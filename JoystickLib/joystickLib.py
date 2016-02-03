@@ -21,11 +21,13 @@ class JoystickUtils:
         
         # initialize button array
         self.NumButtons = self.getButtonCount()
-        self.CurrentButtonState = [ ]
+        self.CurrentButtonState = []
+        self.PreviousButtonState = []
         # will become the previousButtonState...
         # if a button is pressed when the program starts, it should trigger an event
         for i in range(0, self.NumButtons):
             self.CurrentButtonState[i] = False
+            self.PreviousButtonState[i] = False
         self.updateButtons()
     
     def getJoystick(self):
@@ -129,8 +131,8 @@ class JoystickUtils:
 
     def updateButtons(self):
         for i in range(0, self.NumButtons):
+            self.PreviousButtonState[i] = self.CurrentButtonState[i]
             self.CurrentButtonState[i] = self.getRawButton(i)
-        self.PreviousButtonState = self.CurrentButtonState
 
     def buttonPressed(self, b):
         return self.CurrentButtonState[b] and (not self.PreviousButtonState[b])
