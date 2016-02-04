@@ -125,7 +125,7 @@ class JoystickUtils:
     # Button events:
 
     def updateButtons(self):
-        for i in range(2, self.NumButtons + 1):
+        for i in range(1, self.NumButtons + 1):
             self.PreviousButtonState[i] = self.CurrentButtonState[i]
             self.CurrentButtonState[i] = self.getRawButton(i)
 
