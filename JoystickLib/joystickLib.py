@@ -18,11 +18,14 @@ class JoystickUtils:
 
     def __init__(self, joystick):
         self.Joy = joystick
+
+        self.XInv = False
+        self.YInv = False
         
         # initialize button array
         self.NumButtons = self.getButtonCount()
         self.CurrentButtonState = [False for i in range(0, self.NumButtons + 1)]
-        self.PreviousButtonState = [False for i in range(0, self.NumButtons + 1)]
+        self.PreviousButtonState= [False for i in range(0, self.NumButtons + 1)]
         self.updateButtons()
     
     def getJoystick(self):
@@ -42,56 +45,67 @@ class JoystickUtils:
 
     def flushOutputs(self):
         return self.Joy.flushOutputs()
+
+    # Whether to invert the x or y axis
+
+    def invertX(self, enabled=True):
+        self.XInv = enabled
+
+    def invertY(self, enabled=True):
+        self.YInv = enabled
     
     # These methods check if various parts of the joystick are
     # in the dead-zone, and return a boolean value:
     
     def positionInDeadZone(self):
-        return self.Joy.getMagnitude() < positionDeadZone
+        return self.getRawMagnitude() < positionDeadZone
 
     def twistInDeadZone(self):
-        return abs(self.Joy.getTwist()) < twistDeadZone
+        return abs(self.getRawTwist()) < twistDeadZone
 
     def zInDeadZone(self):
-        return abs(self.Joy.getZ()) < zDeadZone
+        return abs(self.getRawZ()) < zDeadZone
 
     # These methods return 0 if the joystick is in the dead-zone:
 
     def getX(self):
         if self.positionInDeadZone():
             return 0
-        return self.Joy.getX()
+        return self.getRawX()
 
     def getY(self):
         if self.positionInDeadZone():
             return 0
-        return self.Joy.getY()
+        return self.getRawY()
 
     def getZ(self):
         if self.zInDeadZone():
             return 0
-        return self.Joy.getZ()
+        return self.getRawZ()
 
     def getTwist(self):
         if self.twistInDeadZone():
             return 0
-        return self.Joy.getTwist()
+        return self.getRawTwist()
 
     def getMagnitude(self):
         if self.positionInDeadZone():
             return 0
-        return self.Joy.getMagnitude()
-
-    # These methods ignore the dead-zone:
+        return self.getRawMagnitude()
 
     def getDirection(self):
         return self.Joy.getDirectionRadians()
 
+    # These methods ignore the dead-zone, but they do invert the axis if that
+    # is enabled:
+
     def getRawX(self):
-        return self.Joy.getX()
+        x = self.Joy.getX()
+        return -x if self.XInv else x
 
     def getRawY(self):
-        return self.Joy.getY()
+        y = self.Joy.getY()
+        return -y if self.YInv else y
 
     def getRawZ(self):
         return self.Joy.getZ()
