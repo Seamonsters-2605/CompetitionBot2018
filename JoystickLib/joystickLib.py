@@ -94,7 +94,9 @@ class JoystickUtils:
         return self.getRawMagnitude()
 
     def getDirection(self):
-        return self.Joy.getDirectionRadians()
+        # Joystick's built-in getDirection() says 0 is positive y
+        # It should be positive x
+        return math.atan2(self.getRawY(), self.getRawX())
 
     # These methods ignore the dead-zone, but they do invert the axis if that
     # is enabled:
