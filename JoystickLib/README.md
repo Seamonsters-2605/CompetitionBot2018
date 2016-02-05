@@ -10,3 +10,4 @@ Method names in JoystickUtils mostly correspond with those in Joystick. Look [he
 - `buttonReleased(button)` Checks if the button was released since the last `updateButtons` call.
 - `invertX(enabled=True)` Sets whether to invert the x axis. `enabled` is optional and defaults to True
 - `invertY(enabled=True)` Sets whether to invert the y axis.
+- `getDirection()` Returns the direction of the joystick in radians. 0 is positive x, and the values increase counter-clockwise.
