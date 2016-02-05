@@ -8,5 +8,5 @@ Method names in JoystickUtils mostly correspond with those in Joystick. Look [he
 - `updateButtons()` Should be called every `teleopPeriodic` loop - updates the current state of the buttons for events.
 - `buttonPressed(button)` Checks if the button was pressed since the last `updateButtons` call.
 - `buttonReleased(button)` Checks if the button was released since the last `updateButtons` call.
-- `invertX(enabled=true)` Sets whether to invert the x axis. `enabled` is optional and defaults to true
-- `invertY(enabled=true)` Sets whether to invert the y axis.
+- `invertX(enabled=True)` Sets whether to invert the x axis. `enabled` is optional and defaults to True
+- `invertY(enabled=True)` Sets whether to invert the y axis.
