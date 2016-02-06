@@ -2,6 +2,14 @@ __author__ = 'Dawson'
 import wpilib
 import math
 class HolonomicDrive(wpilib.IterativeRobot):
+#PLEASE READ:
+#Right side driving forward is assumed to be +1
+#Turning counter-clockwise is assumed to be +1
+#Meet these requriements and THEN use invertDrive() if it is all backwards.
+
+#Summary:
+#Turn should be passed in as -Joystick.getX, most likely
+
 
     def __init__(self, fl, fr, bl, br):
         self.FL = fl
@@ -11,7 +19,7 @@ class HolonomicDrive(wpilib.IterativeRobot):
         self.stores = [0.0, 0.0, 0.0, 0.0]
         self.wheelOffset = math.pi / 4
         self.invert = 1
-        self.maxVelocity = 1000
+        self.maxVelocity = 2000
 
     #USE THESE FEW FUNCTIONS BELOW
 
@@ -19,16 +27,16 @@ class HolonomicDrive(wpilib.IterativeRobot):
         self.ensureControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
         self.calcWheels(magnitude, direction, turn)
         self.setWheels()
-        self.logCurrent()
+        #self.logCurrent()
 
     def driveSpeed(self, magnitude, direction, turn):
         self.ensureControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.calcWheels(magnitude, direction, turn)
         self.scaleToMax()
         self.setWheels()
-        self.logCurrent()
+        #self.logCurrent()
 
-    def invert(self):
+    def invertDrive(self):
         self.invert *= -1
 
     def setWheelOffset(self, angleInRadians):
@@ -51,15 +59,15 @@ class HolonomicDrive(wpilib.IterativeRobot):
             fixedMagnitude = 1.0
         else:
             fixedMagnitude = magnitude
-        self.stores[0] += fixedMagnitude * (math.sin(direction + self.wheelOffset)) * -1 * self.invert #FL
+        self.stores[0] += fixedMagnitude * (math.sin(direction + self.wheelOffset)) * -1 #FL
         #self.stores[0] += fixedMagnitude
-        self.stores[1] += fixedMagnitude * (math.sin((direction - self.wheelOffset))) * self.invert #FR
-        self.stores[2] += fixedMagnitude * (math.sin((direction - self.wheelOffset))) * -1 * self.invert #BL
-        self.stores[3] += fixedMagnitude * (math.sin((direction + self.wheelOffset))) * self.invert #FR
+        self.stores[1] += fixedMagnitude * (math.sin((direction - self.wheelOffset))) #FR
+        self.stores[2] += fixedMagnitude * (math.sin((direction - self.wheelOffset))) * -1 #BL
+        self.stores[3] += fixedMagnitude * (math.sin((direction + self.wheelOffset))) #FR
 
     def addTurn(self, turn):
         for i in range (0,4):
-            self.stores[i] += turn * self.invert
+            self.stores[i] += turn
 
     def scaleNumbers(self):
         largest = max(self.stores)
@@ -68,23 +76,20 @@ class HolonomicDrive(wpilib.IterativeRobot):
                 number = number / largest
 
     def setWheels(self):
-        self.FL.set(self.stores[0])
-        self.FR.set(self.stores[1])
-        self.BL.set(self.stores[2])
-        self.BR.set(self.stores[3])
+        self.FL.set(self.stores[0] * self.invert)
+        self.FR.set(self.stores[1] * self.invert)
+        self.BL.set(self.stores[2] * self.invert)
+        self.BR.set(self.stores[3] * self.invert)
         #print(str(self.stores[0])+ "     "+str(self.stores[1]) + "     "+ str(self.stores[2])+ "     " + str(self.stores[3]))
 
 
     def scaleToMax(self):
-        for number in self.stores:
-            number *= self.maxVelocity
+        for i in range (0,4):
+            self.stores[i] *= self.maxVelocity
 
     def ensureControlMode(self, controlMode):
-        if self.FL.getControlMode() == controlMode:
-            if self.FR.getControlMode() == controlMode:
-                if self.BL.getControlMode() == controlMode:
-                    if self.BR.getControlMode() == controlMode:
-                        return
+        if self.FL.getControlMode() == self.FR.getControlMode() == self.BL.getControlMode() == self.BR.getControlMode() == controlMode:
+            return
         print("SETTING CONTROL MODE")
         self.FL.changeControlMode(controlMode)
         self.FR.changeControlMode(controlMode)

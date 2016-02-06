@@ -1,6 +1,13 @@
 HolonomicDrive.py
 ~Dawson Bowhay
+/////////////////////////////////////////////////////////////////////////////////////////////
+Important note: A positive direction around the unit circle is positive turn. Keep this in
+mind. If you do this right and control it with regular magnitude and direction, everything
+will either be forwards or everything will be backwards, depending on which direction is
+default for your motors/motor controllers. If everything is backwards, use the invertDrive()
+function.
 
+/////////////////////////////////////////////////////////////////////////////////////////////
 Details:
 -Code for Mecanum/Omni drives in the "diamond" configuration ("x" config is like never used)
 -Has class variable for offset of wheels. Default is .25 pi radians (or 45 degrees), which is
@@ -11,15 +18,13 @@ should take 1 line of code
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 Version:
--This is the first version and I just tested it yesterday so there could be some undiscovered
-bugs
--There is still more stuff to be implemented like toggling break mode, some kind of kill
-function, etc.
--The default max velocity is 1000 right now, which is pretty slow. This needs to be tested
-and improved
+-This is version 1.1 and a few bugs have been fixed including a function name that matched a
+class variable name
+-There is still more stuff to be implemented
+-The default max velocity is 2000 right now, which isn't super fast
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-Functions(that you should actually use, not all):
+Functions(that you should actually use, not all functions):
 
 -driveVoltage(magnitude, direction, turn)
 This function is used for driving in percentVBus mode
@@ -27,8 +32,8 @@ This function is used for driving in percentVBus mode
 -driveSpeed(magnitude, direction, turn)
 This function is used for driving in speed mode (w/encoders hooked up)
 
--invert()
-This function inverts everything. Hopefully not needed...
+-invertDrive()
+This function inverts everything. It will probably be used.
 
 -setWheelOffset(angleInRadians)
 This function should be used to set the offset angle at which your wheels exert force.
