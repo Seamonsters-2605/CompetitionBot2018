@@ -1,4 +1,5 @@
 import wpilib, math
+from wpilib.buttons import JoystickButton
 
 __author__ = "jacobvanthoog"
 
@@ -131,6 +132,9 @@ class JoystickUtils:
 
     def getRawButton(self, buttonNumber):
         return self.Joy.getRawButton(buttonNumber)
+    
+    def getJoystickButton(self, buttonNumber):
+        return JoystickButton(self.getJoystick(), buttonNumber)
     
     def getTrigger(self):
         return self.Joy.getTrigger()
