@@ -2,6 +2,7 @@ HolonomicDrive.py
 ~Dawson Bowhay
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+
 Important note: A positive direction around the unit circle is positive turn. Keep this in
 mind. If you do this right and control it with regular magnitude and direction, everything
 will either be forwards or everything will be backwards, depending on which direction is
@@ -9,6 +10,7 @@ default for your motors/motor controllers. If everything is backwards, use the i
 function.
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+
 Details:
 -Code for Mecanum/Omni drives in the "diamond" configuration ("x" config is like never used)
 -Has class variable for offset of wheels. Default is .25 pi radians (or 45 degrees), which is
@@ -18,6 +20,7 @@ pi radians (27 degrees) using the builtin function. The transition between the 2
 should take 1 line of code
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+
 Version:
 -This is version 1.1 and a few bugs have been fixed including a function name that matched a
 class variable name
@@ -25,6 +28,7 @@ class variable name
 -The default max velocity is 2000 right now, which isn't super fast
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+
 Functions(that you should actually use, not all functions):
 
 -driveVoltage(magnitude, direction, turn)
