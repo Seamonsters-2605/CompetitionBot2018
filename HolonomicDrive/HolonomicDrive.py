@@ -1,7 +1,7 @@
 __author__ = 'Dawson'
 import wpilib
 import math
-class HolonomicDrive(wpilib.IterativeRobot):
+
 #PLEASE READ:
 #Right side driving forward is assumed to be +1
 #Turning counter-clockwise is assumed to be +1
@@ -10,7 +10,7 @@ class HolonomicDrive(wpilib.IterativeRobot):
 #Summary:
 #Turn should be passed in as -Joystick.getX, most likely
 
-
+class HolonomicDrive():
     def __init__(self, fl, fr, bl, br):
         self.FL = fl
         self.FR = fr
