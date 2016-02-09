@@ -2,14 +2,18 @@ __author__ = 'Dawson'
 import wpilib
 import math
 class HolonomicDrive():
-#PLEASE READ:
-#Right side driving forward is assumed to be +1
-#Turning counter-clockwise is assumed to be +1
-#Meet these requriements and THEN use invertDrive() if it is all backwards.
-
-#Summary:
-#Turn should be passed in as -Joystick.getX, most likely
-
+    
+    #PLEASE READ:
+    #Right side driving forward is assumed to be +1
+    #Turning counter-clockwise is assumed to be +1
+    #Meet these requriements and THEN use invertDrive() if it is all backwards.
+    #Summary:
+    #Turn should be passed in as -Joystick.getX, most likely
+    
+    class DriveMode:
+        VOLTAGE = 1
+        SPEED = 2
+        JEFF = 3
 
     def __init__(self, fl, fr, bl, br):
         self.FL = fl
@@ -19,17 +23,40 @@ class HolonomicDrive():
         self.stores = [0.0, 0.0, 0.0, 0.0]
         self.encoderTargets = [0.0, 0.0, 0.0, 0.0]
         self.wheelOffset = math.pi / 4
-        self.invert = 1
+        self.invert = 1 # can be 1 or -1
         self.maxVelocity = 2000
-        self.previousDriveMode = 0
+        self.previousDriveMode = DriveMode.VOLTAGE
+        self.driveMode = DriveMode.VOLTAGE
 
     #USE THESE FEW FUNCTIONS BELOW
 
+
+    # use the variables DriveMode.VOLTAGE, DriveMode.SPEED, etc. in this function
+    # and NOT their values (1, 2, ...) -- those could change in the future
+    def setDriveMode(self, mode):
+        self.driveMode = mode
+
+    def getDriveMode(self):
+        return self.driveMode
+
+    # a generic drive() function that calls the corresponding driveVoltage(),
+    # driveSpeed(), etc. based on what the current driveMode is.
+    def drive(self, magnitude, direction, turn):
+        if self.driveMode == DriveMode.VOLTAGE:
+            self.driveVoltage(magnitude, direction, turn)
+        elif self.driveMode = DriveMode.SPEED:
+            self.driveSpeed(magnitude, direction, turn)
+        elif self.driveMode = DriveMode.JEFF:
+            self.driveSpeedJeffMode(magnitude, direction, turn)
+    
+
+    # these functions ignore the current driveMode setting
+    
     def driveVoltage(self, magnitude, direction, turn):
         self.ensureControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
         self.calcWheels(magnitude, direction, turn)
         self.setWheels()
-        self.previousDriveMode = 1
+        self.previousDriveMode = DriveMode.VOLTAGE
         #self.logCurrent()
 
     def driveSpeed(self, magnitude, direction, turn):
@@ -37,28 +64,30 @@ class HolonomicDrive():
         self.calcWheels(magnitude, direction, turn)
         self.scaleToMax()
         self.setWheels()
-        self.previousDriveMode = 2
+        self.previousDriveMode = DriveMode.SPEED
         #self.logCurrent()
 
     def driveSpeedJeffMode(self, magnitude, direction, turn): #Increments position to mock speed mode
         if (turn == 0 and magnitude == 0):
             self.disableTalons()
-        elif self.FL.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and self.FL.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and\
-            self.FL.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and self.FL.getControlMode() == wpilib.CANTalon.ControlMode.Disabled:
+        elif self.FL.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and\
+             self.FR.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and\
+             self.BL.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and\
+             self.BR.getControlMode() == wpilib.CANTalon.ControlMode.Disabled:
             self.enableTalons()
             self.zeroEncoderTargets()
         self.ensureControlMode(wpilib.CANTalon.ControlMode.Position)
-        if not self.previousDriveMode == 3:
+        if not self.previousDriveMode == DriveMode.JEFF:
             self.zeroEncoderTargets()
         self.calcWheels(magnitude, direction, turn)
         self.scaleToMaxJeffMode()
         self.incrementEncoderTargets()
         self.ensureSafeDistance()
         self.setWheelsJeffMode()
-        self.previousDriveMode = 3
+        self.previousDriveMode = DriveMode.JEFF
 
-    def invertDrive(self):
-        self.invert *= -1
+    def invertDrive(self, enabled=True):
+        self.invert = -1 if enabled else 1
 
     def setWheelOffset(self, angleInRadians):
         self.wheelOffset = angleInRadians
@@ -80,8 +109,8 @@ class HolonomicDrive():
             fixedMagnitude = 1.0
         else:
             fixedMagnitude = magnitude
-        self.stores[0] += fixedMagnitude * (math.sin(direction + self.wheelOffset)) * -1 #FL
         #self.stores[0] += fixedMagnitude
+        self.stores[0] += fixedMagnitude * (math.sin(direction + self.wheelOffset)) * -1 #FL
         self.stores[1] += fixedMagnitude * (math.sin((direction - self.wheelOffset))) #FR
         self.stores[2] += fixedMagnitude * (math.sin((direction - self.wheelOffset))) * -1 #BL
         self.stores[3] += fixedMagnitude * (math.sin((direction + self.wheelOffset))) #FR
@@ -124,7 +153,11 @@ class HolonomicDrive():
             self.stores[i] *= self.maxVelocity / 5.0
 
     def ensureControlMode(self, controlMode):
-        if self.FL.getControlMode() == self.FR.getControlMode() == self.BL.getControlMode() == self.BR.getControlMode() == controlMode:
+        if self.FL.getControlMode()\
+           == self.FR.getControlMode()\
+           == self.BL.getControlMode()\
+           == self.BR.getControlMode()\
+           == controlMode:
             return
         print("SETTING CONTROL MODE")
         self.FL.changeControlMode(controlMode)
