@@ -1,3 +1,3 @@
-CompetitionBot2016
+# CompetitionBot2016
 
-Edit later
+Useful libraries and utilities for the robot.
