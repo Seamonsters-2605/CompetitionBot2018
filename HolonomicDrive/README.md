@@ -1,6 +1,8 @@
 HolonomicDrive.py
 ~Dawson Bowhay
 
+For new changes and important version info see the version section.
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 Important note: A positive direction around the unit circle is positive turn. Keep this in
@@ -22,8 +24,8 @@ should take 1 line of code
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 Version:
--This is version 1.1 and a few bugs have been fixed including a function name that matched a
-class variable name
+-Added Jeff mode which mocks velocity mode but instead steadily increments the position. Uses
+position mode.
 -There is still more stuff to be implemented
 -The default max velocity is 2000 right now, which isn't super fast
 
@@ -37,6 +39,10 @@ This function is used for driving in percentVBus mode
 -driveSpeed(magnitude, direction, turn)
 This function is used for driving in speed mode (w/encoders hooked up)
 
+-driveSpeedJeffMode(magnitude, direction, turn)
+This function mocks speed mode using position instead.Has a limit to how far the wheel can be
+from its target position
+
 -invertDrive()
 This function inverts everything. It will probably be used.
 
@@ -46,4 +52,6 @@ To do a tank drive just set it to zero (LOL why wouldn't you just use code desig
 tank drive?). Typical omni/mecanum setups are .25 pi radians (which is the defualt)
 
 -setMaxVelocity(velocity)
-Sets the max encoder velocity to a different number. Default is 1000.
+Sets the max encoder velocity to a different number. Default is 2000. This number also
+affects the jeffMode maximum difference between target and current position, but that can be
+changed later.

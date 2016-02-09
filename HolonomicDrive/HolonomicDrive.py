@@ -1,7 +1,7 @@
 __author__ = 'Dawson'
 import wpilib
 import math
-
+class HolonomicDrive():
 #PLEASE READ:
 #Right side driving forward is assumed to be +1
 #Turning counter-clockwise is assumed to be +1
@@ -10,7 +10,7 @@ import math
 #Summary:
 #Turn should be passed in as -Joystick.getX, most likely
 
-class HolonomicDrive():
+
     def __init__(self, fl, fr, bl, br):
         self.FL = fl
         self.FR = fr
@@ -36,6 +36,12 @@ class HolonomicDrive():
         self.setWheels()
         #self.logCurrent()
 
+    def driveSpeedJeffMode(self, magnitude, direction, turn): #Increments position to mock speed mode
+        self.ensureControlMode(wpilib.CANTalon.ControlMode.Position)
+        self.calcWheels(magnitude, direction, turn)
+        self.scaleToMaxJeffMode()
+        self.setWheelsJeffMode()
+
     def invertDrive(self):
         self.invert *= -1
 
@@ -52,7 +58,7 @@ class HolonomicDrive():
         self.addStrafe(magnitude, direction)
         self.addTurn(turn)
         self.scaleNumbers()
-        self.setWheels()
+        #self.setWheels()
 
     def addStrafe(self, magnitude, direction):
         if magnitude > 1.0:
@@ -82,10 +88,19 @@ class HolonomicDrive():
         self.BR.set(self.stores[3] * self.invert)
         #print(str(self.stores[0])+ "     "+str(self.stores[1]) + "     "+ str(self.stores[2])+ "     " + str(self.stores[3]))
 
+    def setWheelsJeffMode(self):
+        self.FL.set(self.FL.getEncPosition() + self.stores[0] * self.invert)
+        self.FR.set(self.FR.getEncPosition() + self.stores[1] * self.invert)
+        self.BL.set(self.BL.getEncPosition() + self.stores[2] * self.invert)
+        self.BR.set(self.BR.getEncPosition() + self.stores[3] * self.invert)
 
     def scaleToMax(self):
         for i in range (0,4):
             self.stores[i] *= self.maxVelocity
+
+    def scaleToMaxJeffMode(self):
+        for i in range (0,4):
+            self.stores[i] *= self.maxVelocity / 5.0
 
     def ensureControlMode(self, controlMode):
         if self.FL.getControlMode() == self.FR.getControlMode() == self.BL.getControlMode() == self.BR.getControlMode() == controlMode:
