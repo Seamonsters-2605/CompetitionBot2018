@@ -49,6 +49,8 @@ class MainRobot (wpilib.IterativeRobot):
         self.Drive.zeroEncoderTargets()
 
     def teleopPeriodic(self):
+        self.TurnJoy.updateButtons();
+        self.MoveJoy.updateButtons();
         turn = -self.TurnJoy.getX()
         magnitude = self.MoveJoy.getMagnitude()
         direction = self.MoveJoy.getDirection()
