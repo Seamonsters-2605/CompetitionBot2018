@@ -4,6 +4,7 @@ import math
 import wpilib
 import JoystickLib.joystickLib
 from HolonomicDrive.HolonomicDrive import HolonomicDrive
+from Shooter.ShootController import ShootController
 
 class MainRobot (wpilib.IterativeRobot):
 
@@ -30,6 +31,14 @@ class MainRobot (wpilib.IterativeRobot):
         self.Drive.invertDrive(True)
         self.Drive.setWheelOffset(math.radians(27))
         self.Drive.setDriveMode(HolonomicDrive.DriveMode.JEFF)
+
+        self.LeftFly = wpilib.CANTalon(4)
+        self.RightFly = wpilib.CANTalon(5)
+        self.LimitSwitch = wpilib.DigitalInput(0)
+        self.Intake = wpilib.CANTalon(8)
+        self.Shooter = ShootController(self.LeftFly, self.RightFly,\
+                                       self.Intake, self.LimitSwitch)
+        self.Shooter.invertFlywheels()
         
         
 
@@ -44,7 +53,9 @@ class MainRobot (wpilib.IterativeRobot):
         magnitude = self.MoveJoy.getMagnitude()
         direction = self.MoveJoy.getDirection()
         self.Drive.drive(magnitude, direction, turn)
-
+        self.Shooter.update(self.MoveJoy.getRawButton(2),\
+                            self.MoveJoy.getRawButton(3),\
+                            self.MoveJoy.getTrigger())
 
 
 if __name__ == "__main__":
