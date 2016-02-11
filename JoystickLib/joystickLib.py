@@ -12,7 +12,7 @@ zDeadZone = 0.05
 
 
 def createJoystick(port):
-    joystick = Joystick(port)
+    joystick = wpilib.Joystick(port)
     return JoystickUtils(joystick)
 
 class JoystickUtils:

@@ -4,13 +4,13 @@ import math
 import wpilib
 import JoystickLib.joystickLib
 from HolonomicDrive.HolonomicDrive import HolonomicDrive
-from Shooter.ShootController import ShootController
+from Shooter import ShootController, Flywheels, Intake
 
 class MainRobot (wpilib.IterativeRobot):
 
     def robotInit(self):
         self.FL = wpilib.CANTalon(2)
-        self.FR = wpilib.CANTalon(2)
+        self.FR = wpilib.CANTalon(1)
         self.BL = wpilib.CANTalon(0)
         self.BR = wpilib.CANTalon(3)
         self.FL.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
@@ -36,7 +36,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.RightFly = wpilib.CANTalon(5)
         self.LimitSwitch = wpilib.DigitalInput(0)
         self.Intake = wpilib.CANTalon(8)
-        self.Shooter = ShootController(self.LeftFly, self.RightFly,\
+        self.Shooter = ShootController.ShootController(self.LeftFly, self.RightFly,\
                                        self.Intake, self.LimitSwitch)
         self.Shooter.invertFlywheels()
         

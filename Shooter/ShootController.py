@@ -1,6 +1,6 @@
 __author__ = 'Dawson'
-import Flywheels
-import Intake
+from  .Flywheels import Flywheels
+from .Intake import Intake
 import wpilib
 class ShootController():
 
@@ -9,8 +9,8 @@ class ShootController():
         self.RightTalon = right
         self.IntakeTalon = intake
         self.Switch = switch
-        self.Flywheels = Flywheels.Flywheels(self.LeftTalon, self.RightTalon)
-        self.Intake = Intake.Intake(self.IntakeTalon)
+        self.Flywheels = Flywheels(self.LeftTalon, self.RightTalon)
+        self.Intake = Intake(self.IntakeTalon)
 
     def invertFlywheels(self):
         self.Flywheels.invertFlywheels()
