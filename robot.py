@@ -5,6 +5,7 @@ import wpilib
 import JoystickLib.joystickLib
 from HolonomicDrive.HolonomicDrive import HolonomicDrive
 from Shooter import ShootController, Flywheels, Intake
+from PDPLogger.PDPLogger import PDPLogger
 
 class MainRobot (wpilib.IterativeRobot):
 
@@ -39,6 +40,9 @@ class MainRobot (wpilib.IterativeRobot):
         self.Shooter = ShootController.ShootController(self.LeftFly, self.RightFly,\
                                        self.Intake, self.LimitSwitch)
         self.Shooter.invertFlywheels()
+
+        self.Logger = PDPLogger(wpilib.PowerDistibutionPanel(0))
+
         
         
 
@@ -58,7 +62,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.Shooter.update(self.MoveJoy.getRawButton(2),\
                             self.MoveJoy.getRawButton(3),\
                             self.MoveJoy.getTrigger())
-
+        self.Logger.printCurrents()
 
 if __name__ == "__main__":
     wpilib.run(MainRobot)
