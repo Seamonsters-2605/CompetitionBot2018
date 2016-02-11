@@ -2,6 +2,7 @@ __author__ = "jacobvanthoog"
 
 import math
 import wpilib
+from wpilib import PowerDistributionPanel
 import JoystickLib.joystickLib
 from HolonomicDrive.HolonomicDrive import HolonomicDrive
 from Shooter import ShootController, Flywheels, Intake
@@ -41,7 +42,7 @@ class MainRobot (wpilib.IterativeRobot):
                                        self.Intake, self.LimitSwitch)
         self.Shooter.invertFlywheels()
 
-        self.Logger = PDPLogger(wpilib.PowerDistibutionPanel(0))
+        self.Logger = PDPLogger(PowerDistributionPanel(0))
 
         
         
@@ -63,6 +64,7 @@ class MainRobot (wpilib.IterativeRobot):
                             self.MoveJoy.getRawButton(3),\
                             self.MoveJoy.getTrigger())
         self.Logger.printCurrents()
+        print("turn: " + str(turn) + "mag: " + str(magnitude) + "dir: " + str(dir))
 
 if __name__ == "__main__":
     wpilib.run(MainRobot)
