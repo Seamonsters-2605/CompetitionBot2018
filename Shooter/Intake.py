@@ -7,7 +7,7 @@ class Intake():
         self.Invert = 1
 
     def intakeBall(self):
-        self.Motor.set(1 * self.Invert)
+        self.Motor.set(.75 * self.Invert)
 
     def stop(self):
         self.Motor.set(0)

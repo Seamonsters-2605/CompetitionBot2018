@@ -64,7 +64,7 @@ class MainRobot (wpilib.IterativeRobot):
                             self.MoveJoy.getRawButton(3),\
                             self.MoveJoy.getTrigger())
         self.Logger.printCurrents()
-        print("turn: " + str(turn) + "mag: " + str(magnitude) + "dir: " + str(dir))
+        print("turn: " + str(turn) + "mag: " + str(magnitude) + "dir: " + str(direction))
 
 if __name__ == "__main__":
     wpilib.run(MainRobot)

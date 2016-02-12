@@ -18,7 +18,7 @@ class ShootController():
     def update(self, isIntakeButtonPushed, isFlywheelButtonPushed, isShootButtonPushed): #This should be always called
 
         if isIntakeButtonPushed:
-            if not self.Switch.get() == 0:
+            if not self.Switch.get() == 1:
                 if not isFlywheelButtonPushed:
                     self.Intake.intakeBall()
             else:
