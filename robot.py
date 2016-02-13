@@ -59,12 +59,12 @@ class MainRobot (wpilib.IterativeRobot):
         turn = -self.TurnJoy.getX()
         magnitude = self.MoveJoy.getMagnitude()
         direction = self.MoveJoy.getDirection()
-        self.Drive.drive(magnitude, direction, turn)
+        self.Drive.driveSpeedJeffMode(magnitude, direction, turn)
         self.Shooter.update(self.MoveJoy.getRawButton(2),\
                             self.MoveJoy.getRawButton(3),\
                             self.MoveJoy.getTrigger())
-        self.Logger.printCurrents()
-        print("turn: " + str(turn) + "mag: " + str(magnitude) + "dir: " + str(direction))
+        #self.Logger.printCurrents()
+        #print("turn: " + str(turn) + "mag: " + str(magnitude) + "dir: " + str(direction))
 
 if __name__ == "__main__":
     wpilib.run(MainRobot)
