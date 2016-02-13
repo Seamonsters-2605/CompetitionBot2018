@@ -21,6 +21,7 @@ class ShootController():
             self.Flywheels.driveSpeed(0)
             self.Intake.dischargeBall()
         else:
+            self.Intake.stop()#counters above discharge if discharge button pushed
             if isIntakeButtonPushed:
                 if not self.Switch.get() == 1:
                     if not isFlywheelButtonPushed:

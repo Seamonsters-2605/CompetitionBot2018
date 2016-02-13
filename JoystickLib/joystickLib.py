@@ -7,8 +7,8 @@ __author__ = "jacobvanthoog"
 # http://robotpy.readthedocs.org/en/latest/wpilib/Joystick.html
 
 positionDeadZone = 0.05 # 5 percent
-twistDeadZone = 0.05
-zDeadZone = 0.05
+twistDeadZone = 0.1
+zDeadZone = 0.1
 
 
 def createJoystick(port):
