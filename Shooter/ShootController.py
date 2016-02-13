@@ -15,24 +15,28 @@ class ShootController():
     def invertFlywheels(self):
         self.Flywheels.invertFlywheels()
 
-    def update(self, isIntakeButtonPushed, isFlywheelButtonPushed, isShootButtonPushed): #This should be always called
+    def update(self, isIntakeButtonPushed, isFlywheelButtonPushed, isShootButtonPushed, isDischargeButtonPushed = False): #This should be always called
 
-        if isIntakeButtonPushed:
-            if not self.Switch.get() == 1:
-                if not isFlywheelButtonPushed:
+        if (isDischargeButtonPushed):
+            self.Flywheels.driveSpeed(0)
+            self.Intake.dischargeBall()
+        else:
+            if isIntakeButtonPushed:
+                if not self.Switch.get() == 1:
+                    if not isFlywheelButtonPushed:
+                        self.Intake.intakeBall()
+                else:
+                    self.Intake.stop()
+            elif isShootButtonPushed:
+                if self.Flywheels.readyToShoot():
                     self.Intake.intakeBall()
             else:
                 self.Intake.stop()
-        elif isShootButtonPushed:
-            if self.Flywheels.readyToShoot():
-                self.Intake.intakeBall()
-        else:
-            self.Intake.stop()
 
-        if isFlywheelButtonPushed:
-            self.Flywheels.driveAuto()
-        else:
-            self.Flywheels.driveSpeed(0)
+            if isFlywheelButtonPushed:
+                self.Flywheels.driveAuto()
+            else:
+                self.Flywheels.driveSpeed(0)
 
 
 

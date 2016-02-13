@@ -144,16 +144,16 @@ class HolonomicDrive():
 
     def incrementEncoderTargets(self):
         if not abs(self.FL.getEncPosition() - self.encoderTargets[0]) > 1000:
-            print("incrementing")
+            #print("incrementing")
             self.encoderTargets[0] += self.stores[0] * self.invert
         if not abs(self.FR.getEncPosition() - self.encoderTargets[1]) > 1000:
-            print("incrementing")
+            #print("incrementing")
             self.encoderTargets[1] += self.stores[1] * self.invert
         if not abs(self.BL.getEncPosition() - self.encoderTargets[2]) > 1000:
-            print("incrementing")
+            #print("incrementing")
             self.encoderTargets[2] += self.stores[2] * self.invert
         if not abs(self.BR.getEncPosition() - self.encoderTargets[3]) > 1000:
-            print("incrementing")
+            #print("incrementing")
             self.encoderTargets[3] += self.stores[3] * self.invert
 
     def setWheels(self):

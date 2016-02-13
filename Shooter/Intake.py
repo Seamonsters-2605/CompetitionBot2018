@@ -9,6 +9,9 @@ class Intake():
     def intakeBall(self):
         self.Motor.set(.75 * self.Invert)
 
+    def dischargeBall(self):
+        self.Motor.set(-1)
+
     def stop(self):
         self.Motor.set(0)
 

@@ -62,7 +62,8 @@ class MainRobot (wpilib.IterativeRobot):
         self.Drive.driveSpeedJeffMode(magnitude, direction, turn)
         self.Shooter.update(self.MoveJoy.getRawButton(2),\
                             self.MoveJoy.getRawButton(3),\
-                            self.MoveJoy.getTrigger())
+                            self.MoveJoy.getTrigger(),\
+                            self.MoveJoy.getRawButton(5))
         #self.Logger.printCurrents()
         #print("turn: " + str(turn) + "mag: " + str(magnitude) + "dir: " + str(direction))
 
