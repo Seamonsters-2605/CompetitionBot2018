@@ -58,8 +58,9 @@ class MainRobot (wpilib.IterativeRobot):
 
     def teleopInit(self):
         self.Drive.zeroEncoderTargets()
-        self.slowed = 1
+
     def teleopPeriodic(self):
+        self.slowed = 1
         if self.usinggamepad == False:
 
             self.TurnJoy.updateButtons();
@@ -74,8 +75,8 @@ class MainRobot (wpilib.IterativeRobot):
                             self.MoveJoy.getRawButton(5))
         else:
 
-            if self.movegamepad.getButtonByLetter("LT") == True:
-                self.slowed = .1
+            if self.movegamepad.getRawButton(7):
+                self.slowed = .3
             else:
                 self.slowed = 1
             turn = -self.movegamepad.getRX() * self.slowed
