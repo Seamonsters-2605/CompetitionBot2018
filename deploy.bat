@@ -1,1 +1,2 @@
-python robot.py deploy --builtin --nc
+python robot.py deploy --builtin --nc 
+pause
