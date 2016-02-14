@@ -7,7 +7,8 @@ def createGamepad(port):
 class Gamepad(wpilib.Joystick):
     def __init__(self, port):
         super(Gamepad, self).__init__(port = port)
-        deadzone = .08
+        self.deadzone = .08
+        self.isDeadzoneActive = True
 
 
     def getButtonByLetter(self, string):
@@ -37,20 +38,51 @@ class Gamepad(wpilib.Joystick):
             return self.getRawButton(12)
         return False
     def getLY(self):
-        return self.getRawAxis(0)
+        number = self.getRawAxis(0)
+        if self.isDeadzoneActive:
+            if abs(number) < self.deadzone:
+                return 0.0
+        return number
     def getLX(self):
-        return self.getRawAxis(1)
+        number = self.getRawAxis(1)
+        print("LX: " + str(number))
+        if self.isDeadzoneActive:
+            if abs(number) < self.deadzone:
+                return 0.0
+        return number
     def getRX(self):
-        return self.getRawAxis(4)
+        number = self.getRawAxis(4)
+        if self.isDeadzoneActive:
+            if abs(number) < self.deadzone:
+                return 0.0
+        return number
     def getRY(self):
-        return self.getRawAxis(3)
+        number = self.getRawAxis(3)
+        if self.isDeadzoneActive:
+            if abs(number) < self.deadzone:
+                return 0.0
+        return number
     def getRDirection(self):
-        return math.atan2(self.getRawAxis(3), self.getRawAxis(4)) + (math.pi/180 * 90)
+        return math.atan2(self.getRawAxis(3), -self.getRawAxis(4)) - (math.pi/180 * 90)
     def getRMagnitude(self):
-        return math.sqrt((self.getRawAxis(3) * self.getRawAxis(3)) +
+        number = math.sqrt((self.getRawAxis(3) * self.getRawAxis(3)) +
                          (self.getRawAxis(4) * self.getRawAxis(4)))
+        if self.isDeadzoneActive:
+            if number < self.deadzone:
+                return 0.0
+        return number
     def getLDirection(self):
-        return math.atan2(self.getRawAxis(0), self.getRawAxis(1)) + (math.pi/180 * 90)
+        return math.atan2(self.getRawAxis(0), self.getRawAxis(1)) - (math.pi/180 * 90)
     def getLMagnitude(self):
-        return math.sqrt((self.getRawAxis(0) * self.getRawAxis(0)) +
+        number = math.sqrt((self.getRawAxis(0) * self.getRawAxis(0)) +
                          (self.getRawAxis(1) * self.getRawAxis(1)))
+        if self.isDeadzoneActive:
+            if number < self.deadzone:
+                return 0.0
+        return number
+
+    def setIsDeadzoneActive(self, bool):
+        self.isDeadzoneActive = bool
+
+    def setDeadzone(self, inDeadzone):
+        self.deadzone = inDeadzone

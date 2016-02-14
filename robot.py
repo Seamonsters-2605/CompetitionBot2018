@@ -27,7 +27,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.BR.setPID(.5, 0.0, 4.0, 0.0)
 
         self.movegamepad = JoystickLib.Gamepad.Gamepad(port = 0)
-        self.shootgamepad = JoystickLib.Gamepad.Gamepad(port = 0)
+        self.shootgamepad = JoystickLib.Gamepad.Gamepad(port = 1)
 
         self.MoveJoy = JoystickLib.joystickLib.createJoystick(0)
         self.MoveJoy.invertY()
@@ -42,9 +42,10 @@ class MainRobot (wpilib.IterativeRobot):
         self.LeftFly = wpilib.CANTalon(4)
         self.RightFly = wpilib.CANTalon(5)
         self.LimitSwitch = wpilib.DigitalInput(0)
+        self.LimitSwitch2 = wpilib.DigitalInput(1)
         self.Intake = wpilib.CANTalon(8)
         self.Shooter = ShootController.ShootController(self.LeftFly, self.RightFly,\
-                                       self.Intake, self.LimitSwitch)
+                                       self.Intake, self.LimitSwitch, self.LimitSwitch2)
         #self.Shooter.invertFlywheels()
 
         self.Logger = PDPLogger(PowerDistributionPanel(0))
@@ -57,7 +58,7 @@ class MainRobot (wpilib.IterativeRobot):
 
     def teleopInit(self):
         self.Drive.zeroEncoderTargets()
-
+        self.slowed = 1
     def teleopPeriodic(self):
         if self.usinggamepad == False:
 
@@ -71,14 +72,16 @@ class MainRobot (wpilib.IterativeRobot):
                             self.MoveJoy.getRawButton(3),\
                             self.MoveJoy.getTrigger(),\
                             self.MoveJoy.getRawButton(5))
-        if self.usinggamepad == True:
+        else:
+
             if self.movegamepad.getButtonByLetter("LT") == True:
-                slowed = .25
+                self.slowed = .1
             else:
-                slowed = 1
-            turn = self.movegamepad.getRX() * slowed
-            madnitude = self.movegamepad.getMagnitude() * slowed
-            direction = self.movegamepad.getDirection() * slowed
+                self.slowed = 1
+            turn = -self.movegamepad.getRX() * self.slowed
+            magnitude = self.movegamepad.getLMagnitude() * self.slowed
+            direction = self.movegamepad.getLDirection()
+            self.Drive.driveSpeedJeffMode(magnitude, direction, turn)
             self.Shooter.update(self.shootgamepad.getButtonByLetter("LT"), self.shootgamepad.getButtonByLetter("RT"),
                                 self.shootgamepad.getButtonByLetter("RB"), self.shootgamepad.getButtonByLetter("LB"))
 

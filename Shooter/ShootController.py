@@ -4,11 +4,12 @@ from .Intake import Intake
 import wpilib
 class ShootController():
 
-    def __init__(self, left, right, intake, switch):#switch is wpilib.DigitalInput(port)
+    def __init__(self, left, right, intake, switch, switch2):#switch is wpilib.DigitalInput(port)
         self.LeftTalon = left
         self.RightTalon = right
         self.IntakeTalon = intake
         self.Switch = switch
+        self.Switch2 = switch2
         self.Flywheels = Flywheels(self.LeftTalon, self.RightTalon)
         self.Intake = Intake(self.IntakeTalon)
 
@@ -22,7 +23,7 @@ class ShootController():
             self.Intake.dischargeBall()
         else:
             if isIntakeButtonPushed:
-                if not self.Switch.get() == 1:
+                if not (self.Switch.get() == 1 or self.Switch2.get() == 1):
                     if not isFlywheelButtonPushed:
                         self.Intake.intakeBall()
                 else:

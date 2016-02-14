@@ -8,8 +8,8 @@ class Flywheels():
         self.Right.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
         self.Left.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
         self.MaxVelocity = 3400
-        self.Left.setPID(0.7, 0.001, 1.0, 0.0) # Zero F's given...
-        self.Right.setPID(0.7, 0.001, 1.0, 0.0)
+        self.Left.setPID(1, 0.0009, 1, 0.0) # Zero F's given...
+        self.Right.setPID(1, 0.0009, 1, 0.0)
         self.DesiredSpeed = 0
         self.AutoVelocity = self.MaxVelocity
         self.invert = 1
