@@ -45,7 +45,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.Intake = wpilib.CANTalon(8)
         self.Shooter = ShootController.ShootController(self.LeftFly, self.RightFly,\
                                        self.Intake, self.LimitSwitch)
-        self.Shooter.invertFlywheels()
+        #self.Shooter.invertFlywheels()
 
         self.Logger = PDPLogger(PowerDistributionPanel(0))
 
