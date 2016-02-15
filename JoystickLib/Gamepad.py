@@ -28,29 +28,29 @@ class Gamepad(wpilib.Joystick):
     
     def getButtonByLetter(self, string):
         if string == "X":
-            return self.getRawButton(1)
+            return self.getRawButton(Gamepad.X)
         if string == "A":
-            return self.getRawButton(2)
+            return self.getRawButton(Gamepad.A)
         if string == "B":
-            return self.getRawButton(3)
+            return self.getRawButton(Gamepad.B)
         if string == "Y":
-            return self.getRawButton(4)
+            return self.getRawButton(Gamepad.Y)
         if string == "LB":
-            return self.getRawButton(5)
+            return self.getRawButton(Gamepad.LB)
         if string == "RB":
-            return self.getRawButton(6)
+            return self.getRawButton(Gamepad.RB)
         if string == "LT":
-            return self.getRawButton(7)
+            return self.getRawButton(Gamepad.LT)
         if string == "RT":
-            return self.getRawButton(8)
+            return self.getRawButton(Gamepad.RT)
         if string == "Back":
-            return self.getRawButton(9)
+            return self.getRawButton(Gamepad.BACK)
         if string == "Start":
-            return self.getRawButton(10)
+            return self.getRawButton(Gamepad.START)
         if string == "LJ":
-            return self.getRawButton(11)
+            return self.getRawButton(Gamepad.LJ)
         if string == "RJ":
-            return self.getRawButton(12)
+            return self.getRawButton(Gamepad.RJ)
         return False
     def getLY(self):
         number = self.getRawAxis(0)
