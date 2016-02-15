@@ -5,12 +5,27 @@ def createGamepad(port):
     return Gamepad(gamepad)
 
 class Gamepad(wpilib.Joystick):
+    #button definitions
+    # example:
+    # gamepad.getRawButton(Gamepad.LT)
+    X = 1
+    A = 2
+    B = 3
+    Y = 4
+    LB = 5
+    RB = 6
+    LT = 7
+    RT = 8
+    BACK = 9
+    START = 10
+    LJ = 11
+    RJ = 12
+    
     def __init__(self, port):
         super(Gamepad, self).__init__(port = port)
         self.deadzone = .08
         self.isDeadzoneActive = True
-
-
+    
     def getButtonByLetter(self, string):
         if string == "X":
             return self.getRawButton(1)
