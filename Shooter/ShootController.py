@@ -23,7 +23,7 @@ class ShootController():
             self.Intake.dischargeBall()
         else:
             if isIntakeButtonPushed:
-                if not (self.Switch.get() == 1 or self.Switch2.get() == 1):
+                if not (self.Switch.get() == 0 or self.Switch2.get() == 0):
                     if not isFlywheelButtonPushed:
                         self.Intake.intakeBall()
                 else:
