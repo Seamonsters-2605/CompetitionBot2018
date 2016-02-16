@@ -44,14 +44,14 @@ class MainRobot (wpilib.IterativeRobot):
         self.LimitSwitch = wpilib.DigitalInput(0)
         self.LimitSwitch2 = wpilib.DigitalInput(1)
         self.Intake = wpilib.CANTalon(8)
-        self.Shooter = ShootController.ShootController(self.LeftFly, self.RightFly,\
-                                       self.Intake, self.LimitSwitch, self.LimitSwitch2)
+        self.Shooter = ShootController.ShootController(\
+            self.LeftFly, self.RightFly,\
+            self.Intake, self.LimitSwitch, self.LimitSwitch2)
         #self.Shooter.invertFlywheels()
 
         self.Logger = PDPLogger(PowerDistributionPanel(0))
 
-        
-        
+    
 
     def autonomousPeriodic(self):
         pass
@@ -60,38 +60,39 @@ class MainRobot (wpilib.IterativeRobot):
         self.Drive.zeroEncoderTargets()
 
     def teleopPeriodic(self):
-        self.slowed = .7
-        if self.usinggamepad == False:
-
+        if self.usinggamepad == False: # using joystick
             self.TurnJoy.updateButtons();
             self.MoveJoy.updateButtons();
             turn = -self.TurnJoy.getX()
             magnitude = self.MoveJoy.getMagnitude()
             direction = self.MoveJoy.getDirection()
-            self.Drive.driveSpeedJeffMode(magnitude, direction, turn)
+            self.Drive.drive(magnitude, direction, turn) # jeff mode
             self.Shooter.update(self.MoveJoy.getRawButton(2),\
                             self.MoveJoy.getRawButton(3),\
                             self.MoveJoy.getTrigger(),\
                             self.MoveJoy.getRawButton(5))
-        else:
-
-            if self.movegamepad.getButtonByLetter("LT"):
+            
+        else: # using gamepad
+            if self.movegamepad.getButtonByLetter("LT"): # faster button
                  self.slowed = 1
-            elif self.movegamepad.getButtonByLetter("LB"):
+            elif self.movegamepad.getButtonByLetter("LB"): # slower button
                 self.slowed = .2
-
-            else:
+            else: # no button pressed
                 self.slowed = .55
             turn = -self.movegamepad.getRX() * self.slowed
             magnitude = self.movegamepad.getLMagnitude() * self.slowed
             direction = self.movegamepad.getLDirection()
-            self.Drive.driveSpeedJeffMode(magnitude, direction, turn)
-            self.Shooter.update(self.shootgamepad.getButtonByLetter("B"), self.shootgamepad.getButtonByLetter("X"),
-                                self.shootgamepad.getButtonByLetter("RB"), self.shootgamepad.getButtonByLetter("LB"))
+            self.Drive.drive(magnitude, direction, turn) # jeff mode
+            self.Shooter.update(self.shootgamepad.getButtonByLetter("B"),\
+                                self.shootgamepad.getButtonByLetter("X"),\
+                                self.shootgamepad.getButtonByLetter("RB"),\
+                                self.shootgamepad.getButtonByLetter("LB"))
             print ("Slowed:" + str(self.slowed))
             print ("FL: " + str(self.FL.getEncVelocity()))
         #self.Logger.printCurrents()
-        #print("turn: " + str(turn) + "mag: " + str(magnitude) + "dir: " + str(direction))
+        #print("turn: " + str(turn)\
+        #    + " mag: " + str(magnitude)\
+        #    + " dir: " + str(direction))
 
 if __name__ == "__main__":
     wpilib.run(MainRobot)
