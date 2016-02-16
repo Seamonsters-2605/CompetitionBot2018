@@ -8,19 +8,18 @@ class Gamepad(wpilib.Joystick):
     #button definitions
     # example:
     # gamepad.getRawButton(Gamepad.LT)
-    X = 1
-    A = 2
-    B = 3
+    X = 3
+    A = 1
+    B = 2
     Y = 4
     LB = 5
     RB = 6
-    LT = 7
-    RT = 8
-    BACK = 9
-    START = 10
-    LJ = 11
-    RJ = 12
-    
+    LT = 11
+    RT = 12
+    BACK = 7
+    START = 8
+    LJ = 9
+    RJ = 10
     def __init__(self, port):
         super(Gamepad, self).__init__(port = port)
         self.deadzone = .08

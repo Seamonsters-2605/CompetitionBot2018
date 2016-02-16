@@ -60,7 +60,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.Drive.zeroEncoderTargets()
 
     def teleopPeriodic(self):
-        self.slowed = 1
+        self.slowed = .7
         if self.usinggamepad == False:
 
             self.TurnJoy.updateButtons();
@@ -75,17 +75,21 @@ class MainRobot (wpilib.IterativeRobot):
                             self.MoveJoy.getRawButton(5))
         else:
 
-            if self.movegamepad.getRawButton(7):
-                self.slowed = .3
+            if self.movegamepad.getButtonByLetter("LT"):
+                 self.slowed = 1
+            elif self.movegamepad.getButtonByLetter("LB"):
+                self.slowed = .2
+
             else:
-                self.slowed = 1
+                self.slowed = .55
             turn = -self.movegamepad.getRX() * self.slowed
             magnitude = self.movegamepad.getLMagnitude() * self.slowed
             direction = self.movegamepad.getLDirection()
             self.Drive.driveSpeedJeffMode(magnitude, direction, turn)
-            self.Shooter.update(self.shootgamepad.getButtonByLetter("LT"), self.shootgamepad.getButtonByLetter("RT"),
+            self.Shooter.update(self.shootgamepad.getButtonByLetter("B"), self.shootgamepad.getButtonByLetter("X"),
                                 self.shootgamepad.getButtonByLetter("RB"), self.shootgamepad.getButtonByLetter("LB"))
-
+            print ("Slowed:" + str(self.slowed))
+            print ("FL: " + str(self.FL.getEncVelocity()))
         #self.Logger.printCurrents()
         #print("turn: " + str(turn) + "mag: " + str(magnitude) + "dir: " + str(direction))
 
