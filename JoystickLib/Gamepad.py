@@ -77,7 +77,8 @@ class Gamepad(wpilib.Joystick):
                 return 0.0
         return number
     def getRDirection(self):
-        return math.atan2(self.getRawAxis(3), -self.getRawAxis(4)) - (math.pi/180 * 90)
+        return math.atan2(self.getRawAxis(3), -self.getRawAxis(4)) \
+            - (math.pi/180 * 90)
     def getRMagnitude(self):
         number = math.sqrt((self.getRawAxis(3) * self.getRawAxis(3)) +
                          (self.getRawAxis(4) * self.getRawAxis(4)))
@@ -86,7 +87,8 @@ class Gamepad(wpilib.Joystick):
                 return 0.0
         return number
     def getLDirection(self):
-        return math.atan2(self.getRawAxis(0), self.getRawAxis(1)) - (math.pi/180 * 90)
+        return math.atan2(self.getRawAxis(0), self.getRawAxis(1)) \
+            - (math.pi/180 * 90)
     def getLMagnitude(self):
         number = math.sqrt((self.getRawAxis(0) * self.getRawAxis(0)) +
                          (self.getRawAxis(1) * self.getRawAxis(1)))
