@@ -7,7 +7,7 @@ import JoystickLib.joystickLib
 from HolonomicDrive.HolonomicDrive import HolonomicDrive
 from Shooter import ShootController, Flywheels, Intake
 from PDPLogger.PDPLogger import PDPLogger
-import JoystickLib.Gamepad
+from JoystickLib.Gamepad import Gamepad
 
 class MainRobot (wpilib.IterativeRobot):
 
