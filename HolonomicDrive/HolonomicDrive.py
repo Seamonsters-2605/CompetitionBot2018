@@ -102,7 +102,7 @@ class HolonomicDrive():
         self.incrementEncoderTargets()
         #self.ensureSafeDistance()
         self.setWheelsJeffMode()
-        self.previousDriveMode = 3
+        self.previousDriveMode = HolonomicDrive.DriveMode.JEFF
     def invertDrive(self, enabled=True):
         self.invert = -1 if enabled else 1
 
