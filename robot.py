@@ -82,16 +82,17 @@ class MainRobot (wpilib.IterativeRobot):
 
             # switch drive mode with gamepad
             if   self.movegamepad.getRawButton(Gamepad.A):
-                self.Drive.setDriveMode(HolonomicDrive.VOLTAGE)
+                self.Drive.setDriveMode(HolonomicDrive.DriveMode.VOLTAGE)
             elif self.movegamepad.getRawButton(Gamepad.B):
-                self.Drive.setDriveMode(HolonomicDrive.SPEED)
+                self.Drive.setDriveMode(HolonomicDrive.DriveMode.SPEED)
             elif self.movegamepad.getRawButton(Gamepad.X):
-                self.Drive.setDriveMode(HolonomicDrive.JEFF)
-            
+                self.Drive.setDriveMode(HolonomicDrive.DriveMode.JEFF)
+            print(str(self.Drive.getDriveMode()))
             turn = -self.movegamepad.getRX() * self.slowed
             magnitude = self.movegamepad.getLMagnitude() * self.slowed
             direction = self.movegamepad.getLDirection()
-            self.Drive.drive(magnitude, direction, turn)
+            #self.Drive.drive(magnitude, direction, turn)
+            self.Drive.driveSpeedJeffMode(magnitude, direction, turn,  self.movegamepad.getRawButton(Gamepad.START))
             self.Shooter.update(self.shootgamepad.getButtonByLetter("B"),\
                                 self.shootgamepad.getButtonByLetter("X"),\
                                 self.shootgamepad.getButtonByLetter("RB"),\

@@ -73,7 +73,7 @@ class HolonomicDrive():
         self.previousDriveMode = HolonomicDrive.DriveMode.SPEED
         #self.logCurrent()
 
-    def driveSpeedJeffMode(self, magnitude, direction, turn, slowmode = False): #Increments position to mock speed mode
+    def driveSpeedJeffMode(self, magnitude, direction, turn, aggressivePID = False): #Increments position to mock speed mode
         # if (turn == 0 and magnitude == 0):
         #     self.disableTalons()
         # elif self.FL.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and\
@@ -86,13 +86,13 @@ class HolonomicDrive():
         if not self.previousDriveMode == 3:
             self.zeroEncoderTargets()
         self.calcWheels(magnitude, direction, turn)
-        if slowmode:
+        if aggressivePID:
 
-            self.FL.setPID(12.0, 0.0, 40.0, 0.0)
-            self.FR.setPID(12.0, 0.0, 40.0, 0.0)
-            self.BL.setPID(12.0, 0.0, 40.0, 0.0)
-            self.BR.setPID(12.0, 0.0, 40.0, 0.0)
-            self.scaleToMaxJeffModeSlowMode()
+            self.FL.setPID(12.0, 0.0, 15.0, 0.0)
+            self.FR.setPID(12.0, 0.0, 15.0, 0.0)
+            self.BL.setPID(12.0, 0.0, 15.0, 0.0)
+            self.BR.setPID(12.0, 0.0, 15.0, 0.0)
+            self.scaleToMaxJeffMode()
         else:
             self.FL.setPID(1.0, 0.0, 3.0, 0.0)
             self.FR.setPID(1.0, 0.0, 3.0, 0.0)
@@ -143,16 +143,16 @@ class HolonomicDrive():
                 number = number / largest
 
     def incrementEncoderTargets(self):
-        if not abs(self.FL.getEncPosition() - self.encoderTargets[0]) > 1000:
-            #print("incrementing")
+        if not abs(self.FL.getEncPosition() - self.encoderTargets[0]) > 250: #Started @ 1000
+            print(self.FL.getEncPosition())
             self.encoderTargets[0] += self.stores[0] * self.invert
-        if not abs(self.FR.getEncPosition() - self.encoderTargets[1]) > 1000:
+        if not abs(self.FR.getEncPosition() - self.encoderTargets[1]) > 250:
             #print("incrementing")
             self.encoderTargets[1] += self.stores[1] * self.invert
-        if not abs(self.BL.getEncPosition() - self.encoderTargets[2]) > 1000:
+        if not abs(self.BL.getEncPosition() - self.encoderTargets[2]) > 250:
             #print("incrementing")
             self.encoderTargets[2] += self.stores[2] * self.invert
-        if not abs(self.BR.getEncPosition() - self.encoderTargets[3]) > 1000:
+        if not abs(self.BR.getEncPosition() - self.encoderTargets[3]) > 250:
             #print("incrementing")
             self.encoderTargets[3] += self.stores[3] * self.invert
 
