@@ -97,6 +97,20 @@ class Gamepad(wpilib.Joystick):
                 return 0.0
         return number
 
+    def getLMagnitudePower(self, int_power):
+        original = self.getLMagnitude()
+        result = 1.0
+        for i in range (0, int_power):
+            result *= original
+        return result
+
+    def getRMagnitudePower(self, int_power):
+        original = self.getRMagnitude()
+        result = 1.0
+        for i in range (0, int_power):
+            result *= original
+        return result
+
     def setIsDeadzoneActive(self, bool):
         self.isDeadzoneActive = bool
 
