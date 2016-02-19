@@ -7,7 +7,7 @@ class Flywheels():
         self.Right = right
         self.Right.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
         self.Left.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
-        self.MaxVelocity = 3400
+        self.MaxVelocity = 2000
         self.Left.setPID(1, 0.0009, 1, 0.0) # Zero F's given...
         self.Right.setPID(1, 0.0009, 1, 0.0)
         self.DesiredSpeed = 0
@@ -32,10 +32,10 @@ class Flywheels():
 
     def driveSpeed(self, speed):
         self.DesiredSpeed = speed
-        # if not self.Left.getControlMode() == wpilib.CANTalon.ControlMode.Speed:
-        #     self.Left.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
-        # if not self.Right.getControlMode() == wpilib.CANTalon.ControlMode.Speed:
-        #     self.Right.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
+        if not self.Left.getControlMode() == wpilib.CANTalon.ControlMode.Speed:
+            self.Left.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
+        if not self.Right.getControlMode() == wpilib.CANTalon.ControlMode.Speed:
+            self.Right.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.Left.set(speed * self.invert)
         self.Right.set(-speed * self.invert)
         print("Left Speed: " + str(self.Left.getEncVelocity()))
