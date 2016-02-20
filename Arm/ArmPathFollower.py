@@ -91,8 +91,3 @@ class ArmCommand(Command):
         if not self.Started:
             return False
         return self.Arm.movementCompleted()
-
-
-
-arm = ArmPath('ArmPaths/testPath')
-print(arm.getFollowCommand(None))
