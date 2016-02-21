@@ -2,7 +2,7 @@ __author__ = "jacobvanthoog"
 import wpilib
 import math
 
-ROTATION_TICKS_CAN1 = 400 # encoder ticks in a full rotation
+ROTATION_TICKS_CAN1 = 131072 # encoder ticks in a full rotation
 ROTATION_TICKS_CAN2 = 400
 MAGNITUDE_LIMIT = 1 # units before theoretical maximum distance
 COMPLETED_DISTANCE = 5 # when both motors are within this number of ticks, the
@@ -30,7 +30,8 @@ class ArmControl:
         self.CAN1Target = self.CAN1.getEncPosition()
         self.CAN2Target = self.CAN2.getEncPosition()
 
-        self.Velocity = 80 # ticks per step
+        self.CAN1Velocity = 16384 # ticks per step
+        self.CAN2Velocity = 80
 
         self.MovementCompleted = False
 
@@ -62,8 +63,11 @@ class ArmControl:
     def setOffset2(self, offset):
         self.CAN2Offset = offset
 
-    def setVelocity(self, velocity):
-        self.Velocity = velocity
+    def setVelocity1(self, velocity):
+        self.CAN1Velocity = velocity
+
+    def setVelocity2(self, velocity):
+        self.CAN2Velocity = velocity
 
     # mag is distance from the base of the arm, in inches
     # dir is the angle of the target point, where 0 is straight ahead and Pi/2
@@ -133,6 +137,13 @@ class ArmControl:
             return self.CAN2Target
         return None
 
+    def velocity(self, can):
+        if can == self.CAN1:
+            return self.CAN1Velocity
+        if can == self.CAN2:
+            return self.CAN2Velocity
+        return None
+
     def ensureControlMode(self, can):
         if not (can.getControlMode() == wpilib.CANTalon.ControlMode.Position):
             can.changeControlMode(wpilib.CANTalon.ControlMode.Position)
@@ -145,19 +156,19 @@ class ArmControl:
         return math.floor(position)
 
     def rotateToPosition(self, can, target):
-        current = can.getEncPosition();
+        current = can.getEncPosition()
         if current == target:
             return
 
         distance = target - current # amount motor should rotate
         if distance > self.ticksPerRotation(can)/2: # can rotate backwards instead
-            distance = -self.ticksPerRotation(can) + distance
+            distance -= self.ticksPerRotation(can)
 
         # limit rotation to maximum velocity
-        if distance > self.Velocity:
-            distance = self.Velocity
-        if distance < -self.Velocity:
-            distance = -self.Velocity
+        if distance > self.velocity(can):
+            distance = self.velocity(can)
+        if distance < -self.velocity(can):
+            distance = -self.velocity(can)
 
         can.set(current + distance)
 
