@@ -2,7 +2,8 @@ __author__ = "jacobvanthoog"
 import wpilib
 import math
 
-TICKS_PER_ROTATION = 400
+ROTATION_TICKS_CAN1 = 400 # encoder ticks in a full rotation
+ROTATION_TICKS_CAN2 = 400
 MAGNITUDE_LIMIT = 1 # units before theoretical maximum distance
 COMPLETED_DISTANCE = 5 # when both motors are within this number of ticks, the
                        # movement has completed
@@ -80,8 +81,8 @@ class ArmControl:
         angle2 = math.acos( -(mag**2 - self.Length1**2 - self.Length2**2)
                             / (2 * self.Length1 * self.Length2))
 
-        self.CAN1Target = self.can1RadiansToEncoderPosition(angle1)
-        self.CAN2Target = self.can2RadiansToEncoderPosition(angle2)
+        self.CAN1Target = self.radiansToEncoderPosition(angle1, self.CAN1)
+        self.CAN2Target = self.radiansToEncoderPosition(angle2, self.CAN2)
 
     # variant of moveTo() that is given a position
     # x is forward distance from the base of the arm, in inches
@@ -94,30 +95,54 @@ class ArmControl:
     def movementCompleted(self):
         return self.MovementCompleted
 
+
     # DON'T USE THESE
+
+    def ticksPerRotation(self, can):
+        if can == self.CAN1:
+            return ROTATION_TICKS_CAN1
+        if can == self.CAN2:
+            return ROTATION_TICKS_CAN2
+        return None
+
+    def inverted(self, can):
+        if can == self.CAN1:
+            return self.CAN1Invert
+        if can == self.CAN2:
+            return self.CAN2Invert
+        return None
+
+    def zero(self, can):
+        if can == self.CAN1:
+            return self.CAN1Zero
+        if can == self.CAN2:
+            return self.CAN2Zero
+        return None
+
+    def offset(self, can):
+        if can == self.CAN1:
+            return self.CAN1Offset
+        if can == self.CAN2:
+            return self.CAN2Offset
+        return None
+
+    def target(self, can):
+        if can == self.CAN1:
+            return self.CAN1Target
+        if can == self.CAN2:
+            return self.CAN2Target
+        return None
 
     def ensureControlMode(self, can):
         if not (can.getControlMode() == wpilib.CANTalon.ControlMode.Position):
             can.changeControlMode(wpilib.CANTalon.ControlMode.Position)
 
-    def radiansToEncoderPosition(self, radians, zero, offset, invert):
-        position = radians / (2*math.pi) * TICKS_PER_ROTATION
-        position *= invert
-        position -= zero
-        position += offset
+    def radiansToEncoderPosition(self, radians, can):
+        position = radians / (2*math.pi) * self.ticksPerRotation(can)
+        position *= self.inverted(can)
+        position -= self.zero(can)
+        position += self.offset(can)
         return math.floor(position)
-
-    def can1RadiansToEncoderPosition(self, radians):
-        return self.radiansToEncoderPosition(radians,
-                                             self.CAN1Zero,
-                                             self.CAN1Offset,
-                                             self.CAN1Invert)
-
-    def can2RadiansToEncoderPosition(self, radians):
-        return self.radiansToEncoderPosition(radians,
-                                             self.CAN2Zero,
-                                             self.CAN2Offset,
-                                             self.CAN2Invert)
 
     def rotateToPosition(self, can, target):
         current = can.getEncPosition();
@@ -125,8 +150,8 @@ class ArmControl:
             return
 
         distance = target - current # amount motor should rotate
-        if distance > TICKS_PER_ROTATION/2: # can rotate backwards instead
-            distance = -TICKS_PER_ROTATION + distance
+        if distance > self.ticksPerRotation(can)/2: # can rotate backwards instead
+            distance = -self.ticksPerRotation(can) + distance
 
         # limit rotation to maximum velocity
         if distance > self.Velocity:
