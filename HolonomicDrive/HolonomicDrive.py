@@ -34,6 +34,39 @@ class HolonomicDrive():
         self.previousDriveMode = HolonomicDrive.DriveMode.VOLTAGE
         self.driveMode = HolonomicDrive.DriveMode.VOLTAGE
 
+        self.usingInputAccelerationControl = True
+        self.maximumAccelDistance = .08
+        self.previousX = 0.0
+        self.previousY = 0.0
+        self.previousTurn = 0.0
+
+    def accelerationFilter(self, magnitude, direction, turn):
+        newX = magnitude * math.cos(direction)
+        newY = magnitude * math.sin(direction)
+        distanceToNew = math.sqrt( (newX - self.previousX) * (newX - self.previousX) + (newY - self.previousY) * (newY - self.previousY) )
+        finalTurn = turn
+        if not abs(self.previousTurn - turn) <= self.maximumAccelDistance:
+            if turn > self.previousTurn:
+                finalTurn = self.previousTurn + self.maximumAccelDistance
+            else:
+                finalTurn = self.previousTurn - self.maximumAccelDistance
+
+        if (distanceToNew <= self.maximumAccelDistance):
+            self.previousX = newX
+            self.previousY = newY
+            self.previousTurn = finalTurn
+            return [magnitude, direction, finalTurn]
+
+        #Alternate Return for strafe fail to pass
+        directionToNew = math.atan2(newY - self.previousY, newX - self.previousX)
+        finalX = self.previousX + math.cos(directionToNew) * self.maximumAccelDistance
+        finalY = self.previousY + math.sin(directionToNew) * self.maximumAccelDistance
+        self.previousX = finalX
+        self.previousY = finalY
+        self.previousTurn = finalTurn
+        return [math.sqrt(finalX * finalX + finalY * finalY), math.atan2(finalY, finalX), finalTurn]
+
+
     #USE THESE FEW FUNCTIONS BELOW
 
 
@@ -73,7 +106,7 @@ class HolonomicDrive():
         self.previousDriveMode = HolonomicDrive.DriveMode.SPEED
         #self.logCurrent()
 
-    def driveSpeedJeffMode(self, magnitude, direction, turn, aggressivePID = False): #Increments position to mock speed mode
+    def driveSpeedJeffMode(self, inMagnitude, inDirection, inTurn, inAggressivePID = False): #Increments position to mock speed mode
         # if (turn == 0 and magnitude == 0):
         #     self.disableTalons()
         # elif self.FL.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and\
@@ -82,6 +115,18 @@ class HolonomicDrive():
         #      self.BR.getControlMode() == wpilib.CANTalon.ControlMode.Disabled:
         #     self.enableTalons()
         #     self.zeroEncoderTargets()
+
+        magnitude = inMagnitude
+        direction = inDirection
+        turn = inTurn
+        aggressivePID = inAggressivePID
+
+        if self.usingInputAccelerationControl:
+            filteredResults = self.accelerationFilter(magnitude, direction, turn)
+            magnitude = filteredResults[0]
+            direction = filteredResults[1]
+            turn = filteredResults[2]
+
         self.ensureControlMode(wpilib.CANTalon.ControlMode.Position)
         if not self.previousDriveMode == 3:
             self.zeroEncoderTargets()
@@ -143,16 +188,16 @@ class HolonomicDrive():
                 number = number / largest
 
     def incrementEncoderTargets(self):
-        if not abs(self.FL.getEncPosition() - self.encoderTargets[0]) > 250: #Started @ 1000
+        if not abs(self.FL.getEncPosition() - self.encoderTargets[0]) > 4000: #Started @ 1000
             print(self.FL.getEncPosition())
             self.encoderTargets[0] += self.stores[0] * self.invert
-        if not abs(self.FR.getEncPosition() - self.encoderTargets[1]) > 250:
+        if not abs(self.FR.getEncPosition() - self.encoderTargets[1]) > 4000:
             #print("incrementing")
             self.encoderTargets[1] += self.stores[1] * self.invert
-        if not abs(self.BL.getEncPosition() - self.encoderTargets[2]) > 250:
+        if not abs(self.BL.getEncPosition() - self.encoderTargets[2]) > 4000:
             #print("incrementing")
             self.encoderTargets[2] += self.stores[2] * self.invert
-        if not abs(self.BR.getEncPosition() - self.encoderTargets[3]) > 250:
+        if not abs(self.BR.getEncPosition() - self.encoderTargets[3]) > 4000:
             #print("incrementing")
             self.encoderTargets[3] += self.stores[3] * self.invert
 
