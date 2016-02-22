@@ -27,8 +27,8 @@ class Flywheels():
             self.Right.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
         self.Right.set(-speed)
         self.Left.set(speed)
-        print("Speed Left: " + str(self.Left.getEncVelocity()))
-        print("Speed Right: " + str(self.Right.getEncVelocity()))
+        #print("Speed Left: " + str(self.Left.getEncVelocity()))
+        #print("Speed Right: " + str(self.Right.getEncVelocity()))
 
     def driveSpeed(self, speed):
         self.DesiredSpeed = speed
@@ -38,8 +38,8 @@ class Flywheels():
             self.Right.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.Left.set(speed * self.invert)
         self.Right.set(-speed * self.invert)
-        print("Left Speed: " + str(self.Left.getEncVelocity()))
-        print("Set Speed: " + str(speed * self.MaxVelocity * self.invert))
+        #print("Left Speed: " + str(self.Left.getEncVelocity()))
+        #print("Set Speed: " + str(speed * self.MaxVelocity * self.invert))
 
     def driveAuto(self):
         self.driveSpeed(self.AutoVelocity)

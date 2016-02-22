@@ -27,7 +27,7 @@ class PDPLogger:
             message = self.currentMessage(i) + "    "
             message += self.currentMessage(i+8)
             finalMessage += "\n" + message
-        print(finalMessage)
+        #print(finalMessage)
 
     def reprintCurrents(self):
         # up 8 lines

@@ -8,10 +8,19 @@ from HolonomicDrive.HolonomicDrive import HolonomicDrive
 from Shooter import ShootController, Flywheels, Intake
 from PDPLogger.PDPLogger import PDPLogger
 from JoystickLib.Gamepad import Gamepad
+import Vision
+import networktables
+from networktables import NetworkTable
+#import globalListener
 
+NetworkTable.setServerMode()
+
+num_array = networktables.NumberArray()
+
+# noinspection PyInterpreter,PyInterpreter
 class MainRobot (wpilib.IterativeRobot):
-
     def robotInit(self):
+        self.Vision = Vision.Vision()
         self.usinggamepad = True
         self.FL = wpilib.CANTalon(2)
         self.FR = wpilib.CANTalon(1)
@@ -58,8 +67,13 @@ class MainRobot (wpilib.IterativeRobot):
 
     def teleopInit(self):
         self.Drive.zeroEncoderTargets()
+        self.readyToShoot = False
 
     def teleopPeriodic(self):
+        averageFlySpeed = (abs(self.LeftFly.getEncVelocity() + abs(self.RightFly.getEncVelocity())))/2
+        print(str(self.Vision.centerX()))
+
+
         if self.usinggamepad == False: # using joystick
             self.TurnJoy.updateButtons();
             self.MoveJoy.updateButtons();
@@ -73,13 +87,28 @@ class MainRobot (wpilib.IterativeRobot):
                             self.MoveJoy.getRawButton(5))
             
         else: # using gamepad
+            if self.shootgamepad.getButtonByLetter("RB"):
+                if abs(self.Vision.centerX() - 320) < 20:
+                    self.readyToShoot = True
+                elif self.Vision.centerX() - 320 > 0:
+                    self.Drive.driveSpeedJeffMode(0, 0, .05)
+                    self.readyToShoot = False
+                elif self.Vision.centerX - 320 < 0:
+                    self.Drive.driveSpeedJeffMode(0, 0, -.05)
+                    self.readyToShoot = False
+
+            if self.readyToShoot:
+                if averageFlySpeed < 1900:
+                    self.Shooter.update(False, True, False, False)
+                elif averageFlySpeed > 1900:
+                    self.Shooter.update(False, True, True, False)
             if self.movegamepad.getButtonByLetter("LJ"): # faster button
                  self.slowed = 1
             elif self.movegamepad.getButtonByLetter("LB"): # slower button
                 self.slowed = .2
             else: # no button pressed
                 self.slowed = .55
-
+            print ("Slowed: " + str(self.slowed))
             # switch drive mode with gamepad
             # if   self.movegamepad.getRawButton(Gamepad.A):
             #     self.Drive.setDriveMode(HolonomicDrive.DriveMode.VOLTAGE)
@@ -87,7 +116,7 @@ class MainRobot (wpilib.IterativeRobot):
             #     self.Drive.setDriveMode(HolonomicDrive.DriveMode.SPEED)
             # elif self.movegamepad.getRawButton(Gamepad.X):
             #     self.Drive.setDriveMode(HolonomicDrive.DriveMode.JEFF)
-            print(str(self.Drive.getDriveMode()))
+            # print(str(self.Drive.getDriveMode()))
             turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * self.slowed
             #magnitude = self.movegamepad.getLMagnitude() * self.slowed
             magnitude = self.movegamepad.getLMagnitudePower(2) * self.slowed
@@ -98,8 +127,8 @@ class MainRobot (wpilib.IterativeRobot):
                                 self.shootgamepad.getButtonByLetter("X"),\
                                 self.shootgamepad.getButtonByLetter("RB"),\
                                 self.shootgamepad.getButtonByLetter("LB"))
-            print ("Slowed:" + str(self.slowed))
-            print ("FL: " + str(self.FL.getEncVelocity()))
+            # print ("Slowed:" + str(self.slowed))
+            # print ("FL: " + str(self.FL.getEncVelocity()))
         #self.Logger.printCurrents()
         #print("turn: " + str(turn)\
         #    + " mag: " + str(magnitude)\
