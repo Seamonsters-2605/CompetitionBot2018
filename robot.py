@@ -70,7 +70,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.readyToShoot = False
 
     def teleopPeriodic(self):
-        averageFlySpeed = (abs(self.LeftFly.getEncVelocity() + abs(self.RightFly.getEncVelocity())))/2
+        averageFlySpeed = (abs(self.LeftFly.getEncVelocity()) + abs(self.RightFly.getEncVelocity()))/2
         print(str(self.Vision.centerX()))
 
 
@@ -87,21 +87,31 @@ class MainRobot (wpilib.IterativeRobot):
                             self.MoveJoy.getRawButton(5))
             
         else: # using gamepad
-            if self.shootgamepad.getButtonByLetter("RB"):
-                if abs(self.Vision.centerX() - 320) < 20:
-                    self.readyToShoot = True
-                elif self.Vision.centerX() - 320 > 0:
-                    self.Drive.driveSpeedJeffMode(0, 0, .05)
-                    self.readyToShoot = False
-                elif self.Vision.centerX - 320 < 0:
-                    self.Drive.driveSpeedJeffMode(0, 0, -.05)
-                    self.readyToShoot = False
+            if not self.Vision.centerX().__len__() == 0:
+                if self.shootgamepad.getButtonByLetter("RB"):
+                    if abs(self.Vision.centerX()[0] - 240) < 20:
+                        self.readyToShoot = True
+                    elif self.Vision.centerX()[0] - 240 > 0:
+                        self.Drive.driveSpeedJeffMode(0, 0, -.03)
+                        self.readyToShoot = False
+                    elif self.Vision.centerX()[0] - 240 < 0:
+                        self.Drive.driveSpeedJeffMode(0, 0, .03)
+                        self.readyToShoot = False
+                    else:
+                        self.readyToShoot = False
+            else:
+                self.readyToShoot = False
 
-            if self.readyToShoot:
-                if averageFlySpeed < 1900:
-                    self.Shooter.update(False, True, False, False)
-                elif averageFlySpeed > 1900:
-                    self.Shooter.update(False, True, True, False)
+            # if self.readyToShoot:
+            #     if averageFlySpeed < 1900:
+            #         self.LeftFly.set(2000)
+            #         self.RightFly.set(-2000)
+            #     elif averageFlySpeed > 1900:
+            #         self.LeftFly.set(2000)
+            #         self.RightFly.set(-2000)
+            #         self.Intake.set(1)
+            #     else:
+            #         self.Shooter.update(False, False, False, False)
             if self.movegamepad.getButtonByLetter("LJ"): # faster button
                  self.slowed = 1
             elif self.movegamepad.getButtonByLetter("LB"): # slower button
@@ -122,10 +132,15 @@ class MainRobot (wpilib.IterativeRobot):
             magnitude = self.movegamepad.getLMagnitudePower(2) * self.slowed
             direction = self.movegamepad.getLDirection()
             self.Drive.drive(magnitude, direction, turn)
-            self.Shooter.update(self.shootgamepad.getButtonByLetter("B"),\
+            if self.readyToShoot:
+                self.Shooter.update(self.shootgamepad.getButtonByLetter("B"),\
                                 self.shootgamepad.getButtonByLetter("X"),\
-                                self.shootgamepad.getButtonByLetter("RB"),\
+                                self.shootgamepad.getButtonByLetter("RJ"),\
                                 self.shootgamepad.getButtonByLetter("LB"))
+            else:
+                self.Shooter.update(self.shootgamepad.getButtonByLetter("B"), self.shootgamepad.getButtonByLetter("X"),
+                                            False, self.shootgamepad.getButtonByLetter("LB"))
+
             # print ("Slowed:" + str(self.slowed))
             # print ("FL: " + str(self.FL.getEncVelocity()))
         #self.Logger.printCurrents()

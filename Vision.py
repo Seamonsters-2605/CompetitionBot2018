@@ -10,3 +10,4 @@ class Vision():
                                                # if we don't check first.
             self.table.retrieveValue("centerX", numarray)
             return numarray
+        return []
