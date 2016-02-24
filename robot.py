@@ -71,7 +71,7 @@ class MainRobot (wpilib.IterativeRobot):
 
     def teleopPeriodic(self):
         averageFlySpeed = (abs(self.LeftFly.getEncVelocity()) + abs(self.RightFly.getEncVelocity()))/2
-        print(str(self.Vision.centerX()))
+        # print(str(self.Vision.centerX()))
 
 
         if self.usinggamepad == False: # using joystick
@@ -88,14 +88,20 @@ class MainRobot (wpilib.IterativeRobot):
             
         else: # using gamepad
             if not self.Vision.centerX().__len__() == 0:
+                self.needed = abs(self.Vision.centerX()[0] - 235)
+                print (self.needed)
+                if self.needed > 50:
+                    self.turnSpeed = self.needed * .02
+                else:
+                    self.turnSpeed = self.needed * .0008
                 if self.shootgamepad.getButtonByLetter("RB"):
-                    if abs(self.Vision.centerX()[0] - 240) < 20:
+                    if abs(self.Vision.centerX()[0] - 235) < 10:
                         self.readyToShoot = True
-                    elif self.Vision.centerX()[0] - 240 > 0:
-                        self.Drive.driveSpeedJeffMode(0, 0, -.03)
+                    elif self.Vision.centerX()[0] - 235 > 0:
+                        self.Drive.drive(0, 0, -self.turnSpeed)
                         self.readyToShoot = False
-                    elif self.Vision.centerX()[0] - 240 < 0:
-                        self.Drive.driveSpeedJeffMode(0, 0, .03)
+                    elif self.Vision.centerX()[0] - 235 < 0:
+                        self.Drive.drive(0, 0, self.turnSpeed)
                         self.readyToShoot = False
                     else:
                         self.readyToShoot = False
@@ -118,7 +124,7 @@ class MainRobot (wpilib.IterativeRobot):
                 self.slowed = .2
             else: # no button pressed
                 self.slowed = .55
-            print ("Slowed: " + str(self.slowed))
+            # print ("Slowed: " + str(self.slowed))
             # switch drive mode with gamepad
             if   self.movegamepad.getRawButton(Gamepad.A):
                 self.Drive.setDriveMode(HolonomicDrive.DriveMode.VOLTAGE)
@@ -127,19 +133,18 @@ class MainRobot (wpilib.IterativeRobot):
             elif self.movegamepad.getRawButton(Gamepad.X):
                 self.Drive.setDriveMode(HolonomicDrive.DriveMode.JEFF)
             # print(str(self.Drive.getDriveMode()))
-            turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * self.slowed
+            turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
             #magnitude = self.movegamepad.getLMagnitude() * self.slowed
             magnitude = self.movegamepad.getLMagnitudePower(2) * self.slowed
             direction = self.movegamepad.getLDirection()
             self.Drive.drive(magnitude, direction, turn)
-            if self.readyToShoot:
-                self.Shooter.update(self.shootgamepad.getButtonByLetter("B"),\
+            self.Shooter.update(self.shootgamepad.getButtonByLetter("B"),\
                                 self.shootgamepad.getButtonByLetter("X"),\
                                 self.shootgamepad.getButtonByLetter("RJ"),\
                                 self.shootgamepad.getButtonByLetter("LB"))
-            else:
-                self.Shooter.update(self.shootgamepad.getButtonByLetter("B"), self.shootgamepad.getButtonByLetter("X"),
-                                            False, self.shootgamepad.getButtonByLetter("LB"))
+            # else:
+            #     self.Shooter.update(self.shootgamepad.getButtonByLetter("B"), self.shootgamepad.getButtonByLetter("X"),
+            #                                 False, self.shootgamepad.getButtonByLetter("LB"))
 
             # print ("Slowed:" + str(self.slowed))
             # print ("FL: " + str(self.FL.getEncVelocity()))
