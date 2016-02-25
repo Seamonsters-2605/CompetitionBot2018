@@ -1,7 +1,7 @@
 __author__ = "jacobvanthoog"
 
 import wpilib
-from .ArmControl import ArmControl
+from ArmControl import ArmControl
 
 class TestArmEncoders (wpilib.IterativeRobot):
 
