@@ -6,8 +6,8 @@ from .ArmControl import ArmControl
 class TestArmEncoders (wpilib.IterativeRobot):
 
     def robotInit(self):
-        self.Arm1 = wpilib.CANTalon(6)
-        self.Arm2 = wpilib.CANTalon(7)
+        self.Arm1 = wpilib.CANTalon(0)
+        self.Arm2 = wpilib.CANTalon(1)
         self.Control = ArmControl(self.Arm1, self.Arm2)
         self.Control.moveToPosition(20, 17.5)
     def autonomousPeriodic(self):
