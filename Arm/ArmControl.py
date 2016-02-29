@@ -3,7 +3,7 @@ import wpilib
 import math
 
 ROTATION_TICKS_CAN1 = 131072 # encoder ticks in a full rotation
-ROTATION_TICKS_CAN2 = 400
+ROTATION_TICKS_CAN2 = 756
 MAGNITUDE_LIMIT = 1 # units before theoretical maximum distance
 COMPLETED_DISTANCE = 5 # when both motors are within this number of ticks, the
                        # movement has completed
