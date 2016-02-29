@@ -1,3 +1,3 @@
 # CompetitionBot2016
 
-Useful libraries and utilities for the robot.
+Code for the JellyFISH!
