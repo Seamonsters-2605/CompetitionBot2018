@@ -30,14 +30,15 @@ class ArmControl:
         self.CAN1Target = self.CAN1.getEncPosition()
         self.CAN2Target = self.CAN2.getEncPosition()
 
-        self.CAN1Velocity = 16384 # ticks per step
-        self.CAN2Velocity = 80
+        self.CAN1Velocity = 1000 # ticks per step
+        self.CAN2Velocity = 200
 
         self.MovementCompleted = False
 
 
     # should be called once per loop!
     def update(self):
+        #print(self.rotateToPosition(self.CAN1, self.CAN1Target), self.rotateToPosition(self.CAN2, self.CAN2Target))
         self.rotateToPosition(self.CAN1, self.CAN1Target)
         self.rotateToPosition(self.CAN2, self.CAN2Target)
         self.MovementCompleted = \
@@ -75,6 +76,7 @@ class ArmControl:
     # The end of the arm will attempt to move to the point defined by these
     # values
     def moveTo(self, mag, dir):
+        self.MovementCompleted = False
         dir %= 2 * math.pi # constrain dir to be between 0 and 2pi
         if mag > self.Length1 + self.Length2 - MAGNITUDE_LIMIT:
             mag = self.Length1 + self.Length2 - MAGNITUDE_LIMIT
@@ -84,17 +86,23 @@ class ArmControl:
                             / (2 * self.Length1 * mag)) + dir
         angle2 = math.acos( -(mag**2 - self.Length1**2 - self.Length2**2)
                             / (2 * self.Length1 * self.Length2))
-
-        self.CAN1Target = self.radiansToEncoderPosition(angle1, self.CAN1)
-        self.CAN2Target = self.radiansToEncoderPosition(angle2, self.CAN2)
+        print(angle1 / (math.pi*2), angle2 / (math.pi*2))
+        #self.CAN1Target = self.radiansToEncoderPosition(angle1, self.CAN1)
+        #self.CAN2Target = self.radiansToEncoderPosition(angle2, self.CAN2)
 
     # variant of moveTo() that is given a position
     # x is forward distance from the base of the arm, in inches
     # y is upward distance
     def moveToPosition(self, x, y):
+        self.MovementCompleted = False
         mag = math.sqrt(x**2 + y**2)
         dir = math.atan2(y, x)
         self.moveTo(mag, dir)
+
+    def moveMotorRotation(self, can1, can2):
+        self.MovementCompleted = False
+        self.CAN1Target = self.radiansToEncoderPosition(can1, self.CAN1)
+        self.CAN2Target = self.radiansToEncoderPosition(can2, self.CAN2)
 
     def movementCompleted(self):
         return self.MovementCompleted
@@ -149,9 +157,10 @@ class ArmControl:
             can.changeControlMode(wpilib.CANTalon.ControlMode.Position)
 
     def radiansToEncoderPosition(self, radians, can):
+        print(radians / (2*math.pi), "circle")
         position = radians / (2*math.pi) * self.ticksPerRotation(can)
         position *= self.inverted(can)
-        position -= self.zero(can)
+        position += self.zero(can)
         position += self.offset(can)
         return math.floor(position)
 
@@ -159,18 +168,29 @@ class ArmControl:
         current = can.getEncPosition()
         if current == target:
             return
-
         distance = target - current # amount motor should rotate
         if distance > self.ticksPerRotation(can)/2: # can rotate backwards instead
             distance -= self.ticksPerRotation(can)
 
-        # limit rotation to maximum velocity
-        if distance > self.velocity(can):
-            distance = self.velocity(can)
-        if distance < -self.velocity(can):
-            distance = -self.velocity(can)
+        value = 0
+        
+        if abs(distance) < self.velocity(can):
+            value = target
+        else:
+            if distance > 0:
+                value = current + self.velocity(can)
+            else:
+                value = current - self.velocity(can)
 
-        can.set(current + distance)
+        # limit rotation to maximum velocity
+        # if distance > 0 and distance > self.velocity(can):
+        #     distance = self.velocity(can)
+        # if distance < 0 and distance < -self.velocity(can):
+        #   distance = -self.velocity(can)
+
+        can.set(value)
+        #print(distance)
+        return(distance)
 
     def canMovementCompleted(self, can, target):
         return abs(can.getEncPosition() - target) <= COMPLETED_DISTANCE
