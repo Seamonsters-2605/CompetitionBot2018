@@ -80,25 +80,25 @@ class ArmControl:
         dir %= 2 * math.pi # constrain dir to be between 0 and 2pi
         if mag > self.Length1 + self.Length2 - MAGNITUDE_LIMIT:
             mag = self.Length1 + self.Length2 - MAGNITUDE_LIMIT
-        if mag < abs(self.Length1 + self.Length2):
-            mag = abs(self.Length1 + self.Length2)
+        if mag < abs(self.Length1 - self.Length2):
+            mag = abs(self.Length1 - self.Length2)
         angle1 = math.acos( -(self.Length2**2 - self.Length1**2 - mag**2)
                             / (2 * self.Length1 * mag)) + dir
         angle2 = math.acos( -(mag**2 - self.Length1**2 - self.Length2**2)
                             / (2 * self.Length1 * self.Length2))
         print(angle1 / (math.pi*2), angle2 / (math.pi*2))
-        #self.CAN1Target = self.radiansToEncoderPosition(angle1, self.CAN1)
-        #self.CAN2Target = self.radiansToEncoderPosition(angle2, self.CAN2)
+        self.CAN1Target = self.radiansToEncoderPosition(angle1, self.CAN1)
+        self.CAN2Target = self.radiansToEncoderPosition(angle2, self.CAN2)
 
     # variant of moveTo() that is given a position
     # x is forward distance from the base of the arm, in inches
     # y is upward distance
     def moveToPosition(self, x, y):
-        self.MovementCompleted = False
         mag = math.sqrt(x**2 + y**2)
         dir = math.atan2(y, x)
         self.moveTo(mag, dir)
 
+    # sets the motor target to raw radian values for the motor positions
     def moveMotorRotation(self, can1, can2):
         self.MovementCompleted = False
         self.CAN1Target = self.radiansToEncoderPosition(can1, self.CAN1)

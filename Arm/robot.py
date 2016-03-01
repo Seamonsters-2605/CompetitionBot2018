@@ -9,7 +9,7 @@ class TestArmEncoders (wpilib.IterativeRobot):
         self.Arm1 = wpilib.CANTalon(0)
         self.Arm2 = wpilib.CANTalon(1)
         self.Control = ArmControl(self.Arm1, self.Arm2)
-        self.Control.moveToPosition(20, 17.5)
+        #self.Control.moveToPosition(20, 17.5)
         self.Control.moveMotorRotation(-math.pi/2, math.pi/2)
         self.Joystick = wpilib.Joystick(0)
         self.TargetX = 20
