@@ -14,8 +14,9 @@ class ArmReplayReader:
             self.Positions[i] = position
             i += 1
         print(self.Positions)
-        self.resetPath()
-        self.disable()
+        self.Enabled = False
+        self.Point = 0
+        self.Started = False
 
     def resetPath(self):
         self.Point = 0 # index in self.Positions

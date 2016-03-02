@@ -2,6 +2,7 @@ __author__ = "jacobvanthoog"
 
 import wpilib, math
 from ArmReplay import ArmReplay
+from ArmReplayReader import ArmReplayReader
 
 class TestArmEncoders (wpilib.IterativeRobot):
 
@@ -11,7 +12,7 @@ class TestArmEncoders (wpilib.IterativeRobot):
         self.Arm2.reverseSensor(True)
         self.Control = ArmReplay(self.Arm1, self.Arm2)
         self.Joystick = wpilib.Joystick(0)
-        self.Replay = ArmReplayReader(self.Control, "~/testPath.txt")
+        self.Replay = ArmReplayReader(self.Control, "/Users/Jacob van't Hoog/Documents/git/CompBot/CompetitionBot2016/Arm/testPath.txt")
 
     def autonomousPeriodic(self):
         pass
