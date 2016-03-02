@@ -30,7 +30,7 @@ class ArmControl:
         self.CAN1Target = self.CAN1.getEncPosition()
         self.CAN2Target = self.CAN2.getEncPosition()
 
-        self.CAN1Velocity = 1000 # ticks per step
+        self.CAN1Velocity = 1500 # ticks per step
         self.CAN2Velocity = 200
 
         self.MovementCompleted = False
@@ -56,7 +56,7 @@ class ArmControl:
     def invert2(self, invert = True):
         self.CAN2Invert = -1 if invert else 1
 
-    # set the rotation offset of encoders -- specified in encoder ticks
+    # set the rotation offset of encoders -- specified in radians
 
     def setOffset1(self, offset):
         self.CAN1Offset = offset
@@ -158,10 +158,10 @@ class ArmControl:
 
     def radiansToEncoderPosition(self, radians, can):
         print(radians / (2*math.pi), "circle")
+        radians += self.offset(can)
         position = radians / (2*math.pi) * self.ticksPerRotation(can)
         position *= self.inverted(can)
         position += self.zero(can)
-        position += self.offset(can)
         return math.floor(position)
 
     def rotateToPosition(self, can, target):
