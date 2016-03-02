@@ -11,6 +11,7 @@ class TestArmEncoders (wpilib.IterativeRobot):
         self.Arm2.reverseSensor(True)
         self.Control = ArmReplay(self.Arm1, self.Arm2)
         self.Joystick = wpilib.Joystick(0)
+        self.Replay = ArmReplayReader(self.Control, "~/testPath.txt")
 
     def autonomousPeriodic(self):
         pass
@@ -24,6 +25,9 @@ class TestArmEncoders (wpilib.IterativeRobot):
             self.Control.setTarget(self.Control.getPositions())
         if self.Joystick.getRawButton(2): #B
             self.Control.update()
+        if self.Joystick.getRawButton(3): #X
+            self.Replay.enable()
+        self.Replay.update()
 
 if __name__ == "__main__":
     wpilib.run(TestArmEncoders)

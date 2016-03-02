@@ -46,4 +46,3 @@ class ArmReplayReader:
 
         return
 
-arm = ArmReplayReader(None, "/Users/Jacob van't Hoog/testPath.txt")
