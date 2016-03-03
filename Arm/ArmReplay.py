@@ -4,7 +4,7 @@ import math
 
 ROTATION_TICKS_CAN1 = 131072 # encoder ticks in a full rotation
 ROTATION_TICKS_CAN2 = 756
-COMPLETED_DISTANCE = 0.05 # when both motors are within this fraction of their full ticks
+COMPLETED_DISTANCE = 0.06 # when both motors are within this fraction of their full ticks
                        # the movement has completed
 
 class ArmReplay:
@@ -14,7 +14,7 @@ class ArmReplay:
     def __init__(self, can1, can2):
         self.CAN1 = can1
         self.CAN2 = can2
-        self.ensureControlMode(self.CAN1)
+        self.CAN1.changeControlMode(wpilib.CANTalon.ControlMode.Position)
         self.CAN2.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
 
         # target position of the encoders
@@ -32,18 +32,17 @@ class ArmReplay:
     # should be called once per loop!
     def update(self):
         #print(self.rotateToPosition1(self.CAN1, self.CAN1Target), self.rotateToPosition2(self.CAN2, self.CAN2Target))
-        print(self.rotateToPosition1(self.CAN1, self.CAN1Target))
-        print(self.rotateToPosition2(self.CAN2, self.CAN2Target))
+        self.rotateToPosition1(self.CAN1, self.CAN1Target)
+        self.rotateToPosition2(self.CAN2, self.CAN2Target)
         self.MovementCompleted = \
             self.canMovementCompleted(self.CAN1, self.CAN1Target) and \
             self.canMovementCompleted(self.CAN2, self.CAN2Target)
-        if(self.MovementCompleted):
-            print("The movement has complete!")
 
     def setTarget(self, position):
         self.CAN1Target = position[0] + self.CAN1Zero
         self.CAN2Target = position[1] + self.CAN2Zero
-        print(position[0], position[1])
+        self.MovementComplete = False
+        print("Target set to:", position[0], position[1])
 
     def getTarget(self):
         return(self.CAN1Target - self.CAN1Zero, self.CAN2Target - self.CAN2Zero)
@@ -110,6 +109,8 @@ class ArmReplay:
                 value = current + self.velocity(can)
             else:
                 value = current - self.velocity(can)
+
+        print(current, target)
         
         can.set(value)
         return(distance)
@@ -135,4 +136,5 @@ class ArmReplay:
         return(distance)
 
     def canMovementCompleted(self, can, target):
+        #print (abs(can.getEncPosition() - target) / self.ticksPerRotation(can))
         return abs(can.getEncPosition() - target) <= (COMPLETED_DISTANCE * self.ticksPerRotation(can))

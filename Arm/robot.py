@@ -7,12 +7,12 @@ from ArmReplayReader import ArmReplayReader
 class TestArmEncoders (wpilib.IterativeRobot):
 
     def robotInit(self):
-        self.Arm1 = wpilib.CANTalon(1)
-        self.Arm2 = wpilib.CANTalon(0)
+        self.Arm1 = wpilib.CANTalon(0)
+        self.Arm2 = wpilib.CANTalon(1)
         self.Arm2.reverseSensor(True)
         self.Control = ArmReplay(self.Arm1, self.Arm2)
         self.Joystick = wpilib.Joystick(0)
-        self.Replay = ArmReplayReader(self.Control, "/Users/Jacob van't Hoog/Documents/git/CompBot/CompetitionBot2016/Arm/testPath.txt")
+        self.Replay = ArmReplayReader(self.Control, "testPath.txt")
 
     def autonomousPeriodic(self):
         pass
@@ -28,6 +28,8 @@ class TestArmEncoders (wpilib.IterativeRobot):
             self.Control.update()
         if self.Joystick.getRawButton(3): #X
             self.Replay.enable()
+        if self.Joystick.getRawButton(4): #Y
+            self.Replay.disable()
         self.Replay.update()
 
 if __name__ == "__main__":
