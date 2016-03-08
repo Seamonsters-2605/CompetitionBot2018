@@ -24,8 +24,8 @@ class ShootController():
         else:
             if isIntakeButtonPushed:
                 if not (self.Switch.get() == 0 or self.Switch2.get() == 0):
-                    if not isFlywheelButtonPushed:
-                        self.Intake.intakeBall()
+                    # if not isFlywheelButtonPushed:
+                    self.Intake.intakeBall()
                 else:
                     self.Intake.stop()
             elif isShootButtonPushed:
@@ -38,6 +38,7 @@ class ShootController():
                 self.Flywheels.driveAuto()
             else:
                 self.Flywheels.driveSpeed(0)
+
 
 
 

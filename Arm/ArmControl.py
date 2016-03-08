@@ -3,7 +3,7 @@ import wpilib
 import math
 
 ROTATION_TICKS_CAN1 = 131072 # encoder ticks in a full rotation
-ROTATION_TICKS_CAN2 = 400
+ROTATION_TICKS_CAN2 = 756
 MAGNITUDE_LIMIT = 1 # units before theoretical maximum distance
 COMPLETED_DISTANCE = 5 # when both motors are within this number of ticks, the
                        # movement has completed
@@ -30,14 +30,15 @@ class ArmControl:
         self.CAN1Target = self.CAN1.getEncPosition()
         self.CAN2Target = self.CAN2.getEncPosition()
 
-        self.CAN1Velocity = 16384 # ticks per step
-        self.CAN2Velocity = 80
+        self.CAN1Velocity = 1500 # ticks per step
+        self.CAN2Velocity = 200
 
         self.MovementCompleted = False
 
 
     # should be called once per loop!
     def update(self):
+        #print(self.rotateToPosition(self.CAN1, self.CAN1Target), self.rotateToPosition(self.CAN2, self.CAN2Target))
         self.rotateToPosition(self.CAN1, self.CAN1Target)
         self.rotateToPosition(self.CAN2, self.CAN2Target)
         self.MovementCompleted = \
@@ -55,7 +56,7 @@ class ArmControl:
     def invert2(self, invert = True):
         self.CAN2Invert = -1 if invert else 1
 
-    # set the rotation offset of encoders -- specified in encoder ticks
+    # set the rotation offset of encoders -- specified in radians
 
     def setOffset1(self, offset):
         self.CAN1Offset = offset
@@ -75,16 +76,17 @@ class ArmControl:
     # The end of the arm will attempt to move to the point defined by these
     # values
     def moveTo(self, mag, dir):
+        self.MovementCompleted = False
         dir %= 2 * math.pi # constrain dir to be between 0 and 2pi
         if mag > self.Length1 + self.Length2 - MAGNITUDE_LIMIT:
             mag = self.Length1 + self.Length2 - MAGNITUDE_LIMIT
-        if mag < abs(self.Length1 + self.Length2):
-            mag = abs(self.Length1 + self.Length2)
+        if mag < abs(self.Length1 - self.Length2):
+            mag = abs(self.Length1 - self.Length2)
         angle1 = math.acos( -(self.Length2**2 - self.Length1**2 - mag**2)
                             / (2 * self.Length1 * mag)) + dir
         angle2 = math.acos( -(mag**2 - self.Length1**2 - self.Length2**2)
                             / (2 * self.Length1 * self.Length2))
-
+        print(angle1 / (math.pi*2), angle2 / (math.pi*2))
         self.CAN1Target = self.radiansToEncoderPosition(angle1, self.CAN1)
         self.CAN2Target = self.radiansToEncoderPosition(angle2, self.CAN2)
 
@@ -95,6 +97,12 @@ class ArmControl:
         mag = math.sqrt(x**2 + y**2)
         dir = math.atan2(y, x)
         self.moveTo(mag, dir)
+
+    # sets the motor target to raw radian values for the motor positions
+    def moveMotorRotation(self, can1, can2):
+        self.MovementCompleted = False
+        self.CAN1Target = self.radiansToEncoderPosition(can1, self.CAN1)
+        self.CAN2Target = self.radiansToEncoderPosition(can2, self.CAN2)
 
     def movementCompleted(self):
         return self.MovementCompleted
@@ -149,28 +157,40 @@ class ArmControl:
             can.changeControlMode(wpilib.CANTalon.ControlMode.Position)
 
     def radiansToEncoderPosition(self, radians, can):
+        print(radians / (2*math.pi), "circle")
+        radians += self.offset(can)
         position = radians / (2*math.pi) * self.ticksPerRotation(can)
         position *= self.inverted(can)
-        position -= self.zero(can)
-        position += self.offset(can)
+        position += self.zero(can)
         return math.floor(position)
 
     def rotateToPosition(self, can, target):
         current = can.getEncPosition()
         if current == target:
             return
-
         distance = target - current # amount motor should rotate
         if distance > self.ticksPerRotation(can)/2: # can rotate backwards instead
             distance -= self.ticksPerRotation(can)
 
-        # limit rotation to maximum velocity
-        if distance > self.velocity(can):
-            distance = self.velocity(can)
-        if distance < -self.velocity(can):
-            distance = -self.velocity(can)
+        value = 0
+        
+        if abs(distance) < self.velocity(can):
+            value = target
+        else:
+            if distance > 0:
+                value = current + self.velocity(can)
+            else:
+                value = current - self.velocity(can)
 
-        can.set(current + distance)
+        # limit rotation to maximum velocity
+        # if distance > 0 and distance > self.velocity(can):
+        #     distance = self.velocity(can)
+        # if distance < 0 and distance < -self.velocity(can):
+        #   distance = -self.velocity(can)
+
+        can.set(value)
+        #print(distance)
+        return(distance)
 
     def canMovementCompleted(self, can, target):
         return abs(can.getEncPosition() - target) <= COMPLETED_DISTANCE
