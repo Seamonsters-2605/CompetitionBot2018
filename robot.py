@@ -2,11 +2,11 @@ __author__ = "jacobvanthoog"
 
 import math
 import wpilib
-from wpilib import PowerDistributionPanel
+import pydevd
+import sys
 import JoystickLib.joystickLib
 from HolonomicDrive.HolonomicDrive import HolonomicDrive
-from Shooter import ShootController, Flywheels, Intake
-from PDPLogger.PDPLogger import PDPLogger
+from Shooter import ShootController
 from JoystickLib.Gamepad import Gamepad
 import Vision
 import networktables
@@ -59,8 +59,6 @@ class MainRobot (wpilib.IterativeRobot):
             self.LeftFly, self.RightFly,\
             self.Intake, self.LimitSwitch, self.LimitSwitch2)
         #self.Shooter.invertFlywheels()
-
-        self.Logger = PDPLogger(PowerDistributionPanel(0))
 
         self.Arm = Arm(self.shootgamepad)
 
@@ -213,7 +211,7 @@ class MainRobot (wpilib.IterativeRobot):
             #     else:
             #         self.Shooter.update(False, False, False, False)
             if self.movegamepad.getButtonByLetter("LJ"): # faster button
-                 self.slowed = 1
+                self.slowed = 1
             elif self.movegamepad.getButtonByLetter("LB"): # slower button
                 self.slowed = .2
             else: # no button pressed
@@ -250,5 +248,7 @@ class MainRobot (wpilib.IterativeRobot):
         #    + " dir: " + str(direction))
 
 if __name__ == "__main__":
+    if(sys.argv.contains("sim")):
+        pydevd.settrace(suspend = False)
     wpilib.run(MainRobot)
 
