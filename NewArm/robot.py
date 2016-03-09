@@ -1,7 +1,7 @@
 __author__ = "jacobvanthoog"
 
 import wpilib
-from NewArm.NewArmControl import Arm
+from NewArmControl import Arm
 
 class ArmTest(wpilib.IterativeRobot):
     
@@ -14,7 +14,7 @@ class ArmTest(wpilib.IterativeRobot):
     def autonomousPeriodic(self):
         pass
     
-    def teleopInit(self, params):
+    def teleopInit(self):
         self.CAN = wpilib.CANTalon(0)
         self.Arm = Arm(self.CAN)
         self.Joystick = wpilib.Joystick(0)
@@ -25,3 +25,5 @@ class ArmTest(wpilib.IterativeRobot):
         if self.Joystick.getRawButton(2): #B
             self.Arm.update()
         
+if __name__ == "__main__":
+    wpilib.run(ArmTest)
