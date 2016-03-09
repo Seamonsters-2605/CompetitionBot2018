@@ -7,10 +7,11 @@ COMPLETED_DISTANCE = 0.06
 # when both motors are within this fraction of their full ticks
 # the movement has completed
 
-class ArmReplay:
+class Arm:
     
     def __init__(self, can):
         self.CAN = can
+        self.CAN.reverseSensor(True)
         self.CAN.changeControlMode(wpilib.CANTalon.ControlMode.Position)
 
         # target position of the encoders
@@ -67,9 +68,9 @@ class ArmReplay:
             else:
                 value = current - self.Velocity
                 
-        #print(current, target, distance, value)
+        print(current, target, distance, value)
         
-        can.set(-value)
+        #can.set(-value)
         return(distance)
     
     def rotateToPosition2(self, can, target):
