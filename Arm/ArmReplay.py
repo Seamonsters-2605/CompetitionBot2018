@@ -41,7 +41,7 @@ class ArmReplay:
             #print("The movement has complete!")
 
     def setTarget(self, position):
-        selfMovementCompleted = False
+        self.MovementCompleted = False
         self.CAN1Target = position[0] + self.CAN1Zero
         self.CAN2Target = position[1] + self.CAN2Zero
         print(position[0], position[1])
