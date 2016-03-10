@@ -98,16 +98,16 @@ class MainRobot (wpilib.IterativeRobot):
                     self.turn = self.need * .009
                 else:
                     self.turn = self.need * .0008
-                    if abs(self.Vision.centerX()[0] - 240) < 10:
-                        self.shoot = True
-                    elif self.Vision.centerX()[0] - 240 > 0:
-                        self.Drive.drive(0, 0, -self.turn)
-                        self.shoot = False
-                    elif self.Vision.centerX()[0] - 240 < 0:
-                        self.Drive.drive(0, 0, self.turn)
-                        self.shoot = False
-                    else:
-                        self.shoot = False
+                if abs(self.Vision.centerX()[0] - 240) < 10:
+                    self.shoot = True
+                elif self.Vision.centerX()[0] - 240 > 0:
+                    self.Drive.drive(0, 0, -self.turn)
+                    self.shoot = False
+                elif self.Vision.centerX()[0] - 240 < 0:
+                    self.Drive.drive(0, 0, self.turn)
+                    self.shoot = False
+                else:
+                    self.shoot = False
             else:
                 self.shoot = False
             if self.shoot == True:
