@@ -13,12 +13,13 @@ class Arm:
         self.CAN = can
         self.CAN.reverseSensor(True)
         self.CAN.changeControlMode(wpilib.CANTalon.ControlMode.Position)
+        self.CAN.setPID(1.0, 0.0002, 3.0, 0.0)
 
         # target position of the encoders
         self.Target = self.CAN.getEncPosition()
         self.zero()
 
-        self.Velocity = 2000 # ticks per step
+        self.Velocity = 4000 # ticks per step
     
     # should be called once per loop!
     def update(self):
@@ -68,9 +69,9 @@ class Arm:
             else:
                 value = current - self.Velocity
                 
-        print(current, target, distance, value)
+        #print(current, target, distance, value)
         
-        #can.set(-value)
+        can.set(-value)
         return(distance)
     
     def rotateToPosition2(self, can, target):
