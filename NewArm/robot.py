@@ -20,6 +20,7 @@ class ArmTest(wpilib.IterativeRobot):
         self.Joystick = wpilib.Joystick(0)
     
     def teleopPeriodic(self):
+        print(self.CAN.getEncPosition(), self.CAN.getPosition())
         if self.Joystick.getRawButton(1):
             self.Arm.update()
         if self.Joystick.getRawButton(2):

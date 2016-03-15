@@ -16,10 +16,13 @@ class Arm:
         self.CAN.setPID(1.0, 0.0002, 3.0, 0.0)
 
         # target position of the encoders
-        self.Target = self.CAN.getEncPosition()
+        self.CAN.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
+        self.Target = -self.CAN.getPosition()
         self.zero()
 
         self.Velocity = 4000 # ticks per step
+
+        
     
     # should be called once per loop!
     def update(self):
@@ -36,22 +39,22 @@ class Arm:
         self.setTarget(self.getTarget() + amount)
     
     def getPosition(self):
-        return self.CAN.getEncPosition() - self.Zero
+        return -self.CAN.getPosition() - self.Zero
     
     def movePosition(self, amount):
         self.setTarget(self.getPosition() + amount)
     
     def zero(self):
-        self.Zero = self.CAN.getEncPosition()
+        self.Zero = -self.CAN.getPosition()
     
     def movementCompleted(self, can, target):
-        return abs(self.CAN.getEncPosition() - target)\
+        return abs(-self.CAN.getPosition() - target)\
             <= (COMPLETED_DISTANCE * ROTATION_TICKS)
     
     # DON'T USE THESE
     
     def rotateToPosition1(self, can, target):
-        current = can.getEncPosition()
+        current = -can.getPosition()
         
         #if current == target:
             #print("At position")
@@ -75,7 +78,7 @@ class Arm:
         return(distance)
     
     def rotateToPosition2(self, can, target):
-        current = can.getEncPosition()
+        current = -can.getPosition()
         target = target
         if current == target:
             #print("At position")
