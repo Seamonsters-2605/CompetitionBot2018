@@ -23,6 +23,7 @@ class MainRobot (wpilib.IterativeRobot):
     def robotInit(self):
         self.Vision = Vision.Vision()
         self.usinggamepad = True
+        self.Arm = wpilib.CANTalon(6)
         self.FL = wpilib.CANTalon(2)
         self.FR = wpilib.CANTalon(1)
         self.BL = wpilib.CANTalon(0)
@@ -108,6 +109,10 @@ class MainRobot (wpilib.IterativeRobot):
                     self.shoot = False
                 else:
                     self.shoot = False
+            if self.time > 260 and self.time < 320:
+                self.Arm.set(-1)
+            if self.time > 320:
+                self.Arm.set(0)
             else:
                 self.shoot = False
             if self.shoot == True:
