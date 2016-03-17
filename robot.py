@@ -62,7 +62,6 @@ class MainRobot (wpilib.IterativeRobot):
             self.LeftFly, self.RightFly,\
             self.Intake, self.LimitSwitch, self.LimitSwitch2)
         #self.Shooter.invertFlywheels()
-        self.Arm = NewArm(self.shootgamepad)
         
 
     def autonomousInit(self):
@@ -167,6 +166,7 @@ class MainRobot (wpilib.IterativeRobot):
     def teleopInit(self):
         self.Drive.zeroEncoderTargets()
         self.readyToShoot = False
+        self.Arm = NewArm(self.shootgamepad)
 
     def teleopPeriodic(self):
         averageFlySpeed = (abs(self.LeftFly.getEncVelocity()) + abs(self.RightFly.getEncVelocity()))/2
