@@ -15,12 +15,15 @@ class ArmTest(wpilib.IterativeRobot):
         pass
     
     def teleopInit(self):
+        self.Right = wpilib.CANTalon(1)
+        self.Left = wpilib.CANTalon(2)
         self.CAN = wpilib.CANTalon(0)
         self.Arm = Arm(self.CAN)
         self.Joystick = wpilib.Joystick(0)
     
     def teleopPeriodic(self):
-        print(self.CAN.getEncPosition(), self.CAN.getPosition())
+        self.Left.set(-self.Joystick.getY() + self.Joystick.getX())
+        self.Right.set(self.Joystick.getY() + self.Joystick.getX())
         if self.Joystick.getRawButton(1):
             self.Arm.update()
         if self.Joystick.getRawButton(2):

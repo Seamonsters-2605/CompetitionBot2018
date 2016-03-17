@@ -12,6 +12,7 @@ import Vision
 import networktables
 from networktables import NetworkTable
 from TheArm import Arm
+from Lifter import Lifter
 #import globalListener
 
 NetworkTable.setServerMode()
@@ -21,6 +22,7 @@ num_array = networktables.NumberArray()
 # noinspection PyInterpreter,PyInterpreter
 class MainRobot (wpilib.IterativeRobot):
     def robotInit(self):
+        self.Lift = Lifter.Lifter()
         self.Vision = Vision.Vision()
         self.usinggamepad = True
         self.Arm = wpilib.CANTalon(6)
@@ -239,7 +241,15 @@ class MainRobot (wpilib.IterativeRobot):
                                 self.shootgamepad.getButtonByLetter("X"),\
                                 self.shootgamepad.getButtonByLetter("A"),\
                                 self.shootgamepad.getButtonByLetter("Y"))
+            if self.shootgamepad.getButtonByLetter("RB"):
+                self.Lift.liftUp()
+            if self.shootgamepad.getButtonByLetter("LB"):
+                self.Lift.pullUp()
 
+            if self.movegamepad.getButtonByLetter("RB"):
+                self.Drive.setWheelOffset(207)
+            else:
+                self.Drive.setWheelOffset(math.radians(27))
             self.Arm.update()
             # else:
             #     self.Shooter.update(self.shootgamepad.getButtonByLetter("B"), self.shootgamepad.getButtonByLetter("X"),
