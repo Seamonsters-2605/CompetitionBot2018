@@ -12,6 +12,5 @@ class NewArm:
         self.Gamepad = gamepad
 
     def update(self):
-        if self.Gamepad.getRawButton(Gamepad.LB):
-            self.Arm.update()
-            self.Arm.movePosition(4000 * self.Gamepad.getLY())
+        self.Arm.update()
+        self.Arm.movePosition(4000 * self.Gamepad.getLY())
