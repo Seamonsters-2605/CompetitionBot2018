@@ -245,9 +245,9 @@ class MainRobot (wpilib.IterativeRobot):
                                 self.shootgamepad.getButtonByLetter("X"),\
                                 self.shootgamepad.getButtonByLetter("A"),\
                                 self.shootgamepad.getButtonByLetter("Y"))
-            if self.shootgamepad.getButtonByLetter("RB"):
+            if self.shootgamepad.getButtonByLetter("RT"):
                 self.Lift.liftUp()
-            elif self.shootgamepad.getButtonByLetter("LB"):
+            elif self.shootgamepad.getButtonByLetter("LT"):
                 self.Lift.pullUp()
             else:
                 self.Lift.stop()
