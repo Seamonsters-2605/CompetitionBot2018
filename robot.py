@@ -11,7 +11,7 @@ from JoystickLib.Gamepad import Gamepad
 import Vision
 import networktables
 from networktables import NetworkTable
-from TheArm import Arm
+from TheNewArm import Arm
 from Lifter import Lifter
 #import globalListener
 
@@ -62,8 +62,8 @@ class MainRobot (wpilib.IterativeRobot):
             self.LeftFly, self.RightFly,\
             self.Intake, self.LimitSwitch, self.LimitSwitch2)
         #self.Shooter.invertFlywheels()
-
-        self.Arm = Arm(self.shootgamepad)
+        self.Arm = NewArm(self.shootgamepad)
+        
 
     def autonomousInit(self):
         self.shoot = False
@@ -250,7 +250,9 @@ class MainRobot (wpilib.IterativeRobot):
                 self.Drive.setWheelOffset(207)
             else:
                 self.Drive.setWheelOffset(math.radians(27))
+                
             self.Arm.update()
+            
             # else:
             #     self.Shooter.update(self.shootgamepad.getButtonByLetter("B"), self.shootgamepad.getButtonByLetter("X"),
             #                                 False, self.shootgamepad.getButtonByLetter("LB"))
