@@ -30,7 +30,6 @@ class Arm:
     
     def setTarget(self, position):
         self.Target = position + self.Zero
-        print("Target set: ", position)
     
     def getTarget(self):
         return self.Target - self.Zero
