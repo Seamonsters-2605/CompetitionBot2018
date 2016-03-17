@@ -18,3 +18,6 @@ class Lifter():
         self.left = 1
         self.leftLift.set(self.left)
         self.rightLift.set(self.right)
+    def stop(self):
+        self.leftLift.set(0)
+        self.rightLift.set(0)

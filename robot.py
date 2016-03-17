@@ -2,7 +2,6 @@ __author__ = "jacobvanthoog"
 
 import math
 import wpilib
-import pydevd
 import sys
 import JoystickLib.joystickLib
 from HolonomicDrive.HolonomicDrive import HolonomicDrive
@@ -11,7 +10,7 @@ from JoystickLib.Gamepad import Gamepad
 import Vision
 import networktables
 from networktables import NetworkTable
-from TheNewArm import Arm
+from TheNewArm import NewArm
 from Lifter import Lifter
 #import globalListener
 
@@ -25,7 +24,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.Lift = Lifter.Lifter()
         self.Vision = Vision.Vision()
         self.usinggamepad = True
-        self.Arm = wpilib.CANTalon(6)
+        self.Arm = wpilib.CANTalon(7)
         self.FL = wpilib.CANTalon(2)
         self.FR = wpilib.CANTalon(1)
         self.BL = wpilib.CANTalon(0)
@@ -166,7 +165,7 @@ class MainRobot (wpilib.IterativeRobot):
     def teleopInit(self):
         self.Drive.zeroEncoderTargets()
         self.readyToShoot = False
-        self.Arm = NewArm(self.shootgamepad)
+        self.Arm = NewArm(1)
 
     def teleopPeriodic(self):
         averageFlySpeed = (abs(self.LeftFly.getEncVelocity()) + abs(self.RightFly.getEncVelocity()))/2
@@ -232,10 +231,15 @@ class MainRobot (wpilib.IterativeRobot):
             elif self.movegamepad.getRawButton(Gamepad.X):
                 self.Drive.setDriveMode(HolonomicDrive.DriveMode.JEFF)
             # print(str(self.Drive.getDriveMode()))
-            turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
-            #magnitude = self.movegamepad.getLMagnitude() * self.slowed
-            magnitude = self.movegamepad.getLMagnitudePower(2) * self.slowed
-            direction = self.movegamepad.getLDirection()
+            if self.movegamepad.getButtonByLetter("RB"):
+                turn = self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
+                magnitude = self.movegamepad.getLMagnitudePower(2) * self.slowed
+                direction = -self.movegamepad.getLDirection()
+            else:
+                turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
+                #magnitude = self.movegamepad.getLMagnitude() * self.slowed
+                magnitude = self.movegamepad.getLMagnitudePower(2) * self.slowed
+                direction = self.movegamepad.getLDirection()
             self.Drive.drive(magnitude, direction, turn)
             self.Shooter.update(self.shootgamepad.getButtonByLetter("B"),\
                                 self.shootgamepad.getButtonByLetter("X"),\
@@ -243,13 +247,11 @@ class MainRobot (wpilib.IterativeRobot):
                                 self.shootgamepad.getButtonByLetter("Y"))
             if self.shootgamepad.getButtonByLetter("RB"):
                 self.Lift.liftUp()
-            if self.shootgamepad.getButtonByLetter("LB"):
+            elif self.shootgamepad.getButtonByLetter("LB"):
                 self.Lift.pullUp()
-
-            if self.movegamepad.getButtonByLetter("RB"):
-                self.Drive.setWheelOffset(207)
             else:
-                self.Drive.setWheelOffset(math.radians(27))
+                self.Lift.stop()
+
                 
             self.Arm.update()
             
@@ -265,7 +267,5 @@ class MainRobot (wpilib.IterativeRobot):
         #    + " dir: " + str(direction))
 
 if __name__ == "__main__":
-    if(sys.argv.contains("sim")):
-        pydevd.settrace(suspend = False)
     wpilib.run(MainRobot)
 
