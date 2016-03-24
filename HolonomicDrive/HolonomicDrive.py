@@ -255,7 +255,7 @@ class HolonomicDrive():
         self.encoderTargets[3] = self.BR.getEncPosition()
 
     def ensureSafeDistance(self):
-
+        # TODO: add counts per rev. variable, and max velocity variable
         flposition = self.FL.getEncPosition()
         if abs(flposition - self.encoderTargets[0]) > 4000:
             if (self.encoderTargets[0] > flposition):

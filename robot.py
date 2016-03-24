@@ -54,7 +54,8 @@ class MainRobot (wpilib.IterativeRobot):
 
         self.Drive = HolonomicDrive(self.FL, self.FR, self.BL, self.BR)
         self.Drive.invertDrive(True)
-        self.Drive.setWheelOffset(math.radians(27))
+        # TODO: move magic number to constant
+        self.Drive.setWheelOffset(math.radians(27)) #angle of wheels
         self.Drive.setDriveMode(HolonomicDrive.DriveMode.JEFF)
 
         self.LeftFly = wpilib.CANTalon(4)
@@ -208,6 +209,7 @@ class MainRobot (wpilib.IterativeRobot):
                 else:
                     self.turnSpeed = self.needed * .0008
                 if self.shootgamepad.getButtonByLetter("RB"):
+                    # TODO: move 240 to center pixel constant
                     if abs(self.Vision.centerX()[0] - 240) < 15:
                         self.readyToShoot = True
                     elif self.Vision.centerX()[0] - 240 > 0:
@@ -236,6 +238,7 @@ class MainRobot (wpilib.IterativeRobot):
             elif self.movegamepad.getButtonByLetter("LB"): # slower button
                 self.slowed = .2
             else: # no button pressed
+                # TODO: move to constant
                 self.slowed = .55
             # print ("Slowed: " + str(self.slowed))
             # switch drive mode with gamepad
@@ -246,6 +249,7 @@ class MainRobot (wpilib.IterativeRobot):
             elif self.movegamepad.getRawButton(Gamepad.X):
                 self.Drive.setDriveMode(HolonomicDrive.DriveMode.JEFF)
             # print(str(self.Drive.getDriveMode()))
+            # TODO: refactor duplicate code
             if self.movegamepad.getButtonByLetter("RB"):
                 turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
                 #magnitude = self.movegamepad.getLMagnitude() * self.slowed

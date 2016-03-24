@@ -17,6 +17,9 @@ class Arm:
 
         # target position of the encoders
         self.CAN.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
+        #getPosition is updated more often than getEncPosition
+        #but it is negative, because of reverseSensor()
+        #TODO: try to remove negatives
         self.Target = -self.CAN.getPosition()
         self.zero()
 
@@ -70,9 +73,10 @@ class Arm:
                 value = current + self.Velocity
             else:
                 value = current - self.Velocity
-                
-        #print(current, target, distance, value)
         
+        #print(current, target, distance, value)
+
+        #TODO: try to remove this negative
         can.set(-value)
         return(distance)
     
