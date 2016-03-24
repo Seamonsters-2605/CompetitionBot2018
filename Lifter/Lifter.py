@@ -4,7 +4,7 @@ class Lifter():
     def __init__(self):
         self.leftLift = wpilib.Talon(0)
         self.rightLift = wpilib.Talon(1)
-        self.tapeMeasurer = wpilib.Talon(2)
+        self.tapeMeasurer = wpilib.CANTalon(6)
         self.left = 1
         self.right = -1
     def liftUp(self):

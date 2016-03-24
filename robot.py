@@ -14,6 +14,7 @@ from TheNewArm import NewArm
 from Lifter import Lifter
 #import globalListener
 
+
 NetworkTable.setServerMode()
 
 num_array = networktables.NumberArray()
@@ -21,10 +22,14 @@ num_array = networktables.NumberArray()
 # noinspection PyInterpreter,PyInterpreter
 class MainRobot (wpilib.IterativeRobot):
     def robotInit(self):
+
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        self.BELT_BROKEN = False
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         self.Lift = Lifter.Lifter()
         self.Vision = Vision.Vision()
         self.usinggamepad = True
-        self.Arm = wpilib.CANTalon(7)
         self.FL = wpilib.CANTalon(2)
         self.FR = wpilib.CANTalon(1)
         self.BL = wpilib.CANTalon(0)
@@ -61,6 +66,9 @@ class MainRobot (wpilib.IterativeRobot):
             self.LeftFly, self.RightFly,\
             self.Intake, self.LimitSwitch, self.LimitSwitch2)
         #self.Shooter.invertFlywheels()
+        self.armcan = wpilib.CANTalon(7)
+        self.armcan.changeControlMode(wpilib.CANTalon.ControlMode.Voltage)
+        self.armcan.set(0)
         
 
     def autonomousInit(self):
@@ -78,49 +86,55 @@ class MainRobot (wpilib.IterativeRobot):
         self.BR.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.turn = 0
         self.need = 0
+        self.armcan.changeControlMode(wpilib.CANTalon.ControlMode.Voltage)
+        self.armcan.set(0)
 
     def autonomousPeriodic(self):
-        self.time += 1
-        if self.time < 250:
-            self.FL.set(8.5 * 819.2 / 8)
-            self.BR.set(-9 * 819.2 / 8)
-            self.FR.set(-9 * 819.2 / 8)
-            self.BL.set(8.5 * 819.2 / 8)
-        elif (self.time > 250 and self.time < 260):
-            self.FL.set(0)
-            self.BR.set(0)
-            self.FR.set(0)
-            self.BL.set(0)
-        if self.time > 260:
-            if not self.Vision.centerX().__len__() == 0:
-                self.need = abs(self.Vision.centerX()[0] - 240)
-                print (self.need)
-                if self.need > 50:
-                    self.turn = self.need * .009
+        if not self.BELT_BROKEN:
+            self.time += 1
+            if self.time < 250:
+                self.FL.set(8.5 * 819.2 / 8)
+                self.BR.set(-9 * 819.2 / 8)
+                self.FR.set(-9 * 819.2 / 8)
+                self.BL.set(8.5 * 819.2 / 8)
+            elif (self.time > 300 and self.time < 310):
+                self.FL.set(0)
+                self.BR.set(0)
+                self.FR.set(0)
+                self.BL.set(0)
+            if self.time > 310:
+                if not self.Vision.centerX().__len__() == 0:
+                    self.need = abs(self.Vision.centerX()[0] - 240)
+                    print (self.need)
+                    if self.need > 50:
+                        self.turn = self.need * .0005
+                    else:
+                        self.turn = self.need * .0002
+                    if abs(self.Vision.centerX()[0] - 240) < 10:
+                        self.shoot = True
+                    elif self.Vision.centerX()[0] - 240 > 0:
+                        self.Drive.drive(0, 0, -self.turn)
+                        self.shoot = False
+                    elif self.Vision.centerX()[0] - 240 < 0:
+                        self.Drive.drive(0, 0, self.turn)
+                        self.shoot = False
+                    else:
+                        self.shoot = False
+                if self.time > 260 and self.time < 320:
+                    pass #used to have arm
+                if self.time > 320:
+                    pass
                 else:
-                    self.turn = self.need * .0008
-                if abs(self.Vision.centerX()[0] - 240) < 10:
-                    self.shoot = True
-                elif self.Vision.centerX()[0] - 240 > 0:
-                    self.Drive.drive(0, 0, -self.turn)
                     self.shoot = False
-                elif self.Vision.centerX()[0] - 240 < 0:
-                    self.Drive.drive(0, 0, self.turn)
-                    self.shoot = False
-                else:
-                    self.shoot = False
-            if self.time > 260 and self.time < 320:
-                self.Arm.set(-1)
-            if self.time > 320:
-                self.Arm.set(0)
-            else:
-                self.shoot = False
-            if self.shoot == True:
-                self.rev += 1
-                if self.rev < 100:
-                    self.Shooter.update(False, True, False, False)
-                else:
-                    self.Shooter.update(False, True, True, False)
+                # if self.shoot == True:
+                #     self.rev += 1
+                #     if self.rev < 100:
+                #         self.Shooter.update(False, True, False, False)
+                #     else:
+                #         self.Shooter.update(False, True, True, False)
+        else:
+            #self.Drive.driveSpeedJeffMode(.5,math.pi/2,0)
+            pass
     # def autonomousPeriodic(self):
     #
     #     self.time += 1
@@ -165,7 +179,8 @@ class MainRobot (wpilib.IterativeRobot):
     def teleopInit(self):
         self.Drive.zeroEncoderTargets()
         self.readyToShoot = False
-        self.Arm = NewArm(1)
+        self.Arm = NewArm(self.shootgamepad, self.armcan)
+
 
     def teleopPeriodic(self):
         averageFlySpeed = (abs(self.LeftFly.getEncVelocity()) + abs(self.RightFly.getEncVelocity()))/2
@@ -193,7 +208,7 @@ class MainRobot (wpilib.IterativeRobot):
                 else:
                     self.turnSpeed = self.needed * .0008
                 if self.shootgamepad.getButtonByLetter("RB"):
-                    if abs(self.Vision.centerX()[0] - 240) < 10:
+                    if abs(self.Vision.centerX()[0] - 240) < 15:
                         self.readyToShoot = True
                     elif self.Vision.centerX()[0] - 240 > 0:
                         self.Drive.drive(0, 0, -self.turnSpeed)
@@ -232,9 +247,10 @@ class MainRobot (wpilib.IterativeRobot):
                 self.Drive.setDriveMode(HolonomicDrive.DriveMode.JEFF)
             # print(str(self.Drive.getDriveMode()))
             if self.movegamepad.getButtonByLetter("RB"):
-                turn = self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
+                turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
+                #magnitude = self.movegamepad.getLMagnitude() * self.slowed
                 magnitude = self.movegamepad.getLMagnitudePower(2) * self.slowed
-                direction = -self.movegamepad.getLDirection()
+                direction = self.movegamepad.getLDirection() + math.pi
             else:
                 turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
                 #magnitude = self.movegamepad.getLMagnitude() * self.slowed
@@ -245,12 +261,12 @@ class MainRobot (wpilib.IterativeRobot):
                                 self.shootgamepad.getButtonByLetter("X"),\
                                 self.shootgamepad.getButtonByLetter("A"),\
                                 self.shootgamepad.getButtonByLetter("Y"))
-            if self.shootgamepad.getButtonByLetter("RT"):
-                self.Lift.liftUp()
-            elif self.shootgamepad.getButtonByLetter("LT"):
-                self.Lift.pullUp()
-            else:
-                self.Lift.stop()
+            # if self.shootgamepad.getButtonByLetter("RB"):
+            #     self.Lift.liftUp()
+            # elif self.shootgamepad.getButtonByLetter("LB"):
+            #     self.Lift.pullUp()
+            # else:
+            #     self.Lift.stop()
 
                 
             self.Arm.update()

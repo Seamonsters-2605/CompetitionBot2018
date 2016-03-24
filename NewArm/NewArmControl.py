@@ -55,7 +55,6 @@ class Arm:
     
     def rotateToPosition1(self, can, target):
         current = -can.getPosition()
-        
         #if current == target:
             #print("At position")
             #can.set(current)
