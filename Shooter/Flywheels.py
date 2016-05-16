@@ -7,7 +7,7 @@ class Flywheels():
         self.Right = right
         self.Right.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
         self.Left.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
-        self.MaxVelocity = 2000
+        self.MaxVelocity = 3500
         self.Left.setPID(1, 0.0009, 1, 0.0) # Zero F's given...
         self.Right.setPID(1, 0.0009, 1, 0.0)
         self.DesiredSpeed = 0
@@ -40,6 +40,10 @@ class Flywheels():
         self.Right.set(-speed * self.invert)
         #print("Left Speed: " + str(self.Left.getEncVelocity()))
         #print("Set Speed: " + str(speed * self.MaxVelocity * self.invert))
+    def decrease(self):
+        self.MaxVelocity -= 5
+    def increase(self):
+        self.MaxVelocity += 5
 
     def driveAuto(self):
         self.driveSpeed(self.AutoVelocity)
