@@ -10,8 +10,6 @@ from JoystickLib.Gamepad import Gamepad
 import Vision
 import networktables
 from networktables import NetworkTable
-from TheNewArm import NewArm
-from Lifter import Lifter
 #import globalListener
 
 
@@ -26,8 +24,7 @@ class MainRobot (wpilib.IterativeRobot):
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         self.BELT_BROKEN = False
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        self.Lift = Lifter.Lifter()
+        
         self.Vision = Vision.Vision()
         self.usinggamepad = True
         self.FL = wpilib.CANTalon(2)
@@ -67,9 +64,6 @@ class MainRobot (wpilib.IterativeRobot):
             self.LeftFly, self.RightFly,\
             self.Intake, self.LimitSwitch, self.LimitSwitch2)
         #self.Shooter.invertFlywheels()
-        self.armcan = wpilib.CANTalon(7)
-        self.armcan.changeControlMode(wpilib.CANTalon.ControlMode.Voltage)
-        self.armcan.set(0)
         
 
     def autonomousInit(self):
@@ -87,8 +81,6 @@ class MainRobot (wpilib.IterativeRobot):
         self.BR.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.turn = 0
         self.need = 0
-        self.armcan.changeControlMode(wpilib.CANTalon.ControlMode.Voltage)
-        self.armcan.set(0)
 
     def autonomousPeriodic(self):
         if not self.BELT_BROKEN:
@@ -180,7 +172,6 @@ class MainRobot (wpilib.IterativeRobot):
     def teleopInit(self):
         self.Drive.zeroEncoderTargets()
         self.readyToShoot = False
-        self.Arm = NewArm(self.shootgamepad, self.armcan)
 
 
     def teleopPeriodic(self):
@@ -272,9 +263,7 @@ class MainRobot (wpilib.IterativeRobot):
             #     self.Lift.pullUp()
             # else:
             #     self.Lift.stop()
-
-                
-            self.Arm.update()
+            
 
             # else:
             #     self.Shooter.update(self.shootgamepad.getButtonByLetter("B"), self.shootgamepad.getButtonByLetter("X"),
