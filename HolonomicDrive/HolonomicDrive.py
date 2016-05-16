@@ -1,6 +1,9 @@
 __author__ = 'Dawson'
 import wpilib
 import math
+
+BELT_BROKEN = False
+
 class HolonomicDrive():
     
     #PLEASE READ:
@@ -162,9 +165,13 @@ class HolonomicDrive():
     def calcWheels(self, magnitude, direction, turn):
         self.stores = [0.0, 0.0, 0.0, 0.0]
         self.addStrafe(magnitude, direction)
-        self.addTurn(turn)
+        if BELT_BROKEN:
+            self.stores[1] *= 2#Now add 1/3 of FR strafe value to entire robots turn, in correct direction
+        if not BELT_BROKEN:
+            self.addTurn(turn)
+        else:
+            self.addTurn(turn - self.stores[1]/8)#1/6 start
         self.scaleNumbers()
-        #self.setWheels()
 
     def addStrafe(self, magnitude, direction):
         if magnitude > 1.0:
@@ -248,7 +255,7 @@ class HolonomicDrive():
         self.encoderTargets[3] = self.BR.getEncPosition()
 
     def ensureSafeDistance(self):
-
+        # TODO: add counts per rev. variable, and max velocity variable
         flposition = self.FL.getEncPosition()
         if abs(flposition - self.encoderTargets[0]) > 4000:
             if (self.encoderTargets[0] > flposition):

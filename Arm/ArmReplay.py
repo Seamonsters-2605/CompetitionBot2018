@@ -4,7 +4,7 @@ import math
 
 ROTATION_TICKS_CAN1 = 131072 # encoder ticks in a full rotation
 ROTATION_TICKS_CAN2 = 756
-COMPLETED_DISTANCE = 0.07 # when both motors are within this fraction of their full ticks
+COMPLETED_DISTANCE = 0.06 # when both motors are within this fraction of their full ticks
                        # the movement has completed
 
 class ArmReplay:
@@ -37,10 +37,11 @@ class ArmReplay:
         self.MovementCompleted = \
             self.canMovementCompleted(self.CAN1, self.CAN1Target) and \
             self.canMovementCompleted(self.CAN2, self.CAN2Target)
-        if(self.MovementCompleted):
-            print("The movement has complete!")
+        #if(self.MovementCompleted):
+            #print("The movement has complete!")
 
     def setTarget(self, position):
+        self.MovementCompleted = False
         self.CAN1Target = position[0] + self.CAN1Zero
         self.CAN2Target = position[1] + self.CAN2Zero
         print(position[0], position[1])
@@ -98,9 +99,10 @@ class ArmReplay:
     def rotateToPosition1(self, can, target):
         current = can.getEncPosition()
         
-        if current == target:
-            can.set(current)
-            return(0)
+        #if current == target:
+            #print("At position")
+            #can.set(current)
+            #return(0)
         
         distance = (target - current) # amount motor should rotate
 
@@ -113,7 +115,7 @@ class ArmReplay:
             else:
                 value = current - self.velocity(can)
 
-        print(current, target, distance, value)
+        #print(current, target, distance, value)
         
         can.set(-value)
         return(distance)
@@ -122,6 +124,7 @@ class ArmReplay:
         current = can.getEncPosition()
         target = target
         if current == target:
+            #print("At position")
             can.set(0)
             return(0)
         
@@ -134,6 +137,8 @@ class ArmReplay:
                 distance = self.velocity(can)
             else:
                 distance = -self.velocity(can)
+        
+        #print(distance)
         
         can.set(-distance/2)
         return(distance)

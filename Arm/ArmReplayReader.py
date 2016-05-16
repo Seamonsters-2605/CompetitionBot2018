@@ -8,7 +8,7 @@ class ArmReplayReader:
     def __init__(self, replay, filePath):
         self.Arm = replay
         print("Reading file:", filePath)
-        file = open("/home/lvuser/py/paths/" + filePath)
+        file = open("/home/lvuser/py/paths/" + filePath + ".txt")
         lines = file.readlines()
         self.Positions = [None for i in range(0, len(lines))]
         i = 0

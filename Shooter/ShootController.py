@@ -3,7 +3,7 @@ from  .Flywheels import Flywheels
 from .Intake import Intake
 import wpilib
 class ShootController():
-
+    # TODO: better names for Switch/Switch2
     def __init__(self, left, right, intake, switch, switch2):#switch is wpilib.DigitalInput(port)
         self.LeftTalon = left
         self.RightTalon = right
@@ -16,16 +16,18 @@ class ShootController():
     def invertFlywheels(self):
         self.Flywheels.invertFlywheels()
 
-    def update(self, isIntakeButtonPushed, isFlywheelButtonPushed, isShootButtonPushed, isDischargeButtonPushed = False): #This should be always called
-
+    def update(self, isIntakeButtonPushed,
+               isFlywheelButtonPushed,
+               isShootButtonPushed,
+               isDischargeButtonPushed = False): #This should be always called
         if (isDischargeButtonPushed):
             self.Flywheels.driveSpeed(0)
             self.Intake.dischargeBall()
         else:
             if isIntakeButtonPushed:
                 if not (self.Switch.get() == 0 or self.Switch2.get() == 0):
-                    if not isFlywheelButtonPushed:
-                        self.Intake.intakeBall()
+                    # if not isFlywheelButtonPushed:
+                    self.Intake.intakeBall()
                 else:
                     self.Intake.stop()
             elif isShootButtonPushed:
@@ -37,7 +39,9 @@ class ShootController():
             if isFlywheelButtonPushed:
                 self.Flywheels.driveAuto()
             else:
+                #TODO: this uses too much power
                 self.Flywheels.driveSpeed(0)
+
 
 
 
