@@ -25,8 +25,8 @@ class Flywheels():
             self.Left.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
         if not self.Right.getControlMode() == wpilib.CANTalon.ControlMode.PercentVbus:
             self.Right.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
-        self.Right.set(-speed)
-        self.Left.set(speed)
+        self.Right.set(-speed * self.invert)
+        self.Left.set(speed * self.invert)
         #print("Speed Left: " + str(self.Left.getEncVelocity()))
         #print("Speed Right: " + str(self.Right.getEncVelocity()))
 

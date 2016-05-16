@@ -19,7 +19,7 @@ class ShootController():
     def update(self, isIntakeButtonPushed, isFlywheelButtonPushed, isShootButtonPushed, isDischargeButtonPushed = False): #This should be always called
 
         if (isDischargeButtonPushed):
-            self.Flywheels.driveSpeed(0)
+            self.Flywheels.driveVoltage(0)
             self.Intake.dischargeBall()
         else:
             if isIntakeButtonPushed:
@@ -37,7 +37,7 @@ class ShootController():
             if isFlywheelButtonPushed:
                 self.Flywheels.driveAuto()
             else:
-                self.Flywheels.driveSpeed(0)
+                self.Flywheels.driveVoltage(0)
 
 
 
