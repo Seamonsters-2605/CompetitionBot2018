@@ -16,5 +16,5 @@ class DriveInterface:
     def getDriveMode(self):
         return self.driveMode
     
-    def drive(self, magnitude, direction, turn):
+    def drive(self, magnitude, direction, turn, forceDriveMode = None):
         pass

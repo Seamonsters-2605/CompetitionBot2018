@@ -2,9 +2,11 @@ __author__ = 'Dawson'
 import wpilib
 import math
 
+import seamonsters.drive
+
 BELT_BROKEN = False
 
-class HolonomicDrive():
+class HolonomicDrive(seamonsters.drive.DriveInterface):
     
     #PLEASE READ:
     #Right side driving forward is assumed to be +1
@@ -83,12 +85,17 @@ class HolonomicDrive():
 
     # a generic drive() function that calls the corresponding driveVoltage(),
     # driveSpeed(), etc. based on what the current driveMode is.
-    def drive(self, magnitude, direction, turn):
-        if self.driveMode == HolonomicDrive.DriveMode.VOLTAGE:
+    def drive(self, magnitude, direction, turn, forceDriveMode = None):
+        mode = None
+        if forceDriveMode == None:
+            mode = self.driveMode
+        else:
+            mode = forceDriveMode
+        if mode == HolonomicDrive.DriveMode.VOLTAGE:
             self.driveVoltage(magnitude, direction, turn)
-        elif self.driveMode == HolonomicDrive.DriveMode.SPEED:
+        elif mode == HolonomicDrive.DriveMode.SPEED:
             self.driveSpeed(magnitude, direction, turn)
-        elif self.driveMode == HolonomicDrive.DriveMode.JEFF:
+        elif mode == HolonomicDrive.DriveMode.JEFF:
             self.driveSpeedJeffMode(magnitude, direction, turn)
     
 
