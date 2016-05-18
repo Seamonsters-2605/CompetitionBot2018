@@ -219,3 +219,6 @@ pip-log.txt
 .mr.developer.cfg
 
 __pycache__/
+# Emacs things
+\#*
+.\#*
