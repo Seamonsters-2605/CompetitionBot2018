@@ -5,6 +5,7 @@ import wpilib
 import sys
 import JoystickLib.joystickLib
 from HolonomicDrive.HolonomicDrive import HolonomicDrive
+from seamonsters.drive import DriveInterface
 from Shooter import ShootController
 from JoystickLib.Gamepad import Gamepad
 import Vision
@@ -53,7 +54,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.Drive.invertDrive(True)
         # TODO: move magic number to constant
         self.Drive.setWheelOffset(math.radians(27)) #angle of wheels
-        self.Drive.setDriveMode(HolonomicDrive.DriveMode.JEFF)
+        self.Drive.setDriveMode(HolonomicDrive.DriveMode.POSITION)
 
         self.LeftFly = wpilib.CANTalon(4)
         self.RightFly = wpilib.CANTalon(5)
@@ -234,11 +235,11 @@ class MainRobot (wpilib.IterativeRobot):
             # print ("Slowed: " + str(self.slowed))
             # switch drive mode with gamepad
             if   self.movegamepad.getRawButton(Gamepad.A):
-                self.Drive.setDriveMode(HolonomicDrive.DriveMode.VOLTAGE)
+                self.Drive.setDriveMode(DriveInterface.DriveMode.VOLTAGE)
             elif self.movegamepad.getRawButton(Gamepad.B):
-                self.Drive.setDriveMode(HolonomicDrive.DriveMode.SPEED)
+                self.Drive.setDriveMode(DriveInterface.DriveMode.SPEED)
             elif self.movegamepad.getRawButton(Gamepad.X):
-                self.Drive.setDriveMode(HolonomicDrive.DriveMode.JEFF)
+                self.Drive.setDriveMode(DriveInterface.DriveMode.POSITION)
             # print(str(self.Drive.getDriveMode()))
 
             # TODO: refactor duplicate code

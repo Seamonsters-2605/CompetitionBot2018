@@ -2,11 +2,11 @@ __author__ = 'Dawson'
 import wpilib
 import math
 
-import seamonsters.drive
+from seamonsters.drive import DriveInterface
 
 BELT_BROKEN = False
 
-class HolonomicDrive(seamonsters.drive.DriveInterface):
+class HolonomicDrive(DriveInterface):
     
     #PLEASE READ:
     #Right side driving forward is assumed to be +1
@@ -14,11 +14,6 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
     #Meet these requriements and THEN use invertDrive() if it is all backwards.
     #Summary:
     #Turn should be passed in as -Joystick.getX, most likely
-    
-    class DriveMode:
-        VOLTAGE = 1
-        SPEED = 2
-        JEFF = 3
 
     def __init__(self, fl, fr, bl, br):
         self.FL = fl
@@ -36,8 +31,8 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
         self.invert = 1 # can be 1 or -1
         self.maxVelocity = 80 * 5 #MAX VELOCITY IS FOR JEFF MODE (AKA INTEGRAL VELOCITY) AND IS MODIFIED FOR VELOCITY MODE
         self.slowModeMaxVelocity = 50
-        self.previousDriveMode = HolonomicDrive.DriveMode.VOLTAGE
-        self.driveMode = HolonomicDrive.DriveMode.VOLTAGE
+        self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
+        self.driveMode = DriveInterface.DriveMode.VOLTAGE
 
         self.usingInputAccelerationControl = True
         self.maximumAccelDistance = .08
@@ -91,11 +86,11 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
             mode = self.driveMode
         else:
             mode = forceDriveMode
-        if mode == HolonomicDrive.DriveMode.VOLTAGE:
+        if mode == DriveInterface.DriveMode.VOLTAGE:
             self.driveVoltage(magnitude, direction, turn)
-        elif mode == HolonomicDrive.DriveMode.SPEED:
+        elif mode == DriveInterface.DriveMode.SPEED:
             self.driveSpeed(magnitude, direction, turn)
-        elif mode == HolonomicDrive.DriveMode.JEFF:
+        elif mode == DriveInterface.DriveMode.POSITION:
             self.driveSpeedJeffMode(magnitude, direction, turn)
     
 
@@ -157,7 +152,7 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
         self.incrementEncoderTargets()
         #self.ensureSafeDistance()
         self.setWheelsJeffMode()
-        self.previousDriveMode = HolonomicDrive.DriveMode.JEFF
+        self.previousDriveMode = HolonomicDrive.DriveMode.POSITION
     def invertDrive(self, enabled=True):
         self.invert = -1 if enabled else 1
 
