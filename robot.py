@@ -11,7 +11,6 @@ from JoystickLib.Gamepad import Gamepad
 import Vision
 import networktables
 from networktables import NetworkTable
-#import globalListener
 
 
 NetworkTable.setServerMode()
