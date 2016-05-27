@@ -1,5 +1,15 @@
 __author__ = "jacobvanthoog"
 
+import wpilib
+
+def setControlMode(talon, driveMode):
+    if driveMode == DriveInterface.DriveMode.VOLTAGE:
+        talon.changeControlMode(wpilib.CANTalon.ControlMode.Voltage)
+    if driveMode == DriveInterface.DriveMode.SPEED:
+        talon.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
+    if driveMode == DriveInterface.DriveMode.POSITION:
+        talon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
+
 class DriveInterface:
 
     class DriveMode:

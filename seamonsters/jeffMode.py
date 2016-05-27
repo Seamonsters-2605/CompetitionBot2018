@@ -11,17 +11,13 @@ class JeffMode:
             self.Talon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
         self.encoderTarget = self.Talon.getPosition() #zero encoder targets
         self.invert = 1 # can be 1 or -1
-        self.maxVelocity = 80 * 5
 
 
     def set(self, magnitude): #Increments position to mock speed mode
-        store = magnitude * self.maxVelocity
+        store = magnitude
         if not abs(self.Talon.getPosition() - self.encoderTarget) > 250: #Started @ 1000
             self.encoderTarget += store * self.invert
         self.Talon.set(self.encoderTarget)
     
     def invert(self, enabled=True):
         self.invert = -1 if enabled else 1
-
-    def setMaxVelocity(self, velocity):
-        self.maxVelocity = velocity
