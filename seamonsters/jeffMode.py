@@ -14,9 +14,8 @@ class JeffMode:
 
 
     def set(self, magnitude): #Increments position to mock speed mode
-        store = magnitude
-        if not abs(self.Talon.getPosition() - self.encoderTarget) > 250: #Started @ 1000
-            self.encoderTarget += store * self.invert
+        if not abs(self.Talon.getPosition() - self.encoderTarget) > 2*magnitude:
+            self.encoderTarget += magnitude * self.invert
         self.Talon.set(self.encoderTarget)
     
     def invert(self, enabled=True):

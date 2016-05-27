@@ -79,6 +79,10 @@ class WheelController:
 
 
 class TestWheelController(WheelController):
+    
+    def __init__(self):
+        self.rotation = 0
+        
     def rotateWheel(self, radians):
         print("Rotating wheel to", math.degrees(radians))
         self.rotation = radians
