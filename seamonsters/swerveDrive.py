@@ -120,7 +120,10 @@ class TalonWheelController(WheelController):
             + self.rotateTalonInitialPosition
         currentTicks = self.rotateTalon.getPosition()
         diff = targetTicks - currentTicks
-        diff %= self.rotateTalonEncoderTicks
+        if diff < 0:
+            diff = -(abs(diff) % self.rotateTalonEncoderTicks)
+        else:
+            diff %= self.rotateTalonEncoderTicks
         self.rotateTalon.set(currentTicks + diff)
     
     def setDriveMode(self, driveMode):
