@@ -139,9 +139,15 @@ class SwerveDrive(DriveInterface):
         DriveInterface.__init__(self)
         self.wheels = [ ]
     
-    def addWheel(self, xLocation, yLocation):
+    def addWheel(self, xLocation, yLocation,
+            driveTalon=None, rotateTalon=None, rotateTalonEncoderTicks=None):
         location = (xLocation, yLocation)
-        wheelController = TestWheelController( len(self.wheels) )
+        wheelController = None
+        if driveTalon == None:
+            wheelController = TestWheelController( len(self.wheels) )
+        else:
+            wheelController = TalonWheelController(driveTalon, rotateTalon,
+                    rotateTalonEncoderTicks)
         self.wheels.append( WheelState(location, wheelController) )
     
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
