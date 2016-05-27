@@ -80,21 +80,22 @@ class WheelController:
 
 class TestWheelController(WheelController):
     
-    def __init__(self):
+    def __init__(self, number):
+        self.number = number
         self.rotation = 0
         
     def rotateWheel(self, radians):
-        print("Rotating wheel to", math.degrees(radians))
+        print("Wheel", self.number, "rotating to", math.degrees(radians))
         self.rotation = radians
         
     def setSpeed(self, speed):
-        print("Wheel speed set to", speed)
+        print("Wheel", self.number, "speed set to", speed)
         
     def getCurrentRotation(self):
         return self.rotation
     
     def setDriveMode(self, driveMode):
-        print("Set drive mode to", driveMode)
+        print("Wheel", self.number, "drive mode set to", driveMode)
 
 
 class TalonWheelController(WheelController):
@@ -135,8 +136,10 @@ class SwerveDrive(DriveInterface):
         DriveInterface.__init__(self)
         self.wheels = [ ]
     
-    def addWheel(self, location):
-        self.wheels.append(WheelState(location, TestWheelController()))
+    def addWheel(self, xLocation, yLocation):
+        location = (xLocation, yLocation)
+        wheelController = TestWheelController( len(self.wheels) )
+        self.wheels.append( WheelState(location, wheelController) )
     
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
         if forceDriveMode == None:
@@ -156,9 +159,9 @@ class SwerveDrive(DriveInterface):
 def test_swervedrive_forward():
     
     drive = SwerveDrive()
-    drive.addWheel((1.0,1.0))
-    drive.addWheel((-1.0,1.0))
-    drive.addWheel((1.0,-1.0))
-    drive.addWheel((-1.0,-1.0))
+    drive.addWheel(1.0, 1.0)
+    drive.addWheel(-1.0, 1.0)
+    drive.addWheel(1.0, -1.0)
+    drive.addWheel(-1.0, -1.0)
     drive.drive(4, math.radians(90), 0)
     assert drive.wheels[1].targetMagnitude == 4
