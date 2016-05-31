@@ -28,6 +28,8 @@ class DriveInterface:
     
     def __init__(self):
         self.driveMode = DriveInterface.DriveMode.SPEED
+        self.magnitudeScale = 1
+        self.turnScale = 1
 
     def setDriveMode(self, mode):
         """
@@ -42,6 +44,28 @@ class DriveInterface:
         default is SPEED, but implementations may have their own defaults.
         """
         return self.driveMode
+        
+    def setMagnitudeScale(self, scale):
+        """
+        Setting the magnitudeScale causes the magnitude in future calls to
+        drive() to be scaled by a certain amount (which could be negative). This
+        must be done by implementations!
+        """
+        self.magnitudeScale = scale
+        
+    def getMagnitudeScale(self):
+        return self.magnitudeScale
+        
+    def setTurnScale(self, scale):
+        """
+        Setting the turnScale causes the turn amound in future calls to
+        drive() to be scaled by a certain amount (which could be negative). This
+        must be done by implementations!
+        """
+        self.turnScale = scale
+        
+    def getTurnScale(self):
+        return self.turnScale
     
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
         """
