@@ -4,7 +4,7 @@ import math
 import wpilib
 import sys
 import JoystickLib.joystickLib
-from HolonomicDrive.HolonomicDrive import HolonomicDrive
+from seamonsters.holonomicDrive import HolonomicDrive
 from seamonsters.drive import DriveInterface
 from Shooter import ShootController
 from JoystickLib.Gamepad import Gamepad

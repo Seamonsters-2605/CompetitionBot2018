@@ -78,6 +78,15 @@ class HolonomicDrive(DriveInterface):
 
     #USE THESE FEW FUNCTIONS BELOW
     
+    def invertDrive(self, enabled=True):
+        self.invert = -1 if enabled else 1
+
+    def setWheelOffset(self, angleInRadians):
+        self.wheelOffset = angleInRadians
+
+    def setMaxVelocity(self, velocity):
+        self.maxVelocity = velocity
+    
     def setDriveMode(self, mode):
         self.driveMode = mode
 
@@ -161,17 +170,9 @@ class HolonomicDrive(DriveInterface):
         #self.ensureSafeDistance()
         self.setWheelsJeffMode()
         self.previousDriveMode = DriveInterface.DriveMode.POSITION
-    def invertDrive(self, enabled=True):
-        self.invert = -1 if enabled else 1
-
-    def setWheelOffset(self, angleInRadians):
-        self.wheelOffset = angleInRadians
-
-    def setMaxVelocity(self, velocity):
-        self.maxVelocity = velocity
-
-    #DO NOT USE THESE FUNCTIONS
     
+    
+    #DO NOT USE THESE FUNCTIONS
     
 
     def calcWheels(self, magnitude, direction, turn):
