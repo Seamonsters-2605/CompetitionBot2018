@@ -21,8 +21,9 @@ class Tester(wpilib.IterativeRobot):
 
     def teleopInit(self):
         self.goalPosition = self.Talon.getEncPosition()
-
-    def teleopPeriodic(self):#DO NOT CHANGE TELEOPPERIODIC, CHANGE DOALLELSE
+    
+    # DO NOT CHANGE TELEOPPERIODIC, CHANGE DOALLELSE
+    def teleopPeriodic(self):
         if (self.buttonAllowedTime <= self.loopCalls):
             if self.Joystick.getRawButton(4):
                 self.PIDNumber += 1
@@ -54,12 +55,17 @@ class Tester(wpilib.IterativeRobot):
     def printAll(self):
         for i in range(0,5):
             print()
-        print("Selection Number: " + str(self.PIDNumber) + "     P=0, I=1, D=2, F=3")
-        print("P: " + str(self.Talon.getP()) + " I: " + str(self.Talon.getI()) + " D: " + str(self.Talon.getD()) + " F: " + str(self.Talon.getF()))
+        print("Selection Number: " + str(self.PIDNumber) \
+                + "     P=0, I=1, D=2, F=3")
+        print("P: " + str(self.Talon.getP()) \
+           + " I: " + str(self.Talon.getI()) \
+           + " D: " + str(self.Talon.getD()) \
+           + " F: " + str(self.Talon.getF()))
         print("Speed: " + str(self.Talon.getEncVelocity()))
         #print("Position Actual: " + str(self.Talon.getPosition()))
         #print("Position   Goal: " + str(self.goalPosition))
-        print("Time Until Button: " + str(self.buttonAllowedTime - self.loopCalls))
+        print("Time Until Button: " \
+                + str(self.buttonAllowedTime - self.loopCalls))
 
     def changePID(self, number):
         if self.PIDNumber == 0:
