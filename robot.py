@@ -21,6 +21,8 @@ num_array = networktables.NumberArray()
 class MainRobot (wpilib.IterativeRobot):
     def robotInit(self):
 
+        print("seamonsters-template!")
+
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         self.BELT_BROKEN = False
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -4,7 +4,9 @@ import networktables
 from networktables import NetworkTable
 
 class GripInterface():
-    
+    """
+    Simple methods for getting data from GRIP NetworkTables.
+    """
     def __init__(self, networkTableName):
         self.table = NetworkTable.getTable("/GRIP/" + networkTableName + "/")
 
