@@ -222,3 +222,4 @@ __pycache__/
 # Emacs things
 \#*
 .\#*
+.cache/
