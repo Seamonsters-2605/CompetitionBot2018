@@ -1,6 +1,7 @@
 __author__ = 'Dawson'
 import wpilib
 import math
+from wpilib import CANTalon
 
 from seamonsters.drive import DriveInterface
 
@@ -29,7 +30,9 @@ class HolonomicDrive(DriveInterface):
         self.encoderTargets = [0.0, 0.0, 0.0, 0.0]
         self.wheelOffset = math.pi / 4
         self.invert = 1 # can be 1 or -1
-        self.maxVelocity = 80 * 5 #MAX VELOCITY IS FOR JEFF MODE (AKA INTEGRAL VELOCITY) AND IS MODIFIED FOR VELOCITY MODE
+        #MAX VELOCITY IS FOR JEFF MODE (AKA INTEGRAL VELOCITY)
+        #AND IS MODIFIED FOR VELOCITY MODE
+        self.maxVelocity = 80 * 5 
         self.slowModeMaxVelocity = 50
         self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
         self.driveMode = DriveInterface.DriveMode.VOLTAGE
@@ -39,11 +42,14 @@ class HolonomicDrive(DriveInterface):
         self.previousX = 0.0
         self.previousY = 0.0
         self.previousTurn = 0.0
-
+        
+    # returns an list of: [magnitude, direction, turn]
+    # for internal use only
     def accelerationFilter(self, magnitude, direction, turn):
         newX = magnitude * math.cos(direction)
         newY = magnitude * math.sin(direction)
-        distanceToNew = math.sqrt( (newX - self.previousX) * (newX - self.previousX) + (newY - self.previousY) * (newY - self.previousY) )
+        distanceToNew = math.sqrt( (newX - self.previousX) ** 2 \
+                + (newY - self.previousY) ** 2 )
         finalTurn = turn
         if not abs(self.previousTurn - turn) <= self.maximumAccelDistance:
             if turn > self.previousTurn:
@@ -58,28 +64,26 @@ class HolonomicDrive(DriveInterface):
             return [magnitude, direction, finalTurn]
 
         #Alternate Return for strafe fail to pass
-        directionToNew = math.atan2(newY - self.previousY, newX - self.previousX)
-        finalX = self.previousX + math.cos(directionToNew) * self.maximumAccelDistance
-        finalY = self.previousY + math.sin(directionToNew) * self.maximumAccelDistance
+        directionToNew = math.atan2(newY-self.previousY, newX-self.previousX)
+        finalX = self.previousX \
+                + math.cos(directionToNew) * self.maximumAccelDistance
+        finalY = self.previousY \
+                + math.sin(directionToNew) * self.maximumAccelDistance
         self.previousX = finalX
         self.previousY = finalY
         self.previousTurn = finalTurn
-        return [math.sqrt(finalX * finalX + finalY * finalY), math.atan2(finalY, finalX), finalTurn]
+        return [math.sqrt(finalX ** 2 + finalY ** 2), \
+                math.atan2(finalY, finalX), finalTurn]
 
 
     #USE THESE FEW FUNCTIONS BELOW
-
-
-    # use the variables DriveMode.VOLTAGE, DriveMode.SPEED, etc. in this function
-    # and NOT their values (1, 2, ...) -- those could change in the future
+    
     def setDriveMode(self, mode):
         self.driveMode = mode
 
     def getDriveMode(self):
         return self.driveMode
-
-    # a generic drive() function that calls the corresponding driveVoltage(),
-    # driveSpeed(), etc. based on what the current driveMode is.
+    
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
         mode = None
         if forceDriveMode == None:
@@ -94,13 +98,14 @@ class HolonomicDrive(DriveInterface):
             self.driveSpeedJeffMode(magnitude, direction, turn)
     
 
-    # these functions ignore the current driveMode setting
+    # these functions ignore the current driveMode setting. They are not part of
+    # DriveInterface
     
     def driveVoltage(self, magnitude, direction, turn):
         self.ensureControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
         self.calcWheels(magnitude, direction, turn)
         self.setWheels()
-        self.previousDriveMode = HolonomicDrive.DriveMode.VOLTAGE
+        self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
         #self.logCurrent()
 
     def driveSpeed(self, magnitude, direction, turn):
@@ -108,16 +113,18 @@ class HolonomicDrive(DriveInterface):
         self.calcWheels(magnitude, direction, turn)
         self.scaleToMax()
         self.setWheels()
-        self.previousDriveMode = HolonomicDrive.DriveMode.SPEED
+        self.previousDriveMode = DriveInterface.DriveMode.SPEED
         #self.logCurrent()
 
-    def driveSpeedJeffMode(self, inMagnitude, inDirection, inTurn, inAggressivePID = False): #Increments position to mock speed mode
+    #Increments position to mock speed mode
+    def driveSpeedJeffMode(self, inMagnitude, inDirection, inTurn, \
+            inAggressivePID = False): 
         # if (turn == 0 and magnitude == 0):
         #     self.disableTalons()
-        # elif self.FL.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and\
-        #      self.FR.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and\
-        #      self.BL.getControlMode() == wpilib.CANTalon.ControlMode.Disabled and\
-        #      self.BR.getControlMode() == wpilib.CANTalon.ControlMode.Disabled:
+        # elif self.FL.getControlMode() == CANTalon.ControlMode.Disabled and\
+        #      self.FR.getControlMode() == CANTalon.ControlMode.Disabled and\
+        #      self.BL.getControlMode() == CANTalon.ControlMode.Disabled and\
+        #      self.BR.getControlMode() == CANTalon.ControlMode.Disabled:
         #     self.enableTalons()
         #     self.zeroEncoderTargets()
 
@@ -127,7 +134,8 @@ class HolonomicDrive(DriveInterface):
         aggressivePID = inAggressivePID
 
         if self.usingInputAccelerationControl:
-            filteredResults = self.accelerationFilter(magnitude, direction, turn)
+            filteredResults = \
+                    self.accelerationFilter(magnitude, direction, turn)
             magnitude = filteredResults[0]
             direction = filteredResults[1]
             turn = filteredResults[2]
@@ -163,12 +171,16 @@ class HolonomicDrive(DriveInterface):
         self.maxVelocity = velocity
 
     #DO NOT USE THESE FUNCTIONS
+    
+    
 
     def calcWheels(self, magnitude, direction, turn):
         self.stores = [0.0, 0.0, 0.0, 0.0]
         self.addStrafe(magnitude, direction)
         if BELT_BROKEN:
-            self.stores[1] *= 2#Now add 1/3 of FR strafe value to entire robots turn, in correct direction
+            # Now add 1/3 of FR strafe value to entire robots turn,
+            # in correct direction
+            self.stores[1] *= 2
         if not BELT_BROKEN:
             self.addTurn(turn)
         else:
@@ -181,10 +193,14 @@ class HolonomicDrive(DriveInterface):
         else:
             fixedMagnitude = magnitude
         #self.stores[0] += fixedMagnitude
-        self.stores[0] += fixedMagnitude * (math.sin(direction + self.wheelOffset)) * -1 #FL
-        self.stores[1] += fixedMagnitude * (math.sin((direction - self.wheelOffset))) #FR
-        self.stores[2] += fixedMagnitude * (math.sin((direction - self.wheelOffset))) * -1 #BL
-        self.stores[3] += fixedMagnitude * (math.sin((direction + self.wheelOffset))) #FR
+        self.stores[0] += fixedMagnitude \
+                * (math.sin(direction + self.wheelOffset)) * -1 #FL
+        self.stores[1] += fixedMagnitude \
+                * (math.sin((direction - self.wheelOffset))) #FR
+        self.stores[2] += fixedMagnitude \
+                * (math.sin((direction - self.wheelOffset))) * -1 #BL
+        self.stores[3] += fixedMagnitude \
+                * (math.sin((direction + self.wheelOffset))) #FR
 
     def addTurn(self, turn):
         for i in range (0,4):
@@ -197,7 +213,8 @@ class HolonomicDrive(DriveInterface):
                 number = number / largest
 
     def incrementEncoderTargets(self):
-        if not abs(self.FL.getEncPosition() - self.encoderTargets[0]) > 4000: #Started @ 1000
+        #Started @ 1000
+        if not abs(self.FL.getEncPosition() - self.encoderTargets[0]) > 4000: 
             print(self.FL.getEncPosition())
             self.encoderTargets[0] += self.stores[0] * self.invert
         if not abs(self.FR.getEncPosition() - self.encoderTargets[1]) > 4000:
@@ -215,7 +232,6 @@ class HolonomicDrive(DriveInterface):
         self.FR.set(self.stores[1] * self.invert)
         self.BL.set(self.stores[2] * self.invert)
         self.BR.set(self.stores[3] * self.invert)
-        #print(str(self.stores[0])+ "     "+str(self.stores[1]) + "     "+ str(self.stores[2])+ "     " + str(self.stores[3]))
 
     def setWheelsJeffMode(self):
         self.FL.set(self.encoderTargets[0])
