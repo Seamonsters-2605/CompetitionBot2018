@@ -25,8 +25,6 @@ class HolonomicDrive(DriveInterface):
     assumed to be +1. Meet these requriements and THEN use invertDrive() if it
     is all backwards. Turn should be passed in as -Joystick.getX, most likely.
     """
-    
-    
 
     def __init__(self, fl, fr, bl, br):
         DriveInterface.__init__(self)
@@ -34,17 +32,13 @@ class HolonomicDrive(DriveInterface):
         self.FR = fr
         self.BL = bl
         self.BR = br
-        self.FL.setPID(1.0, 0.0, 3.0, 0.0)
-        self.FR.setPID(1.0, 0.0, 3.0, 0.0)
-        self.BL.setPID(1.0, 0.0, 3.0, 0.0)
-        self.BR.setPID(1.0, 0.0, 3.0, 0.0)
 
         self.stores = [0.0, 0.0, 0.0, 0.0]
         self.encoderTargets = [0.0, 0.0, 0.0, 0.0]
         self.wheelOffset = math.pi / 4
         self.invert = 1 # can be 1 or -1
-        #MAX VELOCITY IS FOR JEFF MODE (AKA INTEGRAL VELOCITY)
-        #AND IS MODIFIED FOR VELOCITY MODE
+        # maxVelocity is for "Jeff mode" (aka integral velocity)
+        # and is modified for velocity mode
         self.maxVelocity = 80 * 5 
         self.slowModeMaxVelocity = 50
         self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
@@ -92,12 +86,24 @@ class HolonomicDrive(DriveInterface):
     #USE THESE FEW FUNCTIONS BELOW
     
     def invertDrive(self, enabled=True):
+        """
+        If invertDrive is enabled, all motor directions will be inverted.
+        """
         self.invert = -1 if enabled else 1
 
     def setWheelOffset(self, angleInRadians):
+        """
+        Set the offset angle at which the wheels exert force -- in radians. 0 is
+        facing forward (tank drive). 1/4 pi (45 degrees) is a "diamond"
+        configuration.
+        """
         self.wheelOffset = angleInRadians
 
     def setMaxVelocity(self, velocity):
+        """
+        Sets the max encoder velocity. Default is 2000. This number also affects
+        the Jeff Mode maximum difference between target and current position.
+        """
         self.maxVelocity = velocity
     
     def setDriveMode(self, mode):
@@ -193,7 +199,6 @@ class HolonomicDrive(DriveInterface):
     
     
     #DO NOT USE THESE FUNCTIONS
-    
 
     def calcWheels(self, magnitude, direction, turn):
         self.stores = [0.0, 0.0, 0.0, 0.0]
