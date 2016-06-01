@@ -196,8 +196,5 @@ class JoystickUtils(JoystickBase):
     def getRawMagnitude(self):
         return Joystick.getMagnitude(self)
     
-    def getRawAxis(self, axis):
-        return Joystick.getRawAxis(self, axis)
-    
     
     
