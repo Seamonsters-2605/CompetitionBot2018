@@ -40,7 +40,7 @@ class ShootController():
                 self.Flywheels.driveAuto()
             else:
                 #TODO: this uses too much power
-                self.Flywheels.driveSpeed(0)
+                self.Flywheels.driveVoltage(0)
 
 
 
