@@ -55,49 +55,91 @@ class Gamepad(seamonsters.joystick.JoystickBase):
         self.deadZone = value
 
     def inDeadZone(self, value):
+        """
+        Check if a value between -1 and 1 is within the position deadzone.
+        Return a boolean value.
+        """
         return abs(value) < self.deadZone
         
     def rInDeadZone(self):
+        """
+        Check if the right joystick is in the deadzone. Return a boolean value.
+        """
         return self.inDeadZone(self.getRawRMagnitude())
         
     def lInDeadZone(self):
+        """
+        Check if the left joystick is in the deadzone. Return a boolean value.
+        """
         return self.inDeadZone(self.getRawLMagnitude())
     
     def getLX(self, enableDeadZone = True):
+        """
+        Get the x-axis of the left joystick. The dead zone is enabled by
+        default; set enableDeadZone to False to disable it.
+        """
         if self.lInDeadZone() and enableDeadZone:
             return 0.0
         return self.getRawLX()
 
     def getLY(self, enableDeadZone = True):
+        """
+        Get the x-axis of the left joystick. The dead zone is enabled by
+        default; set enableDeadZone to False to disable it.
+        """
         if self.lInDeadZone() and enableDeadZone:
             return 0.0
         return self.getRawLY()
         
     def getLMagnitude(self, enableDeadZone = True):
+        """
+        Get the magnitude of the left joystick. The dead zone is enabled by
+        default; set enableDeadZone to False to disable it.
+        """
         if self.lInDeadZone() and enableDeadZone:
             return 0.0
         return self.getRawLMagnitude()
 
     def getRX(self, enableDeadZone = True):
+        """
+        Get the y-axis of the right joystick. The dead zone is enabled by
+        default; set enableDeadZone to False to disable it.
+        """
         if self.rInDeadZone() and enableDeadZone:
             return 0.0
         return self.getRawRX()
 
     def getRY(self, enableDeadZone = True):
+        """
+        Get the y-axis of the right joystick. The dead zone is enabled by
+        default; set enableDeadZone to False to disable it.
+        """
         if self.rInDeadZone() and enableDeadZone:
             return 0.0
         return self.getRawRY()
         
     def getRMagnitude(self, enableDeadZone = True):
+        """
+        Get the magnitude of the right joystick. The dead zone is enabled by
+        default; set enableDeadZone to False to disable it.
+        """
         if self.rInDeadZone() and enableDeadZone:
             return 0.0
         return self.getRawRMagnitude()
         
     def getLDirection(self):
+        """
+        Get the direction of the left joystick. wpilib.Joystick's built-in
+        getDirection() says 0 is positive y. This version uses positive x.
+        """
         return math.atan2(self.getRawLY(False), self.getRawLX(False)) \
             - (math.pi / 2)
 
     def getRDirection(self):
+        """
+        Get the direction of the right joystick. wpilib.Joystick's built-in
+        getDirection() says 0 is positive y. This version uses positive x.
+        """
         return math.atan2(self.getRawRY(False), -self.getRawRX(False)) \
             - (math.pi / 2)
     

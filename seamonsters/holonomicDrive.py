@@ -8,13 +8,25 @@ from seamonsters.drive import DriveInterface
 BELT_BROKEN = False
 
 class HolonomicDrive(DriveInterface):
+    """
+    An implementation of the DriveInterface for holonomic drive. This allows for
+    mecanum/omni drives in the "diamond" configuration. The offset of the wheels
+    can be changed -- default is .25 pi radians (or 45 degrees), which is ideal
+    for our regular mecanum wheels or the typical omni drive's. If you want this
+    code to work with Jeff's drivetrain just change the angle offset to 27/180
+    pi radians (27 degrees).
     
-    #PLEASE READ:
-    #Right side driving forward is assumed to be +1
-    #Turning counter-clockwise is assumed to be +1
-    #Meet these requriements and THEN use invertDrive() if it is all backwards.
-    #Summary:
-    #Turn should be passed in as -Joystick.getX, most likely
+    This class can also control a tank drive, although it isn't ideal for that.
+    Just set the wheel offset to 0.
+    
+    PLEASE READ:
+    
+    Right side driving forward is assumed to be +1. Turning counter-clockwise is
+    assumed to be +1. Meet these requriements and THEN use invertDrive() if it
+    is all backwards. Turn should be passed in as -Joystick.getX, most likely.
+    """
+    
+    
 
     def __init__(self, fl, fr, bl, br):
         DriveInterface.__init__(self)

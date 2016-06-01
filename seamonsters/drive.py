@@ -3,6 +3,10 @@ __author__ = "jacobvanthoog"
 import wpilib
 
 def setControlMode(talon, driveMode):
+    """
+    Given a DriveInterface.DriveMode, set the control mode of a CANTalon using
+    a wpilib.CANTalon.ControlMode.
+    """
     if driveMode == DriveInterface.DriveMode.VOLTAGE:
         talon.changeControlMode(wpilib.CANTalon.ControlMode.Voltage)
     if driveMode == DriveInterface.DriveMode.SPEED:
