@@ -26,6 +26,26 @@ class Gamepad(seamonsters.joystick.JoystickBase):
     LJ = 9
     RJ = 10
 
+    
+    def __init__(self, port):
+        seamonsters.joystick.JoystickBase.__init__(self, port)
+        self.deadZone = .08
+        # invert axes
+        self.xInv = False
+        self.yInv = False
+        
+    def invertX(self, enabled=True):
+        """
+        Choose whether to invert the value of the x axis.
+        """
+        self.xInv = enabled
+
+    def invertY(self, enabled=True):
+        """
+        Choose whether to invert the value of the y axis.
+        """
+        self.yInv = enabled
+        
     def setDeadZone(self, value):
         """
         Set the deadzone of the position of both joysticks, on a scale of 0 to
@@ -33,10 +53,6 @@ class Gamepad(seamonsters.joystick.JoystickBase):
         Default value is 0.08 (8 percent).
         """
         self.deadZone = value
-    
-    def __init__(self, port):
-        seamonsters.joystick.JoystickBase.__init__(self, port)
-        self.deadZone = .08
 
     def inDeadZone(self, value):
         return abs(value) < self.deadZone
@@ -88,19 +104,19 @@ class Gamepad(seamonsters.joystick.JoystickBase):
     
     
     def getRawLX(self, enableDeadZone = True):
-        return self.getRawAxis(1)
+        return self.getRawAxis(1) * (-1 if self.xInv else 1)
         
     def getRawLY(self, enableDeadZone = True):
-       return self.getRawAxis(0)
+       return self.getRawAxis(0) * (-1 if self.yInv else 1)
 
     def getRawRX(self, enableDeadZone = True):
-        return self.getRawAxis(4)
+        return self.getRawAxis(4) * (-1 if self.xInv else 1)
 
     def getRawRY(self, enableDeadZone = True):
-        return self.getRawAxis(3)
+        return self.getRawAxis(3) * (-1 if self.yInv else 1)
         
     def getRawLMagnitude(self, enableDeadZone = True):
-        return math.sqrt(self.getLX(False)**2 + self.getLY(False)**2)
+        return math.sqrt(self.getRawLX(False)**2 + self.getRawLY(False)**2)
 
     def getRawRMagnitude(self, enableDeadZone = True):
         return math.sqrt(self.getRawRX(False)**2 + self.getRawRY(False)**2)
