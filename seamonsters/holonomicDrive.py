@@ -95,14 +95,16 @@ class HolonomicDrive(DriveInterface):
         """
         Set the offset angle at which the wheels exert force -- in radians. 0 is
         facing forward (tank drive). 1/4 pi (45 degrees) is a "diamond"
-        configuration.
+        configuration. 1/4 pi is a typical angle for omni/mecanum drives, and is
+        the default.
         """
         self.wheelOffset = angleInRadians
 
     def setMaxVelocity(self, velocity):
         """
         Sets the max encoder velocity. Default is 2000. This number also affects
-        the Jeff Mode maximum difference between target and current position.
+        the Jeff Mode maximum difference between target and current position,
+        although that is also affected by other values.
         """
         self.maxVelocity = velocity
     
