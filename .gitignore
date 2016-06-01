@@ -223,3 +223,6 @@ __pycache__/
 \#*
 .\#*
 .cache/
+
+# cloud9 things
+.~c9*
