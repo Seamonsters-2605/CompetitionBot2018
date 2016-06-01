@@ -6,8 +6,8 @@ import sys
 import JoystickLib.joystickLib
 from seamonsters.holonomicDrive import HolonomicDrive
 from seamonsters.drive import DriveInterface
+from seamonsters.gamepad import Gamepad
 from Shooter import ShootController
-from JoystickLib.Gamepad import Gamepad
 import Vision
 import networktables
 from networktables import NetworkTable
@@ -43,8 +43,8 @@ class MainRobot (wpilib.IterativeRobot):
         self.BR.setPID(1.0, 0.0, 3.0, 0.0)
 
 
-        self.movegamepad = JoystickLib.Gamepad.Gamepad(port = 0)
-        self.shootgamepad = JoystickLib.Gamepad.Gamepad(port = 1)
+        self.movegamepad = Gamepad(port = 0)
+        self.shootgamepad = Gamepad(port = 1)
 
         self.MoveJoy = JoystickLib.joystickLib.createJoystick(0)
         self.MoveJoy.invertY()
@@ -201,7 +201,7 @@ class MainRobot (wpilib.IterativeRobot):
                     self.turnSpeed = self.needed * .009
                 else:
                     self.turnSpeed = self.needed * .0008
-                if self.shootgamepad.getButtonByLetter("RB"):
+                if self.shootgamepad.getRawButton(Gamepad.RB):
                     # TODO: move 240 to center pixel constant
                     if abs(self.Vision.centerX()[0] - 240) < 15:
                         self.readyToShoot = True
@@ -226,9 +226,9 @@ class MainRobot (wpilib.IterativeRobot):
             #         self.Intake.set(1)
             #     else:
             #         self.Shooter.update(False, False, False, False)
-            if self.movegamepad.getButtonByLetter("LJ"): # faster button
+            if self.movegamepad.getRawButton(Gamepad.LJ): # faster button
                 self.slowed = 1
-            elif self.movegamepad.getButtonByLetter("LB"): # slower button
+            elif self.movegamepad.getRawButton(Gamepad.LB): # slower button
                 self.slowed = .2
             else: # no button pressed
                 # TODO: move to constant
@@ -244,21 +244,21 @@ class MainRobot (wpilib.IterativeRobot):
             # print(str(self.Drive.getDriveMode()))
 
             # TODO: refactor duplicate code
-            if self.movegamepad.getButtonByLetter("RB"):
+            if self.movegamepad.getRawButton(Gamepad.RB):
                 turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
                 #magnitude = self.movegamepad.getLMagnitude() * self.slowed
-                magnitude = self.movegamepad.getLMagnitudePower(2) * self.slowed
+                magnitude = self.movegamepad.getLMagnitude()**2 * self.slowed
                 direction = self.movegamepad.getLDirection() + math.pi
             else:
                 turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
                 #magnitude = self.movegamepad.getLMagnitude() * self.slowed
-                magnitude = self.movegamepad.getLMagnitudePower(2) * self.slowed
+                magnitude = self.movegamepad.getLMagnitude()**2 * self.slowed
                 direction = self.movegamepad.getLDirection()
             self.Drive.drive(magnitude, direction, turn)
-            self.Shooter.update(self.shootgamepad.getButtonByLetter("B"),\
-                                self.shootgamepad.getButtonByLetter("X"),\
-                                self.shootgamepad.getButtonByLetter("A"),\
-                                self.shootgamepad.getButtonByLetter("Y"))
+            self.Shooter.update(self.shootgamepad.getRawButton(Gamepad.B),\
+                                self.shootgamepad.getRawButton(Gamepad.X),\
+                                self.shootgamepad.getRawButton(Gamepad.A),\
+                                self.shootgamepad.getRawButton(Gamepad.Y))
             # if self.shootgamepad.getButtonByLetter("RB"):
             #     self.Lift.liftUp()
             # elif self.shootgamepad.getButtonByLetter("LB"):

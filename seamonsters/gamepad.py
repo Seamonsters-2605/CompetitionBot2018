@@ -100,7 +100,7 @@ class Gamepad(seamonsters.joystick.JoystickBase):
         return self.getRawAxis(3)
         
     def getRawLMagnitude(self, enableDeadZone = True):
-        return math.sqrt(self.getLX(False)**2 + self.getLY(False)**2)
+        return math.sqrt(self.getRawLX(False)**2 + self.getRawLY(False)**2)
 
     def getRawRMagnitude(self, enableDeadZone = True):
         return math.sqrt(self.getRawRX(False)**2 + self.getRawRY(False)**2)
