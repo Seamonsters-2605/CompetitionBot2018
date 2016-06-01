@@ -8,7 +8,7 @@ def setControlMode(talon, driveMode):
     a wpilib.CANTalon.ControlMode.
     """
     if driveMode == DriveInterface.DriveMode.VOLTAGE:
-        talon.changeControlMode(wpilib.CANTalon.ControlMode.Voltage)
+        talon.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
     if driveMode == DriveInterface.DriveMode.SPEED:
         talon.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
     if driveMode == DriveInterface.DriveMode.POSITION:

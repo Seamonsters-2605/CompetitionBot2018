@@ -5,8 +5,6 @@ from wpilib import CANTalon
 
 from seamonsters.drive import DriveInterface
 
-BELT_BROKEN = False
-
 class HolonomicDrive(DriveInterface):
     """
     An implementation of the DriveInterface for holonomic drive. This allows for
@@ -39,8 +37,7 @@ class HolonomicDrive(DriveInterface):
         self.invert = 1 # can be 1 or -1
         # maxVelocity is for "Jeff mode" (aka integral velocity)
         # and is modified for velocity mode
-        self.maxVelocity = 80 * 5 
-        self.slowModeMaxVelocity = 50
+        self.maxVelocity = 80 * 5
         self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
         self.driveMode = DriveInterface.DriveMode.VOLTAGE
 
@@ -108,12 +105,6 @@ class HolonomicDrive(DriveInterface):
         """
         self.maxVelocity = velocity
     
-    def setDriveMode(self, mode):
-        self.driveMode = mode
-
-    def getDriveMode(self):
-        return self.driveMode
-    
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
         mode = None
         if forceDriveMode == None:
@@ -138,7 +129,6 @@ class HolonomicDrive(DriveInterface):
         self.calcWheels(magnitude, direction, turn)
         self.setWheels()
         self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
-        #self.logCurrent()
 
     def driveSpeed(self, magnitude, direction, turn):
         magnitude *= self.magnitudeScale
@@ -148,11 +138,9 @@ class HolonomicDrive(DriveInterface):
         self.scaleToMax()
         self.setWheels()
         self.previousDriveMode = DriveInterface.DriveMode.SPEED
-        #self.logCurrent()
 
     #Increments position to mock speed mode
-    def driveSpeedJeffMode(self, inMagnitude, inDirection, inTurn, \
-            inAggressivePID = False): 
+    def driveSpeedJeffMode(self, magnitude, direction, turn): 
         # if (turn == 0 and magnitude == 0):
         #     self.disableTalons()
         # elif self.FL.getControlMode() == CANTalon.ControlMode.Disabled and\
@@ -162,13 +150,8 @@ class HolonomicDrive(DriveInterface):
         #     self.enableTalons()
         #     self.zeroEncoderTargets()
         
-        inMagnitude *= self.magnitudeScale
-        inTurn *= self.turnScale
-        
-        magnitude = inMagnitude
-        direction = inDirection
-        turn = inTurn
-        aggressivePID = inAggressivePID
+        magnitude *= self.magnitudeScale
+        turn *= self.turnScale
 
         if self.usingInputAccelerationControl:
             filteredResults = \
@@ -178,22 +161,10 @@ class HolonomicDrive(DriveInterface):
             turn = filteredResults[2]
 
         self.ensureControlMode(wpilib.CANTalon.ControlMode.Position)
-        if not self.previousDriveMode == 3:
+        if not self.previousDriveMode == DriveInterface.DriveMode.POSITION:
             self.zeroEncoderTargets()
         self.calcWheels(magnitude, direction, turn)
-        if aggressivePID:
-
-            self.FL.setPID(12.0, 0.0, 15.0, 0.0)
-            self.FR.setPID(12.0, 0.0, 15.0, 0.0)
-            self.BL.setPID(12.0, 0.0, 15.0, 0.0)
-            self.BR.setPID(12.0, 0.0, 15.0, 0.0)
-            self.scaleToMaxJeffMode()
-        else:
-            self.FL.setPID(1.0, 0.0, 3.0, 0.0)
-            self.FR.setPID(1.0, 0.0, 3.0, 0.0)
-            self.BL.setPID(1.0, 0.0, 3.0, 0.0)
-            self.BR.setPID(1.0, 0.0, 3.0, 0.0)
-            self.scaleToMaxJeffMode()
+        self.scaleToMaxJeffMode()
         self.incrementEncoderTargets()
         #self.ensureSafeDistance()
         self.setWheelsJeffMode()
@@ -205,14 +176,7 @@ class HolonomicDrive(DriveInterface):
     def calcWheels(self, magnitude, direction, turn):
         self.stores = [0.0, 0.0, 0.0, 0.0]
         self.addStrafe(magnitude, direction)
-        if BELT_BROKEN:
-            # Now add 1/3 of FR strafe value to entire robots turn,
-            # in correct direction
-            self.stores[1] *= 2
-        if not BELT_BROKEN:
-            self.addTurn(turn)
-        else:
-            self.addTurn(turn - self.stores[1]/8)#1/6 start
+        self.addTurn(turn)
         self.scaleNumbers()
 
     def addStrafe(self, magnitude, direction):
@@ -220,7 +184,6 @@ class HolonomicDrive(DriveInterface):
             fixedMagnitude = 1.0
         else:
             fixedMagnitude = magnitude
-        #self.stores[0] += fixedMagnitude
         self.stores[0] += fixedMagnitude \
                 * (math.sin(direction + self.wheelOffset)) * -1 #FL
         self.stores[1] += fixedMagnitude \
@@ -242,17 +205,13 @@ class HolonomicDrive(DriveInterface):
 
     def incrementEncoderTargets(self):
         #Started @ 1000
-        if not abs(self.FL.getEncPosition() - self.encoderTargets[0]) > 4000: 
-            print(self.FL.getEncPosition())
+        if not abs(self.FL.getEncPosition() - self.encoderTargets[0]) > 4000:
             self.encoderTargets[0] += self.stores[0] * self.invert
         if not abs(self.FR.getEncPosition() - self.encoderTargets[1]) > 4000:
-            #print("incrementing")
             self.encoderTargets[1] += self.stores[1] * self.invert
         if not abs(self.BL.getEncPosition() - self.encoderTargets[2]) > 4000:
-            #print("incrementing")
             self.encoderTargets[2] += self.stores[2] * self.invert
         if not abs(self.BR.getEncPosition() - self.encoderTargets[3]) > 4000:
-            #print("incrementing")
             self.encoderTargets[3] += self.stores[3] * self.invert
 
     def setWheels(self):
@@ -282,7 +241,6 @@ class HolonomicDrive(DriveInterface):
            == self.BR.getControlMode()\
            == controlMode:
             return
-        print("SETTING CONTROL MODE")
         self.FL.changeControlMode(controlMode)
         self.FR.changeControlMode(controlMode)
         self.BL.changeControlMode(controlMode)
@@ -341,8 +299,4 @@ class HolonomicDrive(DriveInterface):
         self.FR.disable()
         self.BL.disable()
         self.BR.disable()
-
-    def scaleToMaxJeffModeSlowMode(self):
-        for i in range (0,4):
-            self.stores[i] *= self.slowModeMaxVelocity
 
