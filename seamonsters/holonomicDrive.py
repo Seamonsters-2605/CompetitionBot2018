@@ -123,16 +123,12 @@ class HolonomicDrive(DriveInterface):
     # DriveInterface
     
     def driveVoltage(self, magnitude, direction, turn):
-        magnitude *= self.magnitudeScale
-        turn *= self.turnScale
         self.ensureControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
         self.calcWheels(magnitude, direction, turn)
         self.setWheels()
         self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
 
     def driveSpeed(self, magnitude, direction, turn):
-        magnitude *= self.magnitudeScale
-        turn *= self.turnScale
         self.ensureControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.calcWheels(magnitude, direction, turn)
         self.scaleToMax()
@@ -149,9 +145,6 @@ class HolonomicDrive(DriveInterface):
         #      self.BR.getControlMode() == CANTalon.ControlMode.Disabled:
         #     self.enableTalons()
         #     self.zeroEncoderTargets()
-        
-        magnitude *= self.magnitudeScale
-        turn *= self.turnScale
 
         if self.usingInputAccelerationControl:
             filteredResults = \

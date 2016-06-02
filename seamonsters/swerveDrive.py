@@ -151,8 +151,6 @@ class SwerveDrive(DriveInterface):
         self.wheels.append( WheelState(location, wheelController) )
     
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
-        magnitude *= self.magnitudeScale
-        turn *= self.turnScale
         if forceDriveMode == None:
             forceDriveMode = self.getDriveMode()
         for wheel in self.wheels:

@@ -18,6 +18,11 @@ class DriveInterface:
     """
     A generic, abstract interface for driving a robot. Allows 3 different
     control modes for CANTalons, specified by DriveMode.
+    DriveMode purposefully doesn't have options for configuring things like the
+    maximum velocity of the motors or the ticks-per-rotation for position mode.
+    It is assumed each implementation will have methods for this. But assuming
+    that has been set up in the robotInit method, all DriveInterface classes
+    should be interchangable.
     """
 
 
@@ -48,28 +53,6 @@ class DriveInterface:
         default is SPEED, but implementations may have their own defaults.
         """
         return self.driveMode
-        
-    def setMagnitudeScale(self, scale):
-        """
-        Setting the magnitudeScale causes the magnitude in future calls to
-        drive() to be scaled by a certain amount (which could be negative). This
-        must be done by implementations!
-        """
-        self.magnitudeScale = scale
-        
-    def getMagnitudeScale(self):
-        return self.magnitudeScale
-        
-    def setTurnScale(self, scale):
-        """
-        Setting the turnScale causes the turn amound in future calls to
-        drive() to be scaled by a certain amount (which could be negative). This
-        must be done by implementations!
-        """
-        self.turnScale = scale
-        
-    def getTurnScale(self):
-        return self.turnScale
     
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
         """
