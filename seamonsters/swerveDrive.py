@@ -1,8 +1,8 @@
 __author__ = "jacobvanthoog"
 
-from drive import DriveInterface
-from jeffMode import JeffMode
-import drive
+from seamonsters.drive import DriveInterface
+import seamonsters.drive
+from seamonsters.jeffMode import JeffMode
 import math
 import wpilib
 
@@ -38,7 +38,7 @@ class WheelState:
         self.targetMagnitude = magnitude(self.driveVector)
         self.targetDirection = direction(self.driveVector)
     
-    def drive(self, driveMode):
+    def drive(self, driveMode, scale):
         # set rotate talon
         currentRot = self.controller.getCurrentRotation()
         diffRadians = abs(currentRot - self.targetDirection) % (math.pi*2)
@@ -55,7 +55,7 @@ class WheelState:
         mag = self.targetMagnitude
         if self.invertMagnitude:
             mag = -mag
-        self.controller.setSpeed(mag)
+        self.controller.setSpeed(mag * scale)
 
 
 # an interface for controlling a single swerve drive wheel
@@ -108,6 +108,8 @@ class TalonWheelController(WheelController):
         self.rotateTalonInitialPosition = rotateTalon.getPosition()
         self.rotateTalonEncoderTicks = rotateTalonEncoderTicks
         rotateTalon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
+        
+        self.driveMode = DriveInterface.DriveMode.VOLTAGE
 
     def getCurrentRotation(self):
         ticks = self.rotateTalon.getPosition()
@@ -127,17 +129,36 @@ class TalonWheelController(WheelController):
         self.rotateTalon.set(currentTicks + diff)
     
     def setDriveMode(self, driveMode):
+        if driveMode == DriveInterface.DriveMode.JEFF \
+                and self.driveMode != DriveInterface.DriveMode.JEFF:
+            self.driveTalonJeff.zero()
         seamonsters.drive.setControlMode(self.driveTalon, driveMode)
+        self.driveMode = driveMode
         
     def setSpeed(self, speed):
-        pass
-
+        if self.driveMode = DriveInterface.DriveMode.JEFF:
+            self.driveTalonJeff.set(speed)
+        else:
+            self.driveTalon.set(speed)
+    
 
 class SwerveDrive(DriveInterface):
     
     def __init__(self):
         DriveInterface.__init__(self)
         self.wheels = [ ]
+        self.speedModeVelocity = 2000
+        self.positionModeVelocity = 400
+        self.invert = False
+        
+    def setSpeedModeVeloicty(self, velocity):
+        self.speedModeVelocity = velocity
+    
+    def setPositionModeVeloicty(self, velocity):
+        self.speedModeVelocity = velocity
+        
+    def invert(self, enabled=True):
+        self.invert = enabled
     
     def addWheel(self, xLocation, yLocation,
             driveTalon=None, rotateTalon=None, rotateTalonEncoderTicks=None):
@@ -153,9 +174,14 @@ class SwerveDrive(DriveInterface):
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
         if forceDriveMode == None:
             forceDriveMode = self.getDriveMode()
+        scale = -1 if self.invert else 1
+        if forceDriveMode == DriveInterface.DriveMode.SPEED:
+            scale *= self.speedModeVelocity
+        elif forceDriveMode == DriveInterface.DriveMode.POSITION:
+            scale *= self.positionModeVelocity
         for wheel in self.wheels:
             wheel.calcDrive(magnitude, direction, turn)
-            wheel.drive(forceDriveMode)
+            wheel.drive(forceDriveMode, scale)
     
     def printWheelState(self):
         for i, wheel in enumerate(self.wheels):

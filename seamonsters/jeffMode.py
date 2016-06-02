@@ -20,9 +20,14 @@ class JeffMode:
 
         if not (self.Talon.getControlMode() == wpilib.CANTalon.ControlMode.Position):
             self.Talon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
-        self.encoderTarget = self.Talon.getPosition() #zero encoder targets
+        self.zero()
         self.invert = 1 # can be 1 or -1
 
+    def zero(self):
+        """
+        Zero the encoder target.
+        """
+        self.encoderTarget = self.Talon.getPosition()
 
     def set(self, magnitude):
         """
