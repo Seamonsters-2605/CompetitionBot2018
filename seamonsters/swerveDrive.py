@@ -20,8 +20,16 @@ def normalize(vector):
     return (vector[0] / mag, vector[1] / mag)
 
 class WheelState:
-    # location is a tuple (x, y) -- location of wheel from center of robot
+    """
+    Keeps track of the current state of a single wheels, calculates all the
+    necessary, vector math, and controls a WheelController.
+    """
+    
     def __init__(self, location, controller):
+        """
+        location is a tuple (x, y) -- location of wheel from center of robot.
+        controller is a WheelController.
+        """
         self.location = location
         self.driveVector = (0, 0)
         self.targetDirection = 0
@@ -31,6 +39,10 @@ class WheelState:
         self.controller = controller
     
     def calcDrive(self, mag, driveDirection, turn):
+        """
+        Calculate the drive vector, magnitude, and direction for the given
+        parameters, but don't do anything yet.
+        """
         moveVector = (math.cos(driveDirection) * mag,
                 math.sin(driveDirection) * mag)
         self.driveVector = (moveVector[0] - self.location[1]*turn,
@@ -39,6 +51,11 @@ class WheelState:
         self.targetDirection = direction(self.driveVector)
     
     def drive(self, driveMode, scale):
+        """
+        Use the WheelController to drive with previously calculated values.
+        scale multiplies all driving motor values by a constant -- different
+        drive mode max velocities have already been included in this.
+        """
         # set rotate talon
         currentRot = self.controller.getCurrentRotation()
         diffRadians = abs(currentRot - self.targetDirection) % (math.pi*2)
@@ -58,27 +75,42 @@ class WheelState:
         self.controller.setSpeed(mag * scale)
 
 
-# an interface for controlling a single swerve drive wheel
 class WheelController:
+    """
+    An interface for controlling a single swerve drive wheel
+    """
     
-    # orient the wheel towards a certain direction
-    # radians may not be within 0 and 2pi
     def rotateWheel(self, radians):
+        """
+        Orient the wheel towards a certain direction.
+        radians might not be within 0 and 2pi
+        """
         pass
     
-    # in radians
     def getCurrentRotation(self):
+        """
+        Get the current orientation of the wheel, in radians.
+        """
         pass
     
-    # spin the wheel
     def setSpeed(self, speed):
+        """
+        Spin the wheel at the specific speed. The speed has already been
+        adjusted for the current drive mode.
+        """
         pass
     
     def setDriveMode(self, driveMode):
+        """
+        Set the drive mode for the driving motor (not for the rotation motor).
+        """
         pass
 
 
 class TestWheelController(WheelController):
+    """
+    A wheel controller that logs all events and does nothing else.
+    """
     
     def __init__(self, number):
         self.number = number
@@ -99,6 +131,9 @@ class TestWheelController(WheelController):
 
 
 class TalonWheelController(WheelController):
+    """
+    A wheel controller controlling two CANTalons. Supports any drive mode.
+    """
     
     def __init__(self, driveTalon, rotateTalon, rotateTalonEncoderTicks):
         self.driveTalon = driveTalon
@@ -143,6 +178,9 @@ class TalonWheelController(WheelController):
     
 
 class SwerveDrive(DriveInterface):
+    """
+    An implementation of DriveInterface for swerve drives.
+    """
     
     def __init__(self):
         DriveInterface.__init__(self)
@@ -152,16 +190,33 @@ class SwerveDrive(DriveInterface):
         self.invert = False
         
     def setSpeedModeVeloicty(self, velocity):
+        """
+        Set the maximum encoder velocity when in speed mode. Default is 2000.
+        """
         self.speedModeVelocity = velocity
     
     def setPositionModeVeloicty(self, velocity):
+        """
+        Set the maximum encoder velocity when in position/jeff mode. Default is
+        400.
+        """
         self.speedModeVelocity = velocity
         
     def invert(self, enabled=True):
+        """
+        When enabled, the direction of all motors will be reversed.
+        """
         self.invert = enabled
     
     def addWheel(self, xLocation, yLocation,
             driveTalon=None, rotateTalon=None, rotateTalonEncoderTicks=None):
+        """
+        Add a wheel to the robot at the specific location. driveTalon is the
+        motor that spins the wheel; rotateTalon is the motor that rotates the
+        swerve drive; rotateTalonEncoderTicks is the number of encoder ticks per
+        full rotation for that motor. If none of those are specified, the wheel
+        will be added in test mode, in which it only logs events.
+        """
         location = (xLocation, yLocation)
         wheelController = None
         if driveTalon == None:
@@ -184,6 +239,9 @@ class SwerveDrive(DriveInterface):
             wheel.drive(forceDriveMode, scale)
     
     def printWheelState(self):
+        """
+        Print the vectors each of the wheels are trying to drive towards.
+        """
         for i, wheel in enumerate(self.wheels):
             print("Wheel:", i,
                   "Vector:", wheel.driveVector,
