@@ -212,7 +212,7 @@ class HolonomicDrive(DriveInterface):
     def incrementEncoderTargets(self):
         #Started @ 1000
         for i in range(0, 4):
-            if not abs(self.wheelMotors[i].getEncPosition() \
+            if not abs(self.wheelMotors[i].getPosition() \
                     - self.encoderTargets[i]) > 4000:
                 self.encoderTargets[i] += self.stores[i] * self.invert
 
@@ -244,7 +244,7 @@ class HolonomicDrive(DriveInterface):
 
     def zeroEncoderTargets(self):
         for i in range(0, 4):
-            self.encoderTargets[i] = self.wheelMotors[i].getEncPosition()
+            self.encoderTargets[i] = self.wheelMotors[i].getPosition()
     
     def enableTalons(self):
         for i in range(0, 4):
