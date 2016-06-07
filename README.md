@@ -2,6 +2,21 @@
 
 Code for the JellyFISH!
 
+Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
+`.\test.bat` (Windows).
+
+## Directory Structure
+
+- `seamonsters/`: The work-in-progress seamonsters library code.
+- `GRIP/`: GRIP files used in competition for image recognition.
+- `Shooter/`: Code for the flywheels, intake motor, and ShootController, which
+    allows control of both.
+- `tests/`: Created and used by pyfrc for tests.
+- `utilityRobots/`: Has the pidTest robot. This hasn't been used or updated for
+    a while.
+- `Vision.py`: Simple code that gets the center of the target from GRIP
+- `robot.py`: The final robot
+
 ## Subsystems
 
 Subsystems represent integrated systems made up of components and serving a single purpose, e.g. the drivetrain of the robot. A command can require a subsystem to exclude other commands from using that subsystem's components. 
