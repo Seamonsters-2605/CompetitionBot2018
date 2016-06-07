@@ -32,17 +32,19 @@ class HolonomicDrive(DriveInterface):
 
     def __init__(self, fl, fr, bl, br):
         DriveInterface.__init__(self)
-        self.FL = fl
-        self.FR = fr
-        self.BL = bl
-        self.BR = br
+        
+        self.wheelMotors = [None for i in range(0, 4)]
+        self.wheelMotors[HolonomicDrive.FRONT_LEFT] = fl
+        self.wheelMotors[HolonomicDrive.FRONT_RIGHT] = fr
+        self.wheelMotors[HolonomicDrive.BACK_LEFT] = bl
+        self.wheelMotors[HolonomicDrive.BACK_RIGHT] = br
 
         self.stores = [0.0, 0.0, 0.0, 0.0]
         self.encoderTargets = [0.0, 0.0, 0.0, 0.0]
         self.wheelOffset = math.pi / 4
-        self.invert = 1 # can be 1 or -1
+        self.invert = 1 # can be 1 or -1 (inverted)
         # maxVelocity is for "Jeff mode" (aka integral velocity)
-        # and is modified for velocity mode
+        # and is multiplied by 5 for velocity mode
         self.maxVelocity = 80 * 5
         self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
         self.driveMode = DriveInterface.DriveMode.VOLTAGE
@@ -165,7 +167,6 @@ class HolonomicDrive(DriveInterface):
         self.calcWheels(magnitude, direction, turn)
         self.scaleToMaxJeffMode()
         self.incrementEncoderTargets()
-        #self.ensureSafeDistance()
         self.setWheelsJeffMode()
         self.previousDriveMode = DriveInterface.DriveMode.POSITION
     
@@ -193,7 +194,7 @@ class HolonomicDrive(DriveInterface):
                 * (math.sin((direction + self.wheelOffset)))
 
     def addTurn(self, turn):
-        for i in range (0,4):
+        for i in range(0,4):
             self.stores[i] += turn
 
     def scaleNumbers(self):
@@ -204,57 +205,30 @@ class HolonomicDrive(DriveInterface):
 
     def incrementEncoderTargets(self):
         #Started @ 1000
-        if not abs(self.FL.getEncPosition() \
-                - self.encoderTargets[HolonomicDrive.FRONT_LEFT]) > 4000:
-            self.encoderTargets[HolonomicDrive.FRONT_LEFT] += \
-                self.stores[HolonomicDrive.FRONT_LEFT] * self.invert
-        
-        if not abs(self.FR.getEncPosition() \
-                - self.encoderTargets[HolonomicDrive.FRONT_RIGHT]) > 4000:
-            self.encoderTargets[HolonomicDrive.FRONT_RIGHT] += \
-                self.stores[HolonomicDrive.FRONT_RIGHT] * self.invert
-        
-        if not abs(self.BL.getEncPosition() \
-                - self.encoderTargets[HolonomicDrive.BACK_LEFT]) > 4000:
-            self.encoderTargets[HolonomicDrive.BACK_LEFT] += \
-                self.stores[HolonomicDrive.BACK_LEFT] * self.invert
-        
-        if not abs(self.BR.getEncPosition() \
-                - self.encoderTargets[3]) > 4000:
-            self.encoderTargets[HolonomicDrive.BACK_RIGHT] += \
-                self.stores[HolonomicDrive.BACK_RIGHT] * self.invert
+        for i in range(0, 4):
+            if not abs(self.wheelMotors[i].getEncPosition() \
+                    - self.encoderTargets[i]) > 4000:
+                self.encoderTargets[i] += self.stores[i] * self.invert
 
     def setWheels(self):
-        self.FL.set(self.stores[HolonomicDrive.FRONT_LEFT] * self.invert)
-        self.FR.set(self.stores[HolonomicDrive.FRONT_RIGHT] * self.invert)
-        self.BL.set(self.stores[HolonomicDrive.BACK_LEFT] * self.invert)
-        self.BR.set(self.stores[HolonomicDrive.BACK_RIGHT] * self.invert)
+        for i in range(0, 4):
+            self.wheelMotors[i].set(self.stores[i] * self.invert)
 
     def setWheelsJeffMode(self):
-        self.FL.set(self.encoderTargets[HolonomicDrive.FRONT_LEFT])
-        self.FR.set(self.encoderTargets[HolonomicDrive.FRONT_RIGHT])
-        self.BL.set(self.encoderTargets[HolonomicDrive.BACK_LEFT])
-        self.BR.set(self.encoderTargets[HolonomicDrive.BACK_RIGHT])
+        for i in range(0, 4):
+            self.wheelMotors[i].set(self.encoderTargets[i])
 
     def scaleToMax(self):
-        for i in range (0,4):
+        for i in range(0,4):
             self.stores[i] *= self.maxVelocity * 5
 
     def scaleToMaxJeffMode(self):
-        for i in range (0,4):
+        for i in range(0,4):
             self.stores[i] *= self.maxVelocity
 
     def ensureControlMode(self, controlMode):
-        if self.FL.getControlMode()\
-           == self.FR.getControlMode()\
-           == self.BL.getControlMode()\
-           == self.BR.getControlMode()\
-           == controlMode:
-            return
-        self.FL.changeControlMode(controlMode)
-        self.FR.changeControlMode(controlMode)
-        self.BL.changeControlMode(controlMode)
-        self.BR.changeControlMode(controlMode)
+        for i in range(0, 4):
+            self.wheelMotors[i].changeControlMode(controlMode)
 
     def logCurrent(self):
         print("FL Current: " + str(self.FL.getOutputCurrent()))
@@ -263,50 +237,14 @@ class HolonomicDrive(DriveInterface):
         print("BR Current: " + str(self.BR.getOutputCurrent()))
 
     def zeroEncoderTargets(self):
-        self.encoderTargets[0] = self.FL.getEncPosition()
-        self.encoderTargets[1] = self.FR.getEncPosition()
-        self.encoderTargets[2] = self.BL.getEncPosition()
-        self.encoderTargets[3] = self.BR.getEncPosition()
-
-    def ensureSafeDistance(self):
-        # TODO: add counts per rev. variable, and max velocity variable
-        flposition = self.FL.getEncPosition()
-        if abs(flposition - self.encoderTargets[0]) > 4000:
-            if (self.encoderTargets[0] > flposition):
-                self.encoderTargets[0] = flposition + 4000
-            else:
-                self.encoderTargets[0] = flposition - 4000
-
-        frposition = self.FL.getEncPosition()
-        if abs(frposition - self.encoderTargets[0]) > 4000:
-            if (self.encoderTargets[0] > frposition):
-                self.encoderTargets[0] = frposition + 4000
-            else:
-                self.encoderTargets[0] = frposition - 4000
-
-        blposition = self.FL.getEncPosition()
-        if abs(blposition - self.encoderTargets[0]) > 4000:
-            if (self.encoderTargets[0] > blposition):
-                self.encoderTargets[0] = blposition + 4000
-            else:
-                self.encoderTargets[0] = blposition - 4000
-
-        brposition = self.FL.getEncPosition()
-        if abs(brposition - self.encoderTargets[0]) > 4000:
-            if (self.encoderTargets[0] > brposition):
-                self.encoderTargets[0] = brposition + 4000
-            else:
-                self.encoderTargets[0] = brposition - 4000
-
+        for i in range(0, 4):
+            self.encoderTargets[i] = self.wheelMotors[i].getEncPosition()
+    
     def enableTalons(self):
-        self.FL.enable()
-        self.FR.enable()
-        self.BL.enable()
-        self.BR.enable()
+        for i in range(0, 4):
+            self.wheelMotors[i].enable()
 
     def disableTalons(self):
-        self.FL.disable()
-        self.FR.disable()
-        self.BL.disable()
-        self.BR.disable()
+        for i in range(0, 4):
+            self.wheelMotors[i].disable()
 
