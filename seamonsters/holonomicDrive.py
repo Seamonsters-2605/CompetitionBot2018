@@ -39,13 +39,22 @@ class HolonomicDrive(DriveInterface):
         self.wheelMotors[HolonomicDrive.BACK_LEFT] = bl
         self.wheelMotors[HolonomicDrive.BACK_RIGHT] = br
 
+        # stores the currently calculated voltage or velocity that will be sent
+        # to the CANTalons, for each wheel
         self.stores = [0.0, 0.0, 0.0, 0.0]
+        
+        # for position/jeff mode: stores the current target position for each
+        # wheel
         self.encoderTargets = [0.0, 0.0, 0.0, 0.0]
+        
         self.wheelOffset = math.pi / 4
-        self.invert = 1 # can be 1 or -1 (inverted)
-        # maxVelocity is for "Jeff mode" (aka integral velocity)
-        # and is multiplied by 5 for velocity mode
+        
+        # can be 1 for normal driving, or -1 to invert all motors
+        self.invert = 1
+        
+        # maximum velocity position/jeff mode; multiplied by 5 for speed mode
         self.maxVelocity = 80 * 5
+        
         self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
         self.driveMode = DriveInterface.DriveMode.VOLTAGE
 
@@ -55,7 +64,7 @@ class HolonomicDrive(DriveInterface):
         self.previousY = 0.0
         self.previousTurn = 0.0
         
-    # returns an list of: [magnitude, direction, turn]
+    # returns an tuple of: (magnitude, direction, turn)
     # for internal use only
     def accelerationFilter(self, magnitude, direction, turn):
         newX = magnitude * math.cos(direction)
@@ -73,7 +82,7 @@ class HolonomicDrive(DriveInterface):
             self.previousX = newX
             self.previousY = newY
             self.previousTurn = finalTurn
-            return [magnitude, direction, finalTurn]
+            return magnitude, direction, finalTurn
 
         #Alternate Return for strafe fail to pass
         directionToNew = math.atan2(newY-self.previousY, newX-self.previousX)
@@ -84,8 +93,9 @@ class HolonomicDrive(DriveInterface):
         self.previousX = finalX
         self.previousY = finalY
         self.previousTurn = finalTurn
-        return [math.sqrt(finalX ** 2 + finalY ** 2), \
-                math.atan2(finalY, finalX), finalTurn]
+        return math.sqrt(finalX ** 2 + finalY ** 2), \
+               math.atan2(finalY, finalX), \
+               finalTurn
 
 
     #USE THESE FEW FUNCTIONS BELOW
@@ -107,9 +117,11 @@ class HolonomicDrive(DriveInterface):
 
     def setMaxVelocity(self, velocity):
         """
-        Sets the max encoder velocity. Default is 2000. This number also affects
-        the Jeff Mode maximum difference between target and current position,
-        although that is also affected by other values.
+        Sets the max encoder velocity for position/jeff and speed mode.
+        Default is 2000. For position mode, this is the maximum difference
+        between target and current position for every iteration (50 times per
+        second). Speed mode behaves similarly, but since wpilib uses units of
+        10ths of a second, the velocity value is multiplied by 5.
         """
         self.maxVelocity = velocity
     
@@ -155,11 +167,8 @@ class HolonomicDrive(DriveInterface):
         #     self.zeroEncoderTargets()
 
         if self.usingInputAccelerationControl:
-            filteredResults = \
+            magnitude, direction, turn = \
                     self.accelerationFilter(magnitude, direction, turn)
-            magnitude = filteredResults[0]
-            direction = filteredResults[1]
-            turn = filteredResults[2]
 
         self.ensureControlMode(wpilib.CANTalon.ControlMode.Position)
         if not self.previousDriveMode == DriveInterface.DriveMode.POSITION:
