@@ -24,6 +24,12 @@ class HolonomicDrive(DriveInterface):
     is all backwards. Turn should be passed in as -Joystick.getX, most likely.
     """
 
+    # constants used for wheel indices:
+    FRONT_LEFT = 0
+    FRONT_RIGHT = 1
+    BACK_LEFT = 2
+    BACK_RIGHT = 3
+
     def __init__(self, fl, fr, bl, br):
         DriveInterface.__init__(self)
         self.FL = fl
@@ -177,14 +183,14 @@ class HolonomicDrive(DriveInterface):
             fixedMagnitude = 1.0
         else:
             fixedMagnitude = magnitude
-        self.stores[0] += fixedMagnitude \
-                * (math.sin(direction + self.wheelOffset)) * -1 #FL
-        self.stores[1] += fixedMagnitude \
-                * (math.sin((direction - self.wheelOffset))) #FR
-        self.stores[2] += fixedMagnitude \
-                * (math.sin((direction - self.wheelOffset))) * -1 #BL
-        self.stores[3] += fixedMagnitude \
-                * (math.sin((direction + self.wheelOffset))) #FR
+        self.stores[HolonomicDrive.FRONT_LEFT] += fixedMagnitude \
+                * (math.sin(direction + self.wheelOffset)) * -1
+        self.stores[HolonomicDrive.FRONT_RIGHT] += fixedMagnitude \
+                * (math.sin((direction - self.wheelOffset)))
+        self.stores[HolonomicDrive.BACK_LEFT] += fixedMagnitude \
+                * (math.sin((direction - self.wheelOffset))) * -1
+        self.stores[HolonomicDrive.BACK_RIGHT] += fixedMagnitude \
+                * (math.sin((direction + self.wheelOffset)))
 
     def addTurn(self, turn):
         for i in range (0,4):
@@ -198,26 +204,37 @@ class HolonomicDrive(DriveInterface):
 
     def incrementEncoderTargets(self):
         #Started @ 1000
-        if not abs(self.FL.getEncPosition() - self.encoderTargets[0]) > 4000:
-            self.encoderTargets[0] += self.stores[0] * self.invert
-        if not abs(self.FR.getEncPosition() - self.encoderTargets[1]) > 4000:
-            self.encoderTargets[1] += self.stores[1] * self.invert
-        if not abs(self.BL.getEncPosition() - self.encoderTargets[2]) > 4000:
-            self.encoderTargets[2] += self.stores[2] * self.invert
-        if not abs(self.BR.getEncPosition() - self.encoderTargets[3]) > 4000:
-            self.encoderTargets[3] += self.stores[3] * self.invert
+        if not abs(self.FL.getEncPosition() \
+                - self.encoderTargets[HolonomicDrive.FRONT_LEFT]) > 4000:
+            self.encoderTargets[HolonomicDrive.FRONT_LEFT] += \
+                self.stores[HolonomicDrive.FRONT_LEFT] * self.invert
+        
+        if not abs(self.FR.getEncPosition() \
+                - self.encoderTargets[HolonomicDrive.FRONT_RIGHT]) > 4000:
+            self.encoderTargets[HolonomicDrive.FRONT_RIGHT] += \
+                self.stores[HolonomicDrive.FRONT_RIGHT] * self.invert
+        
+        if not abs(self.BL.getEncPosition() \
+                - self.encoderTargets[HolonomicDrive.BACK_LEFT]) > 4000:
+            self.encoderTargets[HolonomicDrive.BACK_LEFT] += \
+                self.stores[HolonomicDrive.BACK_LEFT] * self.invert
+        
+        if not abs(self.BR.getEncPosition() \
+                - self.encoderTargets[3]) > 4000:
+            self.encoderTargets[HolonomicDrive.BACK_RIGHT] += \
+                self.stores[HolonomicDrive.BACK_RIGHT] * self.invert
 
     def setWheels(self):
-        self.FL.set(self.stores[0] * self.invert)
-        self.FR.set(self.stores[1] * self.invert)
-        self.BL.set(self.stores[2] * self.invert)
-        self.BR.set(self.stores[3] * self.invert)
+        self.FL.set(self.stores[HolonomicDrive.FRONT_LEFT] * self.invert)
+        self.FR.set(self.stores[HolonomicDrive.FRONT_RIGHT] * self.invert)
+        self.BL.set(self.stores[HolonomicDrive.BACK_LEFT] * self.invert)
+        self.BR.set(self.stores[HolonomicDrive.BACK_RIGHT] * self.invert)
 
     def setWheelsJeffMode(self):
-        self.FL.set(self.encoderTargets[0])
-        self.FR.set(self.encoderTargets[1])
-        self.BL.set(self.encoderTargets[2])
-        self.BR.set(self.encoderTargets[3])
+        self.FL.set(self.encoderTargets[HolonomicDrive.FRONT_LEFT])
+        self.FR.set(self.encoderTargets[HolonomicDrive.FRONT_RIGHT])
+        self.BL.set(self.encoderTargets[HolonomicDrive.BACK_LEFT])
+        self.BR.set(self.encoderTargets[HolonomicDrive.BACK_RIGHT])
 
     def scaleToMax(self):
         for i in range (0,4):
