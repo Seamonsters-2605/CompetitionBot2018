@@ -3,7 +3,7 @@ __author__ = "jacobvanthoog"
 import math
 import wpilib
 import sys
-import JoystickLib.joystickLib
+import seamonsters
 from seamonsters.holonomicDrive import HolonomicDrive
 from seamonsters.drive import DriveInterface
 from seamonsters.gamepad import Gamepad
@@ -46,9 +46,9 @@ class MainRobot (wpilib.IterativeRobot):
         self.movegamepad = Gamepad(port = 0)
         self.shootgamepad = Gamepad(port = 1)
 
-        self.MoveJoy = JoystickLib.joystickLib.createJoystick(0)
+        self.MoveJoy = seamonsters.joystick.JoystickUtils(0)
         self.MoveJoy.invertY()
-        self.TurnJoy = JoystickLib.joystickLib.createJoystick(1)
+        self.TurnJoy = seamonsters.joystick.JoystickUtils(1)
         self.TurnJoy.invertY()
 
         self.Drive = HolonomicDrive(self.FL, self.FR, self.BL, self.BR)
