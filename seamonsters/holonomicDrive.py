@@ -157,14 +157,11 @@ class HolonomicDrive(DriveInterface):
 
     #Increments position to mock speed mode
     def driveSpeedJeffMode(self, magnitude, direction, turn): 
-        # if (turn == 0 and magnitude == 0):
-        #     self.disableTalons()
-        # elif self.FL.getControlMode() == CANTalon.ControlMode.Disabled and\
-        #      self.FR.getControlMode() == CANTalon.ControlMode.Disabled and\
-        #      self.BL.getControlMode() == CANTalon.ControlMode.Disabled and\
-        #      self.BR.getControlMode() == CANTalon.ControlMode.Disabled:
-        #     self.enableTalons()
-        #     self.zeroEncoderTargets()
+        if (turn == 0 and magnitude == 0):
+            self.disableTalons()
+        elif not self.allTalonsEnabled():
+            self.enableTalons()
+            self.zeroEncoderTargets()
 
         if self.usingInputAccelerationControl:
             magnitude, direction, turn = \
@@ -257,3 +254,8 @@ class HolonomicDrive(DriveInterface):
         for i in range(0, 4):
             self.wheelMotors[i].disable()
 
+    def allTalonsEnabled(self):
+        for i in range(0, 4):
+            if not self.wheelMotors[i].isControlEnabled():
+                return False
+        return True
