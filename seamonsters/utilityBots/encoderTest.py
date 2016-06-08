@@ -8,6 +8,7 @@ class EncoderTest(wpilib.IterativeRobot):
         """
         ports is an array of integers for the CANTalon ports to test
         """
+        wpilib.IterativeRobot.__init__(self)
         self.talons = [wpilib.CANTalon(p) for p in ports]
         for t in self.talons:
             t.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
