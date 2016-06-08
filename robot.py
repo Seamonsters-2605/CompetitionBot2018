@@ -51,7 +51,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.TurnJoy = seamonsters.joystick.JoystickUtils(1)
         self.TurnJoy.invertY()
 
-        self.Drive = HolonomicDrive(self.FL, self.FR, self.BL, self.BR)
+        self.Drive = HolonomicDrive(self.FL, self.FR, self.BL, self.BR, 4096)
         self.Drive.invertDrive(True)
         # TODO: move magic number to constant
         self.Drive.setWheelOffset(math.radians(27)) #angle of wheels

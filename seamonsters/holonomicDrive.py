@@ -30,7 +30,11 @@ class HolonomicDrive(DriveInterface):
     BACK_LEFT = 2
     BACK_RIGHT = 3
 
-    def __init__(self, fl, fr, bl, br):
+    def __init__(self, fl, fr, bl, br, ticksPerWheelRotation):
+        """
+        Initialize holonomicDrive with for talons. ticksPerWheelRotation MUST
+        be for a full wheel rotation, not necessarily a full motor rotation.
+        """
         DriveInterface.__init__(self)
         
         self.wheelMotors = [None for i in range(0, 4)]
@@ -38,6 +42,8 @@ class HolonomicDrive(DriveInterface):
         self.wheelMotors[HolonomicDrive.FRONT_RIGHT] = fr
         self.wheelMotors[HolonomicDrive.BACK_LEFT] = bl
         self.wheelMotors[HolonomicDrive.BACK_RIGHT] = br
+        
+        self.ticksPerWheelRotation = ticksPerWheelRotation
 
         # stores the currently calculated voltage or velocity that will be sent
         # to the CANTalons, for each wheel
@@ -222,10 +228,9 @@ class HolonomicDrive(DriveInterface):
                 number = number / largest
 
     def incrementEncoderTargets(self):
-        #Started @ 1000
         for i in range(0, 4):
             if not abs(self.wheelMotors[i].getPosition() \
-                    - self.encoderTargets[i]) > 4000:
+                    - self.encoderTargets[i]) > self.ticksPerWheelRotation:
                 self.encoderTargets[i] += self.stores[i] * self.invert
 
     def setWheels(self):
