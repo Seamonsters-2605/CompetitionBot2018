@@ -171,7 +171,7 @@ class TalonWheelController(WheelController):
         self.driveMode = driveMode
         
     def setSpeed(self, speed):
-        if self.driveMode = DriveInterface.DriveMode.JEFF:
+        if self.driveMode == DriveInterface.DriveMode.JEFF:
             self.driveTalonJeff.set(speed)
         else:
             self.driveTalon.set(speed)
@@ -189,18 +189,16 @@ class SwerveDrive(DriveInterface):
         self.positionModeVelocity = 400
         self.invert = False
         
-    def setSpeedModeVeloicty(self, velocity):
+    def setMaxVeloicty(self, velocity):
         """
-        Set the maximum encoder velocity when in speed mode. Default is 2000.
+        Sets the max encoder velocity for position/jeff and speed mode.
+        Default is 400. For position mode, this is the maximum difference
+        between target and current position for every iteration (50 times per
+        second). Speed mode behaves similarly, but since wpilib uses units of
+        10ths of a second, the velocity value is multiplied by 5.
         """
-        self.speedModeVelocity = velocity
-    
-    def setPositionModeVeloicty(self, velocity):
-        """
-        Set the maximum encoder velocity when in position/jeff mode. Default is
-        400.
-        """
-        self.speedModeVelocity = velocity
+        self.speedModeVelocity = velocity * 5
+        self.positionModeVelocity = velocity
         
     def invert(self, enabled=True):
         """

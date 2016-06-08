@@ -124,7 +124,7 @@ class HolonomicDrive(DriveInterface):
     def setMaxVelocity(self, velocity):
         """
         Sets the max encoder velocity for position/jeff and speed mode.
-        Default is 2000. For position mode, this is the maximum difference
+        Default is 400. For position mode, this is the maximum difference
         between target and current position for every iteration (50 times per
         second). Speed mode behaves similarly, but since wpilib uses units of
         10ths of a second, the velocity value is multiplied by 5.
