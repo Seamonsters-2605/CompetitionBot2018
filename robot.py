@@ -51,7 +51,11 @@ class MainRobot (wpilib.IterativeRobot):
         self.TurnJoy = seamonsters.joystick.JoystickUtils(1)
         self.TurnJoy.invertY()
 
-        self.Drive = HolonomicDrive(self.FL, self.FR, self.BL, self.BR, 4096)
+        # 4156 ticks per wheel rotation
+        # encoder has 100 raw ticks -- with a QuadEncoder that makes 400 ticks
+        # the motor gear has 18 teeth and the wheel has 187 teeth
+        # 187 / 18 * 400 = 4155.5556 = ~4156
+        self.Drive = HolonomicDrive(self.FL, self.FR, self.BL, self.BR, 4156)
         self.Drive.invertDrive(True)
         # TODO: move magic number to constant
         self.Drive.setWheelOffset(math.radians(27)) #angle of wheels
