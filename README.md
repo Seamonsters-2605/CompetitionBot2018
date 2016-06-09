@@ -8,14 +8,23 @@ Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
 ## Directory Structure
 
 - `seamonsters/`: The work-in-progress seamonsters library code.
+    - `seamonsters/utilityBots/`: Very basic robot implementations for testing 
+        things. These must be subclassed with a bit of extra code to be used.
 - `GRIP/`: GRIP files used in competition for image recognition.
-- `Shooter/`: Code for the flywheels, intake motor, and ShootController, which
+- `Shooter/`: Code for the flywheels, intake motor, and "ShootController", which
     allows control of both.
 - `tests/`: Created and used by pyfrc for tests.
 - `utilityRobots/`: Has the pidTest robot. This hasn't been used or updated for
     a while.
 - `Vision.py`: Simple code that gets the center of the target from GRIP
 - `robot.py`: The final robot
+- `testBot.py`: Robot that is modified for testing various things
+- `holoBot.py`: Simple bot used for testing holonomic drives
+- `swerveBot.py`: Simple bot used for testing swerve drives
+- `deploy.bat` and `deploy.sh`: Windows and *nix versions of scripts for
+    deploying code to robot.
+- `test.bat` and `test.sh`: Scripts for testing robot code without needing an
+    actual robot to deploy to.
 
 ## Subsystems
 
