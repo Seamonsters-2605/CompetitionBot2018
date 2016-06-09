@@ -4,7 +4,6 @@ from seamonsters.utilityBots.driveTest import DriveTest
 from seamonsters.drive import DriveInterface
 from seamonsters.swerveDrive import SwerveDrive
 import wpilib
-import math
 
 class SwerveBot(DriveTest):
     
@@ -29,7 +28,7 @@ class SwerveBot(DriveTest):
         # 104 gear teeth / 18 gear teeth * 280 ticks per rotation * 4 (quad)
         drive.addWheel(-1.0, 1.0, flDrive, flRotate, 104/18*280*4)
         drive.addWheel(1.0, -1.0, brDrive, brRotate, 104/18*280*4)
-        drive.setDriveMode(DriveInterface.DriveMode.POSITION)
+        drive.setDriveMode(DriveInterface.DriveMode.VOLTAGE)
         
         DriveTest.initDrive(self, drive)
         
