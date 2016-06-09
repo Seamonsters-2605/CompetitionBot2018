@@ -2,7 +2,7 @@ __author__ = "jacobvanthoog"
 
 from seamonsters.utilityBots.driveTest import DriveTest
 from seamonsters.drive import DriveInterface
-from seamonsters.holonomicDrive import HolonomicDrive
+from seamonsters.swerveDrive import SwerveDrive
 import wpilib
 import math
 
@@ -11,27 +11,24 @@ class SwerveBot(DriveTest):
     def robotInit(self):
         DriveTest.robotInit(self)
         
-        fl = wpilib.CANTalon(2)
-        fr = wpilib.CANTalon(1)
-        bl = wpilib.CANTalon(0)
-        br = wpilib.CANTalon(3)
-        fl.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
-        fr.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
-        bl.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
-        br.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
-        fl.setPID(1.0, 0.0, 3.0, 0.0)
-        fr.setPID(1.0, 0.0, 3.0, 0.0)
-        bl.setPID(1.0, 0.0, 3.0, 0.0)
-        br.setPID(1.0, 0.0, 3.0, 0.0)
+        flDrive = wpilib.CANTalon(0)
+        flRotate = wpilib.CANTalon(1)
+        brDrive = wpilib.CANTalon(2)
+        brRotate = wpilib.CANTalon(3)
+        flDrive.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
+        flRotate.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
+        brDrive.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
+        flRotate.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
+        flDrive.setPID(1.0, 0.0, 3.0, 0.0)
+        flRotate.setPID(1.0, 0.0, 3.0, 0.0)
+        brDrive.setPID(1.0, 0.0, 3.0, 0.0)
+        brRotate.setPID(1.0, 0.0, 3.0, 0.0)
         
-        # 4156 ticks per wheel rotation
-        # encoder has 100 raw ticks -- with a QuadEncoder that makes 400 ticks
-        # the motor gear has 18 teeth and the wheel has 187 teeth
-        # 187 / 18 * 400 = 4155.5556 = ~4156
-        drive = HolonomicDrive(fl, fr, bl, br, 4156)
-        drive.invertDrive(True)
-        # TODO: move magic number to constant
-        drive.setWheelOffset(math.radians(27)) #angle of wheels
+        drive = SwerveDrive()
+        
+        # 104 gear teeth / 18 gear teeth * 280 ticks per rotation * 4 (quad)
+        drive.addWheel(-1.0, 1.0, flDrive, flRotate, 104/18*280*4)
+        drive.addWheel(1.0, -1.0, brDrive, brRotate, 104/18*280*4)
         drive.setDriveMode(DriveInterface.DriveMode.POSITION)
         
         DriveTest.initDrive(self, drive)
