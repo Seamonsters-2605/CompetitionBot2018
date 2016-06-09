@@ -14,8 +14,6 @@ Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
 - `Shooter/`: Code for the flywheels, intake motor, and "ShootController", which
     allows control of both.
 - `tests/`: Created and used by pyfrc for tests.
-- `utilityRobots/`: Has the pidTest robot. This hasn't been used or updated for
-    a while.
 - `Vision.py`: Simple code that gets the center of the target from GRIP
 - `robot.py`: The final robot
 - `testBot.py`: Robot that is modified for testing various things

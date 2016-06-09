@@ -1,10 +1,10 @@
 __author__ = 'Dawson'
 import wpilib
 
-class Tester(wpilib.IterativeRobot):
+class PIDTest(wpilib.IterativeRobot):
 
-    def robotInit(self):
-        self.Talon = wpilib.CANTalon(0)
+    def robotInit(self, talonPort):
+        self.Talon = wpilib.CANTalon(talonPort)
         self.Talon.setPID(1,0,1,0)
         self.Talon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
         #self.Talon.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
@@ -76,6 +76,3 @@ class Tester(wpilib.IterativeRobot):
             self.Talon.setD(self.Talon.getD() * number)
         elif self.PIDNumber == 3:
             self.Talon.setF(self.Talon.getF() * number)
-
-if __name__ == "__main__":
-    wpilib.run(Tester)
