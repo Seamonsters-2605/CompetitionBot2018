@@ -164,14 +164,14 @@ class TalonWheelController(WheelController):
         self.rotateTalon.set(currentTicks + diff)
     
     def setDriveMode(self, driveMode):
-        if driveMode == DriveInterface.DriveMode.JEFF \
-                and self.driveMode != DriveInterface.DriveMode.JEFF:
+        if driveMode == DriveInterface.DriveMode.POSITION \
+                and self.driveMode != DriveInterface.DriveMode.POSITION:
             self.driveTalonJeff.zero()
         seamonsters.drive.setControlMode(self.driveTalon, driveMode)
         self.driveMode = driveMode
         
     def setSpeed(self, speed):
-        if self.driveMode == DriveInterface.DriveMode.JEFF:
+        if self.driveMode == DriveInterface.DriveMode.POSITION:
             self.driveTalonJeff.set(speed)
         else:
             self.driveTalon.set(speed)
