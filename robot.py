@@ -59,7 +59,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.Drive.invertDrive(True)
         # TODO: move magic number to constant
         self.Drive.setWheelOffset(math.radians(27)) #angle of wheels
-        self.Drive.setDriveMode(HolonomicDrive.DriveMode.POSITION)
+        self.Drive.setDriveMode(DriveInterface.DriveMode.POSITION)
 
         self.LeftFly = wpilib.CANTalon(4)
         self.RightFly = wpilib.CANTalon(5)
