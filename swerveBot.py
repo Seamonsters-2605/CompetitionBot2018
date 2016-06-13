@@ -19,7 +19,7 @@ class SwerveBot(DriveTest):
         #blDrive.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
         #blRotate.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
         frDrive.setPID(1.0, 0.0, 3.0, 0.0)
-        frRotate.setPID(1.0, 0.0, 3.0, 0.0)
+        frRotate.setPID(0.75, 0.0, 5.0, 0.0)
         #blDrive.setPID(1.0, 0.0, 3.0, 0.0)
         #blRotate.setPID(1.0, 0.0, 3.0, 0.0)
         
