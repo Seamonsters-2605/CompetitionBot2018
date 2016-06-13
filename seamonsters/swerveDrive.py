@@ -166,6 +166,9 @@ class TalonWheelController(WheelController):
         if diff < -self.rotateTalonEncoderTicks / 2:
             diff += self.rotateTalonEncoderTicks
         
+        # slow down as target is approached
+        diff *= .8
+        
         self.rotateTalon.set(currentTicks + diff)
     
     def setDriveMode(self, driveMode):
