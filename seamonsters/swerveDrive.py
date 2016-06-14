@@ -172,6 +172,7 @@ class TalonWheelController(WheelController):
         
     def setSpeed(self, speed):
         self.driveController.set(speed)
+        self.driveController.update()
     
 
 class SwerveDrive(DriveInterface):
