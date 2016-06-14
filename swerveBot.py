@@ -27,8 +27,9 @@ class SwerveBot(DriveTest):
         drive = SwerveDrive()
         
         # 104 gear teeth / 18 gear teeth * 280 ticks per rotation * 4 (quad)
-        drive.addWheel(1.0, 1.0, frDrive, frRotate, 104/18*280*4)
-        #drive.addWheel(1.0, -1.0, blDrive, blRotate, 104/18*280*4)
+        # then divide by 2 for some reason
+        drive.addWheel(1.0, 1.0, frDrive, frRotate, 104/18*280*4/2)
+        #drive.addWheel(1.0, -1.0, blDrive, blRotate, 104/18*280*4/2)
         drive.setDriveMode(DriveInterface.DriveMode.VOLTAGE)
         
         DriveTest.initDrive(self, drive)

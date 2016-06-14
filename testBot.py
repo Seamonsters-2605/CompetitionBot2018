@@ -5,7 +5,7 @@ import wpilib
 
 class Test(EncoderTest):
     def __init__(self):
-        EncoderTest.__init__(self, [0, 1, 2, 3])
+        EncoderTest.__init__(self, [1])
         
 if __name__ == "__main__":
     wpilib.run(Test)
