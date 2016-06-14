@@ -226,6 +226,7 @@ class SwerveDrive(DriveInterface):
         self.manager.setDriveMode(forceDriveMode)
         for wheel in self.wheels:
             wheel.calcDrive(magnitude, direction, turn)
+            wheel.drive()
     
     def printWheelState(self):
         """
