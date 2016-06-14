@@ -5,6 +5,13 @@ Code for the JellyFISH!
 Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
 `.\test.bat` (Windows).
 
+## Terminology
+In the documentation you will see the terms "position mode", "incremental 
+position mode", and "jeff mode" used interchangeably. "Voltage mode" is used to
+refer either to Voltage or PercentVbus mode on CANTalons. Also, some classes use
+"velocity" in method/variable names while others use "speed."
+
+
 ## Directory Structure
 
 - `seamonsters/`: The work-in-progress seamonsters library code.
