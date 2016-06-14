@@ -152,8 +152,9 @@ class MultiMode(MotorSpeedControl):
         Set the current MotorSpeedControl implementation. The zero() method
         will be called.
         """
-        self.speedControl = speedControl
-        speedControl.zero()
+        if self.speedControl != speedControl:
+            self.speedControl = speedControl
+            speedControl.zero()
         
     def getSpeedControl(self):
         """
