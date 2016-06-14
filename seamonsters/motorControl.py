@@ -11,9 +11,65 @@ class MotorManager:
         self.voltageModes = [ ]
         self.speedModes = [ ]
         self.jeffModes [ ]
-    
-    def addMotor(self, talon):
         
+        self.maxSpeed = 400
+    
+    def addMotor(self, talon, inverted=False):
+        self.talons.append(talon)
+        
+        voltage = VoltageMode(talon)
+        voltage.invert(inverted)
+        self.voltageModes.append(voltage)
+        
+        speed = SpeedMode(talon)
+        speed.invert(inverted)
+        speed.setMaxSpeed(self.maxSpeed)
+        self.speedModes.append(speed)
+        
+        jeff = JeffMode(talon)
+        jeff.invert(inverted)
+        jeff.setMaxSpeed(self.maxSpeed)
+        self.jeffModes.append(jeff)
+        
+        initial = None
+        
+        if self.driveMode == DriveInterface.DriveMode.VOLTAGE:
+            initial = voltage
+        if self.driveMode == DriveInterface.DriveMode.SPEED:
+            initial = speed
+        if self.driveMode == DriveInterface.DriveMode.POSITION:
+            initial = position
+        multi = MultiMode(talon, initial)
+        self.multiModes.append(multi)
+        
+        return multi
+        
+    def setDriveMode(self, mode):
+        self.driveMode = mode
+        i = 0
+        for m in multiModes:
+            if self.driveMode == DriveInterface.DriveMode.VOLTAGE:
+                m.setSpeedControl(self.voltageModes[i])
+            if self.driveMode == DriveInterface.DriveMode.SPEED:
+                m.setSpeedControl(self.speedModes[i])
+            if self.driveMode == DriveInterface.DriveMode.POSITION:
+                m.setSpeedControl(self.positionModes[i])
+            i += 1
+            
+    def getDriveMode(self, mode):
+        return self.driveMode
+        
+    def setMaxSpeed(self, speed):
+        self.maxSpeed = speed
+        
+        for m in self.speedModes:
+            m.setMaxSpeed(speed)
+            
+        for m in self.jeffModes:
+            m.setMaxSpeed(speed)
+    
+    def getMaxSpeed(self):
+        return self.maxSpeed
 
 class MotorSpeedControl:
     
@@ -44,6 +100,7 @@ class MultiMode(MotorSpeedControl):
     def __init__(self, talon, speedControl):
         self.talon = talon
         self.speedControl = speedControl
+        self.speedControl.zero()
         
     def zero(self):
         self.speedControl.zero()
@@ -121,7 +178,9 @@ class SpeedMode(MotorSpeedControl):
         
     def setMaxSpeed(self, speed):
         self.maxSpeed = speed * 5
-
+    
+    def getMaxSpeed(self):
+        return self.maxSpeed / 5
 
 class JeffMode(MotorSpeedControl):
 
@@ -178,3 +237,6 @@ class JeffMode(MotorSpeedControl):
 
     def setMaxSpeed(self, speed):
         self.maxSpeed = speed
+        
+    def getMaxSpeed(self):
+        return self.maxSpeed

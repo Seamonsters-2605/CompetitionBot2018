@@ -36,7 +36,7 @@ class DriveInterface:
         POSITION = 3
     
     def __init__(self):
-        self.driveMode = DriveInterface.DriveMode.SPEED
+        self.driveMode = DriveInterface.DriveMode.VOLTAGE
         self.magnitudeScale = 1
         self.turnScale = 1
 
