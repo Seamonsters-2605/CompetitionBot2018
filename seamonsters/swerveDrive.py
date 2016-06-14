@@ -186,6 +186,7 @@ class TalonWheelController(WheelController):
     def setSpeed(self, speed):
         if self.driveMode == DriveInterface.DriveMode.POSITION:
             self.driveTalonJeff.set(speed)
+            self.driveTalonJeff.update()
         else:
             self.driveTalon.set(speed)
     

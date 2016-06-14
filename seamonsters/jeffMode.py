@@ -22,6 +22,7 @@ class JeffMode:
             self.Talon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
         self.zero()
         self.invert = 1 # can be 1 or -1
+        self.speed = 0
 
     def zero(self):
         """
@@ -29,15 +30,21 @@ class JeffMode:
         """
         self.encoderTarget = self.Talon.getPosition()
 
-    def set(self, magnitude):
+    def set(self, speed):
         """
-        Rotate the motor at the specified speed (magnitude). This function needs
-        to be called in the main loop, 50 times per second for anything useful
-        to happen.
+        Set the speed of rotation of the motor. This is the number of rotation
+        ticks it moves every time update() is called.
+        """
+        self.speed
+        
+    def update(self):
+        """
+        Update the position of the motor. This function needs to be called in
+        the main loop, 50 times per second.
         """
         if not abs(self.Talon.getPosition() - self.encoderTarget) \
-               > abs(2*magnitude):
-            self.encoderTarget += magnitude * self.invert
+               > abs(2*self.speed):
+            self.encoderTarget += self.speed * self.invert
         self.Talon.set(self.encoderTarget)
     
     def invert(self, enabled=True):
