@@ -169,7 +169,7 @@ class VoltageMode(MotorSpeedControl):
     def __init__(self, talon):
         self.talon = talon
         self.zero()
-        self.invert = 1 # can be 1 or -1
+        self.inverted = 1 # can be 1 or -1
         self.speed = 0
         
     def zero(self):
@@ -190,7 +190,7 @@ class VoltageMode(MotorSpeedControl):
         """
         Choose whether to invert the direction of the motor.
         """
-        self.invert = -1 if enabled else 1
+        self.inverted = -1 if enabled else 1
 
 
 class SpeedMode(MotorSpeedControl):
@@ -200,7 +200,7 @@ class SpeedMode(MotorSpeedControl):
     def __init__(self, talon):
         self.talon = talon
         self.zero()
-        self.invert = 1 # can be 1 or -1
+        self.inverted = 1 # can be 1 or -1
         self.speed = 0
         self.maxSpeed = 2000
         
@@ -222,7 +222,7 @@ class SpeedMode(MotorSpeedControl):
         """
         Choose whether to invert the direction of the motor.
         """
-        self.invert = -1 if enabled else 1
+        self.inverted = -1 if enabled else 1
         
     def setMaxSpeed(self, speed):
         """
@@ -256,7 +256,7 @@ class JeffMode(MotorSpeedControl):
         self.talon = talon
         
         self.zero()
-        self.invert = 1 # can be 1 or -1
+        self.inverted = 1 # can be 1 or -1
         self.speed = 0
         self.maxSpeed = 400
 
@@ -290,7 +290,7 @@ class JeffMode(MotorSpeedControl):
         """
         Choose whether to invert the direction of the motor.
         """
-        self.invert = -1 if enabled else 1
+        self.inverted = -1 if enabled else 1
 
     def setMaxSpeed(self, speed):
         """
