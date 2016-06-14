@@ -48,7 +48,9 @@ class WheelState:
         self.driveVector = (moveVector[0] - self.location[1]*turn,
                 moveVector[1] + self.location[0]*turn)
         self.targetMagnitude = magnitude(self.driveVector)
-        self.targetDirection = direction(self.driveVector)
+        # don't rotate wheel if not driving
+        if self.targetMagnitude != 0:
+            self.targetDirection = direction(self.driveVector)
     
     def drive(self, driveMode, scale):
         """
@@ -165,7 +167,7 @@ class TalonWheelController(WheelController):
             diff -= self.rotateTalonEncoderTicks
         if diff < -self.rotateTalonEncoderTicks / 2:
             diff += self.rotateTalonEncoderTicks
-        
+                
         self.rotateTalon.set(currentTicks + diff)
     
     def setDriveMode(self, driveMode):
