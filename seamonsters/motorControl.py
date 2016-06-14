@@ -179,7 +179,7 @@ class VoltageMode(MotorSpeedControl):
                 wpilib.CANTalon.ControlMode.PercentVbus)
         
     def set(self, speed):
-        self.speed = speed * self.invert
+        self.speed = speed * self.inverted
         pass
     
     def update(self):
@@ -211,7 +211,7 @@ class SpeedMode(MotorSpeedControl):
                 wpilib.CANTalon.ControlMode.Speed)
         
     def set(self, speed):
-        self.speed = speed * self.invert * self.maxSpeed
+        self.speed = speed * self.inverted * self.maxSpeed
         pass
     
     def update(self):
@@ -274,7 +274,7 @@ class JeffMode(MotorSpeedControl):
         Set the speed of rotation of the motor. This is the number of rotation
         ticks it moves every time update() is called.
         """
-        self.speed = speed * self.invert * self.maxSpeed
+        self.speed = speed * self.inverted * self.maxSpeed
         
     def update(self):
         """
