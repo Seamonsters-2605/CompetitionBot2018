@@ -3,18 +3,27 @@ import wpilib
 from seamonsters.drive import DriveInterface
 
 class MotorManager:
-    
+    """
+    A motor manager manages many CANTalons, with associated MultiMode's. The
+    MultiMode can be in voltage, speed, or jeff/position mode. The drive mode
+    and maximum velocity of all can be set at once.
+    """
     def __init__(self):
         self.talons = [ ]
         self.driveMode = DriveInterface.DriveMode.VOLTAGE
         self.multiModes = [ ]
         self.voltageModes = [ ]
         self.speedModes = [ ]
-        self.jeffModes [ ]
+        self.jeffModes = [ ]
         
         self.maxSpeed = 400
     
     def addMotor(self, talon, inverted=False):
+        """
+        Adds a CANTalon to the manager. Creates a corresponding MultiMode, set
+        to the current max velocity, drive mode, and specified invert setting.
+        This MultiMode is returned.
+        """
         self.talons.append(talon)
         
         voltage = VoltageMode(talon)
@@ -38,28 +47,38 @@ class MotorManager:
         if self.driveMode == DriveInterface.DriveMode.SPEED:
             initial = speed
         if self.driveMode == DriveInterface.DriveMode.POSITION:
-            initial = position
+            initial = jeff
         multi = MultiMode(talon, initial)
         self.multiModes.append(multi)
         
         return multi
         
     def setDriveMode(self, mode):
+        """
+        Set the drive mode of all MultiMode's, using constants from
+        seamonsters.drive.DriveInterface.DriveMode. Default is VOLTAGE.
+        """
         self.driveMode = mode
         i = 0
-        for m in multiModes:
+        for m in self.multiModes:
             if self.driveMode == DriveInterface.DriveMode.VOLTAGE:
                 m.setSpeedControl(self.voltageModes[i])
             if self.driveMode == DriveInterface.DriveMode.SPEED:
                 m.setSpeedControl(self.speedModes[i])
             if self.driveMode == DriveInterface.DriveMode.POSITION:
-                m.setSpeedControl(self.positionModes[i])
+                m.setSpeedControl(self.jeffModes[i])
             i += 1
             
     def getDriveMode(self, mode):
+        """
+        Get the drive mode that was last set.
+        """
         return self.driveMode
         
     def setMaxSpeed(self, speed):
+        """
+        Set the maximum speed of SpeedModes and JeffModes.
+        """
         self.maxSpeed = speed
         
         for m in self.speedModes:
@@ -69,10 +88,16 @@ class MotorManager:
             m.setMaxSpeed(speed)
     
     def getMaxSpeed(self):
+        """
+        Get the last set max speed.
+        """
         return self.maxSpeed
 
 class MotorSpeedControl:
-    
+    """
+    An abstract interface for controlling the speed of a motor. Keeps track of
+    and controls a singe CANTalon.
+    """
     def zero(self):
         """
         This method is implementation specific, and should be called whenever
@@ -96,8 +121,16 @@ class MotorSpeedControl:
 
 
 class MultiMode(MotorSpeedControl):
-    
+    """
+    An implementation of MotorSpeedControl that wraps another MotorSpeedControl
+    implementation. All interface calls go to that object. This allows switching
+    out the underlying MotorSpeedControl. Implementation.
+    """
     def __init__(self, talon, speedControl):
+        """
+        Initialize with a talon and initial MotorSpeedControl. The zero() method
+        of speedControl will be called.
+        """
         self.talon = talon
         self.speedControl = speedControl
         self.speedControl.zero()
@@ -115,11 +148,23 @@ class MultiMode(MotorSpeedControl):
         pass
     
     def setSpeedControl(self, speedControl):
+        """
+        Set the current MotorSpeedControl implementation. The zero() method
+        will be called.
+        """
         self.speedControl = speedControl
         speedControl.zero()
+        
+    def getSpeedControl(self):
+        """
+        Set the current MotorSpeedControl implementation.
+        """
+        return self.speedControl
 
 class VoltageMode(MotorSpeedControl):
-    
+    """
+    A CANTalon in voltage mode (actually PercentVbus).
+    """
     def __init__(self, talon):
         self.talon = talon
         self.zero()
@@ -148,7 +193,9 @@ class VoltageMode(MotorSpeedControl):
 
 
 class SpeedMode(MotorSpeedControl):
-    
+    """
+    A CANTalon in speed mode.
+    """
     def __init__(self, talon):
         self.talon = talon
         self.zero()
@@ -177,17 +224,26 @@ class SpeedMode(MotorSpeedControl):
         self.invert = -1 if enabled else 1
         
     def setMaxSpeed(self, speed):
+        """
+        Set the maximum speed of the motor in encoder ticks per 1/50th of a
+        second. The value passed to the CANTalon will be this value multiplied
+        by 5, because the CANTalon uses units of encoder ticks per 1/10th of a
+        second.
+        """
         self.maxSpeed = speed * 5
     
     def getMaxSpeed(self):
+        """
+        Get the maximum speed of the motor in encoder ticks per 1/50th of a
+        second.
+        """
         return self.maxSpeed / 5
 
 class JeffMode(MotorSpeedControl):
 
     """
     "Jeff Mode" is incremental position mode -- it constantly increments the
-    position of the motors to mock speed mode. The JeffMode class keeps track
-    of and controls a CANTalon.
+    position of the motors to mock speed mode.
     """
     
     def __init__(self, talon):
@@ -236,7 +292,15 @@ class JeffMode(MotorSpeedControl):
         self.invert = -1 if enabled else 1
 
     def setMaxSpeed(self, speed):
+        """
+        Set the maximum speed of the motor in encoder ticks per 1/50th of a
+        second.
+        """
         self.maxSpeed = speed
         
     def getMaxSpeed(self):
+        """
+        Get the maximum speed of the motor in encoder ticks per 1/50th of a
+        second.
+        """
         return self.maxSpeed
