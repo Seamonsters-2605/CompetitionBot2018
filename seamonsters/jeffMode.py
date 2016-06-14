@@ -35,7 +35,8 @@ class JeffMode:
         to be called in the main loop, 50 times per second for anything useful
         to happen.
         """
-        if not abs(self.Talon.getPosition() - self.encoderTarget) > 2*magnitude:
+        if not abs(self.Talon.getPosition() - self.encoderTarget) \
+               > abs(2*magnitude):
             self.encoderTarget += magnitude * self.invert
         self.Talon.set(self.encoderTarget)
     

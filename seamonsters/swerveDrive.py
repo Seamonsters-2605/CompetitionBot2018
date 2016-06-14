@@ -143,7 +143,8 @@ class TalonWheelController(WheelController):
         
         self.rotateTalon = rotateTalon
         self.rotateTalonInitialPosition = rotateTalon.getPosition()
-        self.rotateTalonEncoderTicks = rotateTalonEncoderTicks
+        self.rotateTalonEncoderTicks = abs(rotateTalonEncoderTicks)
+        self.reverseRotateTalon = rotateTalonEncoderTicks < 0
         rotateTalon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
         
         self.driveMode = DriveInterface.DriveMode.VOLTAGE
@@ -152,9 +153,14 @@ class TalonWheelController(WheelController):
         ticks = self.rotateTalon.getPosition()
         ticks %= self.rotateTalonEncoderTicks
         ticks -= self.rotateTalonInitialPosition
+        if self.reverseRotateTalon:
+            ticks = -ticks + self.rotateTalonEncoderTicks
         return float(ticks) / float(self.rotateTalonEncoderTicks) * math.pi * 2
         
     def rotateWheel(self, target):
+        if self.reverseRotateTalon:
+            target = -target
+        
         targetTicks = target / (math.pi * 2) * self.rotateTalonEncoderTicks \
             + self.rotateTalonInitialPosition
         currentTicks = self.rotateTalon.getPosition()
@@ -219,8 +225,9 @@ class SwerveDrive(DriveInterface):
         Add a wheel to the robot at the specific location. driveTalon is the
         motor that spins the wheel; rotateTalon is the motor that rotates the
         swerve drive; rotateTalonEncoderTicks is the number of encoder ticks per
-        full rotation for that motor. If none of those are specified, the wheel
-        will be added in test mode, in which it only logs events.
+        full rotation for that motor. Set this to a negative value to reverse
+        the direction of the rotate motor. If none of those are specified, the
+        wheel will be added in test mode, in which it only logs events.
         """
         location = (xLocation, yLocation)
         wheelController = None
