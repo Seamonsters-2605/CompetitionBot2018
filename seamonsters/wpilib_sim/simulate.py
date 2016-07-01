@@ -34,10 +34,61 @@ class CANTalon:
         self.port = port
         self._log("Init")
         self.values = [0 for i in range(0, 16)]
+        self.lastPositionValue = 0
         self.controlMode = wpilib.CANTalon.ControlMode.PercentVbus
         self.controlEnabled = True
         self.enabled = True
+        
+        self.maxChangePerTick = 400.0
+        
+        updateFunctions.append(self._update)
         pass
+    
+    def _update(self):
+        value = self.values[self.controlMode]
+        updatePosition = False
+        if self.controlMode == CANTalon.ControlMode.Current:
+            pass
+        elif self.controlMode == CANTalon.ControlMode.Disabled:
+            pass
+        elif self.controlMode == CANTalon.ControlMode.Follower:
+            pass
+        elif self.controlMode == CANTalon.ControlMode.MotionProfile:
+            pass
+        
+        elif self.controlMode == CANTalon.ControlMode.PercentVbus:
+            self.values[CANTalon.ControlMode.Voltage] = value * 12.0
+            self.values[CANTalon.ControlMode.Speed] = \
+                value * self.maxChangePerTick * 5.0
+            updatePosition = True
+                
+        elif self.controlMode == CANTalon.ControlMode.Position:
+            diff = value - self.lastPositionValue
+            self.values[CANTalon.ControlMode.PercentVbus] = \
+                diff / self.maxChangePerTick
+            self.values[CANTalon.ControlMode.Voltage] = \
+                diff / self.maxChangePerTick * 12.0
+            self.values[CANTalon.ControlMode.Speed] = diff * 5.0
+            self.lastPositionValue = value
+            updatePosition = True
+            
+        elif self.controlMode == CANTalon.ControlMode.Speed:
+            self.values[CANTalon.ControlMode.PercentVbus] = \
+                value / self.maxChangePerTick / 5.0
+            self.values[CANTalon.ControlMode.Voltage] = \
+                value * 12.0 / self.maxChangePerTick / 5.0
+            updatePosition = True
+                
+        elif self.controlMode == CANTalon.ControlMode.Voltage:
+            self.values[CANTalon.ControlMode.PercentVbus] = value / 12.0
+            self.values[CANTalon.ControlMode.Speed] = \
+                value / 12.0 * self.maxChangePerTick * 5.0
+            updatePosition = True
+        
+        if updatePosition:
+            self.values[CANTalon.ControlMode.Position] += \
+                self.values[CANTalon.ControlMode.Speed] / 5.0
+            
     
     def _log(self, *args):
         print("CANTalon", str(self.port) + ": ", end = "")
@@ -100,6 +151,9 @@ class CANTalon:
     def stopMotor(self):
         self._log("Stop")
         
+        
+updateFunctions = [ ]
+        
 
 # loop at 50 Hz
 def robotLoop(function):
@@ -107,6 +161,8 @@ def robotLoop(function):
     
     while True:
         function()
+        for f in updateFunctions:
+            f()
         
         try:
             while time.time() - lastTime < 1.0 / 50.0:
