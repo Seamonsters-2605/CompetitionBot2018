@@ -11,7 +11,7 @@ from Shooter import ShootController
 import Vision
 import networktables
 from networktables import NetworkTable
-
+import seamonsters.wpilib_sim.simulate
 
 NetworkTable.setServerMode()
 

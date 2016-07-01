@@ -29,15 +29,52 @@ class CANTalon:
         CtreMagEncoder_Relative = hal.TalonSRXConst.kFeedbackDev_CtreMagEncoder_Relative
         CtreMagEncoder_Absolute = hal.TalonSRXConst.kFeedbackDev_CtreMagEncoder_Absolute
         PulseWidth = hal.TalonSRXConst.kFeedbackDev_PosIsPulseWidth
+        
+    class FeedbackDeviceStatus:
+        Unknown = hal.TalonSRXConst.kFeedbackDevStatus_Unknown
+        Present = hal.TalonSRXConst.kFeedbackDevStatus_Present
+        NotPresent = hal.TalonSRXConst.kFeedbackDevStatus_NotPresent
+        
+    class PIDSourceType:
+        kDisplacement = 0
+        kRate = 1
+        
+    class SetValueMotionProfile:
+        Disable = hal.TalonSRXConst.kMotionProfile_Disable
+        Enable = hal.TalonSRXConst.kMotionProfile_Enable
+        Hold = hal.TalonSRXConst.kMotionProfile_Hold
+        
+    class StatusFrameRate:
+        General = hal.TalonSRXConst.kStatusFrame_General
+        Feedback = hal.TalonSRXConst.kStatusFrame_Feedback
+        QuadEncoder = hal.TalonSRXConst.kStatusFrame_Encoder
+        AnalogTempVbat = hal.TalonSRXConst.kStatusFrame_AnalogTempVbat
+        PulseWidth = hal.TalonSRXConst.kStatusFrame_PulseWidth
+        
+    class TrajectoryPoint:
+        position = 0
+        velocity = 0
+        timeDurMs = 0
+        profileSlotSelect = 0
+        velocityOnly = False
+        isLastPoint = False
+        zeroPos = False
+        
     
-    def __init__(self, port):
+    
+    def __init__(self, port, controlPeriodMs=None, enablePeriodMs=None):
         self.port = port
         self._log("Init")
         self.values = [0 for i in range(0, 16)]
         self.lastPositionValue = 0
         self.controlMode = wpilib.CANTalon.ControlMode.PercentVbus
         self.controlEnabled = True
-        self.enabled = True
+        self.inverted = False
+        
+        self.p = 1.0
+        self.i = 0.0
+        self.d = 1.0
+        self.f = 0.0
         
         self.maxChangePerTick = 400.0
         
@@ -94,9 +131,17 @@ class CANTalon:
         print("CANTalon", str(self.port) + ": ", end = "")
         print(*args)
     
+    def getDescription(self):
+        return "CANTalon ID " + str(self.port)
+    
     def changeControlMode(self, controlMode):
         self._log("Change control mode:", controlMode)
         self.controlMode = controlMode
+        if controlMode == CANTalon.ControlMode.Disabled:
+            self.controlEnabled = False
+        
+    def setControlMode(self, controlMode):
+        self.changeControlMode(controlMode)
         
     def getControlMode(self):
         return self.controlMode
@@ -110,21 +155,28 @@ class CANTalon:
         self.controlEnabled = True
         
     def isControlEnabled(self):
-        return self.isControlEnabled
+        return self.controlEnabled
         
     def disable(self):
-        self._log("Disable")
-        self.enabled = False
+        self.disableControl()
         
     def enable(self):
-        self._log("Enable")
-        self.enabled = True
+        self.enableControl()
         
     def isEnabled(self):
-        return self.enabled
+        return self.isControlEnabled()
         
     def get(self):
         return self.values[self.controlMode]
+        
+    def getSetpoint(self):
+        return self.get()
+        
+    def getOutputCurrent(self):
+        return self.values[wpilib.CANTalon.ControlMode.Current]
+        
+    def getOutputVoltage(self):
+        return self.values[wpilib.CANTalon.ControlMode.Voltage]
         
     def getPosition(self):
         return self.values[wpilib.CANTalon.ControlMode.Position]
@@ -138,18 +190,59 @@ class CANTalon:
     def getEncVelocity(self):
         return self.getSpeed()
         
-    def set(self, value):
-        self._log("Set:", value)
-        self.values[self.controlMode] = value
+    def getError(self):
+        return 0.0
+        
+    def getClosedLoopError(self):
+        return 0.0
+        
+    def set(self, outputValue, syncGroup=0):
+        self._log("Set:", outputValue)
+        self.values[self.controlMode] = outputValue
+        
+    def setSetpoint(self, setpoint):
+        self.set(setpoint)
         
     def setPID(self, p, i, d, f):
         self._log("Set PID:", p, i, d, f)
+        self.p = p
+        self.i = i
+        self.d = d
+        self.f = f
+        
+    def getP(self):
+        return self.p
+        
+    def getI(self):
+        return self.i
+        
+    def getD(self):
+        return self.d
+        
+    def getF(self):
+        return self.f
+        
+    def setInverted(self, isInverted):
+        self._log("Set inverted", isInverted)
+        self.inverted = isInverted
+        
+    def getInverted(self):
+        return self.inverted
         
     def setFeedbackDevice(self, device):
         self._log("Set feedback device:", device)
         
     def stopMotor(self):
         self._log("Stop")
+        
+    def reset(self):
+        self._log("Reset")
+        
+    def reverseOutput(self, flip):
+        self._log("Reverse output", flip)
+        
+    def reverseSensor(self, flip):
+        self._log("Reverse sensor", flip)
         
         
 updateFunctions = [ ]
@@ -159,18 +252,19 @@ updateFunctions = [ ]
 def robotLoop(function):
     lastTime = time.time()
     
-    while True:
-        function()
-        for f in updateFunctions:
-            f()
-        
-        try:
+    try:
+        while True:
+            function()
+            for f in updateFunctions:
+                f()
+            
             while time.time() - lastTime < 1.0 / 50.0:
                 pass
-        except KeyboardInterrupt:
-            print("Quitting")
-            return
-        lastTime = time.time()
+        
+            lastTime = time.time()
+    except KeyboardInterrupt:
+        print("\nQuitting")
+        return
 
         
 def run(robotClass):
@@ -182,10 +276,10 @@ def run(robotClass):
     print("Robot init")
     robot.robotInit()
     
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         return
     
-    command = sys.argv[1]
+    command = sys.argv[2]
     if command == "d":
         print("Disabled init")
         robot.disabledInit()
@@ -210,7 +304,8 @@ def run(robotClass):
         print("Test periodic")
         robotLoop(robot.testPeriodic)
 
-print("Simulate!")
-wpilib.CANTalon = CANTalon
-wpilib.run = run
+if len(sys.argv) >= 2 and sys.argv[1] == 'wpilib_sim':
+    print("Simulate!")
+    wpilib.CANTalon = CANTalon
+    wpilib.run = run
 
