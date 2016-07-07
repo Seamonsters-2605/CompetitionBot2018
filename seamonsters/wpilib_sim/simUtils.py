@@ -78,6 +78,7 @@ class CANTalon:
         self.maxChangePerTick = 400.0
         
         updateFunctions.append(self._update)
+        cantalons.append(self)
         pass
     
     def _update(self):
@@ -245,6 +246,16 @@ class CANTalon:
         
         
 updateFunctions = [ ]
+cantalons = [ ]
+
+def addUpdateFunction(function):
+    updateFunctions.append(function)
+
+def getUpdateFunctions():
+    return updateFunctions
+
+def getCANTalons():
+    return cantalons
         
 
 # loop at 50 Hz
