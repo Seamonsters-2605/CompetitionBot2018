@@ -7,16 +7,18 @@ from .nav6protocol import *
 import threading
 import wpilib.timer
 
-#Notes Pitch and Roll need ranges mess with it appears they go from 0 to 90 to 0 on one part which doesn't make much
-#sense.... Also the changing to 360 and offset functions could use some work as well.
+# Notes:
+# Pitch and Roll need ranges mess with it appears they go from 0 to 90 to
+# 0 on one part which doesn't make much sense....
+# Also the changing to 360 and offset functions could use some work as well.
 
 class Nav6( ):
     def __init__( self, serialNumber, updateRate ):
         self.stopRequested = False
-        #This is here in case we are testing one a pc so the code doesn't crash bc the Nav6 isn't connected.
         try:
             self.ser = serial.Serial(serialNumber,self.getDefaultBaudRate())
         except:
+            # There is no Nav6, or no robot at all
             self.ser = None
 
         self.updateRate = updateRate
@@ -136,7 +138,8 @@ class Nav6( ):
 
     def setStreamTermination( self, buffer, messageLength ):
         print( buffer )
-        self.setStreamUint8( buffer, messageLength, self.calcaulteChecksum( buffer, messageLength ) )
+        self.setStreamUint8( buffer, messageLength,
+            self.calcaulteChecksum( buffer, messageLength ) )
         buffer[ messageLength + 2 ] = '\r'
         buffer[ messageLength + 3 ] = '\n'
 

@@ -9,12 +9,13 @@ PROTOCOL_FLOAT_LENGTH = 7
 CHECKSUM_LENGTH = 2
 TERMINATOR_LENGTH = 2
 
-# Yaw/Pitch/Roll (YPR) Update Packet - e.g., !y[yaw][pitch][roll][checksum][cr][lf]
+# Yaw/Pitch/Roll (YPR) Update Packet
+# e.g., !y[yaw][pitch][roll][checksum][cr][lf]
 
 MSGID_YPR_UPDATE = 'y'
 YPR_UPDATE_MESSAGE_LENGTH = 34
-#      where yaw, pitch, roll are floats
-#	   where checksum is 2 ascii-bytes of HEX checksum (all bytes before checksum)
+#    where yaw, pitch, roll are floats
+#	 where checksum is 2 ascii-bytes of HEX checksum (all bytes before checksum)
 
 YPR_UPDATE_YAW_VALUE_INDEX = 2
 YPR_UPDATE_PITCH_VALUE_INDEX = 9
@@ -23,7 +24,8 @@ YPR_UPDATE_COMPASS_VALUE_INDEX = 23
 YPR_UPDATE_CHECKSUM_INDEX = 30
 YPR_UPDATE_TERMINATOR_INDEX = 32
 
-# Quaternion Update Packet - e.g., !r[q1][q2][q3][q4][accelx][accely][accelz][magx][magy][magz][checksum][cr][lf]
+# Quaternion Update Packet - e.g.:
+# !r[q1][q2][q3][q4][accelx][accely][accelz][magx][magy][magz][checksum][cr][lf]
 
 MSGID_QUATERNION_UPDATE = 'q'
 QUATERNION_UPDATE_MESSAGE_LENGTH = 53
@@ -41,7 +43,8 @@ QUATERNION_UPDATE_TEMP_VALUE_INDEX = 42
 QUATERNION_UPDATE_CHECKSUM_INDEX = 49
 QUATERNION_UPDATE_TERMINATOR_INDEX = 51
 
-# Gyro/Raw Data Update packet - e.g., !g[gx][gy][gz][accelx][accely][accelz][magx][magy][magz][temp_c][cr][lf]
+# Gyro/Raw Data Update packet
+# e.g., g[gx][gy][gz][accelx][accely][accelz][magx][magy][magz][temp_c][cr][lf]
 
 MSGID_GYRO_UPDATE = 'g'
 GYRO_UPDATE_MESSAGE_LENGTH = 46
@@ -70,7 +73,8 @@ STREAM_CMD_UPDATE_RATE_HZ_INDEX = 3
 STREAM_CMD_CHECKSUM_INDEX = 5
 STREAM_CMD_TERMINATOR_INDEX = 7
 
-#  EnableStream Response Packet - e.g., !s[stream type][gyro full scale range][accel full scale range][update rate hz][yaw_offset_degrees][q1/2/3/4 offsets][flags][checksum][cr][lf]
+#  EnableStream Response Packet - e.g.:
+# !s[stream type][gyro full scale range][accel full scale range][update rate hz][yaw_offset_degrees][q1/2/3/4 offsets][flags][checksum][cr][lf]
 
 MSG_ID_STREAM_RESPONSE = 's'
 STREAM_RESPONSE_MESSAGE_LENGTH = 46
