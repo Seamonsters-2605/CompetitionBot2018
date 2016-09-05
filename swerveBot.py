@@ -10,20 +10,28 @@ class SwerveBot(DriveTest):
     def robotInit(self):
         DriveTest.robotInit(self)
         
+        # Front Right wheel
         frDrive = wpilib.CANTalon(0)
+        frDrive.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
+        frDrive.setPID(1.0, 0.0, 3.0, 0.0)
+        
         frRotate = wpilib.CANTalon(1)
         frRotate.reverseOutput(True)
-        #blDrive = wpilib.CANTalon(2)
-        #blRotate = wpilib.CANTalon(3)
-        frDrive.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
         frRotate.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
-        #blDrive.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
-        #blRotate.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
-        frDrive.setPID(1.0, 0.0, 3.0, 0.0)
         frRotate.setPID(1.0, 0.0, 3.0, 0.0)
+        
+        
+        # Back Left wheel (not on bot yet)
+        #blDrive = wpilib.CANTalon(2)
+        #blDrive.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
         #blDrive.setPID(1.0, 0.0, 3.0, 0.0)
+        
+        #blRotate = wpilib.CANTalon(3)
+        #blRotate.reverseOutput(True)
+        #blRotate.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
         #blRotate.setPID(1.0, 0.0, 3.0, 0.0)
         
+        # Drive controller
         drive = SwerveDrive()
         
         # 104 gear teeth / 18 gear teeth * 280 ticks per rotation * 4 (quad)
