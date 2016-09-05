@@ -17,15 +17,29 @@ refer either to Voltage or PercentVbus mode on CANTalons. Also, some classes use
 - `seamonsters/`: The work-in-progress seamonsters library code.
     - `seamonsters/utilityBots/`: Very basic robot implementations for testing 
         things. These must be subclassed with a bit of extra code to be used.
+    - `seamonsters/wpilib_sim/`: Robot simulation (work in progress), with
+        rudimentary support for connecting to Blender physics simulation. If you
+        import seamonsters.wpilib_sim.simulate, your robot will magically
+        support simulation. To start in simulation mode, type
+        `python3 robot.py wpilib_sim`, followed by:
+        - Nothing: run robotInit and stop
+        - `d`: Disabled mode
+        - `a`: Autonomous mode
+        - `t`: Teleop mode
+        - `s`: Test mode
 - `GRIP/`: GRIP files used in competition for image recognition.
 - `Shooter/`: Code for the flywheels, intake motor, and "ShootController", which
     allows control of both.
 - `tests/`: Created and used by pyfrc for tests.
-- `Vision.py`: Simple code that gets the center of the target from GRIP
-- `robot.py`: The final robot
-- `testBot.py`: Robot that is modified for testing various things
-- `holoBot.py`: Simple bot used for testing holonomic drives
-- `swerveBot.py`: Simple bot used for testing swerve drives
+- `Vision.py`: Simple code that gets the center of the target from GRIP (when it
+    works).
+- `robot.py`: The final robot, used in the 2016 competition and updated slightly
+    since then.
+- `testBot.py`: Robot that is modified for testing various things.
+- `holoBot.py`: Simple bot used for testing holonomic drives.
+- `swerveBot.py`: Simple bot used for testing swerve drives.
+- `bTest.py`: Very simple bot that spins a single motor - used for testing
+    Blender simulation.
 - `deploy.bat` and `deploy.sh`: Windows and *nix versions of scripts for
     deploying code to robot.
 - `test.bat` and `test.sh`: Scripts for testing robot code without needing an
