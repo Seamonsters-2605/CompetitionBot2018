@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seamonsters.dashboard &mdash; seamonsters 0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="seamonsters 0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for seamonsters.dashboard</h1><div class="highlight"><pre>
+<span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;jacobvanthoog&quot;</span>
+
+<span class="kn">import</span> <span class="nn">wpilib</span>
+
+<div class="viewcode-block" id="DashboardBoolean"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardBoolean">[docs]</a><span class="k">class</span> <span class="nc">DashboardBoolean</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    References a single boolean value in the SmartDashboard</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+        
+<div class="viewcode-block" id="DashboardBoolean.get"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardBoolean.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the value. Specify ``defaultValue`` for a value to return if the key</span>
+<span class="sd">        is not set. Otherwise a KeyError will be thrown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wpilib</span><span class="o">.</span><span class="n">SmartDashboard</span><span class="o">.</span><span class="n">getBoolean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="DashboardBoolean.set"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardBoolean.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wpilib</span><span class="o">.</span><span class="n">SmartDashboard</span><span class="o">.</span><span class="n">putBoolean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="DashboardDouble"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardDouble">[docs]</a><span class="k">class</span> <span class="nc">DashboardDouble</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    References a single Double value in the SmartDashboard</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+        
+<div class="viewcode-block" id="DashboardDouble.get"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardDouble.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the value. Specify ``defaultValue`` for a value to return if the key</span>
+<span class="sd">        is not set. Otherwise a KeyError will be thrown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wpilib</span><span class="o">.</span><span class="n">SmartDashboard</span><span class="o">.</span><span class="n">getDouble</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="DashboardDouble.set"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardDouble.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wpilib</span><span class="o">.</span><span class="n">SmartDashboard</span><span class="o">.</span><span class="n">putDouble</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="DashboardInt"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardInt">[docs]</a><span class="k">class</span> <span class="nc">DashboardInt</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    References a single integer value in the SmartDashboard</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+        
+<div class="viewcode-block" id="DashboardInt.get"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardInt.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the value. Specify ``defaultValue`` for a value to return if the key</span>
+<span class="sd">        is not set. Otherwise a KeyError will be thrown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wpilib</span><span class="o">.</span><span class="n">SmartDashboard</span><span class="o">.</span><span class="n">getInt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="DashboardInt.set"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardInt.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wpilib</span><span class="o">.</span><span class="n">SmartDashboard</span><span class="o">.</span><span class="n">putInt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="DashboardNumber"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardNumber">[docs]</a><span class="k">class</span> <span class="nc">DashboardNumber</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    References a single number value in the SmartDashboard</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+        
+<div class="viewcode-block" id="DashboardNumber.get"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardNumber.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the value. Specify ``defaultValue`` for a value to return if the key</span>
+<span class="sd">        is not set. Otherwise a KeyError will be thrown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wpilib</span><span class="o">.</span><span class="n">SmartDashboard</span><span class="o">.</span><span class="n">getNumber</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="DashboardNumber.set"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardNumber.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wpilib</span><span class="o">.</span><span class="n">SmartDashboard</span><span class="o">.</span><span class="n">putNumber</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="DashboardString"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardString">[docs]</a><span class="k">class</span> <span class="nc">DashboardString</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    References a single string value in the SmartDashboard</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+        
+<div class="viewcode-block" id="DashboardString.get"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardString.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the value. Specify ``defaultValue`` for a value to return if the key</span>
+<span class="sd">        is not set. Otherwise a KeyError will be thrown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">wpilib</span><span class="o">.</span><span class="n">SmartDashboard</span><span class="o">.</span><span class="n">getString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="DashboardString.set"><a class="viewcode-back" href="../../dashboard.html#seamonsters.dashboard.DashboardString.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wpilib</span><span class="o">.</span><span class="n">SmartDashboard</span><span class="o">.</span><span class="n">putString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Sehome Seamonsters.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -23,6 +23,7 @@ Modules:
 .. toctree::
    :maxdepth: 2
    
+   dashboard
    drive
    gamepad
    grip
