@@ -1,4 +1,4 @@
 seamonsters.nav6
 =======================
 
-NAV6 code by Ian.
+Nav6 code by Ian.
