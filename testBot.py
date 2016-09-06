@@ -1,11 +1,11 @@
 __author__ = "jacobvanthoog"
 
-from seamonsters.utilityBots.encoderTest import EncoderTest
+from seamonsters.nav6 import nav6
 import wpilib
 
-class Test(EncoderTest):
-    def __init__(self):
-        EncoderTest.__init__(self, [1])
+class Test(wpilib.IterativeRobot):
+    def robotInit(self):
+        wpilib.SmartDashboard.putString("thisIsAKey", "this is a value!")
         
 if __name__ == "__main__":
     wpilib.run(Test)
