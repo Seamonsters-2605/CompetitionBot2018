@@ -2,50 +2,64 @@ __author__ = "jacobvanthoog"
 
 import wpilib
 
-# An IterativeRobot that is able to contain other robots
 class Module( wpilib.IterativeRobot ):
+    """
+    An IterativeRobot that is able to contain other robots. If you subclass this
+    and override __init__ or special robot functions like robotInit or
+    teleopPeriodic, make sure you call super()'s versions of those functions.
+    """
     
     def __init__(self):
         self.Modules = [ ]
         self.Parent = None
         self.Time = 0
 
-    # Get the Module that owns this Module
     def parent(self):
+        """
+        Get the Module that owns this Module
+        """
         return self.Parent
     
-    # internal function
     def setParent(self, parent):
+        """
+        Internal function to set the parent Module of this Module
+        """
         self.Parent = parent
     
-    # Get the number of iterations since the start of the disabled, autonomous,
-    # teleop, or test loop.
     def time(self):
+        """
+        Get the number of iterations since the start of the disabled,
+        autonomous, teleop, or test loop.
+        """
         return self.Time
 
-    # Add a sub-Module to use in the robot
     def addModule(self, module):
+        """
+        Add a sub-Module to use in the robot. When special robot functions like
+        robotInit or teleopPeriodic are called, they will also be called for
+        sub-Modules.
+        """
         self.Modules.append(module)
         module.setParent(self)
-
-    # Get a previously added Module
-    # moduleType is the class of the Module
+    
     def getModule(self, moduleType):
+        """
+        Find a sub-Module given its class.
+        """
         for robot in self.Modules:
             if type(robot) == moduleType:
                 return robot
         return None
-
-    # internal function to apply a function to all modules
+    
     def runModules(self, function):
+        """
+        Internal function to apply a given function to each module
+        """
         for robot in self.Modules:
             try:
                 function(robot)
             except BaseException as e:
                 print("Error in module", type(robot).__name__, ":", str(e))
-                
-    # IterativeRobot functions
-    # If you implement your own, make sure to call super()'s version also.
     
     def robotInit(self):
         self.Time = 0

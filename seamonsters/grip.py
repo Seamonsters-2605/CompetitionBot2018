@@ -11,6 +11,9 @@ class GripInterface():
         self.table = NetworkTable.getTable("/GRIP/" + networkTableName + "/")
 
     def getKey(self, name):
+        """
+        Get the Number value, given a key name.
+        """
         if(self.table.containsKey(name)):
             numArray = networktables.NumberArray()
             self.table.retrieveValue(name, numArray)

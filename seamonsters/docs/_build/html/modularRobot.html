@@ -46,10 +46,16 @@
 <dt id="seamonsters.modularRobot.Module">
 <em class="property">class </em><code class="descclassname">seamonsters.modularRobot.</code><code class="descname">Module</code><a class="reference internal" href="_modules/seamonsters/modularRobot.html#Module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.modularRobot.Module" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wpilib.iterativerobot.IterativeRobot</span></code></p>
+<p>An IterativeRobot that is able to contain other robots. If you subclass this
+and override __init__ or special robot functions like robotInit or
+teleopPeriodic, make sure you call super()&#8217;s versions of those functions.</p>
 <dl class="method">
 <dt id="seamonsters.modularRobot.Module.addModule">
 <code class="descname">addModule</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/modularRobot.html#Module.addModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.modularRobot.Module.addModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Add a sub-Module to use in the robot. When special robot functions like
+robotInit or teleopPeriodic are called, they will also be called for
+sub-Modules.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.modularRobot.Module.autonomousInit">
@@ -74,12 +80,14 @@
 <dl class="method">
 <dt id="seamonsters.modularRobot.Module.getModule">
 <code class="descname">getModule</code><span class="sig-paren">(</span><em>moduleType</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/modularRobot.html#Module.getModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.modularRobot.Module.getModule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Find a sub-Module given its class.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.modularRobot.Module.parent">
 <code class="descname">parent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/modularRobot.html#Module.parent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.modularRobot.Module.parent" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get the Module that owns this Module</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.modularRobot.Module.robotInit">
@@ -89,12 +97,14 @@
 <dl class="method">
 <dt id="seamonsters.modularRobot.Module.runModules">
 <code class="descname">runModules</code><span class="sig-paren">(</span><em>function</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/modularRobot.html#Module.runModules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.modularRobot.Module.runModules" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Internal function to apply a given function to each module</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.modularRobot.Module.setParent">
 <code class="descname">setParent</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/modularRobot.html#Module.setParent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.modularRobot.Module.setParent" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Internal function to set the parent Module of this Module</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.modularRobot.Module.teleopInit">
@@ -119,7 +129,9 @@
 <dl class="method">
 <dt id="seamonsters.modularRobot.Module.time">
 <code class="descname">time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/modularRobot.html#Module.time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.modularRobot.Module.time" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get the number of iterations since the start of the disabled,
+autonomous, teleop, or test loop.</p>
+</dd></dl>
 
 </dd></dl>
 

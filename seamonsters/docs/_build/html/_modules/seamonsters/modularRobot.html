@@ -44,50 +44,64 @@
 
 <span class="kn">import</span> <span class="nn">wpilib</span>
 
-<span class="c1"># An IterativeRobot that is able to contain other robots</span>
 <div class="viewcode-block" id="Module"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module">[docs]</a><span class="k">class</span> <span class="nc">Module</span><span class="p">(</span> <span class="n">wpilib</span><span class="o">.</span><span class="n">IterativeRobot</span> <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An IterativeRobot that is able to contain other robots. If you subclass this</span>
+<span class="sd">    and override __init__ or special robot functions like robotInit or</span>
+<span class="sd">    teleopPeriodic, make sure you call super()&#39;s versions of those functions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Modules</span> <span class="o">=</span> <span class="p">[</span> <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Parent</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Time</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="c1"># Get the Module that owns this Module</span>
 <div class="viewcode-block" id="Module.parent"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module.parent">[docs]</a>    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the Module that owns this Module</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Parent</span></div>
     
-    <span class="c1"># internal function</span>
 <div class="viewcode-block" id="Module.setParent"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module.setParent">[docs]</a>    <span class="k">def</span> <span class="nf">setParent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal function to set the parent Module of this Module</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Parent</span> <span class="o">=</span> <span class="n">parent</span></div>
     
-    <span class="c1"># Get the number of iterations since the start of the disabled, autonomous,</span>
-    <span class="c1"># teleop, or test loop.</span>
 <div class="viewcode-block" id="Module.time"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module.time">[docs]</a>    <span class="k">def</span> <span class="nf">time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the number of iterations since the start of the disabled,</span>
+<span class="sd">        autonomous, teleop, or test loop.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Time</span></div>
 
-    <span class="c1"># Add a sub-Module to use in the robot</span>
 <div class="viewcode-block" id="Module.addModule"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module.addModule">[docs]</a>    <span class="k">def</span> <span class="nf">addModule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a sub-Module to use in the robot. When special robot functions like</span>
+<span class="sd">        robotInit or teleopPeriodic are called, they will also be called for</span>
+<span class="sd">        sub-Modules.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
         <span class="n">module</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
-
-    <span class="c1"># Get a previously added Module</span>
-    <span class="c1"># moduleType is the class of the Module</span>
+    
 <div class="viewcode-block" id="Module.getModule"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module.getModule">[docs]</a>    <span class="k">def</span> <span class="nf">getModule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">moduleType</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find a sub-Module given its class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">robot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Modules</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">robot</span><span class="p">)</span> <span class="o">==</span> <span class="n">moduleType</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">robot</span>
         <span class="k">return</span> <span class="bp">None</span></div>
-
-    <span class="c1"># internal function to apply a function to all modules</span>
+    
 <div class="viewcode-block" id="Module.runModules"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module.runModules">[docs]</a>    <span class="k">def</span> <span class="nf">runModules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal function to apply a given function to each module</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">robot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Modules</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">function</span><span class="p">(</span><span class="n">robot</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Error in module&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">robot</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
-                
-    <span class="c1"># IterativeRobot functions</span>
-    <span class="c1"># If you implement your own, make sure to call super()&#39;s version also.</span>
     
 <div class="viewcode-block" id="Module.robotInit"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module.robotInit">[docs]</a>    <span class="k">def</span> <span class="nf">robotInit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Time</span> <span class="o">=</span> <span class="mi">0</span>
