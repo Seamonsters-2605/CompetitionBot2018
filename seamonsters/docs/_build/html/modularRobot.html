@@ -51,10 +51,11 @@ and override __init__ or special robot functions like robotInit or
 teleopPeriodic, make sure you call super()&#8217;s versions of those functions.</p>
 <dl class="method">
 <dt id="seamonsters.modularRobot.Module.addModule">
-<code class="descname">addModule</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/modularRobot.html#Module.addModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.modularRobot.Module.addModule" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a sub-Module to use in the robot. When special robot functions like
+<code class="descname">addModule</code><span class="sig-paren">(</span><em>robot</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/modularRobot.html#Module.addModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.modularRobot.Module.addModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a sub-robot to use in the robot. When special robot functions like
 robotInit or teleopPeriodic are called, they will also be called for
-sub-Modules.</p>
+each sub-robot. If the robot happens to be a Module, its parent will be
+set.</p>
 </dd></dl>
 
 <dl class="method">

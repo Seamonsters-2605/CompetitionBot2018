@@ -33,14 +33,16 @@ class Module( wpilib.IterativeRobot ):
         """
         return self.Time
 
-    def addModule(self, module):
+    def addModule(self, robot):
         """
-        Add a sub-Module to use in the robot. When special robot functions like
+        Add a sub-robot to use in the robot. When special robot functions like
         robotInit or teleopPeriodic are called, they will also be called for
-        sub-Modules.
+        each sub-robot. If the robot happens to be a Module, its parent will be
+        set.
         """
-        self.Modules.append(module)
-        module.setParent(self)
+        self.Modules.append(robot)
+        if isinstance(robot, Module):
+            robot.setParent(self)
     
     def getModule(self, moduleType):
         """

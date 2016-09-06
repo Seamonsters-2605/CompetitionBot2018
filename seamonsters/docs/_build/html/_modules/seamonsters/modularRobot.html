@@ -75,14 +75,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Time</span></div>
 
-<div class="viewcode-block" id="Module.addModule"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module.addModule">[docs]</a>    <span class="k">def</span> <span class="nf">addModule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
+<div class="viewcode-block" id="Module.addModule"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module.addModule">[docs]</a>    <span class="k">def</span> <span class="nf">addModule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">robot</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add a sub-Module to use in the robot. When special robot functions like</span>
+<span class="sd">        Add a sub-robot to use in the robot. When special robot functions like</span>
 <span class="sd">        robotInit or teleopPeriodic are called, they will also be called for</span>
-<span class="sd">        sub-Modules.</span>
+<span class="sd">        each sub-robot. If the robot happens to be a Module, its parent will be</span>
+<span class="sd">        set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
-        <span class="n">module</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">robot</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">Module</span><span class="p">):</span>
+            <span class="n">robot</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
     
 <div class="viewcode-block" id="Module.getModule"><a class="viewcode-back" href="../../modularRobot.html#seamonsters.modularRobot.Module.getModule">[docs]</a>    <span class="k">def</span> <span class="nf">getModule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">moduleType</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
