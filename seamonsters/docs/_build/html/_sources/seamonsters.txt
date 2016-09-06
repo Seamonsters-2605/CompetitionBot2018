@@ -1,0 +1,7 @@
+seamonsters module
+=============
+
+.. automodule:: seamonsters
+    :members:
+    :undoc-members:
+    :show-inheritance:

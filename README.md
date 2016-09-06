@@ -14,19 +14,8 @@ refer either to Voltage or PercentVbus mode on CANTalons. Also, some classes use
 
 ## Directory Structure
 
-- `seamonsters/`: The work-in-progress seamonsters library code.
-    - `seamonsters/utilityBots/`: Very basic robot implementations for testing 
-        things. These must be subclassed with a bit of extra code to be used.
-    - `seamonsters/wpilib_sim/`: Robot simulation (work in progress), with
-        rudimentary support for connecting to Blender physics simulation. If you
-        import seamonsters.wpilib_sim.simulate, your robot will magically
-        support simulation. To start in simulation mode, type
-        `python3 robot.py wpilib_sim`, followed by:
-        - Nothing: run robotInit and stop
-        - `d`: Disabled mode
-        - `a`: Autonomous mode
-        - `t`: Teleop mode
-        - `s`: Test mode
+- `seamonsters/`: The work-in-progress seamonsters library code. It has its own
+    documentation, in `seamonsters/docs/_build/html/index.html`.
 - `GRIP/`: GRIP files used in competition for image recognition.
 - `Shooter/`: Code for the flywheels, intake motor, and "ShootController", which
     allows control of both.

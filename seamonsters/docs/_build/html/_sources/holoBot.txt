@@ -1,0 +1,7 @@
+holoBot module
+==============
+
+.. automodule:: holoBot
+    :members:
+    :undoc-members:
+    :show-inheritance:
