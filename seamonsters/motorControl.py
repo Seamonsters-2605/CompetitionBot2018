@@ -180,11 +180,9 @@ class VoltageMode(MotorSpeedControl):
         
     def set(self, speed):
         self.speed = speed * self.inverted
-        pass
     
     def update(self):
         self.talon.set(self.speed)
-        pass
     
     def invert(self, enabled=True):
         """
@@ -212,11 +210,9 @@ class SpeedMode(MotorSpeedControl):
         
     def set(self, speed):
         self.speed = speed * self.inverted * self.maxSpeed
-        pass
     
     def update(self):
         self.talon.set(self.speed)
-        pass
     
     def invert(self, enabled=True):
         """
