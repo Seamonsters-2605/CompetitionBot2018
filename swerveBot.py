@@ -39,8 +39,8 @@ class SwerveBot(DriveTest):
         drive.addWheel(1.0, 1.0, frDrive, frRotate, -104/18*280*4/2)
         drive.addWheel(1.0, -1.0, blDrive, blRotate, -104/18*280*4/2)
         
-        DriveTest.initDrive(self, drive)
-        drive.setDriveMode(DriveInterface.DriveMode.VOLTAGE)
+        DriveTest.initDrive(self, drive,
+            driveMode=DriveInterface.DriveMode.VOLTAGE)
         
         
 if __name__ == "__main__":
