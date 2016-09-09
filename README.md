@@ -20,6 +20,7 @@ Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
 - `testBot.py`: Robot that is modified for testing various things.
 - `holoBot.py`: Simple bot used for testing holonomic drives.
 - `swerveBot.py`: Simple bot used for testing swerve drives.
+- `swerveBot/`: Extra classes for the swerve-drive bot.
 - `bTest.py`: Very simple bot that spins a single motor - used for testing
     Blender simulation.
 - `deploy.bat` and `deploy.sh`: Windows and *nix versions of scripts for
