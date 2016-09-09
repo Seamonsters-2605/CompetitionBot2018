@@ -3,6 +3,7 @@ __author__ = "jacobvanthoog"
 from seamonsters.utilityBots.driveTest import DriveTest
 from seamonsters.drive import DriveInterface
 from seamonsters.swerveDrive import SwerveDrive
+from seamonsters.wpilib_sim import simulate
 import wpilib
 
 class SwerveBotDrive(DriveTest):
