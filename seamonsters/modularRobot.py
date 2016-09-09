@@ -10,6 +10,7 @@ class Module( wpilib.IterativeRobot ):
     """
     
     def __init__(self):
+        super().__init__()
         self.Modules = [ ]
         self.Parent = None
         self.Time = 0
