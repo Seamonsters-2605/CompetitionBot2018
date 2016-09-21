@@ -62,6 +62,8 @@ class MainRobot (wpilib.IterativeRobot):
         self.Drive.setDriveMode(DriveInterface.DriveMode.POSITION)
 
         self.LeftFly = wpilib.CANTalon(4)
+        self.LeftFly.reverseOutput(True)
+        self.LeftFly.reverseSensor(True)
         self.RightFly = wpilib.CANTalon(5)
         self.LimitSwitch = wpilib.DigitalInput(0)
         self.LimitSwitch2 = wpilib.DigitalInput(1)
