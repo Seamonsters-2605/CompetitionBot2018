@@ -6,9 +6,13 @@ from seamonsters.gamepad import Gamepad
 
 class DriveTest (wpilib.IterativeRobot):
     
-    def robotInit(self):
+    def robotInit(self, normalScale=.5, fastScale=1.0, slowScale=.2):
         self.gamepad = Gamepad(port = 0)
         self.drive = None
+
+        self.normalScale = normalScale
+        self.fastScale = fastScale
+        self.slowScale = slowScale
         
     def initDrive(self, drive, driveMode=DriveInterface.DriveMode.POSITION):
         self.drive = drive
@@ -20,17 +24,20 @@ class DriveTest (wpilib.IterativeRobot):
         
         # change drive mode with A, B, and X
         if   self.gamepad.getRawButton(Gamepad.A):
+            print("Voltage mode!")
             self.drive.setDriveMode(DriveInterface.DriveMode.VOLTAGE)
         elif self.gamepad.getRawButton(Gamepad.B):
+            print("Speed mode!)
             self.drive.setDriveMode(DriveInterface.DriveMode.SPEED)
         elif self.gamepad.getRawButton(Gamepad.X):
+            print("Position mode!")
             self.drive.setDriveMode(DriveInterface.DriveMode.POSITION)
         
-        scale = .5
+        scale = self.normalScale
         if self.gamepad.getRawButton(Gamepad.LJ): # faster button
-            scale = 1
+            scale = self.fastScale
         elif self.gamepad.getRawButton(Gamepad.LB): # slower button
-            scale = .2
+            scale = self.slowScale
         
         turn = -self.gamepad.getRX() * abs(self.gamepad.getRX()) \
             * (scale / 2)
