@@ -26,7 +26,7 @@ class DriveTest (wpilib.IterativeRobot):
         elif self.gamepad.getRawButton(Gamepad.X):
             self.drive.setDriveMode(DriveInterface.DriveMode.POSITION)
         
-        scale = .55
+        scale = .5
         if self.gamepad.getRawButton(Gamepad.LJ): # faster button
             scale = 1
         elif self.gamepad.getRawButton(Gamepad.LB): # slower button

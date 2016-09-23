@@ -12,18 +12,34 @@ class SwerveBotShooter(wpilib.IterativeRobot):
         
         self.LeftFly = wpilib.CANTalon(4)
         self.RightFly = wpilib.CANTalon(5)
-        self.LimitSwitch = wpilib.DigitalInput(0)
-        self.LimitSwitch2 = wpilib.DigitalInput(1)
+        self.LeftFly.setPID(1, 0.0009, 1, 0.0)
+        self.RightFly.setPID(1, 0.0009, 1, 0.0)
+        self.LeftFly.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
+        self.RightFly.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
+        
         self.Intake = wpilib.CANTalon(8)
-        self.Shooter = Shooter.ShootController.ShootController(\
-            self.LeftFly, self.RightFly,\
-            self.Intake, self.LimitSwitch, self.LimitSwitch2)
+        self.Intake.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
         
     def teleopPeriodic(self):
-        self.Shooter.update(self.gamepad.getRawButton(Gamepad.B),\
-                            self.gamepad.getRawButton(Gamepad.X),\
-                            self.gamepad.getRawButton(Gamepad.A),\
-                            self.gamepad.getRawButton(Gamepad.Y))
+        if self.gamepad.getRawButton(Gamepad.A) \
+                or self.gamepad.getRawButton(Gamepad.A):
+            # spin flywheels
+            self.RightFly.set(-1.0)
+            self.LeftFly.set(1.0)
+        else:
+            self.RightFly.set(0.0)
+            self.LeftFly.set(0.0)
+            
+        if self.gamepad.getRawButton(Gamepad.B):
+            # intake forwards
+            self.Intake.set(.75)
+        elif self.gamepad.getRawButton(Gamepad.Y):
+            # intake backwards
+            self.Intake.set(-.75)
+        else:
+            self.Intake.set(0.0)
+        
+            
         
         
 if __name__ == "__main__":
