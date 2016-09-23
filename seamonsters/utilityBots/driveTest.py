@@ -27,7 +27,7 @@ class DriveTest (wpilib.IterativeRobot):
             print("Voltage mode!")
             self.drive.setDriveMode(DriveInterface.DriveMode.VOLTAGE)
         elif self.gamepad.getRawButton(Gamepad.B):
-            print("Speed mode!)
+            print("Speed mode!")
             self.drive.setDriveMode(DriveInterface.DriveMode.SPEED)
         elif self.gamepad.getRawButton(Gamepad.X):
             print("Position mode!")
