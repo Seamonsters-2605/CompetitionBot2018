@@ -8,7 +8,7 @@ from seamonsters.wpilib_sim import simulate
 
 class SwerveBot(Module):
     
-    def __init__(self):
+    def __init__(self, normalScale=.35, fastScale=.5, slowScale=.2):
         super().__init__()
         self.addModule(SwerveBotDrive())
         self.addModule(SwerveBotShooter())
