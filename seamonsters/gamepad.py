@@ -9,6 +9,7 @@ class Gamepad(seamonsters.joystick.JoystickBase):
     An extended Joystick specifically designed for Logitech gamepads. Like
     seamonsters.joystick.JoystickUtils, it adds dead zones and changes positive
     x to direction 0.
+    The gamepad mode switch MUST be at X!
     """
     # button definitions
     # example:
@@ -149,13 +150,13 @@ class Gamepad(seamonsters.joystick.JoystickBase):
         return self.getRawAxis(0) * (-1 if self.xInv else 1)
         
     def getRawLY(self, enableDeadZone = True):
-       return -self.getRawAxis(1) * (-1 if self.yInv else 1)
+       return self.getRawAxis(1) * (-1 if self.yInv else 1)
 
     def getRawRX(self, enableDeadZone = True):
         return self.getRawAxis(4) * (-1 if self.xInv else 1)
 
     def getRawRY(self, enableDeadZone = True):
-        return -self.getRawAxis(5) * (-1 if self.yInv else 1)
+        return self.getRawAxis(5) * (-1 if self.yInv else 1)
         
     def getRawLMagnitude(self, enableDeadZone = True):
         return math.sqrt(self.getRawLX(False)**2 + self.getRawLY(False)**2)
