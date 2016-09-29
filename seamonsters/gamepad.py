@@ -14,18 +14,18 @@ class Gamepad(seamonsters.joystick.JoystickBase):
     # button definitions
     # example:
     # gamepad.getRawButton(Gamepad.LT)
-    X = 3
     A = 1
     B = 2
+    X = 3
     Y = 4
     LB = 5
     RB = 6
-    LT = 11
-    RT = 12
     BACK = 7
     START = 8
     LJ = 9
     RJ = 10
+    LT = 11
+    RT = 12
 
     
     def __init__(self, port):
