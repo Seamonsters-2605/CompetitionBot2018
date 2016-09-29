@@ -221,12 +221,10 @@
                 <span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span><span class="p">)</span></div>
         
 <div class="viewcode-block" id="VoltageMode.set"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.VoltageMode.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span>
-        <span class="k">pass</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span></div>
     
 <div class="viewcode-block" id="VoltageMode.update"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.VoltageMode.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span>
-        <span class="k">pass</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span></div>
     
 <div class="viewcode-block" id="VoltageMode.invert"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.VoltageMode.invert">[docs]</a>    <span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -253,12 +251,10 @@
                 <span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Speed</span><span class="p">)</span></div>
         
 <div class="viewcode-block" id="SpeedMode.set"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.SpeedMode.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxSpeed</span>
-        <span class="k">pass</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxSpeed</span></div>
     
 <div class="viewcode-block" id="SpeedMode.update"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.SpeedMode.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span>
-        <span class="k">pass</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span></div>
     
 <div class="viewcode-block" id="SpeedMode.invert"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.SpeedMode.invert">[docs]</a>    <span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

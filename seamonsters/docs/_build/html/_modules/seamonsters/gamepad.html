@@ -51,22 +51,23 @@
 <span class="sd">    An extended Joystick specifically designed for Logitech gamepads. Like</span>
 <span class="sd">    seamonsters.joystick.JoystickUtils, it adds dead zones and changes positive</span>
 <span class="sd">    x to direction 0.</span>
+<span class="sd">    The gamepad mode switch MUST be at X!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># button definitions</span>
     <span class="c1"># example:</span>
     <span class="c1"># gamepad.getRawButton(Gamepad.LT)</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="n">A</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">B</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="n">Y</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">LB</span> <span class="o">=</span> <span class="mi">5</span>
     <span class="n">RB</span> <span class="o">=</span> <span class="mi">6</span>
-    <span class="n">LT</span> <span class="o">=</span> <span class="mi">11</span>
-    <span class="n">RT</span> <span class="o">=</span> <span class="mi">12</span>
     <span class="n">BACK</span> <span class="o">=</span> <span class="mi">7</span>
     <span class="n">START</span> <span class="o">=</span> <span class="mi">8</span>
     <span class="n">LJ</span> <span class="o">=</span> <span class="mi">9</span>
     <span class="n">RJ</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">LT</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">RT</span> <span class="o">=</span> <span class="mi">12</span>
 
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
@@ -182,22 +183,22 @@
 <span class="sd">        Get the direction of the right joystick. wpilib.Joystick&#39;s built-in</span>
 <span class="sd">        getDirection() says 0 is positive y. This version uses positive x.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRawRY</span><span class="p">(</span><span class="bp">False</span><span class="p">),</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">getRawRX</span><span class="p">(</span><span class="bp">False</span><span class="p">))</span> \
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRawRY</span><span class="p">(</span><span class="bp">False</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawRX</span><span class="p">(</span><span class="bp">False</span><span class="p">))</span> \
             <span class="o">-</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
     
     
     
 <div class="viewcode-block" id="Gamepad.getRawLX"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getRawLX">[docs]</a>    <span class="k">def</span> <span class="nf">getRawLX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xInv</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xInv</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span></div>
         
 <div class="viewcode-block" id="Gamepad.getRawLY"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getRawLY">[docs]</a>    <span class="k">def</span> <span class="nf">getRawLY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
-       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">yInv</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span></div>
+       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">yInv</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Gamepad.getRawRX"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getRawRX">[docs]</a>    <span class="k">def</span> <span class="nf">getRawRX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xInv</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Gamepad.getRawRY"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getRawRY">[docs]</a>    <span class="k">def</span> <span class="nf">getRawRY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">yInv</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">yInv</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span></div>
         
 <div class="viewcode-block" id="Gamepad.getRawLMagnitude"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getRawLMagnitude">[docs]</a>    <span class="k">def</span> <span class="nf">getRawLMagnitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRawLX</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawLY</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
