@@ -141,7 +141,7 @@ class Gamepad(seamonsters.joystick.JoystickBase):
         Get the direction of the right joystick. wpilib.Joystick's built-in
         getDirection() says 0 is positive y. This version uses positive x.
         """
-        return math.atan2(self.getRawRY(False), -self.getRawRX(False)) \
+        return math.atan2(self.getRawRY(False), self.getRawRX(False)) \
             - (math.pi / 2)
     
     
