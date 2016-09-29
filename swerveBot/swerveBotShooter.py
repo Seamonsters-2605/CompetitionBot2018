@@ -23,8 +23,8 @@ class SwerveBotShooter(wpilib.IterativeRobot):
     def teleopPeriodic(self):
         if self.gamepad.getRawButton(Gamepad.A):
             # spin flywheels
-            self.RightFly.set(.35)
-            self.LeftFly.set(.35)
+            self.RightFly.set(-.5)
+            self.LeftFly.set(-.5)
         else:
             self.RightFly.set(0.0)
             self.LeftFly.set(0.0)
