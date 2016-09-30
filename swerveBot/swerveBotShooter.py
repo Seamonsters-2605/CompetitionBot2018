@@ -21,19 +21,23 @@ class SwerveBotShooter(wpilib.IterativeRobot):
         self.Intake.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
         
     def teleopPeriodic(self):
+        speed = 0
         if self.gamepad.getRawButton(Gamepad.A):
-            # spin flywheels
-            self.RightFly.set(-1.0)
-            self.LeftFly.set(-1.0)
-        else:
-            self.RightFly.set(0.0)
-            self.LeftFly.set(0.0)
+            speed += 1
+        if self.gamepad.getRawButton(Gamepad.B):
+            speed += 2
+        if self.gamepad.getRawButton(Gamepad.X):
+            speed += 4
+        if self.gamepad.getRawButton(Gamepad.Y):
+            speed += 8
+        motorSpeed = -float(speed) / 15.0
+        self.RightFly.set(motorSpeed)
+        self.LeftFly.set(motorSpeed)
             
-        if self.gamepad.getRawButton(Gamepad.B) \
-                or self.gamepad.getRawButton(Gamepad.X):
+        if self.gamepad.getRawButton(Gamepad.LB):
             # intake forwards
             self.Intake.set(.5)
-        elif self.gamepad.getRawButton(Gamepad.Y):
+        elif self.gamepad.getRawButton(Gamepad.RB):
             # intake backwards
             self.Intake.set(-.5)
         else:
