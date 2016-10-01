@@ -19,25 +19,50 @@ class SwerveBotShooter(wpilib.IterativeRobot):
         
         self.Intake = wpilib.CANTalon(8)
         self.Intake.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
+
+        self.motorSpeed = 0
+        self.lastPrintedSpeed = 0
+        self.hold = False
         
     def teleopPeriodic(self):
-        speed = 0
-        if self.gamepad.getRawButton(Gamepad.A):
-            speed += 1
-        if self.gamepad.getRawButton(Gamepad.B):
-            speed += 2
-        if self.gamepad.getRawButton(Gamepad.X):
-            speed += 4
-        if self.gamepad.getRawButton(Gamepad.Y):
-            speed += 8
-        motorSpeed = -float(speed) / 15.0
-        self.RightFly.set(motorSpeed)
-        self.LeftFly.set(motorSpeed)
+        if not self.hold:
+            buttonPressed = False
+            speed = 3
+            if self.gamepad.getRawButton(Gamepad.A):
+                buttonPressed = True
+                speed += 1
+            if self.gamepad.getRawButton(Gamepad.B):
+                buttonPressed = True
+                speed += 2
+            if self.gamepad.getRawButton(Gamepad.X):
+                buttonPressed = True
+                speed += 4
+            if self.gamepad.getRawButton(Gamepad.Y):
+                buttonPressed = True
+                speed += 8
             
-        if self.gamepad.getRawButton(Gamepad.LB):
+            if buttonPressed:
+                self.motorSpeed = -float(speed) / 18.0
+            else:
+                self.motorSpeed = 0.0
+
+            if int(motorSpeed) != self.lastPrintedSpeed:
+                self.lastPrintedSpeed = int(motorSpeed)
+                print("Flywheels running at", self.lastPrintedSpeed)
+        
+        self.RightFly.set(self.motorSpeed)
+        self.LeftFly.set(self.motorSpeed)
+
+        if not self.hold and self.gamepad.getRawButton(Gamepad.START):
+            self.hold = True
+            print("Hold flywheel speed")
+        elif self.gamepad.getRawButton(Gamepad.BACK):
+            self.hold = False
+            
+        if self.gamepad.getRawButton(Gamepad.RB):
             # intake forwards
             self.Intake.set(.5)
-        elif self.gamepad.getRawButton(Gamepad.RB):
+        elif self.gamepad.getRawButton(Gamepad.LB):
             # intake backwards
             self.Intake.set(-.5)
         else:
