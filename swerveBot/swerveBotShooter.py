@@ -21,7 +21,7 @@ class SwerveBotShooter(wpilib.IterativeRobot):
         self.Intake.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
 
         self.motorSpeed = 0
-        self.lastPrintedSpeed = 0
+        self.lastPrintedSpeedString = ""
         self.hold = False
         
     def teleopPeriodic(self):
@@ -46,18 +46,19 @@ class SwerveBotShooter(wpilib.IterativeRobot):
             else:
                 self.motorSpeed = 0.0
 
-            if int(self.motorSpeed) != self.lastPrintedSpeed:
-                self.lastPrintedSpeed = int(self.motorSpeed)
-                print("Flywheels running at", self.lastPrintedSpeed)
+            if self.getFlywheelSpeedString() != self.lastPrintedSpeedString:
+                self.lastPrintedSpeedString = self.getFlywheelSpeedString()
+                print("Flywheels running at", self.lastPrintedSpeedString)
         
         self.RightFly.set(self.motorSpeed)
         self.LeftFly.set(self.motorSpeed)
 
         if not self.hold and self.gamepad.getRawButton(Gamepad.START):
             self.hold = True
-            print("Hold flywheel speed at", int(self.motorSpeed))
-        elif self.gamepad.getRawButton(Gamepad.BACK):
+            print("Hold flywheel speed at", self.getFlywheelSpeedString())
+        elif self.hold and self.gamepad.getRawButton(Gamepad.BACK):
             self.hold = False
+            print("Hold disabled")
             
         if self.gamepad.getRawButton(Gamepad.RB):
             # intake forwards
@@ -67,7 +68,9 @@ class SwerveBotShooter(wpilib.IterativeRobot):
             self.Intake.set(-.5)
         else:
             self.Intake.set(0.0)
-        
+
+    def getFlywheelSpeedString(self):
+        return str(int(round(-self.motorSpeed * 100))) + "%"
             
         
         

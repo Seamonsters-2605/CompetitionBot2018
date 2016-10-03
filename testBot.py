@@ -13,11 +13,11 @@ class Test(wpilib.IterativeRobot):
         self.Gamepad = seamonsters.gamepad.Gamepad(0)
 
     def teleopPeriodic(self):
-        print(self.Talon1.getPosition(), self.Talon2.getPosition())
-        #print(self.Gamepad.getLX(), self.Gamepad.getLY(),
-        #      self.Gamepad.getLDirection(),
-        #      self.Gamepad.getRX(), self.Gamepad.getRY(),
-        #      self.Gamepad.getRDirection())
+        #print(self.Talon1.getPosition(), self.Talon2.getPosition())
+        print(self.Gamepad.getLX(), self.Gamepad.getLY(),
+              self.Gamepad.getLDirection(),
+              self.Gamepad.getRX(), self.Gamepad.getRY(),
+              self.Gamepad.getRDirection())
         
 if __name__ == "__main__":
     wpilib.run(Test)
