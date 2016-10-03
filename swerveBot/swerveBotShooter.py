@@ -46,8 +46,8 @@ class SwerveBotShooter(wpilib.IterativeRobot):
             else:
                 self.motorSpeed = 0.0
 
-            if int(motorSpeed) != self.lastPrintedSpeed:
-                self.lastPrintedSpeed = int(motorSpeed)
+            if int(self.motorSpeed) != self.lastPrintedSpeed:
+                self.lastPrintedSpeed = int(self.motorSpeed)
                 print("Flywheels running at", self.lastPrintedSpeed)
         
         self.RightFly.set(self.motorSpeed)
@@ -55,7 +55,7 @@ class SwerveBotShooter(wpilib.IterativeRobot):
 
         if not self.hold and self.gamepad.getRawButton(Gamepad.START):
             self.hold = True
-            print("Hold flywheel speed")
+            print("Hold flywheel speed at", int(self.motorSpeed))
         elif self.gamepad.getRawButton(Gamepad.BACK):
             self.hold = False
             
