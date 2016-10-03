@@ -2,6 +2,7 @@ __author__ = "jacobvanthoog"
 
 from seamonsters.utilityBots.driveTest import DriveTest
 from seamonsters.drive import DriveInterface
+from seamonsters.drive import AccelerationFilterDrive
 from seamonsters.swerveDrive import SwerveDrive
 from seamonsters.wpilib_sim import simulate
 import wpilib
@@ -40,7 +41,9 @@ class SwerveBotDrive(DriveTest):
         drive.addWheel(-1.0, 1.0, flDrive, flRotate, -104/18*280*4/2)
         drive.addWheel(1.0, -1.0, brDrive, brRotate, -104/18*280*4/2)
         
-        DriveTest.initDrive(self, drive,
+        filterDrive = AccelerationFilterDrive(drive)
+        
+        DriveTest.initDrive(self, filterDrive,
             driveMode=DriveInterface.DriveMode.VOLTAGE)
             
     def teleopPeriodic(self):

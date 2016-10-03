@@ -1,6 +1,7 @@
 __author__ = "jacobvanthoog"
 
 import wpilib
+import math
 
 def setControlMode(talon, driveMode):
     """
@@ -61,3 +62,60 @@ class DriveInterface:
         overriden. It is expected that this function be called in a loop.
         """
         pass
+
+
+class AccelerationFilterDrive(DriveInterface):
+    """
+    Wraps another drive interface, and provides acceleration filtering.
+    """
+    
+    def __init__(self, drive):
+        self.drive = drive
+        
+        self.maximumAccelDistance = .08
+        self.previousX = 0.0
+        self.previousY = 0.0
+        self.previousTurn = 0.0
+        
+    def setDriveMode(self, mode):
+        self.drive.setDriveMode(mode)
+
+    def getDriveMode(self):
+        return self.drive.getDriveMode()
+    
+    def drive(self, magnitude, direction, turn, forceDriveMode = None):
+        magnitude, direction, turn = \
+            self._accelerationFilter(magnitude, direction, turn)
+        self.drive.drive(magnitude, direction, turn, forceDriveMode)
+    
+    # returns an tuple of: (magnitude, direction, turn)
+    def _accelerationFilter(self, magnitude, direction, turn):
+        newX = magnitude * math.cos(direction)
+        newY = magnitude * math.sin(direction)
+        distanceToNew = math.sqrt( (newX - self.previousX) ** 2 \
+                + (newY - self.previousY) ** 2 )
+        finalTurn = turn
+        if not abs(self.previousTurn - turn) <= self.maximumAccelDistance:
+            if turn > self.previousTurn:
+                finalTurn = self.previousTurn + self.maximumAccelDistance
+            else:
+                finalTurn = self.previousTurn - self.maximumAccelDistance
+
+        if (distanceToNew <= self.maximumAccelDistance):
+            self.previousX = newX
+            self.previousY = newY
+            self.previousTurn = finalTurn
+            return magnitude, direction, finalTurn
+
+        #Alternate Return for strafe fail to pass
+        directionToNew = math.atan2(newY-self.previousY, newX-self.previousX)
+        finalX = self.previousX \
+                + math.cos(directionToNew) * self.maximumAccelDistance
+        finalY = self.previousY \
+                + math.sin(directionToNew) * self.maximumAccelDistance
+        self.previousX = finalX
+        self.previousY = finalY
+        self.previousTurn = finalTurn
+        return math.sqrt(finalX ** 2 + finalY ** 2), \
+               math.atan2(finalY, finalX), \
+               finalTurn
