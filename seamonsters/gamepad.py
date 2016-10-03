@@ -1,8 +1,8 @@
+__author__ = "jacobvanthoog" # based on code by zach steele
+
 import wpilib
 import math
 import seamonsters.joystick
-
-__author__ = "jacobvanthoog" # based on code by zach steele
 
 class Gamepad(seamonsters.joystick.JoystickBase):
     """
@@ -133,16 +133,14 @@ class Gamepad(seamonsters.joystick.JoystickBase):
         Get the direction of the left joystick. wpilib.Joystick's built-in
         getDirection() says 0 is positive y. This version uses positive x.
         """
-        return math.atan2(self.getRawLY(False), self.getRawLX(False)) \
-            - (math.pi / 2)
+        return math.atan2(self.getRawLY(False), self.getRawLX(False))
 
     def getRDirection(self):
         """
         Get the direction of the right joystick. wpilib.Joystick's built-in
         getDirection() says 0 is positive y. This version uses positive x.
         """
-        return math.atan2(self.getRawRY(False), self.getRawRX(False)) \
-            - (math.pi / 2)
+        return math.atan2(self.getRawRY(False), self.getRawRX(False))
     
     
     
@@ -150,13 +148,13 @@ class Gamepad(seamonsters.joystick.JoystickBase):
         return self.getRawAxis(0) * (-1 if self.xInv else 1)
         
     def getRawLY(self, enableDeadZone = True):
-       return self.getRawAxis(1) * (-1 if self.yInv else 1)
+        return -self.getRawAxis(1) * (-1 if self.yInv else 1)
 
     def getRawRX(self, enableDeadZone = True):
         return self.getRawAxis(4) * (-1 if self.xInv else 1)
 
     def getRawRY(self, enableDeadZone = True):
-        return self.getRawAxis(5) * (-1 if self.yInv else 1)
+        return -self.getRawAxis(5) * (-1 if self.yInv else 1)
         
     def getRawLMagnitude(self, enableDeadZone = True):
         return math.sqrt(self.getRawLX(False)**2 + self.getRawLY(False)**2)
