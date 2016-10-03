@@ -43,7 +43,7 @@ class SwerveBotDrive(DriveTest):
         
         filterDrive = AccelerationFilterDrive(drive)
         
-        DriveTest.initDrive(self, filterDrive,
+        DriveTest.initDrive(self, drive,
             driveMode=DriveInterface.DriveMode.VOLTAGE)
             
     def teleopPeriodic(self):

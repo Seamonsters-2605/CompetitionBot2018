@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="seamonsters 0 documentation" href="index.html" />
     <link rel="next" title="seamonsters.gamepad" href="gamepad.html" />
-    <link rel="prev" title="Welcome to the seamonsters library documentation!" href="index.html" />
+    <link rel="prev" title="seamonsters.dashboard" href="dashboard.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -42,6 +42,28 @@
             
   <div class="section" id="module-seamonsters.drive">
 <span id="seamonsters-drive"></span><h1>seamonsters.drive<a class="headerlink" href="#module-seamonsters.drive" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seamonsters.drive.AccelerationFilterDrive">
+<em class="property">class </em><code class="descclassname">seamonsters.drive.</code><code class="descname">AccelerationFilterDrive</code><span class="sig-paren">(</span><em>drive</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seamonsters.drive.DriveInterface" title="seamonsters.drive.DriveInterface"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.drive.DriveInterface</span></code></a></p>
+<p>Wraps another drive interface, and provides acceleration filtering.</p>
+<dl class="method">
+<dt id="seamonsters.drive.AccelerationFilterDrive.drive">
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive.drive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.AccelerationFilterDrive.getDriveMode">
+<code class="descname">getDriveMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.getDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive.getDriveMode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.AccelerationFilterDrive.setDriveMode">
+<code class="descname">setDriveMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.setDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive.setDriveMode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="class">
 <dt id="seamonsters.drive.DriveInterface">
 <em class="property">class </em><code class="descclassname">seamonsters.drive.</code><code class="descname">DriveInterface</code><a class="reference internal" href="_modules/seamonsters/drive.html#DriveInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.DriveInterface" title="Permalink to this definition">¶</a></dt>
@@ -118,7 +140,7 @@ a wpilib.CANTalon.ControlMode.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to the seamonsters library documentation!</a></li>
+      <li>Previous: <a href="dashboard.html" title="previous chapter">seamonsters.dashboard</a></li>
       <li>Next: <a href="gamepad.html" title="next chapter">seamonsters.gamepad</a></li>
   </ul></li>
 </ul>
