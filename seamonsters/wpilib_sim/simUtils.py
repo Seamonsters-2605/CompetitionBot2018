@@ -3,6 +3,133 @@ __author__ = "jacobvanthoog"
 import wpilib
 import time
 import hal
+import math
+
+
+class Joystick:
+    
+    # Some of this was copied from robotpy:
+    # http://robotpy.readthedocs.io/en/latest/_modules/wpilib/joystick.html
+    
+    kDefaultXAxis = 0
+    kDefaultYAxis = 1
+    kDefaultZAxis = 2
+    kDefaultTwistAxis = 2
+    kDefaultThrottleAxis = 3
+    kDefaultTriggerButton = 1
+    kDefaultTopButton = 2
+    
+    class AxisType:
+        kX = 0
+        kY = 1
+        kZ = 2
+        kTwist = 3
+        kThrottle = 4
+        kNumAxis = 5
+    
+    class ButtonType:
+        kTrigger = 0
+        kTop = 1
+        kNumButton = 2
+    
+    class RumbleType:
+        kLeftRumble_val = 0
+        kRightRumble_val = 1
+        
+    def __init__(self, port, numAxisTypes=None, numButtonTypes=None):
+        self.port = port
+        self._log("Init")
+        pass
+    
+    def _log(self, *args):
+        print("Joystick", str(self.port) + ": ", end = "")
+        print(*args)
+    
+    def getX(self, hand=None):
+        return 0.0
+    
+    def getY(self, hand=None):
+        return 0.0
+    
+    def getZ(self, hand=None):
+        return 0.0
+    
+    def getTwist(self):
+        return 0.0
+    
+    def getThrottle(self):
+        return 0.0
+    
+    def getRawAxis(self, axis):
+        return 0.0
+    
+    def getAxis(self, axis):
+        return 0.0
+    
+    def getAxisCount(self):
+        return 6 # arbitrary number
+    
+    def getTrigger(self, hand=None):
+        return False
+    
+    def getTop(self, hand=None):
+        return False
+    
+    def getBumper(self, hand=None):
+        return False
+    
+    def getRawButton(self, button):
+        return False
+    
+    def getButtonCount(self):
+        return 12 # arbitrary number
+    
+    def getPOV(self, pov=0):
+        return -1.0
+    
+    def getPOVCount(self):
+        return 1
+    
+    def getButton(self, button):
+        return False
+    
+    def getMagnitude(self):
+        return math.sqrt(math.pow(self.getX(), 2) + math.pow(self.getY(), 2))
+    
+    def getDirectionRadians(self):
+        return math.atan2(self.getX(), -self.getY())
+    
+    def getDirectionDegrees(self):
+        return math.degrees(self.getDirectionRadians())
+    
+    def getAxisChannel(self, axis):
+        return 0
+    
+    def setAxisChannel(self, axis, channel):
+        pass
+    
+    def getIsXbox(self):
+        return False
+    
+    def getType(self):
+        return None # what should this be?
+    
+    def getName(self):
+        return "nonexistent joystick"
+    
+    def setRumble(self, type, value):
+        pass
+    
+    def setOutput(self, outputNumber, value):
+        pass
+    
+    def setOutputs(self, value):
+        pass
+    
+    def flush_outputs(self):
+        pass
+
+
 
 class CANTalon:
     
@@ -278,3 +405,4 @@ def robotLoop(function):
 
 def replaceWpilib():
     wpilib.CANTalon = CANTalon
+    wpilib.Joystick = Joystick

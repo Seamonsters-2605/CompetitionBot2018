@@ -8,8 +8,11 @@ class Gamepad(seamonsters.joystick.JoystickBase):
     """
     An extended Joystick specifically designed for Logitech gamepads. Like
     seamonsters.joystick.JoystickUtils, it adds dead zones and changes positive
-    x to direction 0.
-    The gamepad mode switch MUST be at X!
+    x to direction 0. The gamepad mode switch MUST be at X!
+    
+    For more of Gamepad's supported methods, see
+    ``seamonsters.joystick.JoystickUtils``, and `wpilib.joystick
+    <http://robotpy.readthedocs.io/en/latest/wpilib/Joystick.html>`_
     """
     # button definitions
     # example:

@@ -2,8 +2,9 @@ seamonsters.wpilib_sim
 ======================
 
 Robot simulation (work in progress), with rudimentary support for connecting to
-Blender physics simulation. If you import ``seamonsters.wpilib_sim.simulate``,
-your robot will magically support simulation. To start in simulation mode, type
+Blender physics simulation. To use it, import
+``seamonsters.wpilib_sim.simulate`` **before anything else**, and your robot
+will magically support simulation. To start in simulation mode, type
 ``python3 robot.py wpilib_sim``, followed by:
 
 - Nothing: run robotInit and stop

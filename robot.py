@@ -1,5 +1,6 @@
 __author__ = "jacobvanthoog"
 
+import seamonsters.wpilib_sim.simulate
 import math
 import wpilib
 import sys
@@ -11,7 +12,6 @@ from Shooter import ShootController
 import Vision
 import networktables
 from networktables import NetworkTable
-import seamonsters.wpilib_sim.simulate
 
 NetworkTable.setServerMode()
 

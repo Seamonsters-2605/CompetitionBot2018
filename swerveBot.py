@@ -1,10 +1,10 @@
 __author__ = "jacobvanthoog"
 
+from seamonsters.wpilib_sim import simulate
 import wpilib
 from seamonsters.modularRobot import Module
 from swerveBot.swerveBotDrive import SwerveBotDrive
 from swerveBot.swerveBotShooter import SwerveBotShooter
-from seamonsters.wpilib_sim import simulate
 
 class SwerveBot(Module):
     
