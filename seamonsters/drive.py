@@ -69,7 +69,7 @@ class AccelerationFilterDrive(DriveInterface):
     Wraps another drive interface, and provides acceleration filtering.
     """
     
-    def __init__(self, drive):
+    def __init__(self, interface):
         self.interface = interface
         
         self.maximumAccelDistance = .08

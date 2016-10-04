@@ -41,9 +41,9 @@ class SwerveBotDrive(DriveTest):
         drive.addWheel(-1.0, 1.0, flDrive, flRotate, -104/18*280*4/2)
         drive.addWheel(1.0, -1.0, brDrive, brRotate, -104/18*280*4/2)
         
-        #filterDrive = AccelerationFilterDrive(drive)
+        filterDrive = AccelerationFilterDrive(drive)
         
-        DriveTest.initDrive(self, drive,
+        DriveTest.initDrive(self, filterDrive,
             driveMode=DriveInterface.DriveMode.VOLTAGE)
         
         
