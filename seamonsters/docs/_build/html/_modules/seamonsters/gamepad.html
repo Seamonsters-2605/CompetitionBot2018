@@ -51,14 +51,19 @@
 <span class="sd">    An extended Joystick specifically designed for Logitech gamepads. Like</span>
 <span class="sd">    seamonsters.joystick.JoystickUtils, it adds dead zones and changes positive</span>
 <span class="sd">    x to direction 0. The gamepad mode switch MUST be at X!</span>
+
+<span class="sd">    The Gamepad class has constants defined for the numbers of gamepad buttons.</span>
+<span class="sd">    These include the colored A, B, X, and Y buttons; the left and right</span>
+<span class="sd">    bumpers; the left and right triggers; the left and right joysticks when</span>
+<span class="sd">    pressed; the Back and Start buttons; and the 4 d-pad buttons. The state</span>
+<span class="sd">    of these buttons can be checked with</span>
+<span class="sd">    ``gamepad.getRawButton(Gamepad.BUTTON_CONSTANT)``.</span>
 <span class="sd">    </span>
 <span class="sd">    For more of Gamepad&#39;s supported methods, see</span>
 <span class="sd">    ``seamonsters.joystick.JoystickUtils``, and `wpilib.joystick</span>
 <span class="sd">    &lt;http://robotpy.readthedocs.io/en/latest/wpilib/Joystick.html&gt;`_</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># button definitions</span>
-    <span class="c1"># example:</span>
-    <span class="c1"># gamepad.getRawButton(Gamepad.LT)</span>
+    
     <span class="n">A</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">B</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">X</span> <span class="o">=</span> <span class="mi">3</span>
@@ -69,8 +74,13 @@
     <span class="n">START</span> <span class="o">=</span> <span class="mi">8</span>
     <span class="n">LJ</span> <span class="o">=</span> <span class="mi">9</span>
     <span class="n">RJ</span> <span class="o">=</span> <span class="mi">10</span>
-    <span class="n">LT</span> <span class="o">=</span> <span class="mi">11</span>
-    <span class="n">RT</span> <span class="o">=</span> <span class="mi">12</span>
+    
+    <span class="n">LT</span> <span class="o">=</span> <span class="mi">101</span>
+    <span class="n">RT</span> <span class="o">=</span> <span class="mi">102</span>
+    <span class="n">UP</span> <span class="o">=</span> <span class="mi">103</span>
+    <span class="n">DOWN</span> <span class="o">=</span> <span class="mi">104</span>
+    <span class="n">LEFT</span> <span class="o">=</span> <span class="mi">105</span>
+    <span class="n">RIGHT</span> <span class="o">=</span> <span class="mi">106</span>
 
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
@@ -197,7 +207,38 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRawRY</span><span class="p">(</span><span class="bp">False</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawRX</span><span class="p">(</span><span class="bp">False</span><span class="p">))</span></div>
     
-    
+<div class="viewcode-block" id="Gamepad.getLTrigger"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getLTrigger">[docs]</a>    <span class="k">def</span> <span class="nf">getLTrigger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get how far the left trigger is pressed, as a value from 0.0 to 1.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Gamepad.getRTrigger"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getRTrigger">[docs]</a>    <span class="k">def</span> <span class="nf">getRTrigger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get how far the right trigger is pressed, as a value from 0.0 to 1.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Gamepad.getRawButton"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getRawButton">[docs]</a>    <span class="k">def</span> <span class="nf">getRawButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">button</span> <span class="o">==</span> <span class="n">Gamepad</span><span class="o">.</span><span class="n">LT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLTrigger</span><span class="p">()</span> <span class="o">&gt;</span> <span class="o">.</span><span class="mi">5</span>
+        <span class="k">elif</span> <span class="n">button</span> <span class="o">==</span> <span class="n">Gamepad</span><span class="o">.</span><span class="n">RT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRTrigger</span><span class="p">()</span> <span class="o">&gt;</span> <span class="o">.</span><span class="mi">5</span>
+        <span class="k">elif</span> <span class="n">button</span> <span class="o">==</span> <span class="n">Gamepad</span><span class="o">.</span><span class="n">UP</span><span class="p">:</span>
+            <span class="n">dpad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDPad</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">7</span>
+        <span class="k">elif</span> <span class="n">button</span> <span class="o">==</span> <span class="n">Gamepad</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">:</span>
+            <span class="n">dpad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDPad</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">3</span>
+        <span class="k">elif</span> <span class="n">button</span> <span class="o">==</span> <span class="n">Gamepad</span><span class="o">.</span><span class="n">DOWN</span><span class="p">:</span>
+            <span class="n">dpad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDPad</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">or</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">5</span>
+        <span class="k">elif</span> <span class="n">button</span> <span class="o">==</span> <span class="n">Gamepad</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
+            <span class="n">dpad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDPad</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">5</span> <span class="ow">or</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">6</span> <span class="ow">or</span> <span class="n">dpad</span> <span class="o">==</span> <span class="mi">7</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">getRawButton</span><span class="p">(</span><span class="n">button</span><span class="p">)</span></div>
     
 <div class="viewcode-block" id="Gamepad.getRawLX"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getRawLX">[docs]</a>    <span class="k">def</span> <span class="nf">getRawLX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xInv</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span></div>

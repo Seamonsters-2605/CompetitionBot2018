@@ -49,6 +49,12 @@
 <p>An extended Joystick specifically designed for Logitech gamepads. Like
 seamonsters.joystick.JoystickUtils, it adds dead zones and changes positive
 x to direction 0. The gamepad mode switch MUST be at X!</p>
+<p>The Gamepad class has constants defined for the numbers of gamepad buttons.
+These include the colored A, B, X, and Y buttons; the left and right
+bumpers; the left and right triggers; the left and right joysticks when
+pressed; the Back and Start buttons; and the 4 d-pad buttons. The state
+of these buttons can be checked with
+<code class="docutils literal"><span class="pre">gamepad.getRawButton(Gamepad.BUTTON_CONSTANT)</span></code>.</p>
 <p>For more of Gamepad&#8217;s supported methods, see
 <code class="docutils literal"><span class="pre">seamonsters.joystick.JoystickUtils</span></code>, and <a class="reference external" href="http://robotpy.readthedocs.io/en/latest/wpilib/Joystick.html">wpilib.joystick</a></p>
 <dl class="attribute">
@@ -67,8 +73,18 @@ x to direction 0. The gamepad mode switch MUST be at X!</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="seamonsters.gamepad.Gamepad.DOWN">
+<code class="descname">DOWN</code><em class="property"> = 104</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.DOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.LB">
 <code class="descname">LB</code><em class="property"> = 5</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.LB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seamonsters.gamepad.Gamepad.LEFT">
+<code class="descname">LEFT</code><em class="property"> = 105</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.LEFT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -78,12 +94,17 @@ x to direction 0. The gamepad mode switch MUST be at X!</p>
 
 <dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.LT">
-<code class="descname">LT</code><em class="property"> = 11</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.LT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">LT</code><em class="property"> = 101</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.LT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.RB">
 <code class="descname">RB</code><em class="property"> = 6</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.RB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seamonsters.gamepad.Gamepad.RIGHT">
+<code class="descname">RIGHT</code><em class="property"> = 106</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.RIGHT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -93,12 +114,17 @@ x to direction 0. The gamepad mode switch MUST be at X!</p>
 
 <dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.RT">
-<code class="descname">RT</code><em class="property"> = 12</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.RT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">RT</code><em class="property"> = 102</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.RT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.START">
 <code class="descname">START</code><em class="property"> = 8</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.START" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="seamonsters.gamepad.Gamepad.UP">
+<code class="descname">UP</code><em class="property"> = 103</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.UP" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -133,6 +159,12 @@ default; set enableDeadZone to False to disable it.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="seamonsters.gamepad.Gamepad.getLTrigger">
+<code class="descname">getLTrigger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getLTrigger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.gamepad.Gamepad.getLTrigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get how far the left trigger is pressed, as a value from 0.0 to 1.0</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="seamonsters.gamepad.Gamepad.getLX">
 <code class="descname">getLX</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getLX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.gamepad.Gamepad.getLX" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the x-axis of the left joystick. The dead zone is enabled by
@@ -161,6 +193,12 @@ default; set enableDeadZone to False to disable it.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="seamonsters.gamepad.Gamepad.getRTrigger">
+<code class="descname">getRTrigger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRTrigger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.gamepad.Gamepad.getRTrigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get how far the right trigger is pressed, as a value from 0.0 to 1.0</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="seamonsters.gamepad.Gamepad.getRX">
 <code class="descname">getRX</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.gamepad.Gamepad.getRX" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the y-axis of the right joystick. The dead zone is enabled by
@@ -173,6 +211,11 @@ default; set enableDeadZone to False to disable it.</p>
 <dd><p>Get the y-axis of the right joystick. The dead zone is enabled by
 default; set enableDeadZone to False to disable it.</p>
 </dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.gamepad.Gamepad.getRawButton">
+<code class="descname">getRawButton</code><span class="sig-paren">(</span><em>button</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawButton"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.gamepad.Gamepad.getRawButton" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.gamepad.Gamepad.getRawLMagnitude">
