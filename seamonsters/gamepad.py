@@ -37,6 +37,16 @@ class Gamepad(seamonsters.joystick.JoystickBase):
         # invert axes
         self.xInv = False
         self.yInv = False
+
+    def getDPad(self):
+        """
+        Return the currently pressed direction of the d-pad. -1 is not pressed.
+        0 - 7 represents the directions starting at Up and moving clockwise.
+        """
+        pov = self.getPOV()
+        if pov == -1:
+            return -1
+        return int(round(self.getPOV() / 45.0))
         
     def invertX(self, enabled=True):
         """

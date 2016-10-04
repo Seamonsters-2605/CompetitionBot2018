@@ -14,10 +14,7 @@ class Test(wpilib.IterativeRobot):
 
     def teleopPeriodic(self):
         #print(self.Talon1.getPosition(), self.Talon2.getPosition())
-        print(self.Gamepad.getLX(), self.Gamepad.getLY(),
-              self.Gamepad.getLDirection(),
-              self.Gamepad.getRX(), self.Gamepad.getRY(),
-              self.Gamepad.getRDirection())
+        print(self.Gamepad.getDPad())
         
 if __name__ == "__main__":
     wpilib.run(Test)
