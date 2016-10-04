@@ -7,6 +7,7 @@ import sys
 import seamonsters
 from seamonsters.holonomicDrive import HolonomicDrive
 from seamonsters.drive import DriveInterface
+from seamonsters.drive import AccelerationFilterDrive
 from seamonsters.gamepad import Gamepad
 from Shooter import ShootController
 import Vision
@@ -60,6 +61,7 @@ class MainRobot (wpilib.IterativeRobot):
         # TODO: move magic number to constant
         self.Drive.setWheelOffset(math.radians(27)) #angle of wheels
         self.Drive.setDriveMode(DriveInterface.DriveMode.POSITION)
+        self.FilterDrive = AccelerationFilterDrive(self.Drive)
 
         self.LeftFly = wpilib.CANTalon(4)
         self.LeftFly.reverseOutput(True)
@@ -114,10 +116,10 @@ class MainRobot (wpilib.IterativeRobot):
                     if abs(self.Vision.centerX()[0] - 240) < 10:
                         self.shoot = True
                     elif self.Vision.centerX()[0] - 240 > 0:
-                        self.Drive.drive(0, 0, -self.turn)
+                        self.FilterDrive.drive(0, 0, -self.turn)
                         self.shoot = False
                     elif self.Vision.centerX()[0] - 240 < 0:
-                        self.Drive.drive(0, 0, self.turn)
+                        self.FilterDrive.drive(0, 0, self.turn)
                         self.shoot = False
                     else:
                         self.shoot = False
@@ -134,7 +136,7 @@ class MainRobot (wpilib.IterativeRobot):
                 #     else:
                 #         self.Shooter.update(False, True, True, False)
         else:
-            #self.Drive.driveSpeedJeffMode(.5,math.pi/2,0)
+            #self.FilterDrive.driveSpeedJeffMode(.5,math.pi/2,0)
             pass
     # def autonomousPeriodic(self):
     #
@@ -142,11 +144,11 @@ class MainRobot (wpilib.IterativeRobot):
     #     if self.time < 350:
     #         self.start = True
     #     if self.start == True:
-    #         self.Drive.drive(1, math.pi/2, 0)
+    #         self.FilterDrive.drive(1, math.pi/2, 0)
     #     if self.time > 350:
     #         self.start = False
     #         print ("time is at 350")
-    #         # self.Drive.drive(0, 0, 0)
+    #         # self.FilterDrive.drive(0, 0, 0)
     #         if not self.Vision.centerX().__len__() == 0:
     #             print("passed")
     #             self.needed = abs(self.Vision.centerX()[0] - 235)
@@ -176,7 +178,7 @@ class MainRobot (wpilib.IterativeRobot):
     #                 self.Shooter.update(False, True, True, False)
     #             else:
     #                 self.Shooter.update(False, False, False, False)
-    #     self.Drive.drive(0, 0, self.turn)
+    #     self.FilterDrive.drive(0, 0, self.turn)
     def teleopInit(self):
         self.Drive.zeroEncoderTargets()
         self.readyToShoot = False
@@ -193,7 +195,7 @@ class MainRobot (wpilib.IterativeRobot):
             turn = -self.TurnJoy.getX()
             magnitude = self.MoveJoy.getMagnitude()
             direction = self.MoveJoy.getDirection()
-            self.Drive.drive(magnitude, direction, turn) # jeff mode
+            self.FilterDrive.drive(magnitude, direction, turn) # jeff mode
             self.Shooter.update(self.MoveJoy.getRawButton(2),\
                             self.MoveJoy.getRawButton(3),\
                             self.MoveJoy.getTrigger(),\
@@ -212,10 +214,10 @@ class MainRobot (wpilib.IterativeRobot):
                     if abs(self.Vision.centerX()[0] - 240) < 15:
                         self.readyToShoot = True
                     elif self.Vision.centerX()[0] - 240 > 0:
-                        self.Drive.drive(0, 0, -self.turnSpeed)
+                        self.FilterDrive.drive(0, 0, -self.turnSpeed)
                         self.readyToShoot = False
                     elif self.Vision.centerX()[0] - 240 < 0:
-                        self.Drive.drive(0, 0, self.turnSpeed)
+                        self.FilterDrive.drive(0, 0, self.turnSpeed)
                         self.readyToShoot = False
                     else:
                         self.readyToShoot = False
@@ -242,12 +244,12 @@ class MainRobot (wpilib.IterativeRobot):
             # print ("Slowed: " + str(self.slowed))
             # switch drive mode with gamepad
             if   self.movegamepad.getRawButton(Gamepad.A):
-                self.Drive.setDriveMode(DriveInterface.DriveMode.VOLTAGE)
+                self.FilterDrive.setDriveMode(DriveInterface.DriveMode.VOLTAGE)
             elif self.movegamepad.getRawButton(Gamepad.B):
-                self.Drive.setDriveMode(DriveInterface.DriveMode.SPEED)
+                self.FilterDrive.setDriveMode(DriveInterface.DriveMode.SPEED)
             elif self.movegamepad.getRawButton(Gamepad.X):
-                self.Drive.setDriveMode(DriveInterface.DriveMode.POSITION)
-            # print(str(self.Drive.getDriveMode()))
+                self.FilterDrive.setDriveMode(DriveInterface.DriveMode.POSITION)
+            # print(str(self.FilterDrive.getDriveMode()))
 
             # TODO: refactor duplicate code
             if self.movegamepad.getRawButton(Gamepad.RB):
@@ -260,7 +262,7 @@ class MainRobot (wpilib.IterativeRobot):
                 #magnitude = self.movegamepad.getLMagnitude() * self.slowed
                 magnitude = self.movegamepad.getLMagnitude()**2 * self.slowed
                 direction = self.movegamepad.getLDirection()
-            self.Drive.drive(magnitude, direction, turn)
+            self.FilterDrive.drive(magnitude, direction, turn)
             self.Shooter.update(self.shootgamepad.getRawButton(Gamepad.B),\
                                 self.shootgamepad.getRawButton(Gamepad.X),\
                                 self.shootgamepad.getRawButton(Gamepad.A),\

@@ -106,45 +106,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">usingInputAccelerationControl</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">maximumAccelDistance</span> <span class="o">=</span> <span class="o">.</span><span class="mi">08</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previousX</span> <span class="o">=</span> <span class="mf">0.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previousY</span> <span class="o">=</span> <span class="mf">0.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previousTurn</span> <span class="o">=</span> <span class="mf">0.0</span>
-        
-    <span class="c1"># returns an tuple of: (magnitude, direction, turn)</span>
-    <span class="c1"># for internal use only</span>
-<div class="viewcode-block" id="HolonomicDrive.accelerationFilter"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.accelerationFilter">[docs]</a>    <span class="k">def</span> <span class="nf">accelerationFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span>
-        <span class="n">newX</span> <span class="o">=</span> <span class="n">magnitude</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
-        <span class="n">newY</span> <span class="o">=</span> <span class="n">magnitude</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
-        <span class="n">distanceToNew</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">newX</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousX</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> \
-                <span class="o">+</span> <span class="p">(</span><span class="n">newY</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousY</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="p">)</span>
-        <span class="n">finalTurn</span> <span class="o">=</span> <span class="n">turn</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previousTurn</span> <span class="o">-</span> <span class="n">turn</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximumAccelDistance</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">turn</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousTurn</span><span class="p">:</span>
-                <span class="n">finalTurn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousTurn</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximumAccelDistance</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">finalTurn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousTurn</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximumAccelDistance</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="n">distanceToNew</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximumAccelDistance</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">previousX</span> <span class="o">=</span> <span class="n">newX</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">previousY</span> <span class="o">=</span> <span class="n">newY</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">previousTurn</span> <span class="o">=</span> <span class="n">finalTurn</span>
-            <span class="k">return</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">finalTurn</span>
-
-        <span class="c1">#Alternate Return for strafe fail to pass</span>
-        <span class="n">directionToNew</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">newY</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">previousY</span><span class="p">,</span> <span class="n">newX</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">previousX</span><span class="p">)</span>
-        <span class="n">finalX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousX</span> \
-                <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">directionToNew</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximumAccelDistance</span>
-        <span class="n">finalY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousY</span> \
-                <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">directionToNew</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximumAccelDistance</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previousX</span> <span class="o">=</span> <span class="n">finalX</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previousY</span> <span class="o">=</span> <span class="n">finalY</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previousTurn</span> <span class="o">=</span> <span class="n">finalTurn</span>
-        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">finalX</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">finalY</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> \
-               <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">finalY</span><span class="p">,</span> <span class="n">finalX</span><span class="p">),</span> \
-               <span class="n">finalTurn</span></div>
-
 
     <span class="c1">#USE THESE FEW FUNCTIONS BELOW</span>
     
@@ -223,10 +184,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">enableTalons</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">zeroEncoderTargets</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">usingInputAccelerationControl</span><span class="p">:</span>
-            <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span> <span class="o">=</span> \
-                    <span class="bp">self</span><span class="o">.</span><span class="n">accelerationFilter</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">ensureControlMode</span><span class="p">(</span><span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">==</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">POSITION</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">zeroEncoderTargets</span><span class="p">()</span>
@@ -296,10 +253,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">changeControlMode</span><span class="p">(</span><span class="n">controlMode</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="HolonomicDrive.logCurrent"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.logCurrent">[docs]</a>    <span class="k">def</span> <span class="nf">logCurrent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;FL Current: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FL</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;FR Current: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FR</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;BL Current: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BL</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;BR Current: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BR</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span></div>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;FL Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">FRONT_LEFT</span><span class="p">]</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;FR Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">FRONT_RIGHT</span><span class="p">]</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;BL Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">BACK_LEFT</span><span class="p">]</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;BR Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">BACK_RIGHT</span><span class="p">]</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span></div>
 
 <div class="viewcode-block" id="HolonomicDrive.zeroEncoderTargets"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.zeroEncoderTargets">[docs]</a>    <span class="k">def</span> <span class="nf">zeroEncoderTargets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>

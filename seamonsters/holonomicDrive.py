@@ -64,45 +64,6 @@ class HolonomicDrive(DriveInterface):
         self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
         self.driveMode = DriveInterface.DriveMode.VOLTAGE
 
-        self.usingInputAccelerationControl = True
-        self.maximumAccelDistance = .08
-        self.previousX = 0.0
-        self.previousY = 0.0
-        self.previousTurn = 0.0
-        
-    # returns an tuple of: (magnitude, direction, turn)
-    # for internal use only
-    def accelerationFilter(self, magnitude, direction, turn):
-        newX = magnitude * math.cos(direction)
-        newY = magnitude * math.sin(direction)
-        distanceToNew = math.sqrt( (newX - self.previousX) ** 2 \
-                + (newY - self.previousY) ** 2 )
-        finalTurn = turn
-        if not abs(self.previousTurn - turn) <= self.maximumAccelDistance:
-            if turn > self.previousTurn:
-                finalTurn = self.previousTurn + self.maximumAccelDistance
-            else:
-                finalTurn = self.previousTurn - self.maximumAccelDistance
-
-        if (distanceToNew <= self.maximumAccelDistance):
-            self.previousX = newX
-            self.previousY = newY
-            self.previousTurn = finalTurn
-            return magnitude, direction, finalTurn
-
-        #Alternate Return for strafe fail to pass
-        directionToNew = math.atan2(newY-self.previousY, newX-self.previousX)
-        finalX = self.previousX \
-                + math.cos(directionToNew) * self.maximumAccelDistance
-        finalY = self.previousY \
-                + math.sin(directionToNew) * self.maximumAccelDistance
-        self.previousX = finalX
-        self.previousY = finalY
-        self.previousTurn = finalTurn
-        return math.sqrt(finalX ** 2 + finalY ** 2), \
-               math.atan2(finalY, finalX), \
-               finalTurn
-
 
     #USE THESE FEW FUNCTIONS BELOW
     
@@ -181,10 +142,6 @@ class HolonomicDrive(DriveInterface):
             self.enableTalons()
             self.zeroEncoderTargets()
 
-        if self.usingInputAccelerationControl:
-            magnitude, direction, turn = \
-                    self.accelerationFilter(magnitude, direction, turn)
-
         self.ensureControlMode(wpilib.CANTalon.ControlMode.Position)
         if not self.previousDriveMode == DriveInterface.DriveMode.POSITION:
             self.zeroEncoderTargets()
@@ -254,10 +211,14 @@ class HolonomicDrive(DriveInterface):
             self.wheelMotors[i].changeControlMode(controlMode)
 
     def logCurrent(self):
-        print("FL Current: " + str(self.FL.getOutputCurrent()))
-        print("FR Current: " + str(self.FR.getOutputCurrent()))
-        print("BL Current: " + str(self.BL.getOutputCurrent()))
-        print("BR Current: " + str(self.BR.getOutputCurrent()))
+        print("FL Current:", str(
+            self.wheelMotors[HolonomicDrive.FRONT_LEFT].getOutputCurrent()))
+        print("FR Current:", str(
+            self.wheelMotors[HolonomicDrive.FRONT_RIGHT].getOutputCurrent()))
+        print("BL Current:", str(
+            self.wheelMotors[HolonomicDrive.BACK_LEFT].getOutputCurrent()))
+        print("BR Current:", str(
+            self.wheelMotors[HolonomicDrive.BACK_RIGHT].getOutputCurrent()))
 
     def zeroEncoderTargets(self):
         for i in range(0, 4):

@@ -1,7 +1,9 @@
 __author__ = "jacobvanthoog"
 
+from seamonsters.wpilib_sim import simulate
 from seamonsters.utilityBots.driveTest import DriveTest
 from seamonsters.drive import DriveInterface
+from seamonsters.drive import AccelerationFilterDrive
 from seamonsters.holonomicDrive import HolonomicDrive
 import wpilib
 import math
@@ -34,7 +36,9 @@ class SwerveBot(DriveTest):
         drive.setWheelOffset(math.radians(27)) #angle of wheels
         drive.setDriveMode(DriveInterface.DriveMode.POSITION)
         
-        DriveTest.initDrive(self, drive)
+        filterDrive = AccelerationFilterDrive(drive)
+        
+        DriveTest.initDrive(self, filterDrive)
         
         
 if __name__ == "__main__":
