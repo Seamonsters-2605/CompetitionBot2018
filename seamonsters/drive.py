@@ -70,7 +70,7 @@ class AccelerationFilterDrive(DriveInterface):
     """
     
     def __init__(self, drive):
-        self.drive = drive
+        self.interface = interface
         
         self.maximumAccelDistance = .08
         self.previousX = 0.0
@@ -78,15 +78,15 @@ class AccelerationFilterDrive(DriveInterface):
         self.previousTurn = 0.0
         
     def setDriveMode(self, mode):
-        self.drive.setDriveMode(mode)
+        self.interface.setDriveMode(mode)
 
     def getDriveMode(self):
-        return self.drive.getDriveMode()
+        return self.interface.getDriveMode()
     
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
         magnitude, direction, turn = \
             self._accelerationFilter(magnitude, direction, turn)
-        self.drive.drive(magnitude, direction, turn, forceDriveMode)
+        self.interface.drive(magnitude, direction, turn, forceDriveMode)
     
     # returns an tuple of: (magnitude, direction, turn)
     def _accelerationFilter(self, magnitude, direction, turn):
