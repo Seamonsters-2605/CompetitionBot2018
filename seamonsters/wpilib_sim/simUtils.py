@@ -39,41 +39,72 @@ class Joystick:
     def __init__(self, port, numAxisTypes=None, numButtonTypes=None):
         self.port = port
         self._log("Init")
-        pass
+        
+        if numAxisTypes is None:
+            self.axes = [0]*self.AxisType.kNumAxis
+            self.axes[self.AxisType.kX] = self.kDefaultXAxis
+            self.axes[self.AxisType.kY] = self.kDefaultYAxis
+            self.axes[self.AxisType.kZ] = self.kDefaultZAxis
+            self.axes[self.AxisType.kTwist] = self.kDefaultTwistAxis
+            self.axes[self.AxisType.kThrottle] = self.kDefaultThrottleAxis
+        else:
+            self.axes = [0]*numAxisTypes
+
+        if numButtonTypes is None:
+            self.buttons = [0]*self.ButtonType.kNumButton
+            self.buttons[self.ButtonType.kTrigger] = self.kDefaultTriggerButton
+            self.buttons[self.ButtonType.kTop] = self.kDefaultTopButton
+        else:
+            self.buttons = [0]*numButtonTypes
+
+        self.outputs = 0
+        self.leftRumble = 0
+        self.rightRumble = 0
     
     def _log(self, *args):
         print("Joystick", str(self.port) + ": ", end = "")
         print(*args)
     
     def getX(self, hand=None):
-        return 0.0
+        return self.getRawAxis(self.axes[self.AxisType.kX])
     
     def getY(self, hand=None):
-        return 0.0
+        return self.getRawAxis(self.axes[self.AxisType.kY])
     
     def getZ(self, hand=None):
-        return 0.0
+        return self.getRawAxis(self.axes[self.AxisType.kZ])
     
     def getTwist(self):
-        return 0.0
+        return self.getRawAxis(self.axes[self.AxisType.kTwist])
     
     def getThrottle(self):
-        return 0.0
+        return self.getRawAxis(self.axes[self.AxisType.kThrottle])
     
     def getRawAxis(self, axis):
         return 0.0
     
     def getAxis(self, axis):
-        return 0.0
+        if axis == self.AxisType.kX:
+            return self.getX()
+        elif axis == self.AxisType.kY:
+            return self.getY()
+        elif axis == self.AxisType.kZ:
+            return self.getZ()
+        elif axis == self.AxisType.kTwist:
+            return self.getTwist()
+        elif axis == self.AxisType.kThrottle:
+            return self.getThrottle()
+        else:
+            raise ValueError("Invalid axis specified! Must be one of wpilib.Joystick.AxisType, or use getRawAxis instead")
     
     def getAxisCount(self):
-        return 6 # arbitrary number
+        return self.AxisType.kNumAxis
     
     def getTrigger(self, hand=None):
-        return False
+        return self.getRawButton(self.buttons[self.ButtonType.kTrigger])
     
     def getTop(self, hand=None):
-        return False
+        return self.getRawButton(self.buttons[self.ButtonType.kTop])
     
     def getBumper(self, hand=None):
         return False
@@ -82,7 +113,7 @@ class Joystick:
         return False
     
     def getButtonCount(self):
-        return 12 # arbitrary number
+        return self.ButtonType.kNumButton
     
     def getPOV(self, pov=0):
         return -1.0
@@ -91,7 +122,12 @@ class Joystick:
         return 1
     
     def getButton(self, button):
-        return False
+        if button == self.ButtonType.kTrigger:
+            return self.getTrigger()
+        elif button == self.ButtonType.kTop:
+            return self.getTop()
+        else:
+            raise ValueError("Invalid button specified! Must be one of wpilib.Joystick.ButtonType, or use getRawButton instead")
     
     def getMagnitude(self):
         return math.sqrt(math.pow(self.getX(), 2) + math.pow(self.getY(), 2))
@@ -103,31 +139,33 @@ class Joystick:
         return math.degrees(self.getDirectionRadians())
     
     def getAxisChannel(self, axis):
-        return 0
+        return self.axes[axis]
     
     def setAxisChannel(self, axis, channel):
-        pass
+        self.axes[axis] = channel
     
     def getIsXbox(self):
         return False
     
     def getType(self):
-        return None # what should this be?
+        return 0 # what should this be? (should be an integer)
     
     def getName(self):
         return "nonexistent joystick"
     
     def setRumble(self, type, value):
-        pass
+        self._log("Rumble " + type + " " + value)
     
     def setOutput(self, outputNumber, value):
-        pass
+        self.outputs = (self.outputs & ~(value << (outputNumber-1))) | (value << (outputNumber-1))
+        self.flush_outputs()
     
     def setOutputs(self, value):
-        pass
+        self.outputs = value
+        self.flush_outputs()
     
     def flush_outputs(self):
-        pass
+        self._log("Flush outputs" + self.outputs)
 
 
 
