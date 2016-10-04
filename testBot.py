@@ -1,6 +1,6 @@
 __author__ = "jacobvanthoog"
 
-import seamonsters.gamepad
+from seamonsters.gamepad import Gamepad
 import wpilib
 
 class Test(wpilib.IterativeRobot):
@@ -10,11 +10,16 @@ class Test(wpilib.IterativeRobot):
         self.Talon1.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
         self.Talon2 = wpilib.CANTalon(3)
         self.Talon2.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
-        self.Gamepad = seamonsters.gamepad.Gamepad(0)
+        self.Gamepad = Gamepad(0)
 
     def teleopPeriodic(self):
         #print(self.Talon1.getPosition(), self.Talon2.getPosition())
-        print(self.Gamepad.getDPad())
+        print(self.Gamepad.getRawButton(Gamepad.UP),
+              self.Gamepad.getRawButton(Gamepad.DOWN),
+              self.Gamepad.getRawButton(Gamepad.LEFT),
+              self.Gamepad.getRawButton(Gamepad.RIGHT),
+              self.Gamepad.getRawButton(Gamepad.LT),
+              self.Gamepad.getRawButton(Gamepad.RT))
         
 if __name__ == "__main__":
     wpilib.run(Test)

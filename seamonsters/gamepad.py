@@ -9,14 +9,19 @@ class Gamepad(seamonsters.joystick.JoystickBase):
     An extended Joystick specifically designed for Logitech gamepads. Like
     seamonsters.joystick.JoystickUtils, it adds dead zones and changes positive
     x to direction 0. The gamepad mode switch MUST be at X!
+
+    The Gamepad class has constants defined for the numbers of gamepad buttons.
+    These include the colored A, B, X, and Y buttons; the left and right
+    bumpers; the left and right triggers; the left and right joysticks when
+    pressed; the Back and Start buttons; and the 4 d-pad buttons. The state
+    of these buttons can be checked with
+    ``gamepad.getRawButton(Gamepad.BUTTON_CONSTANT)``.
     
     For more of Gamepad's supported methods, see
     ``seamonsters.joystick.JoystickUtils``, and `wpilib.joystick
     <http://robotpy.readthedocs.io/en/latest/wpilib/Joystick.html>`_
     """
-    # button definitions
-    # example:
-    # gamepad.getRawButton(Gamepad.LT)
+    
     A = 1
     B = 2
     X = 3
@@ -27,8 +32,13 @@ class Gamepad(seamonsters.joystick.JoystickBase):
     START = 8
     LJ = 9
     RJ = 10
-    LT = 11
-    RT = 12
+    
+    LT = 101
+    RT = 102
+    UP = 103
+    DOWN = 104
+    LEFT = 105
+    RIGHT = 106
 
     
     def __init__(self, port):
@@ -155,7 +165,38 @@ class Gamepad(seamonsters.joystick.JoystickBase):
         """
         return math.atan2(self.getRawRY(False), self.getRawRX(False))
     
-    
+    def getLTrigger(self):
+        """
+        Get how far the left trigger is pressed, as a value from 0.0 to 1.0
+        """
+        return self.getRawAxis(2)
+
+    def getRTrigger(self):
+        """
+        Get how far the right trigger is pressed, as a value from 0.0 to 1.0
+        """
+        return self.getRawAxis(3)
+
+
+    def getRawButton(self, button):
+        if button == Gamepad.LT:
+            return self.getLTrigger() > .5
+        elif button == Gamepad.RT:
+            return self.getRTrigger() > .5
+        elif button == Gamepad.UP:
+            dpad = self.getDPad()
+            return dpad == 0 or dpad == 1 or dpad == 7
+        elif button == Gamepad.RIGHT:
+            dpad = self.getDPad()
+            return dpad == 1 or dpad == 2 or dpad == 3
+        elif button == Gamepad.DOWN:
+            dpad = self.getDPad()
+            return dpad == 3 or dpad == 4 or dpad == 5
+        elif button == Gamepad.LEFT:
+            dpad = self.getDPad()
+            return dpad == 5 or dpad == 6 or dpad == 7
+        else:
+            return super().getRawButton(button)
     
     def getRawLX(self, enableDeadZone = True):
         return self.getRawAxis(0) * (-1 if self.xInv else 1)
