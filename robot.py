@@ -252,21 +252,17 @@ class MainRobot (wpilib.IterativeRobot):
                 self.FilterDrive.setDriveMode(DriveInterface.DriveMode.SPEED)
             elif self.movegamepad.getRawButton(Gamepad.X):
                 self.FilterDrive.setDriveMode(DriveInterface.DriveMode.POSITION)
-
-            # TODO: refactor duplicate code
-            if self.movegamepad.getRawButton(Gamepad.RB):
-                turn = -self.movegamepad.getRX() \
-                  * abs(self.movegamepad.getRX()) * (self.slowed / 2)
-                #magnitude = self.movegamepad.getLMagnitude() * self.slowed
-                magnitude = self.movegamepad.getLMagnitude()**2 * self.slowed
-                direction = self.movegamepad.getLDirection() + math.pi
-            else:
-                turn = -self.movegamepad.getRX() \
-                  * abs(self.movegamepad.getRX()) * (self.slowed / 2)
-                #magnitude = self.movegamepad.getLMagnitude() * self.slowed
-                magnitude = self.movegamepad.getLMagnitude()**2 * self.slowed
-                direction = self.movegamepad.getLDirection()
+            
+            turn = -self.movegamepad.getRX() \
+                * abs(self.movegamepad.getRX()) * (self.slowed / 2)
+            magnitude = self.movegamepad.getLMagnitude()**2 * self.slowed
+            direction = self.movegamepad.getLDirection()
+            
+            if self.movegamepad.getRawButton(Gamepad.RB): # reverse direction
+                direction += math.pi
+            
             self.FilterDrive.drive(magnitude, direction, turn)
+            
             self.Shooter.update(self.shootgamepad.getRawButton(Gamepad.B),\
                                 self.shootgamepad.getRawButton(Gamepad.X),\
                                 self.shootgamepad.getRawButton(Gamepad.A),\
