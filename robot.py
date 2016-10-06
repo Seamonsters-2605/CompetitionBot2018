@@ -138,6 +138,7 @@ class MainRobot (wpilib.IterativeRobot):
         else:
             #self.FilterDrive.driveSpeedJeffMode(.5,math.pi/2,0)
             pass
+    
     # def autonomousPeriodic(self):
     #
     #     self.time += 1
@@ -179,13 +180,15 @@ class MainRobot (wpilib.IterativeRobot):
     #             else:
     #                 self.Shooter.update(False, False, False, False)
     #     self.FilterDrive.drive(0, 0, self.turn)
+    
+    
     def teleopInit(self):
         self.Drive.zeroEncoderTargets()
         self.readyToShoot = False
-
-
+    
     def teleopPeriodic(self):
-        averageFlySpeed = (abs(self.LeftFly.getEncVelocity()) + abs(self.RightFly.getEncVelocity()))/2
+        averageFlySpeed = ( abs(self.LeftFly.getEncVelocity())
+                          + abs(self.RightFly.getEncVelocity()) ) / 2
         # print(str(self.Vision.centerX()))
         print ("FlyWheelSpeed is : " + str(averageFlySpeed))
 
@@ -241,7 +244,7 @@ class MainRobot (wpilib.IterativeRobot):
             else: # no button pressed
                 # TODO: move to constant
                 self.slowed = .55
-            # print ("Slowed: " + str(self.slowed))
+            
             # switch drive mode with gamepad
             if   self.movegamepad.getRawButton(Gamepad.A):
                 self.FilterDrive.setDriveMode(DriveInterface.DriveMode.VOLTAGE)
@@ -249,16 +252,17 @@ class MainRobot (wpilib.IterativeRobot):
                 self.FilterDrive.setDriveMode(DriveInterface.DriveMode.SPEED)
             elif self.movegamepad.getRawButton(Gamepad.X):
                 self.FilterDrive.setDriveMode(DriveInterface.DriveMode.POSITION)
-            # print(str(self.FilterDrive.getDriveMode()))
 
             # TODO: refactor duplicate code
             if self.movegamepad.getRawButton(Gamepad.RB):
-                turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
+                turn = -self.movegamepad.getRX() \
+                  * abs(self.movegamepad.getRX()) * (self.slowed / 2)
                 #magnitude = self.movegamepad.getLMagnitude() * self.slowed
                 magnitude = self.movegamepad.getLMagnitude()**2 * self.slowed
                 direction = self.movegamepad.getLDirection() + math.pi
             else:
-                turn = -self.movegamepad.getRX() * abs(self.movegamepad.getRX()) * (self.slowed / 2)
+                turn = -self.movegamepad.getRX() \
+                  * abs(self.movegamepad.getRX()) * (self.slowed / 2)
                 #magnitude = self.movegamepad.getLMagnitude() * self.slowed
                 magnitude = self.movegamepad.getLMagnitude()**2 * self.slowed
                 direction = self.movegamepad.getLDirection()
@@ -267,25 +271,6 @@ class MainRobot (wpilib.IterativeRobot):
                                 self.shootgamepad.getRawButton(Gamepad.X),\
                                 self.shootgamepad.getRawButton(Gamepad.A),\
                                 self.shootgamepad.getRawButton(Gamepad.Y))
-            # if self.shootgamepad.getButtonByLetter("RB"):
-            #     self.Lift.liftUp()
-            # elif self.shootgamepad.getButtonByLetter("LB"):
-            #     self.Lift.pullUp()
-            # else:
-            #     self.Lift.stop()
-            
-
-            # else:
-            #     self.Shooter.update(self.shootgamepad.getButtonByLetter("B"), self.shootgamepad.getButtonByLetter("X"),
-            #                                 False, self.shootgamepad.getButtonByLetter("LB"))
-
-            # print ("Slowed:" + str(self.slowed))
-            # print ("FL: " + str(self.FL.getEncVelocity()))
-        #self.Logger.printCurrents()
-        #print("turn: " + str(turn)\
-        #    + " mag: " + str(magnitude)\
-        #    + " dir: " + str(direction))
 
 if __name__ == "__main__":
     wpilib.run(MainRobot)
-
