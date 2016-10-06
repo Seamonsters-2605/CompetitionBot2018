@@ -30,7 +30,14 @@ class MainRobot (wpilib.IterativeRobot):
         self.AUTO_SHOOT_ENABLED = False
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
-        self.Vision = Vision.Vision()
+        self.MoveGamepad = Gamepad(port = 0)
+        self.ShootGamepad = Gamepad(port = 1)
+
+        self.MoveJoy = seamonsters.joystick.JoystickUtils(0)
+        self.MoveJoy.invertY()
+        self.TurnJoy = seamonsters.joystick.JoystickUtils(1)
+        self.TurnJoy.invertY()
+        
         self.FL = wpilib.CANTalon(2)
         self.FR = wpilib.CANTalon(1)
         self.BL = wpilib.CANTalon(0)
@@ -43,16 +50,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.FR.setPID(1.0, 0.0, 3.0, 0.0)
         self.BL.setPID(1.0, 0.0, 3.0, 0.0)
         self.BR.setPID(1.0, 0.0, 3.0, 0.0)
-
-
-        self.MoveGamepad = Gamepad(port = 0)
-        self.ShootGamepad = Gamepad(port = 1)
-
-        self.MoveJoy = seamonsters.joystick.JoystickUtils(0)
-        self.MoveJoy.invertY()
-        self.TurnJoy = seamonsters.joystick.JoystickUtils(1)
-        self.TurnJoy.invertY()
-
+        
         # 4156 ticks per wheel rotation
         # encoder has 100 raw ticks -- with a QuadEncoder that makes 400 ticks
         # the motor gear has 18 teeth and the wheel has 187 teeth
@@ -63,7 +61,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.Drive.setWheelOffset(math.radians(27)) #angle of wheels
         self.Drive.setDriveMode(DriveInterface.DriveMode.POSITION)
         self.FilterDrive = AccelerationFilterDrive(self.Drive)
-
+        
         self.LeftFly = wpilib.CANTalon(4)
         self.LeftFly.reverseOutput(True)
         self.LeftFly.reverseSensor(True)
@@ -71,27 +69,31 @@ class MainRobot (wpilib.IterativeRobot):
         self.LimitSwitch = wpilib.DigitalInput(0)
         self.LimitSwitch2 = wpilib.DigitalInput(1)
         self.Intake = wpilib.CANTalon(8)
+        
         self.Shooter = ShootController.ShootController(\
             self.LeftFly, self.RightFly,\
             self.Intake, self.LimitSwitch, self.LimitSwitch2)
         #self.Shooter.invertFlywheels()
         
+        self.Vision = Vision.Vision()
+
 
     def autonomousInit(self):
+        # TODO: more descriptive variable names
         self.shoot = False
         self.rev = 0
         self.time = 0
-        self.shoot = False
         self.turn = 0
-        self.Drive.zeroEncoderTargets()
         self.needed = 0
         self.start = True
+        self.need = 0
+        
+        self.Drive.zeroEncoderTargets()
+        
         self.FR.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.FL.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.BL.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.BR.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
-        self.turn = 0
-        self.need = 0
 
     def autonomousPeriodic(self):
         if not self.BELT_BROKEN:
