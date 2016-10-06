@@ -26,8 +26,8 @@ class MainRobot (wpilib.IterativeRobot):
 
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         self.BELT_BROKEN = False
-        self.usinggamepad = True
-        self.autoShootEnabled = False
+        self.USING_GAMEPAD = True
+        self.AUTO_SHOOT_ENABLED = False
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
         self.Vision = Vision.Vision()
@@ -45,8 +45,8 @@ class MainRobot (wpilib.IterativeRobot):
         self.BR.setPID(1.0, 0.0, 3.0, 0.0)
 
 
-        self.movegamepad = Gamepad(port = 0)
-        self.shootgamepad = Gamepad(port = 1)
+        self.MoveGamepad = Gamepad(port = 0)
+        self.ShootGamepad = Gamepad(port = 1)
 
         self.MoveJoy = seamonsters.joystick.JoystickUtils(0)
         self.MoveJoy.invertY()
@@ -127,7 +127,7 @@ class MainRobot (wpilib.IterativeRobot):
                 if self.time <= 320:
                     self.shoot = False
                 
-                if self.shoot == True and self.autoShootEnabled:
+                if self.shoot == True and self.AUTO_SHOOT_ENABLED:
                     self.rev += 1
                     if self.rev < 100:
                         self.Shooter.update(False, True, False, False)
@@ -193,7 +193,7 @@ class MainRobot (wpilib.IterativeRobot):
         # print(str(self.Vision.centerX()))
         print ("FlyWheelSpeed is : " + str(averageFlySpeed))
 
-        if self.usinggamepad == False: # using joystick
+        if self.USING_GAMEPAD == False: # using joystick
             self.TurnJoy.updateButtons();
             self.MoveJoy.updateButtons();
             turn = -self.TurnJoy.getX()
@@ -213,7 +213,7 @@ class MainRobot (wpilib.IterativeRobot):
                     self.turnSpeed = self.needed * .009
                 else:
                     self.turnSpeed = self.needed * .0008
-                if self.shootgamepad.getRawButton(Gamepad.RB):
+                if self.ShootGamepad.getRawButton(Gamepad.RB):
                     # TODO: move 240 to center pixel constant
                     if abs(self.Vision.centerX()[0] - 240) < 15:
                         self.readyToShoot = True
@@ -229,7 +229,7 @@ class MainRobot (wpilib.IterativeRobot):
                 self.readyToShoot = False
             
             # TODO: what does this do??
-            if self.readyToShoot and self.autoShootEnabled:
+            if self.readyToShoot and self.AUTO_SHOOT_ENABLED:
                 if averageFlySpeed < 1900:
                     self.LeftFly.set(2000)
                     self.RightFly.set(-2000)
@@ -240,36 +240,36 @@ class MainRobot (wpilib.IterativeRobot):
                 else:
                     self.Shooter.update(False, False, False, False)
             
-            if self.movegamepad.getRawButton(Gamepad.LJ): # faster button
+            if self.MoveGamepad.getRawButton(Gamepad.LJ): # faster button
                 self.slowed = 1
-            elif self.movegamepad.getRawButton(Gamepad.LB): # slower button
+            elif self.MoveGamepad.getRawButton(Gamepad.LB): # slower button
                 self.slowed = .2
             else: # no button pressed
                 # TODO: move to constant
                 self.slowed = .55
             
             # switch drive mode with gamepad
-            if   self.movegamepad.getRawButton(Gamepad.A):
+            if   self.MoveGamepad.getRawButton(Gamepad.A):
                 self.FilterDrive.setDriveMode(DriveInterface.DriveMode.VOLTAGE)
-            elif self.movegamepad.getRawButton(Gamepad.B):
+            elif self.MoveGamepad.getRawButton(Gamepad.B):
                 self.FilterDrive.setDriveMode(DriveInterface.DriveMode.SPEED)
-            elif self.movegamepad.getRawButton(Gamepad.X):
+            elif self.MoveGamepad.getRawButton(Gamepad.X):
                 self.FilterDrive.setDriveMode(DriveInterface.DriveMode.POSITION)
             
-            turn = -self.movegamepad.getRX() \
-                * abs(self.movegamepad.getRX()) * (self.slowed / 2)
-            magnitude = self.movegamepad.getLMagnitude()**2 * self.slowed
-            direction = self.movegamepad.getLDirection()
+            turn = -self.MoveGamepad.getRX() \
+                * abs(self.MoveGamepad.getRX()) * (self.slowed / 2)
+            magnitude = self.MoveGamepad.getLMagnitude()**2 * self.slowed
+            direction = self.MoveGamepad.getLDirection()
             
-            if self.movegamepad.getRawButton(Gamepad.RB): # reverse direction
+            if self.MoveGamepad.getRawButton(Gamepad.RB): # reverse direction
                 direction += math.pi
             
             self.FilterDrive.drive(magnitude, direction, turn)
             
-            self.Shooter.update(self.shootgamepad.getRawButton(Gamepad.B),\
-                                self.shootgamepad.getRawButton(Gamepad.X),\
-                                self.shootgamepad.getRawButton(Gamepad.A),\
-                                self.shootgamepad.getRawButton(Gamepad.Y))
+            self.Shooter.update(self.ShootGamepad.getRawButton(Gamepad.B),\
+                                self.ShootGamepad.getRawButton(Gamepad.X),\
+                                self.ShootGamepad.getRawButton(Gamepad.A),\
+                                self.ShootGamepad.getRawButton(Gamepad.Y))
 
 if __name__ == "__main__":
     wpilib.run(MainRobot)
