@@ -26,10 +26,11 @@ class MainRobot (wpilib.IterativeRobot):
 
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         self.BELT_BROKEN = False
+        self.usinggamepad = True
+        self.autoShootEnabled = False
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
         self.Vision = Vision.Vision()
-        self.usinggamepad = True
         self.FL = wpilib.CANTalon(2)
         self.FR = wpilib.CANTalon(1)
         self.BL = wpilib.CANTalon(0)
@@ -123,21 +124,21 @@ class MainRobot (wpilib.IterativeRobot):
                         self.shoot = False
                     else:
                         self.shoot = False
-                if self.time > 260 and self.time < 320:
-                    pass #used to have arm
-                if self.time > 320:
-                    pass
-                else:
+                if self.time <= 320:
                     self.shoot = False
-                # if self.shoot == True:
-                #     self.rev += 1
-                #     if self.rev < 100:
-                #         self.Shooter.update(False, True, False, False)
-                #     else:
-                #         self.Shooter.update(False, True, True, False)
-        else:
+                
+                if self.shoot == True and self.autoShootEnabled:
+                    self.rev += 1
+                    if self.rev < 100:
+                        self.Shooter.update(False, True, False, False)
+                    else:
+                        self.Shooter.update(False, True, True, False)
+        
+        else: # belt is broken
             #self.FilterDrive.driveSpeedJeffMode(.5,math.pi/2,0)
             pass
+    
+    # old version of autonomousPeriodic:
     
     # def autonomousPeriodic(self):
     #
@@ -226,17 +227,19 @@ class MainRobot (wpilib.IterativeRobot):
                         self.readyToShoot = False
             else:
                 self.readyToShoot = False
-
-            # if self.readyToShoot:
-            #     if averageFlySpeed < 1900:
-            #         self.LeftFly.set(2000)
-            #         self.RightFly.set(-2000)
-            #     elif averageFlySpeed > 1900:
-            #         self.LeftFly.set(2000)
-            #         self.RightFly.set(-2000)
-            #         self.Intake.set(1)
-            #     else:
-            #         self.Shooter.update(False, False, False, False)
+            
+            # TODO: what does this do??
+            if self.readyToShoot and self.autoShootEnabled:
+                if averageFlySpeed < 1900:
+                    self.LeftFly.set(2000)
+                    self.RightFly.set(-2000)
+                elif averageFlySpeed > 1900:
+                    self.LeftFly.set(2000)
+                    self.RightFly.set(-2000)
+                    self.Intake.set(1)
+                else:
+                    self.Shooter.update(False, False, False, False)
+            
             if self.movegamepad.getRawButton(Gamepad.LJ): # faster button
                 self.slowed = 1
             elif self.movegamepad.getRawButton(Gamepad.LB): # slower button
