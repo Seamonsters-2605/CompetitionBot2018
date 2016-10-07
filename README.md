@@ -26,5 +26,6 @@ Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
     Blender simulation.
 - `deploy.bat` and `deploy.sh`: Windows and *nix versions of scripts for
     deploying code to robot.
+- `fastdeploy.bat` and `fastdeploy.sh`: Deploy code without testing it.
 - `test.bat` and `test.sh`: Scripts for testing robot code without needing an
     actual robot to deploy to.
