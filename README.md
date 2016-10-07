@@ -14,14 +14,14 @@ Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
 - `Shooter/`: Code for the flywheels, intake motor, and "ShootController", which
     allows control of both.
 - `tests/`: Created and used by pyfrc for tests.
-- `Vision.py`: Simple code that gets the center of the target from GRIP (when it
-    works).
 - `robot.py`: The final robot, used in the 2016 competition and updated slightly
     since then.
+- `stingray.py`: Project Stingray robot code.
+- `stingray/`: Modules for the Project Stingray bot.
+- `Vision.py`: Simple code that gets the center of the target from GRIP (when it
+    works).
 - `testBot.py`: Robot that is modified for testing various things.
 - `holoBot.py`: Simple bot used for testing holonomic drives.
-- `swerveBot.py`: Simple bot used for testing swerve drives.
-- `swerveBot/`: Extra classes for the swerve-drive bot.
 - `bTest.py`: Very simple bot that spins a single motor - used for testing
     Blender simulation.
 - `deploy.bat` and `deploy.sh`: Windows and *nix versions of scripts for

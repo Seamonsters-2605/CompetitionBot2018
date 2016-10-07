@@ -7,7 +7,7 @@ from seamonsters.drive import AccelerationFilterDrive
 from seamonsters.swerveDrive import SwerveDrive
 import wpilib
 
-class SwerveBotDrive(DriveTest):
+class StingrayDrive(DriveTest):
     
     def robotInit(self):
         super().robotInit()
@@ -48,4 +48,4 @@ class SwerveBotDrive(DriveTest):
         
         
 if __name__ == "__main__":
-    wpilib.run(SwerveBotDrive)
+    wpilib.run(StingrayDrive)

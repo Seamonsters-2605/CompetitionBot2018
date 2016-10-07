@@ -2,10 +2,9 @@ __author__ = "jacobvanthoog"
 
 from seamonsters.wpilib_sim import simulate
 from seamonsters.gamepad import Gamepad
-import Shooter.ShootController
 import wpilib
 
-class SwerveBotShooter(wpilib.IterativeRobot):
+class StingrayShooter(wpilib.IterativeRobot):
     
     def robotInit(self):
         self.gamepad = Gamepad(1)
@@ -75,4 +74,4 @@ class SwerveBotShooter(wpilib.IterativeRobot):
         
         
 if __name__ == "__main__":
-    wpilib.run(SwerveBotShooter)
+    wpilib.run(StingrayShooter)
