@@ -24,12 +24,12 @@ class PIDTest(wpilib.IterativeRobot):
 
     def teleopInit(self):
         print("PID Adjustor")
-        print("Move the joystick up and down to spin the motor")
+        print("Hold trigger and move up or down to change the motor speed")
         print("Press 4 to toggle the selected value (P, I, D, F)")
         print("Use 2 and 3 to increase/decrease the selected value")
-        print("Hold trigger to print the speed of the motor continuously")
         print()
         print("Using CANTalon:", self.talonPort)
+        print("Currently adjusting: P")
         
         self.goalPosition = self.Talon.getPosition()
     
@@ -58,14 +58,14 @@ class PIDTest(wpilib.IterativeRobot):
         elif self.Joystick.buttonPressed(2):
             self.changePID(1.0/1.1)
             self.printValues()
-        
-        elif self.Joystick.getRawButton(1):
-            print("Speed: " + str(self.Talon.getVelocity()))
-        
+                
         if not (abs(self.goalPosition - self.Talon.getPosition()) \
                 > self.ticksPerRotation):
             self.goalPosition += self.Joystick.getY() * -1 * self.maxVelocity
-        self.Talon.set(self.goalPosition)
+
+        elif self.Joystick.getRawButton(1):
+            self.Talon.set(self.goalPosition) 
+            print("Speed: " + str(self.Talon.getEncVelocity()))
         
         
     def printValues(self):
@@ -76,10 +76,15 @@ class PIDTest(wpilib.IterativeRobot):
         
     def changePID(self, number):
         if self.PIDNumber == 0:
-            self.Talon.setP(self.Talon.getP() * number)
+            self.Talon.setP(self._multiplyOrSet(self.Talon.getP(), number))
         elif self.PIDNumber == 1:
-            self.Talon.setI(self.Talon.getI() * number)
+            self.Talon.setI(self._multiplyOrSet(self.Talon.getI(), number))
         elif self.PIDNumber == 2:
-            self.Talon.setD(self.Talon.getD() * number)
+            self.Talon.setD(self._multiplyOrSet(self.Talon.getD(), number))
         elif self.PIDNumber == 3:
-            self.Talon.setF(self.Talon.getF() * number)
+            self.Talon.setF(self._multiplyOrSet(self.Talon.getF(), number))
+
+    def _multiplyOrSet(self, old, factor):
+        if old == 0:
+            return factor
+        return old * factor
