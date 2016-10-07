@@ -5,8 +5,8 @@ from seamonsters.utilityBots.pidTest import PIDTest
 import wpilib
 
 class Test(PIDTest):
-    def __init__(self):
-        super().__init__(4)
+    def robotInit(self):
+        super().robotInit(5)
         #wpilib.SmartDashboard.putString("thisIsAKey", "this is a value!")
         
 if __name__ == "__main__":
