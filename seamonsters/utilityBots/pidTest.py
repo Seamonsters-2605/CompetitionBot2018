@@ -13,7 +13,7 @@ class PIDTest(wpilib.IterativeRobot):
         self.Talon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
         #self.Talon.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
 
-        self.goalPosition = self.Talon.getEncPosition()
+        self.goalPosition = self.Talon.getPosition()
         self.maxVelocity = maxVelocity
         self.ticksPerRotation = ticksPerRotation
 
@@ -33,7 +33,7 @@ class PIDTest(wpilib.IterativeRobot):
         print()
         print("Using CANTalon:", self.talonPort)
         
-        self.goalPosition = self.Talon.getEncPosition()
+        self.goalPosition = self.Talon.getPosition()
     
     # DO NOT CHANGE TELEOPPERIODIC, CHANGE DOALLELSE
     def teleopPeriodic(self):
@@ -66,10 +66,10 @@ class PIDTest(wpilib.IterativeRobot):
                 self.buttonAllowedTime = self.loopCalls + 5
                 
             elif self.Joystick.getRawButton(1):
-                print("Speed: " + str(self.Talon.getEncVelocity()))
+                print("Speed: " + str(self.Talon.getVelocity()))
                 self.buttonAllowedTime = self.loopCalls + 5
 
-        if not (abs(self.goalPosition - self.Talon.getEncPosition()) \
+        if not (abs(self.goalPosition - self.Talon.getPosition()) \
                 > self.ticksPerRotation):
             self.goalPosition += self.Joystick.getY() * -1 * self.maxVelocity
         self.Talon.set(self.goalPosition)
@@ -79,8 +79,6 @@ class PIDTest(wpilib.IterativeRobot):
         self.loopCalls %= 1000000
         
     def printValues(self):
-        print()
-        print()
         print("P: " + str(self.Talon.getP()) \
            + " I: " + str(self.Talon.getI()) \
            + " D: " + str(self.Talon.getD()) \
