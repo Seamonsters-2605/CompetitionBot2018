@@ -76,6 +76,10 @@ class MainRobot (wpilib.IterativeRobot):
         #self.Shooter.invertFlywheels()
         
         self.Vision = Vision.Vision()
+        # vision is 480 pixels wide, center is at x=240
+        self.VISION_CENTER_X = 240
+        # used in old version of autonomousPeriodic (commented out below)
+        # self.VISION_CENTER_X = 235
 
 
     def autonomousInit(self):
@@ -114,18 +118,18 @@ class MainRobot (wpilib.IterativeRobot):
             if self.time > 310:
                 if not self.Vision.centerX().__len__() == 0:
                     self.distanceToVisionTarget = \
-                        abs(self.Vision.centerX()[0] - 240)
+                        abs(self.Vision.centerX()[0] - self.VISION_CENTER_X)
                     print (self.distanceToVisionTarget)
                     if self.distanceToVisionTarget > 50:
                         self.turn = self.distanceToVisionTarget * .0005
                     else:
                         self.turn = self.distanceToVisionTarget * .0002
-                    if abs(self.Vision.centerX()[0] - 240) < 10:
+                    if abs(self.Vision.centerX()[0]-self.VISION_CENTER_X) < 10:
                         self.shoot = True
-                    elif self.Vision.centerX()[0] - 240 > 0:
+                    elif self.Vision.centerX()[0] - self.VISION_CENTER_X > 0:
                         self.FilterDrive.drive(0, 0, -self.turn)
                         self.shoot = False
-                    elif self.Vision.centerX()[0] - 240 < 0:
+                    elif self.Vision.centerX()[0] - self.VISION_CENTER_X < 0:
                         self.FilterDrive.drive(0, 0, self.turn)
                         self.shoot = False
                     else:
@@ -160,19 +164,19 @@ class MainRobot (wpilib.IterativeRobot):
     #         if not self.Vision.centerX().__len__() == 0:
     #             print("passed")
     #             self.distanceToVisionTarget = \
-    #                 abs(self.Vision.centerX()[0] - 235)
+    #                 abs(self.Vision.centerX()[0] - self.VISION_CENTER_X)
     #             print (self.distanceToVisionTarget)
     #             if self.distanceToVisionTarget > 50:
     #                 self.turn = self.distanceToVisionTarget * .009
     #             else:
     #                 self.turn = self.distanceToVisionTarget * .0008
     #
-    #             if abs(self.Vision.centerX()[0] - 235) < 10:
+    #             if abs(self.Vision.centerX()[0] - self.VISION_CENTER_X) < 10:
     #                 self.shoot = True
     #                 print ("Alligned")
-    #             elif self.Vision.centerX()[0] - 235 > 0:
+    #             elif self.Vision.centerX()[0] - self.VISION_CENTER_X > 0:
     #                 self.shoot = False
-    #             elif self.Vision.centerX()[0] - 235 < 0:
+    #             elif self.Vision.centerX()[0] - self.VISION_CENTER_X < 0:
     #                 self.shoot = False
     #             else:
     #                 self.shoot = False
@@ -215,20 +219,19 @@ class MainRobot (wpilib.IterativeRobot):
         else: # using gamepad
             if not self.Vision.centerX().__len__() == 0:
                 self.distanceToVisionTarget = \
-                    abs(self.Vision.centerX()[0] - 240)
+                    abs(self.Vision.centerX()[0] - self.VISION_CENTER_X)
                 print (self.distanceToVisionTarget)
                 if self.distanceToVisionTarget > 50:
                     self.turnSpeed = self.distanceToVisionTarget * .009
                 else:
                     self.turnSpeed = self.distanceToVisionTarget * .0008
                 if self.ShootGamepad.getRawButton(Gamepad.RB):
-                    # TODO: move 240 to center pixel constant
-                    if abs(self.Vision.centerX()[0] - 240) < 15:
+                    if abs(self.Vision.centerX()[0]-self.VISION_CENTER_X) < 15:
                         self.readyToShoot = True
-                    elif self.Vision.centerX()[0] - 240 > 0:
+                    elif self.Vision.centerX()[0] - self.VISION_CENTER_X > 0:
                         self.FilterDrive.drive(0, 0, -self.turnSpeed)
                         self.readyToShoot = False
-                    elif self.Vision.centerX()[0] - 240 < 0:
+                    elif self.Vision.centerX()[0] - self.VISION_CENTER_X < 0:
                         self.FilterDrive.drive(0, 0, self.turnSpeed)
                         self.readyToShoot = False
                     else:
