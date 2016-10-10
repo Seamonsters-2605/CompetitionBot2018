@@ -79,14 +79,17 @@ class MainRobot (wpilib.IterativeRobot):
 
 
     def autonomousInit(self):
-        # TODO: more descriptive variable names
-        self.shoot = False
-        self.rev = 0
+        # autonomous loop timing
         self.time = 0
+        self.revTime = 0
+        
+        # autonomous state
+        self.shoot = False
+        self.driveForward = True
+        
         self.turn = 0
-        self.needed = 0
-        self.start = True
-        self.need = 0
+        self.distanceToVisionTarget = 0
+        
         
         self.Drive.zeroEncoderTargets()
         
@@ -110,12 +113,13 @@ class MainRobot (wpilib.IterativeRobot):
                 self.BL.set(0)
             if self.time > 310:
                 if not self.Vision.centerX().__len__() == 0:
-                    self.need = abs(self.Vision.centerX()[0] - 240)
-                    print (self.need)
-                    if self.need > 50:
-                        self.turn = self.need * .0005
+                    self.distanceToVisionTarget = \
+                        abs(self.Vision.centerX()[0] - 240)
+                    print (self.distanceToVisionTarget)
+                    if self.distanceToVisionTarget > 50:
+                        self.turn = self.distanceToVisionTarget * .0005
                     else:
-                        self.turn = self.need * .0002
+                        self.turn = self.distanceToVisionTarget * .0002
                     if abs(self.Vision.centerX()[0] - 240) < 10:
                         self.shoot = True
                     elif self.Vision.centerX()[0] - 240 > 0:
@@ -130,8 +134,8 @@ class MainRobot (wpilib.IterativeRobot):
                     self.shoot = False
                 
                 if self.shoot == True and self.AUTO_SHOOT_ENABLED:
-                    self.rev += 1
-                    if self.rev < 100:
+                    self.revTime += 1
+                    if self.revTime < 100:
                         self.Shooter.update(False, True, False, False)
                     else:
                         self.Shooter.update(False, True, True, False)
@@ -146,21 +150,22 @@ class MainRobot (wpilib.IterativeRobot):
     #
     #     self.time += 1
     #     if self.time < 350:
-    #         self.start = True
-    #     if self.start == True:
+    #         self.driveForward = True
+    #     if self.driveForward == True:
     #         self.FilterDrive.drive(1, math.pi/2, 0)
     #     if self.time > 350:
-    #         self.start = False
+    #         self.driveForward = False
     #         print ("time is at 350")
     #         # self.FilterDrive.drive(0, 0, 0)
     #         if not self.Vision.centerX().__len__() == 0:
     #             print("passed")
-    #             self.needed = abs(self.Vision.centerX()[0] - 235)
-    #             print (self.needed)
-    #             if self.needed > 50:
-    #                 self.turn = self.needed * .009
+    #             self.distanceToVisionTarget = \
+    #                 abs(self.Vision.centerX()[0] - 235)
+    #             print (self.distanceToVisionTarget)
+    #             if self.distanceToVisionTarget > 50:
+    #                 self.turn = self.distanceToVisionTarget * .009
     #             else:
-    #                 self.turn = self.needed * .0008
+    #                 self.turn = self.distanceToVisionTarget * .0008
     #
     #             if abs(self.Vision.centerX()[0] - 235) < 10:
     #                 self.shoot = True
@@ -209,12 +214,13 @@ class MainRobot (wpilib.IterativeRobot):
             
         else: # using gamepad
             if not self.Vision.centerX().__len__() == 0:
-                self.needed = abs(self.Vision.centerX()[0] - 240)
-                print (self.needed)
-                if self.needed > 50:
-                    self.turnSpeed = self.needed * .009
+                self.distanceToVisionTarget = \
+                    abs(self.Vision.centerX()[0] - 240)
+                print (self.distanceToVisionTarget)
+                if self.distanceToVisionTarget > 50:
+                    self.turnSpeed = self.distanceToVisionTarget * .009
                 else:
-                    self.turnSpeed = self.needed * .0008
+                    self.turnSpeed = self.distanceToVisionTarget * .0008
                 if self.ShootGamepad.getRawButton(Gamepad.RB):
                     # TODO: move 240 to center pixel constant
                     if abs(self.Vision.centerX()[0] - 240) < 15:
