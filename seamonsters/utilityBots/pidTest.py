@@ -58,12 +58,12 @@ class PIDTest(wpilib.IterativeRobot):
         elif self.Joystick.buttonPressed(2):
             self.changePID(1.0/1.1)
             self.printValues()
-                
-        if not (abs(self.goalPosition - self.Talon.getPosition()) \
-                > self.ticksPerRotation):
-            self.goalPosition += self.Joystick.getY() * -1 * self.maxVelocity
 
-        elif self.Joystick.getRawButton(1):
+        if self.Joystick.getRawButton(1):
+            if not (abs(self.goalPosition - self.Talon.getPosition()) \
+                    > self.ticksPerRotation):
+                self.goalPosition += self.Joystick.getY() * -1 \
+                                     * self.maxVelocity
             self.Talon.set(self.goalPosition) 
             print("Speed: " + str(self.Talon.getEncVelocity()))
         
