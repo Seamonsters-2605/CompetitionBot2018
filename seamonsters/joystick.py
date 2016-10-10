@@ -14,11 +14,11 @@ class JoystickBase(Joystick):
     whether buttons have been pressed or released.
     """
     def __init__(self, port):
-        Joystick.__init__(self, port)
+        super().__init__(port)
         # initialize button array
         self.NumButtons = self.getButtonCount()
-        self.CurrentButtonState = [False for i in range(0, self.NumButtons + 1)]
-        self.PreviousButtonState= [False for i in range(0, self.NumButtons + 1)]
+        self.CurrentButtonState = [False] * (self.NumButtons + 1)
+        self.PreviousButtonState= [False] * (self.NumButtons + 1)
         self.updateButtons()
     
     def getJoystickButton(self, buttonNumber):
@@ -53,7 +53,7 @@ class JoystickUtils(JoystickBase):
     of direction: positive X is now zero, which is more standard.
     """
     def __init__(self, port):
-        JoystickBase.__init__(self, port)
+        super().__init__(port)
         self.XInv = False
         self.YInv = False
 
@@ -180,21 +180,18 @@ class JoystickUtils(JoystickBase):
     # preferred.
 
     def getRawX(self):
-        x = Joystick.getX(self)
+        x = super().getX()
         return -x if self.XInv else x
 
     def getRawY(self):
-        y = Joystick.getY(self)
+        y = super().getY()
         return -y if self.YInv else y
 
     def getRawZ(self):
-        return Joystick.getZ(self)
+        return super().getZ()
 
     def getRawTwist(self):
-        return Joystick.getTwist(self)
+        return super().getTwist()
 
     def getRawMagnitude(self):
-        return Joystick.getMagnitude(self)
-    
-    
-    
+        return math.sqrt(self.getRawX()**2 + self.getRawY()**2)
