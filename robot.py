@@ -18,21 +18,22 @@ NetworkTable.setServerMode()
 
 num_array = networktables.NumberArray()
 
+# prevent some errors in PyCharm
 # noinspection PyInterpreter,PyInterpreter
 class MainRobot (wpilib.IterativeRobot):
     def robotInit(self):
 
         print("seamonsters-template!")
 
-        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        # Flags
         self.BELT_BROKEN = False
         self.USING_GAMEPAD = True
         self.AUTO_SHOOT_ENABLED = False
-        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
+        # Input
         self.MoveGamepad = Gamepad(port = 0)
         self.ShootGamepad = Gamepad(port = 1)
-
+        # Alternative joystick input (USING_GAMEPAD must be false)
         self.MoveJoy = seamonsters.joystick.JoystickUtils(0)
         self.MoveJoy.invertY()
         self.TurnJoy = seamonsters.joystick.JoystickUtils(1)
@@ -78,7 +79,7 @@ class MainRobot (wpilib.IterativeRobot):
         self.Vision = Vision.Vision()
         # vision is 480 pixels wide, center is at x=240
         self.VISION_CENTER_X = 240
-        # used in old version of autonomousPeriodic (commented out below)
+        # used in old, commented-out version of autonomousPeriodic
         # self.VISION_CENTER_X = 235
 
 
@@ -91,12 +92,12 @@ class MainRobot (wpilib.IterativeRobot):
         self.shoot = False
         self.driveForward = True
         
-        self.turn = 0
-        self.distanceToVisionTarget = 0
-        
+        self.distanceToVisionTarget = 0 # distance in pixels to target
+        self.turn = 0 # amount to turn to face target
         
         self.Drive.zeroEncoderTargets()
         
+        # TODO: remove this once we figure out why HolonomicDrive isn't working
         self.FR.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.FL.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
         self.BL.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
@@ -106,16 +107,18 @@ class MainRobot (wpilib.IterativeRobot):
         if not self.BELT_BROKEN:
             self.time += 1
             if self.time < 250:
+                # TODO: we never figured out why HolonomicDrive wasn't working
+                # This solution (manually set the speed of motors) is not ideal
                 self.FL.set(8.5 * 819.2 / 8)
                 self.BR.set(-9 * 819.2 / 8)
                 self.FR.set(-9 * 819.2 / 8)
                 self.BL.set(8.5 * 819.2 / 8)
-            elif (self.time > 300 and self.time < 310):
+            elif self.time > 300 and self.time < 310:
                 self.FL.set(0)
                 self.BR.set(0)
                 self.FR.set(0)
                 self.BL.set(0)
-            if self.time > 310:
+            elif self.time > 310:
                 if not self.Vision.centerX().__len__() == 0:
                     self.distanceToVisionTarget = \
                         abs(self.Vision.centerX()[0] - self.VISION_CENTER_X)
@@ -132,7 +135,7 @@ class MainRobot (wpilib.IterativeRobot):
                     elif self.Vision.centerX()[0] - self.VISION_CENTER_X < 0:
                         self.FilterDrive.drive(0, 0, self.turn)
                         self.shoot = False
-                    else:
+                    else: # target is outside of range
                         self.shoot = False
                 if self.time <= 320:
                     self.shoot = False
@@ -141,7 +144,7 @@ class MainRobot (wpilib.IterativeRobot):
                     self.revTime += 1
                     if self.revTime < 100:
                         self.Shooter.update(False, True, False, False)
-                    else:
+                    else: # done revving, ready to shoot
                         self.Shooter.update(False, True, True, False)
         
         else: # belt is broken
@@ -149,6 +152,7 @@ class MainRobot (wpilib.IterativeRobot):
             pass
     
     # old version of autonomousPeriodic:
+    # TODO: can this be deleted or combined into existing autonomous?
     
     # def autonomousPeriodic(self):
     #
@@ -234,7 +238,7 @@ class MainRobot (wpilib.IterativeRobot):
                     elif self.Vision.centerX()[0] - self.VISION_CENTER_X < 0:
                         self.FilterDrive.drive(0, 0, self.turnSpeed)
                         self.readyToShoot = False
-                    else:
+                    else: # target is outside of range
                         self.readyToShoot = False
             else:
                 self.readyToShoot = False
@@ -248,7 +252,7 @@ class MainRobot (wpilib.IterativeRobot):
                     self.LeftFly.set(2000)
                     self.RightFly.set(-2000)
                     self.Intake.set(1)
-                else:
+                else: # flywheels are at the right speed
                     self.Shooter.update(False, False, False, False)
             
             if self.MoveGamepad.getRawButton(Gamepad.LJ): # faster button
