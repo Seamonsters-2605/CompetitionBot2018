@@ -58,8 +58,7 @@ class MainRobot (wpilib.IterativeRobot):
         # 187 / 18 * 400 = 4155.5556 = ~4156
         self.Drive = HolonomicDrive(self.FL, self.FR, self.BL, self.BR, 4156)
         self.Drive.invertDrive(True)
-        # TODO: move magic number to constant
-        self.Drive.setWheelOffset(math.radians(27)) #angle of wheels
+        self.Drive.setWheelOffset(math.radians(27)) # angle of the wheels
         self.Drive.setDriveMode(DriveInterface.DriveMode.POSITION)
         self.FilterDrive = AccelerationFilterDrive(self.Drive)
         
@@ -79,8 +78,6 @@ class MainRobot (wpilib.IterativeRobot):
         self.Vision = Vision.Vision()
         # vision is 480 pixels wide, center is at x=240
         self.VISION_CENTER_X = 240
-        # used in old, commented-out version of autonomousPeriodic
-        # self.VISION_CENTER_X = 235
 
 
     def autonomousInit(self):
@@ -151,8 +148,8 @@ class MainRobot (wpilib.IterativeRobot):
             #self.FilterDrive.driveSpeedJeffMode(.5,math.pi/2,0)
             pass
     
-    # old version of autonomousPeriodic:
-    # TODO: can this be deleted or combined into existing autonomous?
+    # old version of autonomousPeriodic, which uses Holo-drive to drive forward:
+    # TODO: combine changes as comments into existing autonomous
     
     # def autonomousPeriodic(self):
     #
