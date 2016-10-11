@@ -1,6 +1,17 @@
-python robot.py deploy --builtin --nc && (
+:: Based on deploy.sh
+
+setlocal
+set file="robot.py"
+
+if not "%1"=="" (
+	set file=%~1
+)
+
+echo Deploying robot %file%
+
+py "%file%" deploy --builtin --nc --nonstandard && (
 	pause
 ) || (
-	py robot.py deploy --builtin --nc
+	python "%file%" deploy --builtin --nc --nonstandard
 	pause
 )

@@ -1,6 +1,17 @@
-python robot.py deploy --builtin --nc --skip-tests && (
+:: Based on fastdeploy.sh
+
+setlocal
+set file="robot.py"
+
+if not "%1"=="" (
+	set file=%~1
+)
+
+echo Deploying robot %file%
+
+py "%file%" deploy --builtin --nc --skip-tests && (
 	pause
 ) || (
-	py robot.py deploy --builtin --nc --skip-tests
+	python "%file%" deploy --builtin --nc --skip-tests
 	pause
 )

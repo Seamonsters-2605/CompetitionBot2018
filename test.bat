@@ -1,6 +1,17 @@
-python robot.py test && (
+:: Based on deploy.sh
+
+setlocal
+set file="robot.py"
+
+if not "%1"=="" (
+	set file=%~1
+)
+
+echo Testing robot %file%
+
+py "%file%" test && (
 	pause
 ) || (
-	py robot.py test
+	python "%file%" test
 	pause
 )
