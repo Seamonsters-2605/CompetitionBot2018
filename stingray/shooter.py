@@ -2,6 +2,7 @@ __author__ = "jacobvanthoog"
 
 from seamonsters.wpilib_sim import simulate
 from seamonsters.gamepad import Gamepad
+from seamonsters.logging import LogState
 import wpilib
 
 class StingrayShooter(wpilib.IterativeRobot):
@@ -20,8 +21,11 @@ class StingrayShooter(wpilib.IterativeRobot):
         self.Intake.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
 
         self.motorSpeed = 0
-        self.lastPrintedSpeedString = ""
         self.hold = False
+        
+        self.flywheelsLog = LogState("Flywheels")
+        self.holdLog = LogState("Hold flywheel speed")
+        self.intakeLog = LogState("Intake")
         
     def teleopPeriodic(self):
         if not self.hold:
@@ -45,33 +49,33 @@ class StingrayShooter(wpilib.IterativeRobot):
             else:
                 self.motorSpeed = 0.0
 
-            if self.getFlywheelSpeedString() != self.lastPrintedSpeedString:
-                self.lastPrintedSpeedString = self.getFlywheelSpeedString()
-                print("Flywheels running at", self.lastPrintedSpeedString)
+            self.flywheelsLog.update(self.getFlywheelSpeedString())
         
         self.RightFly.set(self.motorSpeed)
         self.LeftFly.set(self.motorSpeed)
 
-        if not self.hold and self.gamepad.getRawButton(Gamepad.START):
+        if self.gamepad.getRawButton(Gamepad.START):
             self.hold = True
-            print("Hold flywheel speed at", self.getFlywheelSpeedString())
-        elif self.hold and self.gamepad.getRawButton(Gamepad.BACK):
+            self.holdLog.update(self.getFlywheelSpeedString())
+        elif self.gamepad.getRawButton(Gamepad.BACK):
             self.hold = False
-            print("Hold disabled")
+            self.holdLog.update("Disabled")
             
         if self.gamepad.getRawButton(Gamepad.RB):
             # intake forwards
             self.Intake.set(.5)
+            self.intakeLog.update("Forward")
         elif self.gamepad.getRawButton(Gamepad.LB):
             # intake backwards
             self.Intake.set(-.5)
+            self.intakeLog.update("Backward")
         else:
             self.Intake.set(0.0)
+            self.intakeLog.update("Off")
 
     def getFlywheelSpeedString(self):
         return str(int(round(-self.motorSpeed * 100))) + "%"
-            
-        
+    
         
 if __name__ == "__main__":
     wpilib.run(StingrayShooter)
