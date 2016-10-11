@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seamonsters.logging &mdash; seamonsters 0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="seamonsters 0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for seamonsters.logging</h1><div class="highlight"><pre>
+<span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;jacobvanthoog&quot;</span>
+
+<div class="viewcode-block" id="LogState"><a class="viewcode-back" href="../../joystick.html#seamonsters.logging.LogState">[docs]</a><span class="k">class</span> <span class="nc">LogState</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a value important to the user that is constantly changing.</span>
+<span class="sd">    Whenever the value changes its new value will be printed to the console.</span>
+<span class="sd">    There are checks to make sure that the same value isn&#39;t logged multiple</span>
+<span class="sd">    times in a row (unless it changed and changed back), and to make sure that</span>
+<span class="sd">    nothing is logged more than 2.5 times per second.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">logFrequency</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the LogState. ``name`` is the name of the value as printed</span>
+<span class="sd">        in the console - it has no meaning other than that. ``logFrequency`` can</span>
+<span class="sd">        be optionally given to specify the minimum number of seconds allowed</span>
+<span class="sd">        between logs. The default value is 0.4 seconds, or 2.5 times per second.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastValue</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logFrequency</span> <span class="o">=</span> <span class="n">logFrequency</span>
+        <span class="c1"># make sure the first value is logged</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeSinceLastLog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logFrequency</span> <span class="o">*</span> <span class="mi">50</span> <span class="o">+</span> <span class="mi">1</span>
+        
+<div class="viewcode-block" id="LogState.update"><a class="viewcode-back" href="../../joystick.html#seamonsters.logging.LogState.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the value to log. This should be called every loop (50 times per</span>
+<span class="sd">        second) even if the value does not change. It&#39;s up to the LogState to</span>
+<span class="sd">        determine if the value has changed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastValue</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lastValue</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="c1"># 50 loops per second</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span> \
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeSinceLastLog</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logFrequency</span> <span class="o">*</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastValue</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeSinceLastLog</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeSinceLastLog</span> <span class="o">+=</span> <span class="mi">1</span></div></div>
+
+
+<span class="c1"># Logging test</span>
+<span class="c1"># The correct output should be:</span>
+<span class="c1"># Test 1</span>
+<span class="c1"># test: 0</span>
+<span class="c1"># test: 20</span>
+<span class="c1"># test: 40</span>
+<span class="c1"># test: 60</span>
+<span class="c1"># test: 80</span>
+<span class="c1"># Test 2</span>
+<span class="c1"># test: 100</span>
+<span class="c1"># Test 3</span>
+<span class="c1"># test: 0</span>
+<span class="c1"># test: 0</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">LogState</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Test 1&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Test 2&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Test 3&quot;</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Sehome Seamonsters.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

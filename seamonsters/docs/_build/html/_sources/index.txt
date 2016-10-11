@@ -29,6 +29,7 @@ Modules:
    grip
    holonomicDrive
    joystick
+   logging
    modularRobot
    motorControl
    nav6
