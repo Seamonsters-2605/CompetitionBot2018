@@ -111,105 +111,47 @@ class HolonomicDrive(DriveInterface):
     
     def driveVoltage(self, magnitude, direction, turn):
         if (turn == 0 and magnitude == 0):
-            self.disableTalons()
-        elif not self.allTalonsEnabled():
-            self.enableTalons()
+            self._disableTalons()
+        elif not self._allTalonsEnabled():
+            self._enableTalons()
             self.zeroEncoderTargets()
         
-        self.ensureControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
-        self.calcWheels(magnitude, direction, turn)
-        self.setWheels()
+        self._ensureControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
+        self._calcWheels(magnitude, direction, turn)
+        self._setWheels()
         self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
 
     def driveSpeed(self, magnitude, direction, turn):
         if (turn == 0 and magnitude == 0):
-            self.disableTalons()
-        elif not self.allTalonsEnabled():
-            self.enableTalons()
+            self._disableTalons()
+        elif not self._allTalonsEnabled():
+            self._enableTalons()
             self.zeroEncoderTargets()
         
-        self.ensureControlMode(wpilib.CANTalon.ControlMode.Speed)
-        self.calcWheels(magnitude, direction, turn)
-        self.scaleToMax()
-        self.setWheels()
+        self._ensureControlMode(wpilib.CANTalon.ControlMode.Speed)
+        self._calcWheels(magnitude, direction, turn)
+        self._scaleToMax()
+        self._setWheels()
         self.previousDriveMode = DriveInterface.DriveMode.SPEED
 
     #Increments position to mock speed mode
     def driveSpeedJeffMode(self, magnitude, direction, turn): 
         if (turn == 0 and magnitude == 0):
-            self.disableTalons()
-        elif not self.allTalonsEnabled():
-            self.enableTalons()
+            self._disableTalons()
+        elif not self._allTalonsEnabled():
+            self._enableTalons()
             self.zeroEncoderTargets()
 
-        self.ensureControlMode(wpilib.CANTalon.ControlMode.Position)
+        self._ensureControlMode(wpilib.CANTalon.ControlMode.Position)
         if not self.previousDriveMode == DriveInterface.DriveMode.POSITION:
             self.zeroEncoderTargets()
-        self.calcWheels(magnitude, direction, turn)
-        self.scaleToMaxJeffMode()
-        self.incrementEncoderTargets()
-        self.setWheelsJeffMode()
+        self._calcWheels(magnitude, direction, turn)
+        self._scaleToMaxJeffMode()
+        self._incrementEncoderTargets()
+        self._setWheelsJeffMode()
         self.previousDriveMode = DriveInterface.DriveMode.POSITION
-    
-    
-    #DO NOT USE THESE FUNCTIONS
-
-    def calcWheels(self, magnitude, direction, turn):
-        self.stores = [0.0, 0.0, 0.0, 0.0]
-        self.addStrafe(magnitude, direction)
-        self.addTurn(turn)
-        self.scaleNumbers()
-
-    def addStrafe(self, magnitude, direction):
-        if magnitude > 1.0:
-            fixedMagnitude = 1.0
-        else:
-            fixedMagnitude = magnitude
-        self.stores[HolonomicDrive.FRONT_LEFT] += fixedMagnitude \
-                * (math.sin(direction + self.wheelOffset)) * -1
-        self.stores[HolonomicDrive.FRONT_RIGHT] += fixedMagnitude \
-                * (math.sin((direction - self.wheelOffset)))
-        self.stores[HolonomicDrive.BACK_LEFT] += fixedMagnitude \
-                * (math.sin((direction - self.wheelOffset))) * -1
-        self.stores[HolonomicDrive.BACK_RIGHT] += fixedMagnitude \
-                * (math.sin((direction + self.wheelOffset)))
-
-    def addTurn(self, turn):
-        for i in range(0,4):
-            self.stores[i] += turn
-
-    def scaleNumbers(self):
-        largest = max(self.stores)
-        if largest > 1:
-            for number in self.stores:
-                number = number / largest
-
-    def incrementEncoderTargets(self):
-        for i in range(0, 4):
-            if not abs(self.wheelMotors[i].getPosition() \
-                    - self.encoderTargets[i]) > self.ticksPerWheelRotation:
-                self.encoderTargets[i] += self.stores[i] * self.invert
-
-    def setWheels(self):
-        for i in range(0, 4):
-            self.wheelMotors[i].set(self.stores[i] * self.invert)
-
-    def setWheelsJeffMode(self):
-        for i in range(0, 4):
-            self.wheelMotors[i].set(self.encoderTargets[i])
-
-    def scaleToMax(self):
-        for i in range(0,4):
-            self.stores[i] *= self.maxVelocity * 5
-
-    def scaleToMaxJeffMode(self):
-        for i in range(0,4):
-            self.stores[i] *= self.maxVelocity
-
-    def ensureControlMode(self, controlMode):
-        for i in range(0, 4):
-            self.wheelMotors[i].changeControlMode(controlMode)
-
+        
+        
     def logCurrent(self):
         print("FL Current:", str(
             self.wheelMotors[HolonomicDrive.FRONT_LEFT].getOutputCurrent()))
@@ -224,15 +166,72 @@ class HolonomicDrive(DriveInterface):
         for i in range(0, 4):
             self.encoderTargets[i] = self.wheelMotors[i].getPosition()
     
-    def enableTalons(self):
+    
+    def _calcWheels(self, magnitude, direction, turn):
+        self.stores = [0.0, 0.0, 0.0, 0.0]
+        self._addStrafe(magnitude, direction)
+        self._addTurn(turn)
+        self._scaleNumbers()
+
+    def _addStrafe(self, magnitude, direction):
+        if magnitude > 1.0:
+            fixedMagnitude = 1.0
+        else:
+            fixedMagnitude = magnitude
+        self.stores[HolonomicDrive.FRONT_LEFT] += fixedMagnitude \
+                * (math.sin(direction + self.wheelOffset)) * -1
+        self.stores[HolonomicDrive.FRONT_RIGHT] += fixedMagnitude \
+                * (math.sin((direction - self.wheelOffset)))
+        self.stores[HolonomicDrive.BACK_LEFT] += fixedMagnitude \
+                * (math.sin((direction - self.wheelOffset))) * -1
+        self.stores[HolonomicDrive.BACK_RIGHT] += fixedMagnitude \
+                * (math.sin((direction + self.wheelOffset)))
+
+    def _addTurn(self, turn):
+        for i in range(0,4):
+            self.stores[i] += turn
+
+    def _scaleNumbers(self):
+        largest = max(self.stores)
+        if largest > 1:
+            for number in self.stores:
+                number = number / largest
+
+    def _incrementEncoderTargets(self):
+        for i in range(0, 4):
+            if not abs(self.wheelMotors[i].getPosition() \
+                    - self.encoderTargets[i]) > self.ticksPerWheelRotation:
+                self.encoderTargets[i] += self.stores[i] * self.invert
+
+    def _setWheels(self):
+        for i in range(0, 4):
+            self.wheelMotors[i].set(self.stores[i] * self.invert)
+
+    def _setWheelsJeffMode(self):
+        for i in range(0, 4):
+            self.wheelMotors[i].set(self.encoderTargets[i])
+
+    def _scaleToMax(self):
+        for i in range(0,4):
+            self.stores[i] *= self.maxVelocity * 5
+
+    def _scaleToMaxJeffMode(self):
+        for i in range(0,4):
+            self.stores[i] *= self.maxVelocity
+
+    def _ensureControlMode(self, controlMode):
+        for i in range(0, 4):
+            self.wheelMotors[i].changeControlMode(controlMode)
+    
+    def _enableTalons(self):
         for i in range(0, 4):
             self.wheelMotors[i].enable()
 
-    def disableTalons(self):
+    def _disableTalons(self):
         for i in range(0, 4):
             self.wheelMotors[i].disable()
 
-    def allTalonsEnabled(self):
+    def _allTalonsEnabled(self):
         for i in range(0, 4):
             if not self.wheelMotors[i].isControlEnabled():
                 return False
