@@ -9,7 +9,7 @@ Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
 
 - `seamonsters/`: The seamonsters library code. It has its own documentation, in
     `seamonsters/docs/_build/html/index.html` (you can view it online
-    [here](https://cdn.rawgit.com/Seamonsters-2605/CompetitionBot2016/seamonsters-template/seamonsters/docs/_build/html/index.html))
+    [here](https://rawgit.com/Seamonsters-2605/CompetitionBot2016/seamonsters-template/seamonsters/docs/_build/html/index.html))
 - `GRIP/`: GRIP files used in competition for image recognition.
 - `Shooter/`: Code for the flywheels, intake motor, and "ShootController", which
     allows control of both.
