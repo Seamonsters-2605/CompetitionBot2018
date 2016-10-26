@@ -49,6 +49,14 @@
 <p>&#8220;Jeff Mode&#8221; is incremental position mode &#8211; it constantly increments the
 position of the motors to mock speed mode.</p>
 <dl class="method">
+<dt id="seamonsters.motorControl.JeffMode.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>talon</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#JeffMode.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.JeffMode.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize JeffMode with a CANTalon. This will automatically zero
+everything and change the control mode &#8211; be careful not to change that
+later on.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="seamonsters.motorControl.JeffMode.getMaxSpeed">
 <code class="descname">getMaxSpeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#JeffMode.getMaxSpeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.JeffMode.getMaxSpeed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the maximum speed of the motor in encoder ticks per 1/50th of a
@@ -97,6 +105,11 @@ the main loop, 50 times per second.</p>
 <p>A motor manager manages many CANTalons, with associated MultiMode&#8217;s. The
 MultiMode can be in voltage, speed, or jeff/position mode. The drive mode
 and maximum velocity of all can be set at once.</p>
+<dl class="method">
+<dt id="seamonsters.motorControl.MotorManager.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#MotorManager.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.MotorManager.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="seamonsters.motorControl.MotorManager.addMotor">
 <code class="descname">addMotor</code><span class="sig-paren">(</span><em>talon</em>, <em>inverted=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#MotorManager.addMotor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.MotorManager.addMotor" title="Permalink to this definition">¶</a></dt>
@@ -169,6 +182,13 @@ example, in JeffMode it will zero the encoder targets.</p>
 implementation. All interface calls go to that object. This allows switching
 out the underlying MotorSpeedControl. Implementation.</p>
 <dl class="method">
+<dt id="seamonsters.motorControl.MultiMode.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>talon</em>, <em>speedControl</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#MultiMode.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.MultiMode.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize with a talon and initial MotorSpeedControl. The zero() method
+of speedControl will be called.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="seamonsters.motorControl.MultiMode.getSpeedControl">
 <code class="descname">getSpeedControl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#MultiMode.getSpeedControl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.MultiMode.getSpeedControl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the current MotorSpeedControl implementation.</p>
@@ -203,6 +223,11 @@ will be called.</p>
 <em class="property">class </em><code class="descclassname">seamonsters.motorControl.</code><code class="descname">SpeedMode</code><span class="sig-paren">(</span><em>talon</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#SpeedMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.SpeedMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#seamonsters.motorControl.MotorSpeedControl" title="seamonsters.motorControl.MotorSpeedControl"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.motorControl.MotorSpeedControl</span></code></a></p>
 <p>A CANTalon in speed mode.</p>
+<dl class="method">
+<dt id="seamonsters.motorControl.SpeedMode.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>talon</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#SpeedMode.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.SpeedMode.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="seamonsters.motorControl.SpeedMode.getMaxSpeed">
 <code class="descname">getMaxSpeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#SpeedMode.getMaxSpeed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.SpeedMode.getMaxSpeed" title="Permalink to this definition">¶</a></dt>
@@ -247,6 +272,11 @@ second.</p>
 <em class="property">class </em><code class="descclassname">seamonsters.motorControl.</code><code class="descname">VoltageMode</code><span class="sig-paren">(</span><em>talon</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#VoltageMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.VoltageMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#seamonsters.motorControl.MotorSpeedControl" title="seamonsters.motorControl.MotorSpeedControl"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.motorControl.MotorSpeedControl</span></code></a></p>
 <p>A CANTalon in voltage mode (actually PercentVbus).</p>
+<dl class="method">
+<dt id="seamonsters.motorControl.VoltageMode.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>talon</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#VoltageMode.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.VoltageMode.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="seamonsters.motorControl.VoltageMode.invert">
 <code class="descname">invert</code><span class="sig-paren">(</span><em>enabled=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#VoltageMode.invert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.motorControl.VoltageMode.invert" title="Permalink to this definition">¶</a></dt>

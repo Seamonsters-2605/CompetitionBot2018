@@ -55,13 +55,13 @@
 <span class="sd">    The base for other joystick utilities classes. This has methods for checking</span>
 <span class="sd">    whether buttons have been pressed or released.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickBase.__init__"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickBase.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
         <span class="c1"># initialize button array</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">NumButtons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getButtonCount</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">CurrentButtonState</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NumButtons</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PreviousButtonState</span><span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NumButtons</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">updateButtons</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateButtons</span><span class="p">()</span></div>
     
 <div class="viewcode-block" id="JoystickBase.getJoystickButton"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickBase.getJoystickButton">[docs]</a>    <span class="k">def</span> <span class="nf">getJoystickButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buttonNumber</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">JoystickButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buttonNumber</span><span class="p">)</span></div>
@@ -94,14 +94,14 @@
 <span class="sd">    An extended Joystick with extra utilities for deadzones and a new definition</span>
 <span class="sd">    of direction: positive X is now zero, which is more standard.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.__init__"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">XInv</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">YInv</span> <span class="o">=</span> <span class="bp">False</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">positionDeadZone</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="c1"># 5 percent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">twistDeadZone</span> <span class="o">=</span> <span class="mf">0.1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">zDeadZone</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zDeadZone</span> <span class="o">=</span> <span class="mf">0.1</span></div>
     
 
 <div class="viewcode-block" id="JoystickUtils.invertX"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.invertX">[docs]</a>    <span class="k">def</span> <span class="nf">invertX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>

@@ -50,7 +50,7 @@
 <span class="sd">    MultiMode can be in voltage, speed, or jeff/position mode. The drive mode</span>
 <span class="sd">    and maximum velocity of all can be set at once.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MotorManager.__init__"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.MotorManager.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">talons</span> <span class="o">=</span> <span class="p">[</span> <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multiModes</span> <span class="o">=</span> <span class="p">[</span> <span class="p">]</span>
@@ -58,7 +58,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">speedModes</span> <span class="o">=</span> <span class="p">[</span> <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">jeffModes</span> <span class="o">=</span> <span class="p">[</span> <span class="p">]</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">maxSpeed</span> <span class="o">=</span> <span class="mi">400</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxSpeed</span> <span class="o">=</span> <span class="mi">400</span></div>
     
 <div class="viewcode-block" id="MotorManager.addMotor"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.MotorManager.addMotor">[docs]</a>    <span class="k">def</span> <span class="nf">addMotor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">talon</span><span class="p">,</span> <span class="n">inverted</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -168,14 +168,14 @@
 <span class="sd">    implementation. All interface calls go to that object. This allows switching</span>
 <span class="sd">    out the underlying MotorSpeedControl. Implementation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">talon</span><span class="p">,</span> <span class="n">speedControl</span><span class="p">):</span>
+<div class="viewcode-block" id="MultiMode.__init__"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.MultiMode.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">talon</span><span class="p">,</span> <span class="n">speedControl</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize with a talon and initial MotorSpeedControl. The zero() method</span>
 <span class="sd">        of speedControl will be called.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">talon</span> <span class="o">=</span> <span class="n">talon</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speedControl</span> <span class="o">=</span> <span class="n">speedControl</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">speedControl</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedControl</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span></div>
         
 <div class="viewcode-block" id="MultiMode.zero"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.MultiMode.zero">[docs]</a>    <span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speedControl</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
@@ -208,11 +208,11 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A CANTalon in voltage mode (actually PercentVbus).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">talon</span><span class="p">):</span>
+<div class="viewcode-block" id="VoltageMode.__init__"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.VoltageMode.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">talon</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">talon</span> <span class="o">=</span> <span class="n">talon</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># can be 1 or -1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">0</span></div>
         
 <div class="viewcode-block" id="VoltageMode.zero"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.VoltageMode.zero">[docs]</a>    <span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">getControlMode</span><span class="p">()</span> <span class="o">==</span> \
@@ -237,12 +237,12 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A CANTalon in speed mode.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">talon</span><span class="p">):</span>
+<div class="viewcode-block" id="SpeedMode.__init__"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.SpeedMode.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">talon</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">talon</span> <span class="o">=</span> <span class="n">talon</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># can be 1 or -1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">maxSpeed</span> <span class="o">=</span> <span class="mi">2000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxSpeed</span> <span class="o">=</span> <span class="mi">2000</span></div>
         
 <div class="viewcode-block" id="SpeedMode.zero"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.SpeedMode.zero">[docs]</a>    <span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">getControlMode</span><span class="p">()</span> <span class="o">==</span> \
@@ -285,7 +285,7 @@
 <span class="sd">    position of the motors to mock speed mode.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">talon</span><span class="p">):</span>
+<div class="viewcode-block" id="JeffMode.__init__"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.JeffMode.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">talon</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize JeffMode with a CANTalon. This will automatically zero</span>
 <span class="sd">        everything and change the control mode -- be careful not to change that</span>
@@ -296,7 +296,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># can be 1 or -1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">maxSpeed</span> <span class="o">=</span> <span class="mi">400</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxSpeed</span> <span class="o">=</span> <span class="mi">400</span></div>
 
 <div class="viewcode-block" id="JeffMode.zero"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.JeffMode.zero">[docs]</a>    <span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

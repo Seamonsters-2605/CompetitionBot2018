@@ -52,6 +52,15 @@ There are checks to make sure that the same value isn&#8217;t logged multiple
 times in a row (unless it changed and changed back), and to make sure that
 nothing is logged more than 2.5 times per second.</p>
 <dl class="method">
+<dt id="seamonsters.logging.LogState.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>logFrequency=0.4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/logging.html#LogState.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.logging.LogState.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the LogState. <code class="docutils literal"><span class="pre">name</span></code> is the name of the value as printed
+in the console - it has no meaning other than that. <code class="docutils literal"><span class="pre">logFrequency</span></code> can
+be optionally given to specify the minimum number of seconds allowed
+between logs. The default value is 0.4 seconds, or 2.5 times per second.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="seamonsters.logging.LogState.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/logging.html#LogState.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.logging.LogState.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the value to log. This should be called every loop (50 times per

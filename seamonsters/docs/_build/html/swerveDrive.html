@@ -48,6 +48,11 @@
 <dd><p>Bases: <a class="reference internal" href="drive.html#seamonsters.drive.DriveInterface" title="seamonsters.drive.DriveInterface"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.drive.DriveInterface</span></code></a></p>
 <p>An implementation of DriveInterface for swerve drives.</p>
 <dl class="method">
+<dt id="seamonsters.swerveDrive.SwerveDrive.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#SwerveDrive.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.swerveDrive.SwerveDrive.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="seamonsters.swerveDrive.SwerveDrive.addWheel">
 <code class="descname">addWheel</code><span class="sig-paren">(</span><em>xLocation</em>, <em>yLocation</em>, <em>driveTalon=None</em>, <em>rotateTalon=None</em>, <em>rotateTalonEncoderTicks=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#SwerveDrive.addWheel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.swerveDrive.SwerveDrive.addWheel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a wheel to the robot at the specific location. driveTalon is the
@@ -92,6 +97,12 @@ second). Speed mode behaves similarly, but since wpilib uses units of
 <dd><p>Bases: <a class="reference internal" href="#seamonsters.swerveDrive.WheelController" title="seamonsters.swerveDrive.WheelController"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.swerveDrive.WheelController</span></code></a></p>
 <p>A wheel controller controlling two CANTalons. Uses a MotorSpeedControl.</p>
 <dl class="method">
+<dt id="seamonsters.swerveDrive.TalonWheelController.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>driveController</em>, <em>rotateTalon</em>, <em>rotateTalonEncoderTicks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#TalonWheelController.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.swerveDrive.TalonWheelController.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>driveController should be a MotorSpeedControl</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="seamonsters.swerveDrive.TalonWheelController.getCurrentRotation">
 <code class="descname">getCurrentRotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#TalonWheelController.getCurrentRotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.swerveDrive.TalonWheelController.getCurrentRotation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -113,6 +124,11 @@ second). Speed mode behaves similarly, but since wpilib uses units of
 <em class="property">class </em><code class="descclassname">seamonsters.swerveDrive.</code><code class="descname">TestWheelController</code><span class="sig-paren">(</span><em>number</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#TestWheelController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.swerveDrive.TestWheelController" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#seamonsters.swerveDrive.WheelController" title="seamonsters.swerveDrive.WheelController"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.swerveDrive.WheelController</span></code></a></p>
 <p>A wheel controller that logs all events and does nothing else.</p>
+<dl class="method">
+<dt id="seamonsters.swerveDrive.TestWheelController.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>number</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#TestWheelController.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.swerveDrive.TestWheelController.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="seamonsters.swerveDrive.TestWheelController.getCurrentRotation">
 <code class="descname">getCurrentRotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#TestWheelController.getCurrentRotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.swerveDrive.TestWheelController.getCurrentRotation" title="Permalink to this definition">¶</a></dt>
@@ -167,6 +183,13 @@ radians might not be within 0 and 2pi</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Keeps track of the current state of a single wheels, calculates all the
 necessary, vector math, and controls a WheelController.</p>
+<dl class="method">
+<dt id="seamonsters.swerveDrive.WheelState.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>location</em>, <em>controller</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#WheelState.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.swerveDrive.WheelState.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>location is a tuple (x, y) &#8211; location of wheel from center of robot.
+controller is a WheelController.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="seamonsters.swerveDrive.WheelState.calcDrive">
 <code class="descname">calcDrive</code><span class="sig-paren">(</span><em>mag</em>, <em>driveDirection</em>, <em>turn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#WheelState.calcDrive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.swerveDrive.WheelState.calcDrive" title="Permalink to this definition">¶</a></dt>
