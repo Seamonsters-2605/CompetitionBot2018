@@ -11,7 +11,8 @@ import math
 class SwerveBot(DriveTest):
     
     def robotInit(self):
-        DriveTest.robotInit(self)
+        DriveTest.robotInit(self, normalScale = .3, fastScale = .5,
+                            slowScale = .05)
         
         fl = wpilib.CANTalon(2)
         fr = wpilib.CANTalon(1)
@@ -33,12 +34,12 @@ class SwerveBot(DriveTest):
         drive = HolonomicDrive(fl, fr, bl, br, 4156)
         drive.invertDrive(True)
         # TODO: move magic number to constant
-        drive.setWheelOffset(math.radians(27)) #angle of wheels
-        drive.setDriveMode(DriveInterface.DriveMode.POSITION)
+        drive.setWheelOffset(math.radians(22.5)) #angle of rollers
         
         filterDrive = AccelerationFilterDrive(drive)
         
-        DriveTest.initDrive(self, filterDrive)
+        DriveTest.initDrive(self, filterDrive,
+                            driveMode=DriveInterface.DriveMode.POSITION)
         
         
 if __name__ == "__main__":

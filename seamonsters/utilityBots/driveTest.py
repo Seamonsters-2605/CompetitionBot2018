@@ -7,6 +7,8 @@ from seamonsters.gamepad import Gamepad
 class DriveTest (wpilib.IterativeRobot):
     
     def robotInit(self, normalScale=.5, fastScale=1.0, slowScale=.2):
+        print("Left Bumper: Slower")
+        print("Left Joystick: Faster")
         self.gamepad = Gamepad(port = 0)
         self.drive = None
 
