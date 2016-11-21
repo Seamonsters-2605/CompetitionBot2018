@@ -218,6 +218,10 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
+###########
+# ADDED
+###########
+
 __pycache__/
 # Emacs things
 \#*
@@ -226,3 +230,8 @@ __pycache__/
 
 # cloud9 things
 .~c9*
+
+# sphinx doctree caches
+*.doctree
+*.pickle
+
