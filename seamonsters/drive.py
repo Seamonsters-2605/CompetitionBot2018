@@ -119,3 +119,23 @@ class AccelerationFilterDrive(DriveInterface):
         return math.sqrt(finalX ** 2 + finalY ** 2), \
                math.atan2(finalY, finalX), \
                finalTurn
+
+class FieldOrientedDrive(DriveInterface):
+    """
+    Wraps another drive interface, and provides field orientation.
+    """
+    
+    def __init__(self, interface, ahrs):
+        self.interface = interface
+        self.ahrs = ahrs
+        
+    def setDriveMode(self, mode):
+        self.interface.setDriveMode(mode)
+
+    def getDriveMode(self):
+        return self.interface.getDriveMode()
+    
+    def drive(self, magnitude, direction, turn, forceDriveMode = None):
+        robotAngle = - math.radians(self.ahrs.getYaw())
+        direction -= robotAngle
+        self.interface.drive(magnitude, direction, turn, forceDriveMode)
