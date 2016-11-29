@@ -128,7 +128,7 @@ class FieldOrientedDrive(DriveInterface):
     def __init__(self, interface, ahrs):
         self.interface = interface
         self.ahrs = ahrs
-        self.origin = 0
+        self.origin = 0.0
 
     def zero(self):
         self.origin = self._getYawRadians()
@@ -145,4 +145,4 @@ class FieldOrientedDrive(DriveInterface):
         self.interface.drive(magnitude, direction, turn, forceDriveMode)
     
     def _getYawRadians(self):
-        - math.radians(self.ahrs.getYaw())
+        return - math.radians(self.ahrs.getYaw())
