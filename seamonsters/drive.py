@@ -128,6 +128,10 @@ class FieldOrientedDrive(DriveInterface):
     def __init__(self, interface, ahrs):
         self.interface = interface
         self.ahrs = ahrs
+        self.origin = 0
+
+    def zero(self):
+        self.origin = self._getYawRadians()
         
     def setDriveMode(self, mode):
         self.interface.setDriveMode(mode)
@@ -136,6 +140,9 @@ class FieldOrientedDrive(DriveInterface):
         return self.interface.getDriveMode()
     
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
-        robotAngle = - math.radians(self.ahrs.getYaw())
+        robotAngle = self._getYawRadians() - self.origin
         direction -= robotAngle
         self.interface.drive(magnitude, direction, turn, forceDriveMode)
+    
+    def _getYawRadians(self):
+        - math.radians(self.ahrs.getYaw())
