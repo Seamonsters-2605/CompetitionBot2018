@@ -125,10 +125,16 @@ class FieldOrientedDrive(DriveInterface):
     Wraps another drive interface, and provides field orientation.
     """
     
-    def __init__(self, interface, ahrs):
+    def __init__(self, interface, ahrs, offset=0.0):
+        """
+        Create the FieldOrientedDrive with another DriveInterface to wrap and a
+        ``robotpy_ext.common_drivers.navx.AHRS``. If given, the offset is a
+        value in radians to add to all direction inputs.
+        """
         self.interface = interface
         self.ahrs = ahrs
         self.origin = 0.0
+        self.offset = offset
 
     def zero(self):
         self.origin = self._getYawRadians()
@@ -142,7 +148,9 @@ class FieldOrientedDrive(DriveInterface):
     def drive(self, magnitude, direction, turn, forceDriveMode = None):
         robotAngle = self._getYawRadians() - self.origin
         direction -= robotAngle
+        direction += self.offset
         self.interface.drive(magnitude, direction, turn, forceDriveMode)
     
     def _getYawRadians(self):
         return - math.radians(self.ahrs.getYaw())
+
