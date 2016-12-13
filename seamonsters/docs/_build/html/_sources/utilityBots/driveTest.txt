@@ -1,7 +1,0 @@
-seamonsters.utilityBots.driveTest
-=================
-
-.. automodule:: seamonsters.utilityBots.driveTest
-    :members:
-    :undoc-members:
-    :show-inheritance:

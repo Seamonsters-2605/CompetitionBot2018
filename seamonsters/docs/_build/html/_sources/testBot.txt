@@ -1,7 +1,0 @@
-testBot module
-==============
-
-.. automodule:: testBot
-    :members:
-    :undoc-members:
-    :show-inheritance:

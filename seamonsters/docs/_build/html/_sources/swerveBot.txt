@@ -1,7 +1,0 @@
-swerveBot module
-================
-
-.. automodule:: swerveBot
-    :members:
-    :undoc-members:
-    :show-inheritance:
