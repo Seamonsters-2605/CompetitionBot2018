@@ -235,3 +235,5 @@ __pycache__/
 *.doctree
 *.pickle
 
+# PyCharm
+.idea/
