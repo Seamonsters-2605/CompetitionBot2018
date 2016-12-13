@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>seamonsters.drive &mdash; seamonsters 0 documentation</title>
+    <title>seamonsters.drive &#8212; seamonsters 0 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,17 +17,20 @@
         VERSION:     '0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="seamonsters 0 documentation" href="index.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="seamonsters.gamepad" href="gamepad.html" />
     <link rel="prev" title="seamonsters.dashboard" href="dashboard.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -132,6 +135,41 @@ forceDriveMode, this will be used.</p>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="seamonsters.drive.FieldOrientedDrive">
+<em class="property">class </em><code class="descclassname">seamonsters.drive.</code><code class="descname">FieldOrientedDrive</code><span class="sig-paren">(</span><em>interface</em>, <em>ahrs</em>, <em>offset=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.FieldOrientedDrive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seamonsters.drive.DriveInterface" title="seamonsters.drive.DriveInterface"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.drive.DriveInterface</span></code></a></p>
+<p>Wraps another drive interface, and provides field orientation.</p>
+<dl class="method">
+<dt id="seamonsters.drive.FieldOrientedDrive.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>interface</em>, <em>ahrs</em>, <em>offset=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.FieldOrientedDrive.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the FieldOrientedDrive with another DriveInterface to wrap and a
+<code class="docutils literal"><span class="pre">robotpy_ext.common_drivers.navx.AHRS</span></code>. If given, the offset is a
+value in radians to add to all direction inputs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.FieldOrientedDrive.drive">
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.FieldOrientedDrive.drive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.FieldOrientedDrive.getDriveMode">
+<code class="descname">getDriveMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive.getDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.FieldOrientedDrive.getDriveMode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.FieldOrientedDrive.setDriveMode">
+<code class="descname">setDriveMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive.setDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.FieldOrientedDrive.setDriveMode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.FieldOrientedDrive.zero">
+<code class="descname">zero</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive.zero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.FieldOrientedDrive.zero" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="seamonsters.drive.setControlMode">
 <code class="descclassname">seamonsters.drive.</code><code class="descname">setControlMode</code><span class="sig-paren">(</span><em>talon</em>, <em>driveMode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#setControlMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.setControlMode" title="Permalink to this definition">¶</a></dt>
@@ -158,15 +196,15 @@ a wpilib.CANTalon.ControlMode.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/drive.txt"
+      <li><a href="_sources/drive.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -180,11 +218,11 @@ a wpilib.CANTalon.ControlMode.</p>
       &copy;2016, Sehome Seamonsters.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
       |
-      <a href="_sources/drive.txt"
+      <a href="_sources/drive.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

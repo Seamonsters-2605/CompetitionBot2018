@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>seamonsters.holonomicDrive &mdash; seamonsters 0 documentation</title>
+    <title>seamonsters.holonomicDrive &#8212; seamonsters 0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -17,16 +17,18 @@
         VERSION:     '0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="seamonsters 0 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -43,9 +45,9 @@
 <span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Dawson&#39;</span>
 <span class="kn">import</span> <span class="nn">wpilib</span>
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">wpilib</span> <span class="kn">import</span> <span class="n">CANTalon</span>
+<span class="kn">from</span> <span class="nn">wpilib</span> <span class="k">import</span> <span class="n">CANTalon</span>
 
-<span class="kn">from</span> <span class="nn">seamonsters.drive</span> <span class="kn">import</span> <span class="n">DriveInterface</span>
+<span class="kn">from</span> <span class="nn">seamonsters.drive</span> <span class="k">import</span> <span class="n">DriveInterface</span>
 
 <div class="viewcode-block" id="HolonomicDrive"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive">[docs]</a><span class="k">class</span> <span class="nc">HolonomicDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -79,7 +81,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">DriveInterface</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">FRONT_LEFT</span><span class="p">]</span> <span class="o">=</span> <span class="n">fl</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">FRONT_RIGHT</span><span class="p">]</span> <span class="o">=</span> <span class="n">fr</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">BACK_LEFT</span><span class="p">]</span> <span class="o">=</span> <span class="n">bl</span>
@@ -109,7 +111,7 @@
 
     <span class="c1">#USE THESE FEW FUNCTIONS BELOW</span>
     
-<div class="viewcode-block" id="HolonomicDrive.invertDrive"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.invertDrive">[docs]</a>    <span class="k">def</span> <span class="nf">invertDrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="HolonomicDrive.invertDrive"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.invertDrive">[docs]</a>    <span class="k">def</span> <span class="nf">invertDrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If invertDrive is enabled, all motor directions will be inverted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -134,9 +136,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maxVelocity</span> <span class="o">=</span> <span class="n">velocity</span></div>
     
-<div class="viewcode-block" id="HolonomicDrive.drive"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
-        <span class="n">mode</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">if</span> <span class="n">forceDriveMode</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+<div class="viewcode-block" id="HolonomicDrive.drive"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">forceDriveMode</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">mode</span> <span class="o">=</span> <span class="n">forceDriveMode</span>
@@ -195,13 +197,13 @@
         
         
 <div class="viewcode-block" id="HolonomicDrive.logCurrent"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.logCurrent">[docs]</a>    <span class="k">def</span> <span class="nf">logCurrent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;FL Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FL Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">FRONT_LEFT</span><span class="p">]</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;FR Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FR Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">FRONT_RIGHT</span><span class="p">]</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;BL Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BL Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">BACK_LEFT</span><span class="p">]</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;BR Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BR Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">BACK_RIGHT</span><span class="p">]</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span></div>
 
 <div class="viewcode-block" id="HolonomicDrive.zeroEncoderTargets"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.zeroEncoderTargets">[docs]</a>    <span class="k">def</span> <span class="nf">zeroEncoderTargets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -276,8 +278,8 @@
     <span class="k">def</span> <span class="nf">_allTalonsEnabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isControlEnabled</span><span class="p">():</span>
-                <span class="k">return</span> <span class="bp">False</span>
-        <span class="k">return</span> <span class="bp">True</span></div>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
 </pre></div>
 
           </div>
@@ -296,8 +298,8 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -311,8 +313,8 @@
       &copy;2016, Sehome Seamonsters.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>
 
