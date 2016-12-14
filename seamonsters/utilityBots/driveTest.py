@@ -5,7 +5,10 @@ from seamonsters.drive import DriveInterface
 from seamonsters.gamepad import Gamepad
 
 class DriveTest (wpilib.IterativeRobot):
-    
+    """
+    Can be extended to allow driving a robot with a custom drivetrain using the
+    gamepad.
+    """
     def robotInit(self, normalScale=.5, fastScale=1.0, slowScale=.2):
         """
         ``normalScale``, ``fastScale`` and ``slowScale`` are optional - these
