@@ -48,10 +48,12 @@
 <span class="kn">from</span> <span class="nn">seamonsters.logging</span> <span class="k">import</span> <span class="n">LogState</span>
 
 <div class="viewcode-block" id="PDPMonitor"><a class="viewcode-back" href="../../pdp.html#seamonsters.pdp.PDPMonitor">[docs]</a><span class="k">class</span> <span class="nc">PDPMonitor</span><span class="p">:</span>
-
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Monitors and prints the current of a group of PDP channels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="PDPMonitor.__init__"><a class="viewcode-back" href="../../pdp.html#seamonsters.pdp.PDPMonitor.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channels</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        ``channels`` is a list of channel numbers (0 - 15)</span>
+<span class="sd">        ``channels`` is a list of channel numbers (0 - 15) to monitor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="n">channels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pdp</span> <span class="o">=</span> <span class="n">wpilib</span><span class="o">.</span><span class="n">PowerDistributionPanel</span><span class="p">()</span>
@@ -59,6 +61,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logStates</span> <span class="o">=</span> <span class="p">[</span><span class="n">LogState</span><span class="p">(</span><span class="s2">&quot;PDP &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="mf">0.8</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">]</span></div>
     
 <div class="viewcode-block" id="PDPMonitor.update"><a class="viewcode-back" href="../../pdp.html#seamonsters.pdp.PDPMonitor.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call this every loop (50 times per second) to monitor the currents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logStates</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pdp</span><span class="o">.</span><span class="n">getCurrent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span></div></div>
 

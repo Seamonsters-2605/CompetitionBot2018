@@ -49,16 +49,18 @@
 <dt id="seamonsters.pdp.PDPMonitor">
 <em class="property">class </em><code class="descclassname">seamonsters.pdp.</code><code class="descname">PDPMonitor</code><span class="sig-paren">(</span><em>channels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/pdp.html#PDPMonitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.pdp.PDPMonitor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Monitors and prints the current of a group of PDP channels.</p>
 <dl class="method">
 <dt id="seamonsters.pdp.PDPMonitor.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>channels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/pdp.html#PDPMonitor.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.pdp.PDPMonitor.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="docutils literal"><span class="pre">channels</span></code> is a list of channel numbers (0 - 15)</p>
+<dd><p><code class="docutils literal"><span class="pre">channels</span></code> is a list of channel numbers (0 - 15) to monitor.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.pdp.PDPMonitor.update">
 <code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/pdp.html#PDPMonitor.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.pdp.PDPMonitor.update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Call this every loop (50 times per second) to monitor the currents.</p>
+</dd></dl>
 
 </dd></dl>
 
