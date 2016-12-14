@@ -17,6 +17,9 @@ class JoystickBase(Joystick):
         super().__init__(port)
         # initialize button array
         self.NumButtons = self.getButtonCount()
+        if self.NumButtons == 0:
+            print("WARNING: Joystick has 0 buttons! Defaulting to 16")
+            self.NumButtons = 16
         self.CurrentButtonState = [False] * (self.NumButtons + 1)
         self.PreviousButtonState= [False] * (self.NumButtons + 1)
         self.updateButtons()

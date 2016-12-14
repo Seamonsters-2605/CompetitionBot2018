@@ -33,12 +33,12 @@ class Gamepad(seamonsters.joystick.JoystickBase):
     LJ = 9
     RJ = 10
     
-    LT = 101
-    RT = 102
-    UP = 103
-    DOWN = 104
-    LEFT = 105
-    RIGHT = 106
+    LT = 11
+    RT = 12
+    UP = 13
+    DOWN = 14
+    LEFT = 15
+    RIGHT = 16
 
     
     def __init__(self, port):
@@ -177,6 +177,9 @@ class Gamepad(seamonsters.joystick.JoystickBase):
         """
         return self.getRawAxis(3)
 
+    def getButtonCount(self):
+        # override for extra "buttons"
+        return 16
 
     def getRawButton(self, button):
         if button == Gamepad.LT:
