@@ -33,7 +33,6 @@ class PIDTest(wpilib.IterativeRobot):
         
         self.goalPosition = self.Talon.getPosition()
     
-    # DO NOT CHANGE TELEOPPERIODIC, CHANGE DOALLELSE
     def teleopPeriodic(self):
         self.Joystick.updateButtons()
         
