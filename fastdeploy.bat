@@ -9,9 +9,9 @@ if not "%1"=="" (
 
 echo Deploying robot %file%
 
-py "%file%" deploy --builtin --nc --skip-tests && (
+py "%file%" deploy --builtin --nc --skip-tests --no-version-check && (
 	pause
 ) || (
-	python "%file%" deploy --builtin --nc --skip-tests
+	python "%file%" deploy --builtin --nc --skip-tests --no-version-check
 	pause
 )
