@@ -33,6 +33,7 @@ Modules:
    modularRobot
    motorControl
    nav6
+   pdp
    swerveDrive
    utilityBots
    wpilib_sim
