@@ -1,6 +1,7 @@
 __author__ = "jacobvanthoog"
 
 import wpilib
+from seamonsters.logging import LogState
 
 class EncoderTest(wpilib.IterativeRobot):
     
@@ -8,12 +9,13 @@ class EncoderTest(wpilib.IterativeRobot):
         """
         ports is an array of integers for the CANTalon ports to test
         """
-        wpilib.IterativeRobot.__init__(self)
+        super().__init__()
         self.talons = [wpilib.CANTalon(p) for p in ports]
+        self.logStates = [LogState("Talon " + str(p)) for p in ports]
         for t in self.talons:
             t.setFeedbackDevice(wpilib.CANTalon.FeedbackDevice.QuadEncoder)
 
     def teleopPeriodic(self):
-        for t in self.talons:
-            print(t.getPosition(), end=" ")
-        print("")
+        for i in range(0, len(self.talons)):
+            self.logStates[i].update(self.talons[i].getPosition())
+
