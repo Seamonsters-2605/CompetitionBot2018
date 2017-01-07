@@ -173,47 +173,49 @@ class CANTalon:
     
     # Classes taken from robotpy:
     # http://robotpy.readthedocs.io/en/latest/_modules/wpilib/cantalon.html
+
+    # TODO: Update this for 2017!
     
     class ControlMode:
-        PercentVbus = hal.TalonSRXConst.kMode_DutyCycle
-        Position = hal.TalonSRXConst.kMode_PositionCloseLoop
-        Speed = hal.TalonSRXConst.kMode_VelocityCloseLoop
-        Current = hal.TalonSRXConst.kMode_CurrentCloseLoop
-        Voltage = hal.TalonSRXConst.kMode_VoltCompen
-        Follower = hal.TalonSRXConst.kMode_SlaveFollower
-        MotionProfile = hal.TalonSRXConst.kMode_MotionProfile
-        Disabled = hal.TalonSRXConst.kMode_NoDrive
+        PercentVbus = 0
+        Position = 1
+        Speed = 2
+        Current = 3
+        Voltage = 4
+        Follower = 5
+        MotionProfile = 6
+        Disabled = 7
         
     class FeedbackDevice:
-        QuadEncoder = hal.TalonSRXConst.kFeedbackDev_DigitalQuadEnc
-        AnalogPot = hal.TalonSRXConst.kFeedbackDev_AnalogPot
-        AnalogEncoder = hal.TalonSRXConst.kFeedbackDev_AnalogEncoder
-        EncRising = hal.TalonSRXConst.kFeedbackDev_CountEveryRisingEdge
-        EncFalling = hal.TalonSRXConst.kFeedbackDev_CountEveryFallingEdge
-        CtreMagEncoder_Relative = hal.TalonSRXConst.kFeedbackDev_CtreMagEncoder_Relative
-        CtreMagEncoder_Absolute = hal.TalonSRXConst.kFeedbackDev_CtreMagEncoder_Absolute
-        PulseWidth = hal.TalonSRXConst.kFeedbackDev_PosIsPulseWidth
+        QuadEncoder = 0
+        AnalogPot = 1
+        AnalogEncoder = 2
+        EncRising = 3
+        EncFalling = 4
+        CtreMagEncoder_Relative = 5
+        CtreMagEncoder_Absolute = 6
+        PulseWidth = 7
         
     class FeedbackDeviceStatus:
-        Unknown = hal.TalonSRXConst.kFeedbackDevStatus_Unknown
-        Present = hal.TalonSRXConst.kFeedbackDevStatus_Present
-        NotPresent = hal.TalonSRXConst.kFeedbackDevStatus_NotPresent
+        Unknown = 0
+        Present = 1
+        NotPresent = 2
         
     class PIDSourceType:
         kDisplacement = 0
         kRate = 1
         
     class SetValueMotionProfile:
-        Disable = hal.TalonSRXConst.kMotionProfile_Disable
-        Enable = hal.TalonSRXConst.kMotionProfile_Enable
-        Hold = hal.TalonSRXConst.kMotionProfile_Hold
+        Disable = 0
+        Enable = 1
+        Hold = 2
         
     class StatusFrameRate:
-        General = hal.TalonSRXConst.kStatusFrame_General
-        Feedback = hal.TalonSRXConst.kStatusFrame_Feedback
-        QuadEncoder = hal.TalonSRXConst.kStatusFrame_Encoder
-        AnalogTempVbat = hal.TalonSRXConst.kStatusFrame_AnalogTempVbat
-        PulseWidth = hal.TalonSRXConst.kStatusFrame_PulseWidth
+        General = 0
+        Feedback = 1
+        QuadEncoder = 2
+        AnalogTempVbat = 3
+        PulseWidth = 4
         
     class TrajectoryPoint:
         position = 0
