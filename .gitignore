@@ -237,3 +237,4 @@ __pycache__/
 
 # PyCharm
 .idea/
+.cache
