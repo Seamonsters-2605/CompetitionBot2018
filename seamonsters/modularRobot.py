@@ -9,8 +9,9 @@ class Module( wpilib.IterativeRobot ):
     teleopPeriodic, make sure you call super()'s versions of those functions.
     """
     
-    def __init__(self):
-        super().__init__()
+    def __init__(self, initSuper=True):
+        if initSuper:
+            super().__init__()
         self.Modules = [ ]
         self.Parent = None
         self.Time = 0
