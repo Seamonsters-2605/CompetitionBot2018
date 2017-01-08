@@ -266,10 +266,6 @@ class JeffMode(MotorSpeedControl):
         self.encoderTarget = self.talon.getPosition()
 
     def set(self, speed):
-        """
-        Set the speed of rotation of the motor. This is the number of rotation
-        ticks it moves every time update() is called.
-        """
         self.speed = speed * self.inverted * self.maxSpeed
         
     def update(self):
