@@ -1,6 +1,7 @@
 __author__ = "jacobvanthoog"
 
 import wpilib
+import wpilib.command
 
 class Module( wpilib.IterativeRobot ):
     """
@@ -72,48 +73,56 @@ class Module( wpilib.IterativeRobot ):
         self.runModules(f)
 
     def disabledInit(self):
+        wpilib.command.Scheduler.getInstance().run()
         self.Time = 0
         def f(r):
             r.disabledInit()
         self.runModules(f)
 
     def autonomousInit(self):
+        wpilib.command.Scheduler.getInstance().run()
         self.Time = 0
         def f(r):
             r.autonomousInit()
         self.runModules(f)
 
     def teleopInit(self):
+        wpilib.command.Scheduler.getInstance().run()
         self.Time = 0
         def f(r):
             r.teleopInit()
         self.runModules(f)
 
     def testInit(self):
+        wpilib.command.Scheduler.getInstance().run()
         self.Time = 0
         def f(r):
             r.testInit()
         self.runModules(f)
 
     def disabledPeriodic(self):
+        wpilib.command.Scheduler.getInstance().run()
         def f(r):
             r.disabledPeriodic()
         self.runModules(f)
         self.Time += 1
 
     def autonomousPeriodic(self):
+        wpilib.command.Scheduler.getInstance().run()
         def f(r):
             r.autonomousPeriodic()
         self.runModules(f)
         self.Time += 1
 
     def teleopPeriodic(self):
+        wpilib.command.Scheduler.getInstance().run()
         def f(r):
             r.teleopPeriodic()
         self.runModules(f)
         self.Time += 1
 
     def testPeriodic(self):
+        wpilib.command.Scheduler.getInstance().run()
         def f(r):
             r.testPeriodic()
         self.runModules(f)
