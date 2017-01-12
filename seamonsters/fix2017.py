@@ -1,4 +1,6 @@
 __author__ = "jacobvanthoog"
 
-print("Fix 2017!")
+import wpilib
+import ctre
 
+wpilib.CANTalon = ctre.CANTalon
