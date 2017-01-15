@@ -33,6 +33,7 @@ Modules:
    modularRobot
    motorControl
    nav6
+   path
    pdp
    swerveDrive
    utilityBots
