@@ -48,7 +48,7 @@
 <dl class="class">
 <dt id="seamonsters.gamepad.Gamepad">
 <em class="property">class </em><code class="descclassname">seamonsters.gamepad.</code><code class="descname">Gamepad</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.gamepad.Gamepad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="logging.html#seamonsters.joystick.JoystickBase" title="seamonsters.joystick.JoystickBase"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.joystick.JoystickBase</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="joystick.html#seamonsters.joystick.JoystickBase" title="seamonsters.joystick.JoystickBase"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.joystick.JoystickBase</span></code></a></p>
 <p>An extended Joystick specifically designed for Logitech gamepads. Like
 seamonsters.joystick.JoystickUtils, it adds dead zones and changes positive
 x to direction 0. The gamepad mode switch MUST be at X!</p>
@@ -77,7 +77,7 @@ of these buttons can be checked with
 
 <dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.DOWN">
-<code class="descname">DOWN</code><em class="property"> = 104</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.DOWN" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DOWN</code><em class="property"> = 14</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.DOWN" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -87,7 +87,7 @@ of these buttons can be checked with
 
 <dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.LEFT">
-<code class="descname">LEFT</code><em class="property"> = 105</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.LEFT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">LEFT</code><em class="property"> = 15</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.LEFT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -97,7 +97,7 @@ of these buttons can be checked with
 
 <dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.LT">
-<code class="descname">LT</code><em class="property"> = 101</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.LT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">LT</code><em class="property"> = 11</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.LT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -107,7 +107,7 @@ of these buttons can be checked with
 
 <dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.RIGHT">
-<code class="descname">RIGHT</code><em class="property"> = 106</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.RIGHT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">RIGHT</code><em class="property"> = 16</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.RIGHT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -117,7 +117,7 @@ of these buttons can be checked with
 
 <dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.RT">
-<code class="descname">RT</code><em class="property"> = 102</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.RT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">RT</code><em class="property"> = 12</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.RT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -127,7 +127,7 @@ of these buttons can be checked with
 
 <dl class="attribute">
 <dt id="seamonsters.gamepad.Gamepad.UP">
-<code class="descname">UP</code><em class="property"> = 103</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.UP" title="Permalink to this definition">¶</a></dt>
+<code class="descname">UP</code><em class="property"> = 13</em><a class="headerlink" href="#seamonsters.gamepad.Gamepad.UP" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -143,6 +143,11 @@ of these buttons can be checked with
 <dl class="method">
 <dt id="seamonsters.gamepad.Gamepad.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.gamepad.Gamepad.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.gamepad.Gamepad.getButtonCount">
+<code class="descname">getButtonCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getButtonCount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.gamepad.Gamepad.getButtonCount" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -337,7 +342,7 @@ Default value is 0.08 (8 percent).</p>
       &copy;2016, Sehome Seamonsters.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
       |

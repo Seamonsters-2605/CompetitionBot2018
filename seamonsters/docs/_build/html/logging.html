@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>seamonsters.joystick &#8212; seamonsters 0 documentation</title>
+    <title>seamonsters.logging &#8212; seamonsters 0 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="seamonsters.modularRobot" href="modularRobot.html" />
-    <link rel="prev" title="seamonsters.logging" href="joystick.html" />
+    <link rel="prev" title="seamonsters.joystick" href="joystick.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -43,179 +43,32 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-seamonsters.joystick">
-<span id="seamonsters-joystick"></span><h1>seamonsters.joystick<a class="headerlink" href="#module-seamonsters.joystick" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-seamonsters.logging">
+<span id="seamonsters-logging"></span><h1>seamonsters.logging<a class="headerlink" href="#module-seamonsters.logging" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="seamonsters.joystick.JoystickBase">
-<em class="property">class </em><code class="descclassname">seamonsters.joystick.</code><code class="descname">JoystickBase</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wpilib.joystick.Joystick</span></code></p>
-<p>The base for other joystick utilities classes. This has methods for checking
-whether buttons have been pressed or released.</p>
+<dt id="seamonsters.logging.LogState">
+<em class="property">class </em><code class="descclassname">seamonsters.logging.</code><code class="descname">LogState</code><span class="sig-paren">(</span><em>name</em>, <em>logFrequency=0.4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/logging.html#LogState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.logging.LogState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Represents a value important to the user that is constantly changing.
+Whenever the value changes its new value will be printed to the console.
+There are checks to make sure that the same value isn&#8217;t logged multiple
+times in a row (unless it changed and changed back), and to make sure that
+nothing is logged more than 2.5 times per second.</p>
 <dl class="method">
-<dt id="seamonsters.joystick.JoystickBase.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickBase.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickBase.buttonPressed">
-<code class="descname">buttonPressed</code><span class="sig-paren">(</span><em>b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase.buttonPressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickBase.buttonPressed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the specified button was pressed between the most recent 
-updateButtons() call and the call before that.</p>
+<dt id="seamonsters.logging.LogState.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>logFrequency=0.4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/logging.html#LogState.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.logging.LogState.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the LogState. <code class="docutils literal"><span class="pre">name</span></code> is the name of the value as printed
+in the console - it has no meaning other than that. <code class="docutils literal"><span class="pre">logFrequency</span></code> can
+be optionally given to specify the minimum number of seconds allowed
+between logs. The default value is 0.4 seconds, or 2.5 times per second.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="seamonsters.joystick.JoystickBase.buttonReleased">
-<code class="descname">buttonReleased</code><span class="sig-paren">(</span><em>b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase.buttonReleased"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickBase.buttonReleased" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the specified button was released between the most recent 
-updateButtons() call and the call before that.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickBase.getJoystickButton">
-<code class="descname">getJoystickButton</code><span class="sig-paren">(</span><em>buttonNumber</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase.getJoystickButton"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickBase.getJoystickButton" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickBase.updateButtons">
-<code class="descname">updateButtons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase.updateButtons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickBase.updateButtons" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the current state of the buttons. Call this in the main loop.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="seamonsters.joystick.JoystickUtils">
-<em class="property">class </em><code class="descclassname">seamonsters.joystick.</code><code class="descname">JoystickUtils</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamonsters.joystick.JoystickBase" title="seamonsters.joystick.JoystickBase"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.joystick.JoystickBase</span></code></a></p>
-<p>An extended Joystick with extra utilities for deadzones and a new definition
-of direction: positive X is now zero, which is more standard.</p>
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getDirection">
-<code class="descname">getDirection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getDirection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getDirection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the direction of the joystick. wpilib.Joystick&#8217;s built-in
-getDirection() says 0 is positive y. This version uses positive x.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getMagnitude">
-<code class="descname">getMagnitude</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getMagnitude" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the magnitude of the joystick. The dead zone is enabled by default;
-set enableDeadZone to False to disable it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getRawMagnitude">
-<code class="descname">getRawMagnitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getRawMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getRawMagnitude" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getRawTwist">
-<code class="descname">getRawTwist</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getRawTwist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getRawTwist" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getRawX">
-<code class="descname">getRawX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getRawX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getRawX" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getRawY">
-<code class="descname">getRawY</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getRawY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getRawY" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getRawZ">
-<code class="descname">getRawZ</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getRawZ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getRawZ" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getTwist">
-<code class="descname">getTwist</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getTwist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getTwist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the twist of the joystick. The dead zone is enabled by default; set
-enableDeadZone to False to disable it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getX">
-<code class="descname">getX</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getX" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the value of the x-axis. The dead zone is enabled by default; set
-enableDeadZone to False to disable it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getY">
-<code class="descname">getY</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getY" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the value of the y-axis. The dead zone is enabled by default; set
-enableDeadZone to False to disable it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.getZ">
-<code class="descname">getZ</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getZ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.getZ" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the value of the z-axis. The dead zone is enabled by default; set
-enableDeadZone to False to disable it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.invertX">
-<code class="descname">invertX</code><span class="sig-paren">(</span><em>enabled=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.invertX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.invertX" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose whether to invert the value of the x axis.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.invertY">
-<code class="descname">invertY</code><span class="sig-paren">(</span><em>enabled=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.invertY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.invertY" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose whether to invert the value of the y axis.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.positionInDeadZone">
-<code class="descname">positionInDeadZone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.positionInDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.positionInDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the position of the joystick is currently in the deadzone.
-Return a boolean value.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.setPositionDeadZone">
-<code class="descname">setPositionDeadZone</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.setPositionDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.setPositionDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the deadzone of the position of the joystick, on a scale of 0 to 1.
-If the magnitude is within this range it will be reported as 0. Default
-value is 0.05 (5 percent).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.setTwistDeadZone">
-<code class="descname">setTwistDeadZone</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.setTwistDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.setTwistDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the deadzone of the twist of the joystick, on a scale of 0 to 1.
-If the twist is within this range it will be reported as 0. Default
-value is 0.1 (10 percent).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.setZDeadZone">
-<code class="descname">setZDeadZone</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.setZDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.setZDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the deadzone of the z-axis of the joystick, on a scale of 0 to 1.
-If the value is within this range it will be reported as 0. Default
-value is 0.1 (10 percent).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.twistInDeadZone">
-<code class="descname">twistInDeadZone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.twistInDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.twistInDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the twist of the joystick is currently in the deadzone.
-Return a boolean value.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.joystick.JoystickUtils.zInDeadZone">
-<code class="descname">zInDeadZone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.zInDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.joystick.JoystickUtils.zInDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the z-axis of the joystick is currently in the deadzone.
-Return a boolean value.</p>
+<dt id="seamonsters.logging.LogState.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/logging.html#LogState.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.logging.LogState.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the value to log. This should be called every loop (50 times per
+second) even if the value does not change. It&#8217;s up to the LogState to
+determine if the value has changed.</p>
 </dd></dl>
 
 </dd></dl>
@@ -231,7 +84,7 @@ Return a boolean value.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="joystick.html" title="previous chapter">seamonsters.logging</a></li>
+      <li>Previous: <a href="joystick.html" title="previous chapter">seamonsters.joystick</a></li>
       <li>Next: <a href="modularRobot.html" title="next chapter">seamonsters.modularRobot</a></li>
   </ul></li>
 </ul>
@@ -261,7 +114,7 @@ Return a boolean value.</p>
       &copy;2016, Sehome Seamonsters.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
       |

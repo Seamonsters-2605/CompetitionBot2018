@@ -52,23 +52,26 @@
 <span class="c1"># http://robotpy.readthedocs.org/en/latest/wpilib/Joystick.html</span>
 
 
-<div class="viewcode-block" id="JoystickBase"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickBase">[docs]</a><span class="k">class</span> <span class="nc">JoystickBase</span><span class="p">(</span><span class="n">Joystick</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickBase"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickBase">[docs]</a><span class="k">class</span> <span class="nc">JoystickBase</span><span class="p">(</span><span class="n">Joystick</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The base for other joystick utilities classes. This has methods for checking</span>
 <span class="sd">    whether buttons have been pressed or released.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="JoystickBase.__init__"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickBase.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickBase.__init__"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickBase.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
         <span class="c1"># initialize button array</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">NumButtons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getButtonCount</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">NumButtons</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: Joystick has 0 buttons! Defaulting to 16&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">NumButtons</span> <span class="o">=</span> <span class="mi">16</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">CurrentButtonState</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NumButtons</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PreviousButtonState</span><span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NumButtons</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateButtons</span><span class="p">()</span></div>
     
-<div class="viewcode-block" id="JoystickBase.getJoystickButton"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickBase.getJoystickButton">[docs]</a>    <span class="k">def</span> <span class="nf">getJoystickButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buttonNumber</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickBase.getJoystickButton"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickBase.getJoystickButton">[docs]</a>    <span class="k">def</span> <span class="nf">getJoystickButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buttonNumber</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">JoystickButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buttonNumber</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="JoystickBase.updateButtons"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickBase.updateButtons">[docs]</a>    <span class="k">def</span> <span class="nf">updateButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickBase.updateButtons"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickBase.updateButtons">[docs]</a>    <span class="k">def</span> <span class="nf">updateButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the current state of the buttons. Call this in the main loop.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -76,14 +79,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">PreviousButtonState</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CurrentButtonState</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">CurrentButtonState</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawButton</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="JoystickBase.buttonPressed"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickBase.buttonPressed">[docs]</a>    <span class="k">def</span> <span class="nf">buttonPressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickBase.buttonPressed"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickBase.buttonPressed">[docs]</a>    <span class="k">def</span> <span class="nf">buttonPressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if the specified button was pressed between the most recent </span>
 <span class="sd">        updateButtons() call and the call before that.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">CurrentButtonState</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">PreviousButtonState</span><span class="p">[</span><span class="n">b</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="JoystickBase.buttonReleased"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickBase.buttonReleased">[docs]</a>    <span class="k">def</span> <span class="nf">buttonReleased</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickBase.buttonReleased"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickBase.buttonReleased">[docs]</a>    <span class="k">def</span> <span class="nf">buttonReleased</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if the specified button was released between the most recent </span>
 <span class="sd">        updateButtons() call and the call before that.</span>
@@ -91,12 +94,12 @@
         <span class="k">return</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CurrentButtonState</span><span class="p">[</span><span class="n">b</span><span class="p">])</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">PreviousButtonState</span><span class="p">[</span><span class="n">b</span><span class="p">]</span></div></div>
         
 
-<div class="viewcode-block" id="JoystickUtils"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils">[docs]</a><span class="k">class</span> <span class="nc">JoystickUtils</span><span class="p">(</span><span class="n">JoystickBase</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils">[docs]</a><span class="k">class</span> <span class="nc">JoystickUtils</span><span class="p">(</span><span class="n">JoystickBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An extended Joystick with extra utilities for deadzones and a new definition</span>
 <span class="sd">    of direction: positive X is now zero, which is more standard.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="JoystickUtils.__init__"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.__init__"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">XInv</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">YInv</span> <span class="o">=</span> <span class="kc">False</span>
@@ -106,20 +109,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">zDeadZone</span> <span class="o">=</span> <span class="mf">0.1</span></div>
     
 
-<div class="viewcode-block" id="JoystickUtils.invertX"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.invertX">[docs]</a>    <span class="k">def</span> <span class="nf">invertX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.invertX"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.invertX">[docs]</a>    <span class="k">def</span> <span class="nf">invertX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Choose whether to invert the value of the x axis.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">XInv</span> <span class="o">=</span> <span class="n">enabled</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.invertY"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.invertY">[docs]</a>    <span class="k">def</span> <span class="nf">invertY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.invertY"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.invertY">[docs]</a>    <span class="k">def</span> <span class="nf">invertY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Choose whether to invert the value of the y axis.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">YInv</span> <span class="o">=</span> <span class="n">enabled</span></div>
     
 
-<div class="viewcode-block" id="JoystickUtils.setPositionDeadZone"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.setPositionDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">setPositionDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.setPositionDeadZone"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.setPositionDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">setPositionDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the deadzone of the position of the joystick, on a scale of 0 to 1.</span>
 <span class="sd">        If the magnitude is within this range it will be reported as 0. Default</span>
@@ -127,7 +130,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">positionDeadZone</span> <span class="o">=</span> <span class="n">value</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.setTwistDeadZone"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.setTwistDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">setTwistDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.setTwistDeadZone"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.setTwistDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">setTwistDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the deadzone of the twist of the joystick, on a scale of 0 to 1.</span>
 <span class="sd">        If the twist is within this range it will be reported as 0. Default</span>
@@ -135,7 +138,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">twistDeadZone</span> <span class="o">=</span> <span class="n">value</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.setZDeadZone"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.setZDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">setZDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.setZDeadZone"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.setZDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">setZDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the deadzone of the z-axis of the joystick, on a scale of 0 to 1.</span>
 <span class="sd">        If the value is within this range it will be reported as 0. Default</span>
@@ -144,21 +147,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">zDeadZone</span> <span class="o">=</span> <span class="n">value</span></div>
     
     
-<div class="viewcode-block" id="JoystickUtils.positionInDeadZone"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.positionInDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">positionInDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.positionInDeadZone"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.positionInDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">positionInDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if the position of the joystick is currently in the deadzone.</span>
 <span class="sd">        Return a boolean value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawMagnitude</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">positionDeadZone</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.twistInDeadZone"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.twistInDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">twistInDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.twistInDeadZone"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.twistInDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">twistInDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if the twist of the joystick is currently in the deadzone.</span>
 <span class="sd">        Return a boolean value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRawTwist</span><span class="p">())</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">twistDeadZone</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.zInDeadZone"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.zInDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">zInDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.zInDeadZone"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.zInDeadZone">[docs]</a>    <span class="k">def</span> <span class="nf">zInDeadZone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if the z-axis of the joystick is currently in the deadzone.</span>
 <span class="sd">        Return a boolean value.</span>
@@ -167,7 +170,7 @@
 
     <span class="c1"># These methods return 0 if the joystick is in the dead-zone:</span>
 
-<div class="viewcode-block" id="JoystickUtils.getX"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getX">[docs]</a>    <span class="k">def</span> <span class="nf">getX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getX"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getX">[docs]</a>    <span class="k">def</span> <span class="nf">getX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the value of the x-axis. The dead zone is enabled by default; set</span>
 <span class="sd">        enableDeadZone to False to disable it.</span>
@@ -176,7 +179,7 @@
             <span class="k">return</span> <span class="mf">0.0</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawX</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.getY"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getY">[docs]</a>    <span class="k">def</span> <span class="nf">getY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getY"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getY">[docs]</a>    <span class="k">def</span> <span class="nf">getY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the value of the y-axis. The dead zone is enabled by default; set</span>
 <span class="sd">        enableDeadZone to False to disable it.</span>
@@ -185,7 +188,7 @@
             <span class="k">return</span> <span class="mf">0.0</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawY</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.getZ"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getZ">[docs]</a>    <span class="k">def</span> <span class="nf">getZ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getZ"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getZ">[docs]</a>    <span class="k">def</span> <span class="nf">getZ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the value of the z-axis. The dead zone is enabled by default; set</span>
 <span class="sd">        enableDeadZone to False to disable it.</span>
@@ -194,7 +197,7 @@
             <span class="k">return</span> <span class="mf">0.0</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawZ</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.getTwist"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getTwist">[docs]</a>    <span class="k">def</span> <span class="nf">getTwist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getTwist"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getTwist">[docs]</a>    <span class="k">def</span> <span class="nf">getTwist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the twist of the joystick. The dead zone is enabled by default; set</span>
 <span class="sd">        enableDeadZone to False to disable it.</span>
@@ -203,7 +206,7 @@
             <span class="k">return</span> <span class="mf">0.0</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawTwist</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.getMagnitude"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getMagnitude">[docs]</a>    <span class="k">def</span> <span class="nf">getMagnitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getMagnitude"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getMagnitude">[docs]</a>    <span class="k">def</span> <span class="nf">getMagnitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enableDeadZone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the magnitude of the joystick. The dead zone is enabled by default;</span>
 <span class="sd">        set enableDeadZone to False to disable it.</span>
@@ -212,7 +215,7 @@
             <span class="k">return</span> <span class="mf">0.0</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawMagnitude</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.getDirection"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getDirection">[docs]</a>    <span class="k">def</span> <span class="nf">getDirection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getDirection"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getDirection">[docs]</a>    <span class="k">def</span> <span class="nf">getDirection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the direction of the joystick. wpilib.Joystick&#39;s built-in</span>
 <span class="sd">        getDirection() says 0 is positive y. This version uses positive x.</span>
@@ -223,22 +226,69 @@
     <span class="c1"># is enabled. Calling the above methods with enableDeadZone=False is</span>
     <span class="c1"># preferred.</span>
 
-<div class="viewcode-block" id="JoystickUtils.getRawX"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getRawX">[docs]</a>    <span class="k">def</span> <span class="nf">getRawX</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getRawX"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getRawX">[docs]</a>    <span class="k">def</span> <span class="nf">getRawX</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">getX</span><span class="p">()</span>
         <span class="k">return</span> <span class="o">-</span><span class="n">x</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">XInv</span> <span class="k">else</span> <span class="n">x</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.getRawY"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getRawY">[docs]</a>    <span class="k">def</span> <span class="nf">getRawY</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getRawY"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getRawY">[docs]</a>    <span class="k">def</span> <span class="nf">getRawY</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">y</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">getY</span><span class="p">()</span>
         <span class="k">return</span> <span class="o">-</span><span class="n">y</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">YInv</span> <span class="k">else</span> <span class="n">y</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.getRawZ"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getRawZ">[docs]</a>    <span class="k">def</span> <span class="nf">getRawZ</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getRawZ"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getRawZ">[docs]</a>    <span class="k">def</span> <span class="nf">getRawZ</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">getZ</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.getRawTwist"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getRawTwist">[docs]</a>    <span class="k">def</span> <span class="nf">getRawTwist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getRawTwist"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getRawTwist">[docs]</a>    <span class="k">def</span> <span class="nf">getRawTwist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">getTwist</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="JoystickUtils.getRawMagnitude"><a class="viewcode-back" href="../../logging.html#seamonsters.joystick.JoystickUtils.getRawMagnitude">[docs]</a>    <span class="k">def</span> <span class="nf">getRawMagnitude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JoystickUtils.getRawMagnitude"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.JoystickUtils.getRawMagnitude">[docs]</a>    <span class="k">def</span> <span class="nf">getRawMagnitude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getRawX</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawY</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="DynamicAxis"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.DynamicAxis">[docs]</a><span class="k">class</span> <span class="nc">DynamicAxis</span><span class="p">:</span>
+
+    <span class="c1"># try 2.0, 4.0, 0.5?</span>
+<div class="viewcode-block" id="DynamicAxis.__init__"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.DynamicAxis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">speedScaleFactor</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                 <span class="n">speedScaleExponent</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">deadZone</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        ``exponent`` should be &gt;= 1. ``speedScaleFactor`` should be &gt;= 1.</span>
+<span class="sd">        ``speedScaleExponent`` should be &lt;= 1 (use 0 to ignore speed).</span>
+<span class="sd">        ``deadZone`` should be &lt; 1 and close to 0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exponent</span> <span class="o">=</span> <span class="n">exponent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedScaleFactor</span> <span class="o">=</span> <span class="n">speedScaleFactor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedScaleExponent</span> <span class="o">=</span> <span class="n">speedScaleExponent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deadZone</span> <span class="o">=</span> <span class="n">deadZone</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="mf">1.0</span></div>
+
+<div class="viewcode-block" id="DynamicAxis.update"><a class="viewcode-back" href="../../joystick.html#seamonsters.joystick.DynamicAxis.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadZone</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadZone</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="n">reversedValues</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">reversedValues</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="k">if</span> <span class="mf">0.0</span> <span class="ow">in</span> <span class="n">reversedValues</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">reversedValues</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">reversedValues</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedScaleFactor</span><span class="p">)</span> \
+                    <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedScaleExponent</span>
+        
+        <span class="n">adjustedValue</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">exponent</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">adjustedValue</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">adjustedValue</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">adjustedValue</span> <span class="o">=</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">adjustedValue</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">adjustedValue</span></div></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="n">DynamicAxis</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">axis</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">axis</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">axis</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">axis</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+
 </pre></div>
 
           </div>
@@ -272,7 +322,7 @@
       &copy;2016, Sehome Seamonsters.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

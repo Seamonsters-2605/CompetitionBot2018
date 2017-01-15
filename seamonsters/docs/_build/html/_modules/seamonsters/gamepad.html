@@ -77,12 +77,12 @@
     <span class="n">LJ</span> <span class="o">=</span> <span class="mi">9</span>
     <span class="n">RJ</span> <span class="o">=</span> <span class="mi">10</span>
     
-    <span class="n">LT</span> <span class="o">=</span> <span class="mi">101</span>
-    <span class="n">RT</span> <span class="o">=</span> <span class="mi">102</span>
-    <span class="n">UP</span> <span class="o">=</span> <span class="mi">103</span>
-    <span class="n">DOWN</span> <span class="o">=</span> <span class="mi">104</span>
-    <span class="n">LEFT</span> <span class="o">=</span> <span class="mi">105</span>
-    <span class="n">RIGHT</span> <span class="o">=</span> <span class="mi">106</span>
+    <span class="n">LT</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">RT</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">UP</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">DOWN</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">LEFT</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">RIGHT</span> <span class="o">=</span> <span class="mi">16</span>
 
     
 <div class="viewcode-block" id="Gamepad.__init__"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
@@ -221,6 +221,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRawAxis</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="Gamepad.getButtonCount"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getButtonCount">[docs]</a>    <span class="k">def</span> <span class="nf">getButtonCount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># override for extra &quot;buttons&quot;</span>
+        <span class="k">return</span> <span class="mi">16</span></div>
 
 <div class="viewcode-block" id="Gamepad.getRawButton"><a class="viewcode-back" href="../../gamepad.html#seamonsters.gamepad.Gamepad.getRawButton">[docs]</a>    <span class="k">def</span> <span class="nf">getRawButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">button</span> <span class="o">==</span> <span class="n">Gamepad</span><span class="o">.</span><span class="n">LT</span><span class="p">:</span>
@@ -293,7 +296,7 @@
       &copy;2016, Sehome Seamonsters.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

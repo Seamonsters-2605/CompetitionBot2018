@@ -1,7 +1,7 @@
-seamonsters.logging
-===================
+seamonsters.joystick
+====================
 
-.. automodule:: seamonsters.logging
+.. automodule:: seamonsters.joystick
     :members:
     :special-members: __init__
     :undoc-members:
