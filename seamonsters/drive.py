@@ -63,20 +63,26 @@ class DriveInterface:
         """
         pass
 
+class TestDriveInterface(DriveInterface):
+
+    def drive(self, magnitude, direction, turn, forceDriveMode = None):
+        print("Drive mag", magnitude, "dir", direction, "turn", turn)
+
 
 class AccelerationFilterDrive(DriveInterface):
     """
     Wraps another drive interface, and provides acceleration filtering.
     """
     
-    def __init__(self, interface):
+    def __init__(self, interface, accelerationRate=.08):
         """
         ``interface`` is the DriveInterface to provide acceleration filtering
-        for.
+        for. ``accelerationRate`` defaults to .08 (0 to full speed in .25
+        seconds).
         """
         self.interface = interface
         
-        self.maximumAccelDistance = .08
+        self.accelerationRate = accelerationRate
         self.previousX = 0.0
         self.previousY = 0.0
         self.previousTurn = 0.0
@@ -94,35 +100,37 @@ class AccelerationFilterDrive(DriveInterface):
     
     # returns an tuple of: (magnitude, direction, turn)
     def _accelerationFilter(self, magnitude, direction, turn):
-        newX = magnitude * math.cos(direction)
-        newY = magnitude * math.sin(direction)
-        distanceToNew = math.sqrt( (newX - self.previousX) ** 2 \
-                + (newY - self.previousY) ** 2 )
-        finalTurn = turn
-        if not abs(self.previousTurn - turn) <= self.maximumAccelDistance:
+        if abs(self.previousTurn - turn) <= self.accelerationRate:
+            newTurn = turn
+        else:
             if turn > self.previousTurn:
-                finalTurn = self.previousTurn + self.maximumAccelDistance
+                newTurn = self.previousTurn + self.accelerationRate
             else:
-                finalTurn = self.previousTurn - self.maximumAccelDistance
+                newTurn = self.previousTurn - self.accelerationRate
+        
+        x = magnitude * math.cos(direction)
+        y = magnitude * math.sin(direction)
+        distanceToNew = math.sqrt( (x - self.previousX) ** 2 \
+                + (y - self.previousY) ** 2 )
 
-        if (distanceToNew <= self.maximumAccelDistance):
-            self.previousX = newX
-            self.previousY = newY
-            self.previousTurn = finalTurn
-            return magnitude, direction, finalTurn
+        if distanceToNew <= self.accelerationRate:
+            newX = x
+            newY = y
+            newMagnitude = magnitude
+            newDirection = direction
+        else:
+            directionToNew = math.atan2(y - self.previousY, x - self.previousX)
+            newX = self.previousX \
+                    + math.cos(directionToNew) * self.accelerationRate
+            newY = self.previousY \
+                    + math.sin(directionToNew) * self.accelerationRate
+            newMagnitude = math.sqrt(newX ** 2 + newY ** 2)
+            newDirection = math.atan2(newY, newX)
 
-        #Alternate Return for strafe fail to pass
-        directionToNew = math.atan2(newY-self.previousY, newX-self.previousX)
-        finalX = self.previousX \
-                + math.cos(directionToNew) * self.maximumAccelDistance
-        finalY = self.previousY \
-                + math.sin(directionToNew) * self.maximumAccelDistance
-        self.previousX = finalX
-        self.previousY = finalY
-        self.previousTurn = finalTurn
-        return math.sqrt(finalX ** 2 + finalY ** 2), \
-               math.atan2(finalY, finalX), \
-               finalTurn
+        self.previousX = newX
+        self.previousY = newY
+        self.previousTurn = newTurn
+        return newMagnitude, newDirection, newTurn
 
 class FieldOrientedDrive(DriveInterface):
     """
@@ -158,3 +166,8 @@ class FieldOrientedDrive(DriveInterface):
     def _getYawRadians(self):
         return - math.radians(self.ahrs.getYaw())
 
+if __name__ == "__main__":
+    # test acceleration filter drive
+    filterDrive = AccelerationFilterDrive(TestDriveInterface())
+    for i in range(0, 20):
+        filterDrive.drive(1.0, 1.0, 1.0)
