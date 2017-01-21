@@ -97,6 +97,15 @@ class AccelerationFilterDrive(DriveInterface):
         magnitude, direction, turn = \
             self._accelerationFilter(magnitude, direction, turn)
         self.interface.drive(magnitude, direction, turn, forceDriveMode)
+
+    def getFilteredMagnitude(self):
+        return math.sqrt(self.previousX ** 2 + self.previousY ** 2)
+
+    def getFilteredDirection(self):
+        return math.atan2(self.previousY, self.previousX)
+
+    def getFilteredTurn(self):
+        return self.previousTurn
     
     # returns an tuple of: (magnitude, direction, turn)
     def _accelerationFilter(self, magnitude, direction, turn):
