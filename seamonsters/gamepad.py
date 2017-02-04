@@ -6,7 +6,7 @@ import seamonsters.joystick
 
 gamepads = { }
 
-def globalGamepad(self, port):
+def globalGamepad(port):
     global gamepads
     if not port in gamepads:
         gamepads[port] = Gamepad(port)
