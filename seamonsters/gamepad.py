@@ -4,6 +4,14 @@ import wpilib
 import math
 import seamonsters.joystick
 
+gamepads = { }
+
+def globalGamepad(self, port):
+    global gamepads
+    if not port in gamepads:
+        gamepads[port] = Gamepad(port)
+    return gamepads[port]
+
 class Gamepad(seamonsters.joystick.JoystickBase):
     """
     An extended Joystick specifically designed for Logitech gamepads. Like
