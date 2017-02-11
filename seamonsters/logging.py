@@ -1,5 +1,17 @@
 __author__ = "jacobvanthoog"
 
+from networktables import NetworkTables
+
+logStates = { }
+
+def sendLogStates():
+    global logStates
+    logStateNames = [key for key, value in logStates.items()]
+    logStateValues = [value for key, value in logStates.items()]
+    table = NetworkTables.getTable('dashboard')
+    table.putStringArray('logstatenames', logStateNames)
+    table.putStringArray('logstatevalues', logStateValues)
+
 class LogState:
     """
     Represents a value important to the user that is constantly changing.
@@ -29,7 +41,10 @@ class LogState:
         second) even if the value does not change. It's up to the LogState to
         determine if the value has changed.
         """
+        global logStates
+        
         value = str(value)
+        logStates[self.name] = value
         if value != self.lastValue:
             self.lastValue = value
             self.valueChanged = True
