@@ -2,6 +2,8 @@ __author__ = "jacobvanthoog"
 
 import wpilib
 
+from networktables import NetworkTables
+
 def getSwitch(name, defaultValue):
     """
     Get whether a switch on the dashboard is enabled.
