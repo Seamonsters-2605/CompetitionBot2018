@@ -43,9 +43,9 @@
             
   <h1>Source code for seamonsters.holonomicDrive</h1><div class="highlight"><pre>
 <span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Dawson&#39;</span>
-<span class="kn">import</span> <span class="nn">wpilib</span>
+
+<span class="kn">import</span> <span class="nn">ctre</span>
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">wpilib</span> <span class="k">import</span> <span class="n">CANTalon</span>
 
 <span class="kn">from</span> <span class="nn">seamonsters.drive</span> <span class="k">import</span> <span class="n">DriveInterface</span>
 
@@ -160,7 +160,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_enableTalons</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">zeroEncoderTargets</span><span class="p">()</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ensureControlMode</span><span class="p">(</span><span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensureControlMode</span><span class="p">(</span><span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_calcWheels</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_setWheels</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span></div>
@@ -172,7 +172,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_enableTalons</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">zeroEncoderTargets</span><span class="p">()</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ensureControlMode</span><span class="p">(</span><span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Speed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensureControlMode</span><span class="p">(</span><span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Speed</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_calcWheels</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scaleToMax</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_setWheels</span><span class="p">()</span>
@@ -186,7 +186,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_enableTalons</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">zeroEncoderTargets</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ensureControlMode</span><span class="p">(</span><span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensureControlMode</span><span class="p">(</span><span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">==</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">POSITION</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">zeroEncoderTargets</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_calcWheels</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>

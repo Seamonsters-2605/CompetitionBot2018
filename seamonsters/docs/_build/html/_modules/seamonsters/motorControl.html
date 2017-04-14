@@ -43,7 +43,8 @@
             
   <h1>Source code for seamonsters.motorControl</h1><div class="highlight"><pre>
 <span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;jacobvanthoog&#39;</span>
-<span class="kn">import</span> <span class="nn">wpilib</span>
+
+<span class="kn">import</span> <span class="nn">ctre</span>
 <span class="kn">from</span> <span class="nn">seamonsters.drive</span> <span class="k">import</span> <span class="n">DriveInterface</span>
 
 <div class="viewcode-block" id="MotorManager"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.MotorManager">[docs]</a><span class="k">class</span> <span class="nc">MotorManager</span><span class="p">:</span>
@@ -218,9 +219,9 @@
         
 <div class="viewcode-block" id="VoltageMode.zero"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.VoltageMode.zero">[docs]</a>    <span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">getControlMode</span><span class="p">()</span> <span class="o">==</span> \
-                <span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span><span class="p">):</span>
+                <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">changeControlMode</span><span class="p">(</span>
-                <span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span><span class="p">)</span></div>
+                <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span><span class="p">)</span></div>
         
 <div class="viewcode-block" id="VoltageMode.set"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.VoltageMode.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span></div>
@@ -248,9 +249,9 @@
         
 <div class="viewcode-block" id="SpeedMode.zero"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.SpeedMode.zero">[docs]</a>    <span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">getControlMode</span><span class="p">()</span> <span class="o">==</span> \
-                <span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Speed</span><span class="p">):</span>
+                <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Speed</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">changeControlMode</span><span class="p">(</span>
-                <span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Speed</span><span class="p">)</span></div>
+                <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Speed</span><span class="p">)</span></div>
         
 <div class="viewcode-block" id="SpeedMode.set"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.SpeedMode.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxSpeed</span></div>
@@ -305,8 +306,8 @@
 <span class="sd">        Zero the encoder target.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">getControlMode</span><span class="p">()</span> <span class="o">==</span> \
-                <span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">changeControlMode</span><span class="p">(</span><span class="n">wpilib</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">)</span>
+                <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">changeControlMode</span><span class="p">(</span><span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">encoderTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">talon</span><span class="o">.</span><span class="n">getPosition</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="JeffMode.set"><a class="viewcode-back" href="../../motorControl.html#seamonsters.motorControl.JeffMode.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>

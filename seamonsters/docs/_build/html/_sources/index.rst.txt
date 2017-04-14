@@ -27,7 +27,6 @@ Modules:
    dashboard
    drive
    gamepad
-   grip
    holonomicDrive
    joystick
    logging
