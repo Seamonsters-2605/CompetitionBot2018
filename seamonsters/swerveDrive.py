@@ -4,7 +4,7 @@ from seamonsters.drive import DriveInterface
 import seamonsters.drive
 from seamonsters.motorControl import *
 import math
-import wpilib
+import ctre
 
 def magnitude(vector):
     return math.sqrt(vector[0]**2.0 + vector[1]**2.0)
@@ -139,7 +139,7 @@ class TalonWheelController(WheelController):
         self.rotateTalonInitialPosition = rotateTalon.getPosition()
         self.rotateTalonEncoderTicks = abs(rotateTalonEncoderTicks)
         self.reverseRotateTalon = rotateTalonEncoderTicks < 0
-        rotateTalon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
+        rotateTalon.changeControlMode(ctre.CANTalon.ControlMode.Position)
         
         self.driveMode = DriveInterface.DriveMode.VOLTAGE
 

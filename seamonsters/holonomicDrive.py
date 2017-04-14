@@ -1,7 +1,7 @@
 __author__ = 'Dawson'
-import wpilib
+
+import ctre
 import math
-from wpilib import CANTalon
 
 from seamonsters.drive import DriveInterface
 
@@ -116,7 +116,7 @@ class HolonomicDrive(DriveInterface):
             self._enableTalons()
             self.zeroEncoderTargets()
         
-        self._ensureControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
+        self._ensureControlMode(ctre.CANTalon.ControlMode.PercentVbus)
         self._calcWheels(magnitude, direction, turn)
         self._setWheels()
         self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
@@ -128,7 +128,7 @@ class HolonomicDrive(DriveInterface):
             self._enableTalons()
             self.zeroEncoderTargets()
         
-        self._ensureControlMode(wpilib.CANTalon.ControlMode.Speed)
+        self._ensureControlMode(ctre.CANTalon.ControlMode.Speed)
         self._calcWheels(magnitude, direction, turn)
         self._scaleToMax()
         self._setWheels()
@@ -142,7 +142,7 @@ class HolonomicDrive(DriveInterface):
             self._enableTalons()
             self.zeroEncoderTargets()
 
-        self._ensureControlMode(wpilib.CANTalon.ControlMode.Position)
+        self._ensureControlMode(ctre.CANTalon.ControlMode.Position)
         if not self.previousDriveMode == DriveInterface.DriveMode.POSITION:
             self.zeroEncoderTargets()
         self._calcWheels(magnitude, direction, turn)

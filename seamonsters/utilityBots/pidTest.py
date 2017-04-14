@@ -1,6 +1,7 @@
 __author__ = 'Dawson'
 
 import wpilib
+import ctre
 from seamonsters.gamepad import Gamepad
 
 class PIDTest(wpilib.IterativeRobot):
@@ -8,10 +9,10 @@ class PIDTest(wpilib.IterativeRobot):
     def robotInit(self, talonPort, ticksPerRotation=4000, maxVelocity=10):
         self.talonPort = talonPort
         
-        self.Talon = wpilib.CANTalon(talonPort)
+        self.Talon = ctre.CANTalon(talonPort)
         self.Talon.setPID(1,0,1,0)
-        self.Talon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
-        #self.Talon.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
+        self.Talon.changeControlMode(ctre.CANTalon.ControlMode.Position)
+        #self.Talon.changeControlMode(ctre.CANTalon.ControlMode.Speed)
 
         self.goalPosition = self.Talon.getPosition()
         self.maxVelocity = maxVelocity

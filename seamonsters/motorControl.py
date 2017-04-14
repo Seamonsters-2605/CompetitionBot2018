@@ -1,5 +1,6 @@
 __author__ = 'jacobvanthoog'
-import wpilib
+
+import ctre
 from seamonsters.drive import DriveInterface
 
 class MotorManager:
@@ -174,9 +175,9 @@ class VoltageMode(MotorSpeedControl):
         
     def zero(self):
         if not (self.talon.getControlMode() == \
-                wpilib.CANTalon.ControlMode.PercentVbus):
+                ctre.CANTalon.ControlMode.PercentVbus):
             self.talon.changeControlMode(
-                wpilib.CANTalon.ControlMode.PercentVbus)
+                ctre.CANTalon.ControlMode.PercentVbus)
         
     def set(self, speed):
         self.speed = speed * self.inverted
@@ -204,9 +205,9 @@ class SpeedMode(MotorSpeedControl):
         
     def zero(self):
         if not (self.talon.getControlMode() == \
-                wpilib.CANTalon.ControlMode.Speed):
+                ctre.CANTalon.ControlMode.Speed):
             self.talon.changeControlMode(
-                wpilib.CANTalon.ControlMode.Speed)
+                ctre.CANTalon.ControlMode.Speed)
         
     def set(self, speed):
         self.speed = speed * self.inverted * self.maxSpeed
@@ -261,8 +262,8 @@ class JeffMode(MotorSpeedControl):
         Zero the encoder target.
         """
         if not (self.talon.getControlMode() == \
-                wpilib.CANTalon.ControlMode.Position):
-            self.talon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
+                ctre.CANTalon.ControlMode.Position):
+            self.talon.changeControlMode(ctre.CANTalon.ControlMode.Position)
         self.encoderTarget = self.talon.getPosition()
 
     def set(self, speed):

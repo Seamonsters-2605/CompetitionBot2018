@@ -1,19 +1,19 @@
 __author__ = "jacobvanthoog"
 
-import wpilib
+import ctre
 import math
 
 def setControlMode(talon, driveMode):
     """
     Given a DriveInterface.DriveMode, set the control mode of a CANTalon using
-    a wpilib.CANTalon.ControlMode.
+    a ctre.CANTalon.ControlMode.
     """
     if driveMode == DriveInterface.DriveMode.VOLTAGE:
-        talon.changeControlMode(wpilib.CANTalon.ControlMode.PercentVbus)
+        talon.changeControlMode(ctre.CANTalon.ControlMode.PercentVbus)
     if driveMode == DriveInterface.DriveMode.SPEED:
-        talon.changeControlMode(wpilib.CANTalon.ControlMode.Speed)
+        talon.changeControlMode(ctre.CANTalon.ControlMode.Speed)
     if driveMode == DriveInterface.DriveMode.POSITION:
-        talon.changeControlMode(wpilib.CANTalon.ControlMode.Position)
+        talon.changeControlMode(ctre.CANTalon.ControlMode.Position)
 
 class DriveInterface:
     """
