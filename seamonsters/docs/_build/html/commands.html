@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seamonsters.commands &#8212; seamonsters 0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="seamonsters.dashboard" href="dashboard.html" />
+    <link rel="prev" title="Welcome to the seamonsters library documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-seamonsters.commands">
+<span id="seamonsters-commands"></span><h1>seamonsters.commands<a class="headerlink" href="#module-seamonsters.commands" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seamonsters.commands.CommandWrapper">
+<em class="property">class </em><code class="descclassname">seamonsters.commands.</code><code class="descname">CommandWrapper</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.CommandWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wpilib.command.command.Command</span></code></p>
+<p>Wraps another command. This is meant to be extended to do useful things.</p>
+<dl class="method">
+<dt id="seamonsters.commands.CommandWrapper.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.CommandWrapper.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.commands.CommandWrapper.end">
+<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.CommandWrapper.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.commands.CommandWrapper.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.CommandWrapper.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.commands.CommandWrapper.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.CommandWrapper.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.commands.CommandWrapper.interrupted">
+<code class="descname">interrupted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.interrupted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.CommandWrapper.interrupted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.commands.CommandWrapper.isFinished">
+<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.CommandWrapper.isFinished" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="seamonsters.commands.EnsureFinishedCommand">
+<em class="property">class </em><code class="descclassname">seamonsters.commands.</code><code class="descname">EnsureFinishedCommand</code><span class="sig-paren">(</span><em>command</em>, <em>requiredCount</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#EnsureFinishedCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.EnsureFinishedCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seamonsters.commands.CommandWrapper" title="seamonsters.commands.CommandWrapper"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.commands.CommandWrapper</span></code></a></p>
+<p>Waits until isFinished() of the wrapped command returns True for a certain
+number of steps before finishing.</p>
+<dl class="method">
+<dt id="seamonsters.commands.EnsureFinishedCommand.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>command</em>, <em>requiredCount</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#EnsureFinishedCommand.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.EnsureFinishedCommand.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.commands.EnsureFinishedCommand.isFinished">
+<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#EnsureFinishedCommand.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.EnsureFinishedCommand.isFinished" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="seamonsters.commands.ForeverCommand">
+<em class="property">class </em><code class="descclassname">seamonsters.commands.</code><code class="descname">ForeverCommand</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#ForeverCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.ForeverCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seamonsters.commands.CommandWrapper" title="seamonsters.commands.CommandWrapper"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.commands.CommandWrapper</span></code></a></p>
+<p>Wraps a command. isFinished() always returns False.</p>
+<dl class="method">
+<dt id="seamonsters.commands.ForeverCommand.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#ForeverCommand.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.ForeverCommand.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.commands.ForeverCommand.isFinished">
+<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#ForeverCommand.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.ForeverCommand.isFinished" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="seamonsters.commands.WhileRunningCommand">
+<em class="property">class </em><code class="descclassname">seamonsters.commands.</code><code class="descname">WhileRunningCommand</code><span class="sig-paren">(</span><em>command</em>, <em>watchCommand</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#WhileRunningCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.WhileRunningCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seamonsters.commands.CommandWrapper" title="seamonsters.commands.CommandWrapper"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.commands.CommandWrapper</span></code></a></p>
+<p>Wraps one command, but tracks a different command (<code class="docutils literal"><span class="pre">watchCommand</span></code>) for
+isFinished().</p>
+<dl class="method">
+<dt id="seamonsters.commands.WhileRunningCommand.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>command</em>, <em>watchCommand</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#WhileRunningCommand.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.WhileRunningCommand.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.commands.WhileRunningCommand.isFinished">
+<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#WhileRunningCommand.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.commands.WhileRunningCommand.isFinished" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to the seamonsters library documentation!</a></li>
+      <li>Next: <a href="dashboard.html" title="next chapter">seamonsters.dashboard</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/commands.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Sehome Seamonsters.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/commands.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

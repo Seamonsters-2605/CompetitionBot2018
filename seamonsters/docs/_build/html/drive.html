@@ -47,14 +47,15 @@
 <span id="seamonsters-drive"></span><h1>seamonsters.drive<a class="headerlink" href="#module-seamonsters.drive" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="seamonsters.drive.AccelerationFilterDrive">
-<em class="property">class </em><code class="descclassname">seamonsters.drive.</code><code class="descname">AccelerationFilterDrive</code><span class="sig-paren">(</span><em>interface</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">seamonsters.drive.</code><code class="descname">AccelerationFilterDrive</code><span class="sig-paren">(</span><em>interface</em>, <em>accelerationRate=0.08</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#seamonsters.drive.DriveInterface" title="seamonsters.drive.DriveInterface"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.drive.DriveInterface</span></code></a></p>
 <p>Wraps another drive interface, and provides acceleration filtering.</p>
 <dl class="method">
 <dt id="seamonsters.drive.AccelerationFilterDrive.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>interface</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>interface</em>, <em>accelerationRate=0.08</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal"><span class="pre">interface</span></code> is the DriveInterface to provide acceleration filtering
-for.</p>
+for. <code class="docutils literal"><span class="pre">accelerationRate</span></code> defaults to .08 (0 to full speed in .25
+seconds).</p>
 </dd></dl>
 
 <dl class="method">
@@ -65,6 +66,21 @@ for.</p>
 <dl class="method">
 <dt id="seamonsters.drive.AccelerationFilterDrive.getDriveMode">
 <code class="descname">getDriveMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.getDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive.getDriveMode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.AccelerationFilterDrive.getFilteredDirection">
+<code class="descname">getFilteredDirection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.getFilteredDirection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive.getFilteredDirection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.AccelerationFilterDrive.getFilteredMagnitude">
+<code class="descname">getFilteredMagnitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.getFilteredMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive.getFilteredMagnitude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.AccelerationFilterDrive.getFilteredTurn">
+<code class="descname">getFilteredTurn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.getFilteredTurn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.AccelerationFilterDrive.getFilteredTurn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -138,6 +154,37 @@ forceDriveMode, this will be used.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="seamonsters.drive.DynamicPIDDrive">
+<em class="property">class </em><code class="descclassname">seamonsters.drive.</code><code class="descname">DynamicPIDDrive</code><span class="sig-paren">(</span><em>interface</em>, <em>wheelTalons</em>, <em>slowPID</em>, <em>slowPIDScale</em>, <em>fastPID</em>, <em>fastPIDScale</em>, <em>pidLookBackRange=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DynamicPIDDrive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.DynamicPIDDrive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seamonsters.drive.DriveInterface" title="seamonsters.drive.DriveInterface"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.drive.DriveInterface</span></code></a></p>
+<p>Wraps another drive interface. Based on the driving matnitude and turn
+speed, the PID&#8217;s of a set of talons are changed. PID&#8217;s are given as a tuple
+of (p, i, d, f). For speeds below <code class="docutils literal"><span class="pre">slowPIDScale</span></code>, <code class="docutils literal"><span class="pre">slowPID</span></code> is used.
+For speeds above <code class="docutils literal"><span class="pre">fastPIDScale</span></code>, <code class="docutils literal"><span class="pre">fastPID</span></code> is used. For speeds in
+between, the P/I/D/F values are interpolated.</p>
+<dl class="method">
+<dt id="seamonsters.drive.DynamicPIDDrive.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>interface</em>, <em>wheelTalons</em>, <em>slowPID</em>, <em>slowPIDScale</em>, <em>fastPID</em>, <em>fastPIDScale</em>, <em>pidLookBackRange=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DynamicPIDDrive.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.DynamicPIDDrive.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.DynamicPIDDrive.drive">
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DynamicPIDDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.DynamicPIDDrive.drive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.DynamicPIDDrive.getDriveMode">
+<code class="descname">getDriveMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DynamicPIDDrive.getDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.DynamicPIDDrive.getDriveMode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.drive.DynamicPIDDrive.setDriveMode">
+<code class="descname">setDriveMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DynamicPIDDrive.setDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.DynamicPIDDrive.setDriveMode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="seamonsters.drive.FieldOrientedDrive">
 <em class="property">class </em><code class="descclassname">seamonsters.drive.</code><code class="descname">FieldOrientedDrive</code><span class="sig-paren">(</span><em>interface</em>, <em>ahrs</em>, <em>offset=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.FieldOrientedDrive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#seamonsters.drive.DriveInterface" title="seamonsters.drive.DriveInterface"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.drive.DriveInterface</span></code></a></p>
@@ -168,6 +215,17 @@ value in radians to add to all direction inputs.</p>
 <dl class="method">
 <dt id="seamonsters.drive.FieldOrientedDrive.zero">
 <code class="descname">zero</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive.zero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.FieldOrientedDrive.zero" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="seamonsters.drive.TestDriveInterface">
+<em class="property">class </em><code class="descclassname">seamonsters.drive.</code><code class="descname">TestDriveInterface</code><a class="reference internal" href="_modules/seamonsters/drive.html#TestDriveInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.TestDriveInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seamonsters.drive.DriveInterface" title="seamonsters.drive.DriveInterface"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.drive.DriveInterface</span></code></a></p>
+<dl class="method">
+<dt id="seamonsters.drive.TestDriveInterface.drive">
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#TestDriveInterface.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.drive.TestDriveInterface.drive" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

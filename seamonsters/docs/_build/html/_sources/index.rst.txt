@@ -22,7 +22,8 @@ Modules:
 
 .. toctree::
    :maxdepth: 2
-   
+
+   commands
    dashboard
    drive
    gamepad

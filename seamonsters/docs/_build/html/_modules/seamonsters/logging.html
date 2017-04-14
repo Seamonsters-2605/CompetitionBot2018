@@ -44,6 +44,18 @@
   <h1>Source code for seamonsters.logging</h1><div class="highlight"><pre>
 <span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;jacobvanthoog&quot;</span>
 
+<span class="kn">from</span> <span class="nn">networktables</span> <span class="k">import</span> <span class="n">NetworkTables</span>
+
+<span class="n">logStates</span> <span class="o">=</span> <span class="p">{</span> <span class="p">}</span>
+
+<div class="viewcode-block" id="sendLogStates"><a class="viewcode-back" href="../../logging.html#seamonsters.logging.sendLogStates">[docs]</a><span class="k">def</span> <span class="nf">sendLogStates</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">logStates</span>
+    <span class="n">logStateNames</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">logStates</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+    <span class="n">logStateValues</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">logStates</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">NetworkTables</span><span class="o">.</span><span class="n">getTable</span><span class="p">(</span><span class="s1">&#39;dashboard&#39;</span><span class="p">)</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">putStringArray</span><span class="p">(</span><span class="s1">&#39;logstatenames&#39;</span><span class="p">,</span> <span class="n">logStateNames</span><span class="p">)</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">putStringArray</span><span class="p">(</span><span class="s1">&#39;logstatevalues&#39;</span><span class="p">,</span> <span class="n">logStateValues</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="LogState"><a class="viewcode-back" href="../../logging.html#seamonsters.logging.LogState">[docs]</a><span class="k">class</span> <span class="nc">LogState</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a value important to the user that is constantly changing.</span>
@@ -73,7 +85,10 @@
 <span class="sd">        second) even if the value does not change. It&#39;s up to the LogState to</span>
 <span class="sd">        determine if the value has changed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">global</span> <span class="n">logStates</span>
+        
         <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">logStates</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastValue</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lastValue</span> <span class="o">=</span> <span class="n">value</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span> <span class="o">=</span> <span class="kc">True</span>
