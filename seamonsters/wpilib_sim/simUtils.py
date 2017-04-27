@@ -165,7 +165,7 @@ class Joystick:
         self.flush_outputs()
     
     def flush_outputs(self):
-        self._log("Flush outputs" + self.outputs)
+        self._log("Flush outputs", self.outputs)
 
 
 
