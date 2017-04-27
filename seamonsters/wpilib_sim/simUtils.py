@@ -1,6 +1,7 @@
 __author__ = "jacobvanthoog"
 
 import wpilib
+import ctre
 import time
 import hal
 import math
@@ -233,7 +234,7 @@ class CANTalon:
         self._log("Init")
         self.values = [0 for i in range(0, 16)]
         self.lastPositionValue = 0
-        self.controlMode = wpilib.CANTalon.ControlMode.PercentVbus
+        self.controlMode = ctre.CANTalon.ControlMode.PercentVbus
         self.controlEnabled = True
         self.inverted = False
         
@@ -340,19 +341,19 @@ class CANTalon:
         return self.get()
         
     def getOutputCurrent(self):
-        return self.values[wpilib.CANTalon.ControlMode.Current]
+        return self.values[ctre.CANTalon.ControlMode.Current]
         
     def getOutputVoltage(self):
-        return self.values[wpilib.CANTalon.ControlMode.Voltage]
+        return self.values[ctre.CANTalon.ControlMode.Voltage]
         
     def getPosition(self):
-        return self.values[wpilib.CANTalon.ControlMode.Position]
+        return self.values[ctre.CANTalon.ControlMode.Position]
         
     def getEncPosition(self):
         return self.getPosition()
         
     def getSpeed(self):
-        return self.values[wpilib.CANTalon.ControlMode.Speed]
+        return self.values[ctre.CANTalon.ControlMode.Speed]
         
     def getEncVelocity(self):
         return self.getSpeed()
@@ -444,5 +445,5 @@ def robotLoop(function):
         return
 
 def replaceWpilib():
-    wpilib.CANTalon = CANTalon
+    ctre.CANTalon = CANTalon
     wpilib.Joystick = Joystick
