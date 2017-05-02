@@ -3,8 +3,9 @@ __author__ = "jacobvanthoog"
 import wpilib
 from seamonsters.drive import DriveInterface
 from seamonsters.gamepad import Gamepad
+from seamonsters.modularRobot import Module
 
-class DriveTest (wpilib.IterativeRobot):
+class DriveTest (Module):
     """
     Can be extended to allow driving a robot with a custom drivetrain using the
     gamepad.

@@ -3,8 +3,9 @@ __author__ = 'Dawson'
 import wpilib
 import ctre
 from seamonsters.gamepad import Gamepad
+from seamonsters.modularRobot import Module
 
-class PIDTest(wpilib.IterativeRobot):
+class PIDTest(Module):
 
     def robotInit(self, talonPort, ticksPerRotation=4000, maxVelocity=10):
         self.talonPort = talonPort

@@ -3,8 +3,9 @@ __author__ = "jacobvanthoog"
 import wpilib
 import ctre
 from seamonsters.logging import LogState
+from seamonsters.modularRobot import Module
 
-class EncoderTest(wpilib.IterativeRobot):
+class EncoderTest(Module):
     
     def __init__(self, ports):
         """
