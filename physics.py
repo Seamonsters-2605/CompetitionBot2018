@@ -1,13 +1,24 @@
 __author__ = "jacobvanthoog"
+import math
 import wpilib
 import inspect, os
 import configparser
 from pyfrc.physics import drivetrains
 
+import robotpy_ext.common_drivers.navx
+
+# make the NavX work with the physics simulator
+def createAnalogGyro():
+    return wpilib.AnalogGyro(0)
+robotpy_ext.common_drivers.navx.AHRS.create_spi = createAnalogGyro
+
 class PhysicsEngine:
 
     def __init__(self, physicsController):
         self.physicsController = physicsController
+
+        # NavX simulation
+        self.physicsController.add_analog_gyro_channel(0)
 
         config = configparser.ConfigParser()
         filename = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + os.sep + "sim" + os.sep + "drivetrain.ini"
@@ -24,21 +35,21 @@ class PhysicsEngine:
         self.speed = float(physics.get('speed', '6'))
         self.drivetrain = physics.get('drivetrain', 'four')
 
-        fl = int(physics.get('canfl', '0'))
-        self.canFL = abs(fl)
-        self.canFLInv = 1 if fl >= 0 else -1
+        flName = physics.get('canfl', '0')
+        self.canFL = abs(int(flName))
+        self.canFLInv = -1 if flName.startswith('-') else 1
 
-        fr = int(physics.get('canfr', '0'))
-        self.canFR = abs(fr)
-        self.canFRInv = 1 if fr >= 0 else -1
+        frName = physics.get('canfr', '0')
+        self.canFR = abs(int(frName))
+        self.canFRInv = -1 if frName.startswith('-') else 1
 
-        bl = int(physics.get('canbl', '0'))
-        self.canBL = abs(bl)
-        self.canBLInv = 1 if bl >= 0 else -1
+        blName = physics.get('canbl', '0')
+        self.canBL = abs(int(blName))
+        self.canBLInv = -1 if blName.startswith('-') else 1
 
-        br = int(physics.get('canbr', '0'))
-        self.canBR = abs(br)
-        self.canBRInv = 1 if br >= 0 else -1
+        brName = physics.get('canbr', '0')
+        self.canBR = abs(int(brName))
+        self.canBRInv = -1 if brName.startswith('-') else 1
 
     def initialize(self, hal_data):
         pass
@@ -67,3 +78,5 @@ class PhysicsEngine:
                 self.xLen, self.speed)
             self.physicsController.drive(speed, rot, elapsed)
 
+        # https://github.com/robotpy/robotpy-wpilib/issues/291
+        data['analog_gyro'][0]['angle'] = math.degrees(self.physicsController.angle)
