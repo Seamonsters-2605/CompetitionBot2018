@@ -24,7 +24,6 @@ Modules:
    :maxdepth: 2
 
    commands
-   dashboard
    drive
    gamepad
    holonomicDrive
