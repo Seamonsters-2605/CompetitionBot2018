@@ -32,7 +32,6 @@ Modules:
    logging
    modularRobot
    motorControl
-   nav6
    path
    pdp
    swerveDrive
