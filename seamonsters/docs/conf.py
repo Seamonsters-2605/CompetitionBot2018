@@ -311,6 +311,8 @@ def setup(app):
                 item = module.__dict__.get(itemName)
                 if not hasattr(item, "__module__"):
                     continue
+                if item.__module__ != "seamonsters":
+                    continue
                 self.content.append("seamonsters." + itemName)
             return super().run()
 
