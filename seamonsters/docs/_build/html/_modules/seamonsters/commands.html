@@ -160,6 +160,9 @@
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 
+<div class="viewcode-block" id="CommandGroup.clear"><a class="viewcode-back" href="../../commands.html#seamonsters.commands.CommandGroup.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entries</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="CommandGroup.addSequential"><a class="viewcode-back" href="../../commands.html#seamonsters.commands.CommandGroup.addSequential">[docs]</a>    <span class="k">def</span> <span class="nf">addSequential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">command</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Given None command&quot;</span><span class="p">)</span>
@@ -213,12 +216,12 @@
                 <span class="n">startNextCommand</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_end</span><span class="p">()</span>
-
         <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runningCommands</span><span class="p">:</span>
             <span class="n">cmd</span><span class="o">.</span><span class="n">interrupt</span><span class="p">()</span>
             <span class="n">cmd</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">runningCommands</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_end</span><span class="p">()</span>
 
 <div class="viewcode-block" id="CommandGroup.isFinished"><a class="viewcode-back" href="../../commands.html#seamonsters.commands.CommandGroup.isFinished">[docs]</a>    <span class="k">def</span> <span class="nf">isFinished</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns True if all the Commands in this group</span>
