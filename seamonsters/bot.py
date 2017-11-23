@@ -1,16 +1,16 @@
 __author__ = "seamonsters"
 
 import hal
-import seamonsters
+import seamonsters.commands
 
 from wpilib.robotbase import RobotBase
 from wpilib.livewindow import LiveWindow
 
-class CommandBot(RobotBase, seamonsters.CommandGroup):
+class CommandBot(RobotBase, seamonsters.commands.CommandGroup):
 
     def __init__(self):
         RobotBase.__init__(self)
-        seamonsters.CommandGroup.__init__(self)
+        seamonsters.commands.CommandGroup.__init__(self)
         self.started = False
 
     def __repr__(self):
@@ -25,14 +25,12 @@ class CommandBot(RobotBase, seamonsters.CommandGroup):
         # Tell the DS that the robot is ready to be enabled
         hal.observeUserProgramStarting()
 
-        # loop forever, calling the appropriate mode-dependent function
         LiveWindow.setEnabled(False)
         while True:
             # Wait for new data to arrive
             self.ds.waitForData()
-            # Call the appropriate function depending upon the current robot mode
             if self.isDisabled():
-                if self.state != seamonsters.Command.STOPPED:
+                if self.state != seamonsters.commands.Command.STOPPED:
                     self.interrupt()
                     self.run()
                     LiveWindow.setEnabled(False)

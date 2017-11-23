@@ -2,7 +2,7 @@ Welcome to the seamonsters library documentation!
 =================================================
 
 This is Team 2605's Python library for robot code. It builds on wpilib and adds
-useful utilities for working with input, motors, drivetrains, and Nav6's, as
+useful utilities for working with input, motors, drivetrains, and Commands, as
 well as for simulation without a robot and for quick and simple tests.
 
 Terminology
@@ -17,29 +17,7 @@ Rebuilding the documentation
 This documentation was created with Sphinx. To update it, navigate to
 ``seamonsters/docs`` and run ``make html``.
 
-Modules:
+Index:
 --------
 
-.. toctree::
-   :maxdepth: 2
-
-   bot
-   commands
-   drive
-   gamepad
-   holonomicDrive
-   joystick
-   logging
-   motorControl
-   path
-   pdp
-   swerveDrive
-   utilityBots
-
-
-Indices
--------
-- :ref:`genindex`
-- :ref:`modindex`
-- :ref:`search`
-
+.. autoautosummary:: seamonsters

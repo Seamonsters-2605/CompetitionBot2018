@@ -31,6 +31,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
@@ -290,3 +291,27 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+
+autosummary_generate = True
+
+def setup(app):
+    from sphinx.ext.autosummary import Autosummary
+
+    class AutoAutoSummary(Autosummary):
+
+        required_arguments = 1
+
+        def run(self):
+            module = __import__(self.arguments[0], globals(), locals())
+            self.content = []
+            for itemName in dir(module):
+                if itemName.startswith('_'):
+                    continue
+                item = module.__dict__.get(itemName)
+                if not hasattr(item, "__module__"):
+                    continue
+                self.content.append("seamonsters." + itemName)
+            return super().run()
+
+    app.add_directive('autoautosummary', AutoAutoSummary)
