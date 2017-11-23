@@ -35,7 +35,6 @@ Modules:
    pdp
    swerveDrive
    utilityBots
-   wpilib_sim
 
 
 Indices
