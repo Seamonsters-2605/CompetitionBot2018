@@ -75,12 +75,22 @@
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="commands.html#seamonsters.commands.CommandWrapper.__init__">__init__() (seamonsters.commands.CommandWrapper method)</a>
+      <li><a href="commands.html#seamonsters.commands.Command.__init__">__init__() (seamonsters.commands.Command method)</a>
 
       <ul>
+        <li><a href="commands.html#seamonsters.commands.CommandGroup.__init__">(seamonsters.commands.CommandGroup method)</a>
+</li>
+        <li><a href="commands.html#seamonsters.commands.CommandGroup.Entry.__init__">(seamonsters.commands.CommandGroup.Entry method)</a>
+</li>
+        <li><a href="commands.html#seamonsters.commands.CommandWrapper.__init__">(seamonsters.commands.CommandWrapper method)</a>
+</li>
         <li><a href="commands.html#seamonsters.commands.EnsureFinishedCommand.__init__">(seamonsters.commands.EnsureFinishedCommand method)</a>
 </li>
         <li><a href="commands.html#seamonsters.commands.ForeverCommand.__init__">(seamonsters.commands.ForeverCommand method)</a>
+</li>
+        <li><a href="commands.html#seamonsters.commands.PrintCommand.__init__">(seamonsters.commands.PrintCommand method)</a>
+</li>
+        <li><a href="commands.html#seamonsters.commands.WaitCommand.__init__">(seamonsters.commands.WaitCommand method)</a>
 </li>
         <li><a href="commands.html#seamonsters.commands.WhileRunningCommand.__init__">(seamonsters.commands.WhileRunningCommand method)</a>
 </li>
@@ -103,8 +113,6 @@
         <li><a href="joystick.html#seamonsters.joystick.JoystickUtils.__init__">(seamonsters.joystick.JoystickUtils method)</a>
 </li>
         <li><a href="logging.html#seamonsters.logging.LogState.__init__">(seamonsters.logging.LogState method)</a>
-</li>
-        <li><a href="modularRobot.html#seamonsters.modularRobot.Module.__init__">(seamonsters.modularRobot.Module method)</a>
 </li>
         <li><a href="motorControl.html#seamonsters.motorControl.JeffMode.__init__">(seamonsters.motorControl.JeffMode method)</a>
 </li>
@@ -137,17 +145,15 @@
 </li>
       <li><a href="drive.html#seamonsters.drive.AccelerationFilterDrive">AccelerationFilterDrive (class in seamonsters.drive)</a>
 </li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.addModule">addModule() (seamonsters.modularRobot.Module method)</a>
+      <li><a href="motorControl.html#seamonsters.motorControl.MotorManager.addMotor">addMotor() (seamonsters.motorControl.MotorManager method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="motorControl.html#seamonsters.motorControl.MotorManager.addMotor">addMotor() (seamonsters.motorControl.MotorManager method)</a>
+      <li><a href="commands.html#seamonsters.commands.CommandGroup.addParallel">addParallel() (seamonsters.commands.CommandGroup method)</a>
+</li>
+      <li><a href="commands.html#seamonsters.commands.CommandGroup.addSequential">addSequential() (seamonsters.commands.CommandGroup method)</a>
 </li>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.SwerveDrive.addWheel">addWheel() (seamonsters.swerveDrive.SwerveDrive method)</a>
-</li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.autonomousInit">autonomousInit() (seamonsters.modularRobot.Module method)</a>
-</li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.autonomousPeriodic">autonomousPeriodic() (seamonsters.modularRobot.Module method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -177,8 +183,14 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.WheelState.calcDrive">calcDrive() (seamonsters.swerveDrive.WheelState method)</a>
 </li>
+      <li><a href="commands.html#seamonsters.commands.Command">Command (class in seamonsters.commands)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="commands.html#seamonsters.commands.CommandGroup">CommandGroup (class in seamonsters.commands)</a>
+</li>
+      <li><a href="commands.html#seamonsters.commands.CommandGroup.Entry">CommandGroup.Entry (class in seamonsters.commands)</a>
+</li>
       <li><a href="commands.html#seamonsters.commands.CommandWrapper">CommandWrapper (class in seamonsters.commands)</a>
 </li>
   </ul></td>
@@ -188,10 +200,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.direction">direction() (in module seamonsters.swerveDrive)</a>
-</li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.disabledInit">disabledInit() (seamonsters.modularRobot.Module method)</a>
-</li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.disabledPeriodic">disabledPeriodic() (seamonsters.modularRobot.Module method)</a>
 </li>
       <li><a href="gamepad.html#seamonsters.gamepad.Gamepad.DOWN">DOWN (seamonsters.gamepad.Gamepad attribute)</a>
 </li>
@@ -235,14 +243,22 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="commands.html#seamonsters.commands.CommandWrapper.end">end() (seamonsters.commands.CommandWrapper method)</a>
+      <li><a href="commands.html#seamonsters.commands.Command.end">end() (seamonsters.commands.Command method)</a>
+
+      <ul>
+        <li><a href="commands.html#seamonsters.commands.CommandWrapper.end">(seamonsters.commands.CommandWrapper method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="commands.html#seamonsters.commands.EnsureFinishedCommand">EnsureFinishedCommand (class in seamonsters.commands)</a>
 </li>
-      <li><a href="commands.html#seamonsters.commands.CommandWrapper.execute">execute() (seamonsters.commands.CommandWrapper method)</a>
+      <li><a href="commands.html#seamonsters.commands.Command.execute">execute() (seamonsters.commands.Command method)</a>
+
+      <ul>
+        <li><a href="commands.html#seamonsters.commands.CommandWrapper.execute">(seamonsters.commands.CommandWrapper method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -323,8 +339,6 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.getModule">getModule() (seamonsters.modularRobot.Module method)</a>
-</li>
       <li><a href="gamepad.html#seamonsters.gamepad.Gamepad.getRawButton">getRawButton() (seamonsters.gamepad.Gamepad method)</a>
 </li>
       <li><a href="gamepad.html#seamonsters.gamepad.Gamepad.getRawLMagnitude">getRawLMagnitude() (seamonsters.gamepad.Gamepad method)</a>
@@ -387,9 +401,17 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="gamepad.html#seamonsters.gamepad.Gamepad.inDeadZone">inDeadZone() (seamonsters.gamepad.Gamepad method)</a>
 </li>
-      <li><a href="commands.html#seamonsters.commands.CommandWrapper.initialize">initialize() (seamonsters.commands.CommandWrapper method)</a>
+      <li><a href="commands.html#seamonsters.commands.Command.initialize">initialize() (seamonsters.commands.Command method)</a>
+
+      <ul>
+        <li><a href="commands.html#seamonsters.commands.CommandWrapper.initialize">(seamonsters.commands.CommandWrapper method)</a>
 </li>
-      <li><a href="commands.html#seamonsters.commands.CommandWrapper.interrupted">interrupted() (seamonsters.commands.CommandWrapper method)</a>
+        <li><a href="commands.html#seamonsters.commands.PrintCommand.initialize">(seamonsters.commands.PrintCommand method)</a>
+</li>
+        <li><a href="commands.html#seamonsters.commands.WhileRunningCommand.initialize">(seamonsters.commands.WhileRunningCommand method)</a>
+</li>
+      </ul></li>
+      <li><a href="commands.html#seamonsters.commands.Command.interrupt">interrupt() (seamonsters.commands.Command method)</a>
 </li>
       <li><a href="motorControl.html#seamonsters.motorControl.JeffMode.invert">invert() (seamonsters.motorControl.JeffMode method)</a>
 
@@ -401,26 +423,34 @@
       </ul></li>
       <li><a href="holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.invertDrive">invertDrive() (seamonsters.holonomicDrive.HolonomicDrive method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="gamepad.html#seamonsters.gamepad.Gamepad.invertX">invertX() (seamonsters.gamepad.Gamepad method)</a>
 
       <ul>
         <li><a href="joystick.html#seamonsters.joystick.JoystickUtils.invertX">(seamonsters.joystick.JoystickUtils method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="gamepad.html#seamonsters.gamepad.Gamepad.invertY">invertY() (seamonsters.gamepad.Gamepad method)</a>
 
       <ul>
         <li><a href="joystick.html#seamonsters.joystick.JoystickUtils.invertY">(seamonsters.joystick.JoystickUtils method)</a>
 </li>
       </ul></li>
-      <li><a href="commands.html#seamonsters.commands.CommandWrapper.isFinished">isFinished() (seamonsters.commands.CommandWrapper method)</a>
+      <li><a href="commands.html#seamonsters.commands.Command.isFinished">isFinished() (seamonsters.commands.Command method)</a>
 
       <ul>
+        <li><a href="commands.html#seamonsters.commands.CommandGroup.isFinished">(seamonsters.commands.CommandGroup method)</a>
+</li>
+        <li><a href="commands.html#seamonsters.commands.CommandWrapper.isFinished">(seamonsters.commands.CommandWrapper method)</a>
+</li>
         <li><a href="commands.html#seamonsters.commands.EnsureFinishedCommand.isFinished">(seamonsters.commands.EnsureFinishedCommand method)</a>
 </li>
         <li><a href="commands.html#seamonsters.commands.ForeverCommand.isFinished">(seamonsters.commands.ForeverCommand method)</a>
+</li>
+        <li><a href="commands.html#seamonsters.commands.PrintCommand.isFinished">(seamonsters.commands.PrintCommand method)</a>
+</li>
+        <li><a href="commands.html#seamonsters.commands.WaitCommand.isFinished">(seamonsters.commands.WaitCommand method)</a>
 </li>
         <li><a href="commands.html#seamonsters.commands.WhileRunningCommand.isFinished">(seamonsters.commands.WhileRunningCommand method)</a>
 </li>
@@ -469,12 +499,10 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.magnitude">magnitude() (in module seamonsters.swerveDrive)</a>
 </li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module">Module (class in seamonsters.modularRobot)</a>
+      <li><a href="motorControl.html#seamonsters.motorControl.MotorManager">MotorManager (class in seamonsters.motorControl)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="motorControl.html#seamonsters.motorControl.MotorManager">MotorManager (class in seamonsters.motorControl)</a>
-</li>
       <li><a href="motorControl.html#seamonsters.motorControl.MotorSpeedControl">MotorSpeedControl (class in seamonsters.motorControl)</a>
 </li>
       <li><a href="motorControl.html#seamonsters.motorControl.MultiMode">MultiMode (class in seamonsters.motorControl)</a>
@@ -493,15 +521,17 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.parent">parent() (seamonsters.modularRobot.Module method)</a>
+      <li><a href="commands.html#seamonsters.commands.CommandGroup.Entry.PARALLEL">PARALLEL (seamonsters.commands.CommandGroup.Entry attribute)</a>
 </li>
       <li><a href="pdp.html#seamonsters.pdp.PDPMonitor">PDPMonitor (class in seamonsters.pdp)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="drive.html#seamonsters.drive.DriveInterface.DriveMode.POSITION">POSITION (seamonsters.drive.DriveInterface.DriveMode attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="joystick.html#seamonsters.joystick.JoystickUtils.positionInDeadZone">positionInDeadZone() (seamonsters.joystick.JoystickUtils method)</a>
+</li>
+      <li><a href="commands.html#seamonsters.commands.PrintCommand">PrintCommand (class in seamonsters.commands)</a>
 </li>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.SwerveDrive.printWheelState">printWheelState() (seamonsters.swerveDrive.SwerveDrive method)</a>
 </li>
@@ -523,8 +553,6 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.robotInit">robotInit() (seamonsters.modularRobot.Module method)</a>
-</li>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.TalonWheelController.rotateWheel">rotateWheel() (seamonsters.swerveDrive.TalonWheelController method)</a>
 
       <ul>
@@ -535,7 +563,9 @@
       </ul></li>
       <li><a href="gamepad.html#seamonsters.gamepad.Gamepad.RT">RT (seamonsters.gamepad.Gamepad attribute)</a>
 </li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.runModules">runModules() (seamonsters.modularRobot.Module method)</a>
+      <li><a href="commands.html#seamonsters.commands.Command.run">run() (seamonsters.commands.Command method)</a>
+</li>
+      <li><a href="commands.html#seamonsters.commands.Command.RUNNING">RUNNING (seamonsters.commands.Command attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -555,8 +585,6 @@
 </li>
       <li><a href="logging.html#module-seamonsters.logging">seamonsters.logging (module)</a>
 </li>
-      <li><a href="modularRobot.html#module-seamonsters.modularRobot">seamonsters.modularRobot (module)</a>
-</li>
       <li><a href="motorControl.html#module-seamonsters.motorControl">seamonsters.motorControl (module)</a>
 </li>
       <li><a href="path.html#module-seamonsters.path">seamonsters.path (module)</a>
@@ -566,6 +594,8 @@
       <li><a href="swerveDrive.html#module-seamonsters.swerveDrive">seamonsters.swerveDrive (module)</a>
 </li>
       <li><a href="logging.html#seamonsters.logging.sendLogStates">sendLogStates() (in module seamonsters.logging)</a>
+</li>
+      <li><a href="commands.html#seamonsters.commands.CommandGroup.Entry.SEQUENTIAL">SEQUENTIAL (seamonsters.commands.CommandGroup.Entry attribute)</a>
 </li>
       <li><a href="motorControl.html#seamonsters.motorControl.JeffMode.set">set() (seamonsters.motorControl.JeffMode method)</a>
 
@@ -613,8 +643,6 @@
 </li>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.SwerveDrive.setMaxVeloicty">setMaxVeloicty() (seamonsters.swerveDrive.SwerveDrive method)</a>
 </li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.setParent">setParent() (seamonsters.modularRobot.Module method)</a>
-</li>
       <li><a href="joystick.html#seamonsters.joystick.JoystickUtils.setPositionDeadZone">setPositionDeadZone() (seamonsters.joystick.JoystickUtils method)</a>
 </li>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.TalonWheelController.setSpeed">setSpeed() (seamonsters.swerveDrive.TalonWheelController method)</a>
@@ -639,6 +667,12 @@
 </li>
       <li><a href="gamepad.html#seamonsters.gamepad.Gamepad.START">START (seamonsters.gamepad.Gamepad attribute)</a>
 </li>
+      <li><a href="commands.html#seamonsters.commands.Command.start">start() (seamonsters.commands.Command method)</a>
+</li>
+      <li><a href="commands.html#seamonsters.commands.Command.STARTING">STARTING (seamonsters.commands.Command attribute)</a>
+</li>
+      <li><a href="commands.html#seamonsters.commands.Command.STOPPED">STOPPED (seamonsters.commands.Command attribute)</a>
+</li>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.SwerveDrive">SwerveDrive (class in seamonsters.swerveDrive)</a>
 </li>
   </ul></td>
@@ -649,23 +683,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.TalonWheelController">TalonWheelController (class in seamonsters.swerveDrive)</a>
 </li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.teleopInit">teleopInit() (seamonsters.modularRobot.Module method)</a>
-</li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.teleopPeriodic">teleopPeriodic() (seamonsters.modularRobot.Module method)</a>
-</li>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.test_swervedrive_forward">test_swervedrive_forward() (in module seamonsters.swerveDrive)</a>
-</li>
-      <li><a href="drive.html#seamonsters.drive.TestDriveInterface">TestDriveInterface (class in seamonsters.drive)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.testInit">testInit() (seamonsters.modularRobot.Module method)</a>
-</li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.testPeriodic">testPeriodic() (seamonsters.modularRobot.Module method)</a>
+      <li><a href="drive.html#seamonsters.drive.TestDriveInterface">TestDriveInterface (class in seamonsters.drive)</a>
 </li>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.TestWheelController">TestWheelController (class in seamonsters.swerveDrive)</a>
-</li>
-      <li><a href="modularRobot.html#seamonsters.modularRobot.Module.time">time() (seamonsters.modularRobot.Module method)</a>
 </li>
       <li><a href="joystick.html#seamonsters.joystick.JoystickUtils.twistInDeadZone">twistInDeadZone() (seamonsters.joystick.JoystickUtils method)</a>
 </li>
@@ -717,6 +741,8 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="commands.html#seamonsters.commands.WaitCommand">WaitCommand (class in seamonsters.commands)</a>
+</li>
       <li><a href="swerveDrive.html#seamonsters.swerveDrive.WheelController">WheelController (class in seamonsters.swerveDrive)</a>
 </li>
   </ul></td>
