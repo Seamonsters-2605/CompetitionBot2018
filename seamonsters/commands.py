@@ -116,6 +116,9 @@ class CommandGroup(Command):
     def __repr__(self):
         return self.name
 
+    def clear(self):
+        self.entries.clear()
+
     def addSequential(self, command):
         if command is None:
             raise ValueError("Given None command")
@@ -169,12 +172,12 @@ class CommandGroup(Command):
                 startNextCommand = False
 
     def _end(self):
-        super()._end()
-
         for cmd in self.runningCommands:
             cmd.interrupt()
             cmd.run()
         self.runningCommands.clear()
+
+        super()._end()
 
     def isFinished(self):
         """Returns True if all the Commands in this group
