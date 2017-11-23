@@ -23,13 +23,13 @@ Modules:
 .. toctree::
    :maxdepth: 2
 
+   bot
    commands
    drive
    gamepad
    holonomicDrive
    joystick
    logging
-   modularRobot
    motorControl
    path
    pdp
