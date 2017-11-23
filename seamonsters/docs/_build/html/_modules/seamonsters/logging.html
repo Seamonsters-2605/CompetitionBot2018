@@ -48,15 +48,15 @@
 
 <span class="n">logStates</span> <span class="o">=</span> <span class="p">{</span> <span class="p">}</span>
 
-<div class="viewcode-block" id="sendLogStates"><a class="viewcode-back" href="../../logging.html#seamonsters.logging.sendLogStates">[docs]</a><span class="k">def</span> <span class="nf">sendLogStates</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">sendLogStates</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">logStates</span>
     <span class="n">logStateNames</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">logStates</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
     <span class="n">logStateValues</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">logStates</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
     <span class="n">table</span> <span class="o">=</span> <span class="n">NetworkTables</span><span class="o">.</span><span class="n">getTable</span><span class="p">(</span><span class="s1">&#39;dashboard&#39;</span><span class="p">)</span>
     <span class="n">table</span><span class="o">.</span><span class="n">putStringArray</span><span class="p">(</span><span class="s1">&#39;logstatenames&#39;</span><span class="p">,</span> <span class="n">logStateNames</span><span class="p">)</span>
-    <span class="n">table</span><span class="o">.</span><span class="n">putStringArray</span><span class="p">(</span><span class="s1">&#39;logstatevalues&#39;</span><span class="p">,</span> <span class="n">logStateValues</span><span class="p">)</span></div>
+    <span class="n">table</span><span class="o">.</span><span class="n">putStringArray</span><span class="p">(</span><span class="s1">&#39;logstatevalues&#39;</span><span class="p">,</span> <span class="n">logStateValues</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogState"><a class="viewcode-back" href="../../logging.html#seamonsters.logging.LogState">[docs]</a><span class="k">class</span> <span class="nc">LogState</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">LogState</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a value important to the user that is constantly changing.</span>
 <span class="sd">    Whenever the value changes its new value will be printed to the console.</span>
@@ -65,7 +65,7 @@
 <span class="sd">    nothing is logged more than 2.5 times per second.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="LogState.__init__"><a class="viewcode-back" href="../../logging.html#seamonsters.logging.LogState.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">logFrequency</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
+<div class="viewcode-block" id="LogState.__init__"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.LogState.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">logFrequency</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the LogState. ``name`` is the name of the value as printed</span>
 <span class="sd">        in the console - it has no meaning other than that. ``logFrequency`` can</span>
@@ -79,7 +79,7 @@
         <span class="c1"># make sure the first value is logged</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeSinceLastLog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logFrequency</span> <span class="o">*</span> <span class="mi">50</span> <span class="o">+</span> <span class="mi">1</span></div>
         
-<div class="viewcode-block" id="LogState.update"><a class="viewcode-back" href="../../logging.html#seamonsters.logging.LogState.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="LogState.update"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.LogState.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the value to log. This should be called every loop (50 times per</span>
 <span class="sd">        second) even if the value does not change. It&#39;s up to the LogState to</span>
@@ -98,7 +98,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastValue</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">timeSinceLastLog</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">valueChanged</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">timeSinceLastLog</span> <span class="o">+=</span> <span class="mi">1</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeSinceLastLog</span> <span class="o">+=</span> <span class="mi">1</span></div>
 
 
 <span class="c1"># Logging test</span>
@@ -140,6 +140,8 @@
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../seamonsters.html">seamonsters</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>

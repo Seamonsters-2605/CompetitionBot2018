@@ -50,26 +50,26 @@
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">ctre</span>
 
-<div class="viewcode-block" id="magnitude"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.magnitude">[docs]</a><span class="k">def</span> <span class="nf">magnitude</span><span class="p">(</span><span class="n">vector</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">+</span> <span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span></div>
+<span class="k">def</span> <span class="nf">magnitude</span><span class="p">(</span><span class="n">vector</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">+</span> <span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span>
 
-<div class="viewcode-block" id="direction"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.direction">[docs]</a><span class="k">def</span> <span class="nf">direction</span><span class="p">(</span><span class="n">vector</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">direction</span><span class="p">(</span><span class="n">vector</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">result</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">+=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">2</span>
-    <span class="k">return</span> <span class="n">result</span></div>
+    <span class="k">return</span> <span class="n">result</span>
 
-<div class="viewcode-block" id="normalize"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.normalize">[docs]</a><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">vector</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">vector</span><span class="p">):</span>
     <span class="n">mag</span> <span class="o">=</span> <span class="n">magnitude</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">mag</span><span class="p">,</span> <span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">mag</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">mag</span><span class="p">,</span> <span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">mag</span><span class="p">)</span>
 
-<div class="viewcode-block" id="WheelState"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.WheelState">[docs]</a><span class="k">class</span> <span class="nc">WheelState</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">WheelState</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Keeps track of the current state of a single wheels, calculates all the</span>
 <span class="sd">    necessary, vector math, and controls a WheelController.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="WheelState.__init__"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.WheelState.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+<div class="viewcode-block" id="WheelState.__init__"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.WheelState.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        location is a tuple (x, y) -- location of wheel from center of robot.</span>
 <span class="sd">        controller is a WheelController.</span>
@@ -82,7 +82,7 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span></div>
     
-<div class="viewcode-block" id="WheelState.calcDrive"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.WheelState.calcDrive">[docs]</a>    <span class="k">def</span> <span class="nf">calcDrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mag</span><span class="p">,</span> <span class="n">driveDirection</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span>
+<div class="viewcode-block" id="WheelState.calcDrive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.WheelState.calcDrive">[docs]</a>    <span class="k">def</span> <span class="nf">calcDrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mag</span><span class="p">,</span> <span class="n">driveDirection</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the drive vector, magnitude, and direction for the given</span>
 <span class="sd">        parameters, but don&#39;t do anything yet.</span>
@@ -96,7 +96,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetMagnitude</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">targetDirection</span> <span class="o">=</span> <span class="n">direction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driveVector</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="WheelState.drive"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.WheelState.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WheelState.drive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.WheelState.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use the WheelController to drive with previously calculated values.</span>
 <span class="sd">        scale multiplies all driving motor values by a constant -- different</span>
@@ -117,63 +117,63 @@
         <span class="n">mag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetMagnitude</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invertMagnitude</span><span class="p">:</span>
             <span class="n">mag</span> <span class="o">=</span> <span class="o">-</span><span class="n">mag</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">setSpeed</span><span class="p">(</span><span class="n">mag</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">setSpeed</span><span class="p">(</span><span class="n">mag</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="WheelController"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.WheelController">[docs]</a><span class="k">class</span> <span class="nc">WheelController</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">WheelController</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An interface for controlling a single swerve drive wheel</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="WheelController.rotateWheel"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.WheelController.rotateWheel">[docs]</a>    <span class="k">def</span> <span class="nf">rotateWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radians</span><span class="p">):</span>
+<div class="viewcode-block" id="WheelController.rotateWheel"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.WheelController.rotateWheel">[docs]</a>    <span class="k">def</span> <span class="nf">rotateWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radians</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Orient the wheel towards a certain direction.</span>
 <span class="sd">        radians might not be within 0 and 2pi</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
     
-<div class="viewcode-block" id="WheelController.getCurrentRotation"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.WheelController.getCurrentRotation">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WheelController.getCurrentRotation"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.WheelController.getCurrentRotation">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the current orientation of the wheel, in radians.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
     
-<div class="viewcode-block" id="WheelController.setSpeed"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.WheelController.setSpeed">[docs]</a>    <span class="k">def</span> <span class="nf">setSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+<div class="viewcode-block" id="WheelController.setSpeed"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.WheelController.setSpeed">[docs]</a>    <span class="k">def</span> <span class="nf">setSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Spin the wheel at the specific speed, between -1 and 1</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div></div>
+        <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="TestWheelController"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TestWheelController">[docs]</a><span class="k">class</span> <span class="nc">TestWheelController</span><span class="p">(</span><span class="n">WheelController</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">TestWheelController</span><span class="p">(</span><span class="n">WheelController</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A wheel controller that logs all events and does nothing else.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="TestWheelController.__init__"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TestWheelController.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+<div class="viewcode-block" id="TestWheelController.__init__"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.TestWheelController.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">0</span></div>
         
-<div class="viewcode-block" id="TestWheelController.rotateWheel"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TestWheelController.rotateWheel">[docs]</a>    <span class="k">def</span> <span class="nf">rotateWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radians</span><span class="p">):</span>
+<div class="viewcode-block" id="TestWheelController.rotateWheel"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.TestWheelController.rotateWheel">[docs]</a>    <span class="k">def</span> <span class="nf">rotateWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radians</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wheel&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="s2">&quot;rotating to&quot;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">radians</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rotation</span> <span class="o">=</span> <span class="n">radians</span></div>
         
-<div class="viewcode-block" id="TestWheelController.setSpeed"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TestWheelController.setSpeed">[docs]</a>    <span class="k">def</span> <span class="nf">setSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+<div class="viewcode-block" id="TestWheelController.setSpeed"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.TestWheelController.setSpeed">[docs]</a>    <span class="k">def</span> <span class="nf">setSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wheel&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="s2">&quot;speed set to&quot;</span><span class="p">,</span> <span class="n">speed</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="TestWheelController.getCurrentRotation"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TestWheelController.getCurrentRotation">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestWheelController.getCurrentRotation"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.TestWheelController.getCurrentRotation">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotation</span></div>
     
-<div class="viewcode-block" id="TestWheelController.setDriveMode"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TestWheelController.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driveMode</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wheel&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="s2">&quot;drive mode set to&quot;</span><span class="p">,</span> <span class="n">driveMode</span><span class="p">)</span></div></div>
+<div class="viewcode-block" id="TestWheelController.setDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.TestWheelController.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driveMode</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wheel&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="s2">&quot;drive mode set to&quot;</span><span class="p">,</span> <span class="n">driveMode</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TalonWheelController"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TalonWheelController">[docs]</a><span class="k">class</span> <span class="nc">TalonWheelController</span><span class="p">(</span><span class="n">WheelController</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">TalonWheelController</span><span class="p">(</span><span class="n">WheelController</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A wheel controller controlling two CANTalons. Uses a MotorSpeedControl.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="TalonWheelController.__init__"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TalonWheelController.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driveController</span><span class="p">,</span> <span class="n">rotateTalon</span><span class="p">,</span> <span class="n">rotateTalonEncoderTicks</span><span class="p">):</span>
+<div class="viewcode-block" id="TalonWheelController.__init__"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.TalonWheelController.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driveController</span><span class="p">,</span> <span class="n">rotateTalon</span><span class="p">,</span> <span class="n">rotateTalonEncoderTicks</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        driveController should be a MotorSpeedControl</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -187,7 +187,7 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span></div>
 
-<div class="viewcode-block" id="TalonWheelController.getCurrentRotation"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TalonWheelController.getCurrentRotation">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TalonWheelController.getCurrentRotation"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.TalonWheelController.getCurrentRotation">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentRotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">ticks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotateTalon</span><span class="o">.</span><span class="n">getPosition</span><span class="p">()</span>
         <span class="n">ticks</span> <span class="o">%=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotateTalonEncoderTicks</span>
         <span class="n">ticks</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotateTalonInitialPosition</span>
@@ -195,7 +195,7 @@
             <span class="n">ticks</span> <span class="o">=</span> <span class="o">-</span><span class="n">ticks</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotateTalonEncoderTicks</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rotateTalonEncoderTicks</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">2</span></div>
         
-<div class="viewcode-block" id="TalonWheelController.rotateWheel"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TalonWheelController.rotateWheel">[docs]</a>    <span class="k">def</span> <span class="nf">rotateWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<div class="viewcode-block" id="TalonWheelController.rotateWheel"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.TalonWheelController.rotateWheel">[docs]</a>    <span class="k">def</span> <span class="nf">rotateWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverseRotateTalon</span><span class="p">:</span>
             <span class="n">target</span> <span class="o">=</span> <span class="o">-</span><span class="n">target</span>
         
@@ -214,22 +214,22 @@
                 
         <span class="bp">self</span><span class="o">.</span><span class="n">rotateTalon</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">currentTicks</span> <span class="o">+</span> <span class="n">diff</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="TalonWheelController.setSpeed"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.TalonWheelController.setSpeed">[docs]</a>    <span class="k">def</span> <span class="nf">setSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+<div class="viewcode-block" id="TalonWheelController.setSpeed"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.TalonWheelController.setSpeed">[docs]</a>    <span class="k">def</span> <span class="nf">setSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driveController</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">driveController</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driveController</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
     
 
-<div class="viewcode-block" id="SwerveDrive"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.SwerveDrive">[docs]</a><span class="k">class</span> <span class="nc">SwerveDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">SwerveDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An implementation of DriveInterface for swerve drives.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="SwerveDrive.__init__"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.SwerveDrive.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SwerveDrive.__init__"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.SwerveDrive.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">DriveInterface</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wheels</span> <span class="o">=</span> <span class="p">[</span> <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="n">MotorManager</span><span class="p">()</span></div>
         
-<div class="viewcode-block" id="SwerveDrive.setMaxVeloicty"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.SwerveDrive.setMaxVeloicty">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxVeloicty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">velocity</span><span class="p">):</span>
+<div class="viewcode-block" id="SwerveDrive.setMaxVeloicty"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.SwerveDrive.setMaxVeloicty">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxVeloicty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">velocity</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the max encoder velocity for position/jeff and speed mode.</span>
 <span class="sd">        Default is 400. For position mode, this is the maximum difference</span>
@@ -239,11 +239,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">setMaxSpeed</span><span class="p">(</span><span class="n">velocity</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="SwerveDrive.setDriveMode"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.SwerveDrive.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<div class="viewcode-block" id="SwerveDrive.setDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.SwerveDrive.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="n">DriveInterface</span><span class="o">.</span><span class="n">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">setDriveMode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="SwerveDrive.addWheel"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.SwerveDrive.addWheel">[docs]</a>    <span class="k">def</span> <span class="nf">addWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xLocation</span><span class="p">,</span> <span class="n">yLocation</span><span class="p">,</span>
+<div class="viewcode-block" id="SwerveDrive.addWheel"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.SwerveDrive.addWheel">[docs]</a>    <span class="k">def</span> <span class="nf">addWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xLocation</span><span class="p">,</span> <span class="n">yLocation</span><span class="p">,</span>
             <span class="n">driveTalon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rotateTalon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rotateTalonEncoderTicks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a wheel to the robot at the specific location. driveTalon is the</span>
@@ -264,7 +264,7 @@
                     <span class="n">rotateTalonEncoderTicks</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wheels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">WheelState</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">wheelController</span><span class="p">)</span> <span class="p">)</span></div>
     
-<div class="viewcode-block" id="SwerveDrive.drive"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.SwerveDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SwerveDrive.drive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.SwerveDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">forceDriveMode</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDriveMode</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">setDriveMode</span><span class="p">(</span><span class="n">forceDriveMode</span><span class="p">)</span>
@@ -272,7 +272,7 @@
             <span class="n">wheel</span><span class="o">.</span><span class="n">calcDrive</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
             <span class="n">wheel</span><span class="o">.</span><span class="n">drive</span><span class="p">()</span></div>
     
-<div class="viewcode-block" id="SwerveDrive.printWheelState"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.SwerveDrive.printWheelState">[docs]</a>    <span class="k">def</span> <span class="nf">printWheelState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SwerveDrive.printWheelState"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.SwerveDrive.printWheelState">[docs]</a>    <span class="k">def</span> <span class="nf">printWheelState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print the vectors each of the wheels are trying to drive towards.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -280,10 +280,10 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wheel:&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span>
                   <span class="s2">&quot;Vector:&quot;</span><span class="p">,</span> <span class="n">wheel</span><span class="o">.</span><span class="n">driveVector</span><span class="p">,</span>
                   <span class="s2">&quot;Magnitude:&quot;</span><span class="p">,</span> <span class="n">wheel</span><span class="o">.</span><span class="n">targetMagnitude</span><span class="p">,</span>
-                  <span class="s2">&quot;Direction:&quot;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">wheel</span><span class="o">.</span><span class="n">targetDirection</span><span class="p">))</span></div></div>
+                  <span class="s2">&quot;Direction:&quot;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">wheel</span><span class="o">.</span><span class="n">targetDirection</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="test_swervedrive_forward"><a class="viewcode-back" href="../../swerveDrive.html#seamonsters.swerveDrive.test_swervedrive_forward">[docs]</a><span class="k">def</span> <span class="nf">test_swervedrive_forward</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">test_swervedrive_forward</span><span class="p">():</span>
     
     <span class="n">drive</span> <span class="o">=</span> <span class="n">SwerveDrive</span><span class="p">()</span>
     <span class="n">drive</span><span class="o">.</span><span class="n">addWheel</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
@@ -291,7 +291,7 @@
     <span class="n">drive</span><span class="o">.</span><span class="n">addWheel</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span>
     <span class="n">drive</span><span class="o">.</span><span class="n">addWheel</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span>
     <span class="n">drive</span><span class="o">.</span><span class="n">drive</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">drive</span><span class="o">.</span><span class="n">wheels</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">targetMagnitude</span> <span class="o">==</span> <span class="mi">4</span></div>
+    <span class="k">assert</span> <span class="n">drive</span><span class="o">.</span><span class="n">wheels</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">targetMagnitude</span> <span class="o">==</span> <span class="mi">4</span>
 </pre></div>
 
           </div>
@@ -303,6 +303,8 @@
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../seamonsters.html">seamonsters</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>

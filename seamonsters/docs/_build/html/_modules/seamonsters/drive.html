@@ -47,7 +47,7 @@
 <span class="kn">import</span> <span class="nn">ctre</span>
 <span class="kn">import</span> <span class="nn">math</span>
 
-<div class="viewcode-block" id="setControlMode"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.setControlMode">[docs]</a><span class="k">def</span> <span class="nf">setControlMode</span><span class="p">(</span><span class="n">talon</span><span class="p">,</span> <span class="n">driveMode</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">setControlMode</span><span class="p">(</span><span class="n">talon</span><span class="p">,</span> <span class="n">driveMode</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Given a DriveInterface.DriveMode, set the control mode of a CANTalon using</span>
 <span class="sd">    a ctre.CANTalon.ControlMode.</span>
@@ -57,9 +57,9 @@
     <span class="k">if</span> <span class="n">driveMode</span> <span class="o">==</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">SPEED</span><span class="p">:</span>
         <span class="n">talon</span><span class="o">.</span><span class="n">changeControlMode</span><span class="p">(</span><span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Speed</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">driveMode</span> <span class="o">==</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">POSITION</span><span class="p">:</span>
-        <span class="n">talon</span><span class="o">.</span><span class="n">changeControlMode</span><span class="p">(</span><span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">)</span></div>
+        <span class="n">talon</span><span class="o">.</span><span class="n">changeControlMode</span><span class="p">(</span><span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DriveInterface"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DriveInterface">[docs]</a><span class="k">class</span> <span class="nc">DriveInterface</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">DriveInterface</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A generic, abstract interface for driving a robot. Allows 3 different</span>
 <span class="sd">    control modes for CANTalons, specified by DriveMode.</span>
@@ -71,7 +71,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="DriveInterface.DriveMode"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DriveInterface.DriveMode">[docs]</a>    <span class="k">class</span> <span class="nc">DriveMode</span><span class="p">:</span>
+<div class="viewcode-block" id="DriveInterface.DriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.DriveInterface.DriveMode">[docs]</a>    <span class="k">class</span> <span class="nc">DriveMode</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Control modes for CANTalons. POSITION is incremental position mode (aka</span>
 <span class="sd">        &quot;Jeff mode&quot;).</span>
@@ -80,45 +80,45 @@
         <span class="n">SPEED</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="n">POSITION</span> <span class="o">=</span> <span class="mi">3</span></div>
     
-<div class="viewcode-block" id="DriveInterface.__init__"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DriveInterface.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DriveInterface.__init__"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.DriveInterface.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">magnitudeScale</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">turnScale</span> <span class="o">=</span> <span class="mi">1</span></div>
 
-<div class="viewcode-block" id="DriveInterface.setDriveMode"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DriveInterface.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<div class="viewcode-block" id="DriveInterface.setDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.DriveInterface.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the default control mode for driving. If you call drive() without</span>
 <span class="sd">        forceDriveMode, this will be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span> <span class="o">=</span> <span class="n">mode</span></div>
 
-<div class="viewcode-block" id="DriveInterface.getDriveMode"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DriveInterface.getDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">getDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DriveInterface.getDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.DriveInterface.getDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">getDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the current default control mode, as set by setDriveMode(). The</span>
 <span class="sd">        default is SPEED, but implementations may have their own defaults.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span></div>
     
-<div class="viewcode-block" id="DriveInterface.drive"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DriveInterface.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="DriveInterface.drive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.DriveInterface.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Drive the robot, with a given magnitude, direction, and turn.</span>
 <span class="sd">        If forceDriveMode is specified, the current drive mode will be </span>
 <span class="sd">        overriden. It is expected that this function be called in a loop.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div></div>
+        <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="TestDriveInterface"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.TestDriveInterface">[docs]</a><span class="k">class</span> <span class="nc">TestDriveInterface</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">TestDriveInterface</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
 
-<div class="viewcode-block" id="TestDriveInterface.drive"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.TestDriveInterface.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Drive mag&quot;</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="s2">&quot;dir&quot;</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="s2">&quot;turn&quot;</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span></div></div>
+<div class="viewcode-block" id="TestDriveInterface.drive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.TestDriveInterface.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Drive mag&quot;</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="s2">&quot;dir&quot;</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="s2">&quot;turn&quot;</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="AccelerationFilterDrive"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.AccelerationFilterDrive">[docs]</a><span class="k">class</span> <span class="nc">AccelerationFilterDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">AccelerationFilterDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps another drive interface, and provides acceleration filtering.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="AccelerationFilterDrive.__init__"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.AccelerationFilterDrive.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">,</span> <span class="n">accelerationRate</span><span class="o">=.</span><span class="mi">08</span><span class="p">):</span>
+<div class="viewcode-block" id="AccelerationFilterDrive.__init__"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.AccelerationFilterDrive.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">,</span> <span class="n">accelerationRate</span><span class="o">=.</span><span class="mi">08</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ``interface`` is the DriveInterface to provide acceleration filtering</span>
 <span class="sd">        for. ``accelerationRate`` defaults to .08 (0 to full speed in .25</span>
@@ -131,24 +131,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">previousY</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">previousTurn</span> <span class="o">=</span> <span class="mf">0.0</span></div>
         
-<div class="viewcode-block" id="AccelerationFilterDrive.setDriveMode"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.AccelerationFilterDrive.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<div class="viewcode-block" id="AccelerationFilterDrive.setDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.AccelerationFilterDrive.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">setDriveMode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AccelerationFilterDrive.getDriveMode"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.AccelerationFilterDrive.getDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">getDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AccelerationFilterDrive.getDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.AccelerationFilterDrive.getDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">getDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">getDriveMode</span><span class="p">()</span></div>
     
-<div class="viewcode-block" id="AccelerationFilterDrive.drive"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.AccelerationFilterDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="AccelerationFilterDrive.drive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.AccelerationFilterDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span> <span class="o">=</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">_accelerationFilter</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">drive</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AccelerationFilterDrive.getFilteredMagnitude"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.AccelerationFilterDrive.getFilteredMagnitude">[docs]</a>    <span class="k">def</span> <span class="nf">getFilteredMagnitude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AccelerationFilterDrive.getFilteredMagnitude"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.AccelerationFilterDrive.getFilteredMagnitude">[docs]</a>    <span class="k">def</span> <span class="nf">getFilteredMagnitude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previousX</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousY</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AccelerationFilterDrive.getFilteredDirection"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.AccelerationFilterDrive.getFilteredDirection">[docs]</a>    <span class="k">def</span> <span class="nf">getFilteredDirection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AccelerationFilterDrive.getFilteredDirection"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.AccelerationFilterDrive.getFilteredDirection">[docs]</a>    <span class="k">def</span> <span class="nf">getFilteredDirection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previousY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousX</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AccelerationFilterDrive.getFilteredTurn"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.AccelerationFilterDrive.getFilteredTurn">[docs]</a>    <span class="k">def</span> <span class="nf">getFilteredTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AccelerationFilterDrive.getFilteredTurn"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.AccelerationFilterDrive.getFilteredTurn">[docs]</a>    <span class="k">def</span> <span class="nf">getFilteredTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousTurn</span></div>
     
     <span class="c1"># returns an tuple of: (magnitude, direction, turn)</span>
@@ -183,14 +183,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">previousX</span> <span class="o">=</span> <span class="n">newX</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">previousY</span> <span class="o">=</span> <span class="n">newY</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">previousTurn</span> <span class="o">=</span> <span class="n">newTurn</span>
-        <span class="k">return</span> <span class="n">newMagnitude</span><span class="p">,</span> <span class="n">newDirection</span><span class="p">,</span> <span class="n">newTurn</span></div>
+        <span class="k">return</span> <span class="n">newMagnitude</span><span class="p">,</span> <span class="n">newDirection</span><span class="p">,</span> <span class="n">newTurn</span>
 
-<div class="viewcode-block" id="FieldOrientedDrive"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.FieldOrientedDrive">[docs]</a><span class="k">class</span> <span class="nc">FieldOrientedDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">FieldOrientedDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps another drive interface, and provides field orientation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="FieldOrientedDrive.__init__"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.FieldOrientedDrive.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">,</span> <span class="n">ahrs</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+<div class="viewcode-block" id="FieldOrientedDrive.__init__"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.FieldOrientedDrive.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">,</span> <span class="n">ahrs</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create the FieldOrientedDrive with another DriveInterface to wrap and a</span>
 <span class="sd">        ``robotpy_ext.common_drivers.navx.AHRS``. If given, the offset is a</span>
@@ -201,26 +201,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">offset</span></div>
 
-<div class="viewcode-block" id="FieldOrientedDrive.zero"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.FieldOrientedDrive.zero">[docs]</a>    <span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FieldOrientedDrive.zero"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.FieldOrientedDrive.zero">[docs]</a>    <span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getYawRadians</span><span class="p">()</span></div>
         
-<div class="viewcode-block" id="FieldOrientedDrive.setDriveMode"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.FieldOrientedDrive.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<div class="viewcode-block" id="FieldOrientedDrive.setDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.FieldOrientedDrive.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">setDriveMode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FieldOrientedDrive.getDriveMode"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.FieldOrientedDrive.getDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">getDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FieldOrientedDrive.getDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.FieldOrientedDrive.getDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">getDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">getDriveMode</span><span class="p">()</span></div>
     
-<div class="viewcode-block" id="FieldOrientedDrive.drive"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.FieldOrientedDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="FieldOrientedDrive.drive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.FieldOrientedDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">robotAngle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getYawRadians</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span>
         <span class="n">direction</span> <span class="o">-=</span> <span class="n">robotAngle</span>
         <span class="n">direction</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">drive</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span><span class="p">)</span></div>
     
     <span class="k">def</span> <span class="nf">_getYawRadians</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ahrs</span><span class="o">.</span><span class="n">getYaw</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ahrs</span><span class="o">.</span><span class="n">getYaw</span><span class="p">())</span>
 
 
-<div class="viewcode-block" id="DynamicPIDDrive"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DynamicPIDDrive">[docs]</a><span class="k">class</span> <span class="nc">DynamicPIDDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">DynamicPIDDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps another drive interface. Based on the driving matnitude and turn</span>
 <span class="sd">    speed, the PID&#39;s of a set of talons are changed. PID&#39;s are given as a tuple</span>
@@ -229,7 +229,7 @@
 <span class="sd">    between, the P/I/D/F values are interpolated.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="DynamicPIDDrive.__init__"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DynamicPIDDrive.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">,</span> <span class="n">wheelTalons</span><span class="p">,</span> <span class="n">slowPID</span><span class="p">,</span> <span class="n">slowPIDScale</span><span class="p">,</span>
+<div class="viewcode-block" id="DynamicPIDDrive.__init__"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.DynamicPIDDrive.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">,</span> <span class="n">wheelTalons</span><span class="p">,</span> <span class="n">slowPID</span><span class="p">,</span> <span class="n">slowPIDScale</span><span class="p">,</span>
                  <span class="n">fastPID</span><span class="p">,</span> <span class="n">fastPIDScale</span><span class="p">,</span> <span class="n">pidLookBackRange</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interface</span> <span class="o">=</span> <span class="n">interface</span>
@@ -242,13 +242,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">currentPID</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driveScales</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pidLookBackRange</span><span class="p">)]</span></div>
 
-<div class="viewcode-block" id="DynamicPIDDrive.setDriveMode"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DynamicPIDDrive.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<div class="viewcode-block" id="DynamicPIDDrive.setDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.DynamicPIDDrive.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">setDriveMode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DynamicPIDDrive.getDriveMode"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DynamicPIDDrive.getDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">getDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DynamicPIDDrive.getDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.DynamicPIDDrive.getDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">getDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">getDriveMode</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="DynamicPIDDrive.drive"><a class="viewcode-back" href="../../drive.html#seamonsters.drive.DynamicPIDDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="DynamicPIDDrive.drive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.DynamicPIDDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">driveScale</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">magnitude</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">turn</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driveScales</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">driveScale</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driveScales</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -278,7 +278,7 @@
                 <span class="n">fastValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fastPID</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">fastValue</span> <span class="o">-</span> <span class="n">slowValue</span><span class="p">)</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="n">slowValue</span>
                 <span class="n">pidList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pidList</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">pidList</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -297,6 +297,8 @@
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../seamonsters.html">seamonsters</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>

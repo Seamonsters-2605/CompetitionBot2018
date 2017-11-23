@@ -49,7 +49,7 @@
 
 <span class="kn">from</span> <span class="nn">seamonsters.drive</span> <span class="k">import</span> <span class="n">DriveInterface</span>
 
-<div class="viewcode-block" id="HolonomicDrive"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive">[docs]</a><span class="k">class</span> <span class="nc">HolonomicDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">HolonomicDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An implementation of the DriveInterface for holonomic drive. This allows for</span>
 <span class="sd">    mecanum/omni drives in the &quot;diamond&quot; configuration. The offset of the wheels</span>
@@ -74,7 +74,7 @@
     <span class="n">BACK_LEFT</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">BACK_RIGHT</span> <span class="o">=</span> <span class="mi">3</span>
 
-<div class="viewcode-block" id="HolonomicDrive.__init__"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fl</span><span class="p">,</span> <span class="n">fr</span><span class="p">,</span> <span class="n">bl</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">ticksPerWheelRotation</span><span class="p">):</span>
+<div class="viewcode-block" id="HolonomicDrive.__init__"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fl</span><span class="p">,</span> <span class="n">fr</span><span class="p">,</span> <span class="n">bl</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">ticksPerWheelRotation</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize holonomicDrive with for talons. ticksPerWheelRotation MUST</span>
 <span class="sd">        be for a full wheel rotation, not necessarily a full motor rotation.</span>
@@ -111,13 +111,13 @@
 
     <span class="c1">#USE THESE FEW FUNCTIONS BELOW</span>
     
-<div class="viewcode-block" id="HolonomicDrive.invertDrive"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.invertDrive">[docs]</a>    <span class="k">def</span> <span class="nf">invertDrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="HolonomicDrive.invertDrive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.invertDrive">[docs]</a>    <span class="k">def</span> <span class="nf">invertDrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If invertDrive is enabled, all motor directions will be inverted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">invert</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">enabled</span> <span class="k">else</span> <span class="mi">1</span></div>
 
-<div class="viewcode-block" id="HolonomicDrive.setWheelOffset"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.setWheelOffset">[docs]</a>    <span class="k">def</span> <span class="nf">setWheelOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angleInRadians</span><span class="p">):</span>
+<div class="viewcode-block" id="HolonomicDrive.setWheelOffset"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.setWheelOffset">[docs]</a>    <span class="k">def</span> <span class="nf">setWheelOffset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angleInRadians</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the offset angle at which the wheels exert force -- in radians. 0 is</span>
 <span class="sd">        facing forward (tank drive). 1/4 pi (45 degrees) is a &quot;diamond&quot;</span>
@@ -126,7 +126,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wheelOffset</span> <span class="o">=</span> <span class="n">angleInRadians</span></div>
 
-<div class="viewcode-block" id="HolonomicDrive.setMaxVelocity"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.setMaxVelocity">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxVelocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">velocity</span><span class="p">):</span>
+<div class="viewcode-block" id="HolonomicDrive.setMaxVelocity"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.setMaxVelocity">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxVelocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">velocity</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the max encoder velocity for position/jeff and speed mode.</span>
 <span class="sd">        Default is 400. For position mode, this is the maximum difference</span>
@@ -136,7 +136,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maxVelocity</span> <span class="o">=</span> <span class="n">velocity</span></div>
     
-<div class="viewcode-block" id="HolonomicDrive.drive"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="HolonomicDrive.drive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">forceDriveMode</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span>
@@ -153,7 +153,7 @@
     <span class="c1"># these functions ignore the current driveMode setting. They are not part of</span>
     <span class="c1"># DriveInterface</span>
     
-<div class="viewcode-block" id="HolonomicDrive.driveVoltage"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.driveVoltage">[docs]</a>    <span class="k">def</span> <span class="nf">driveVoltage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span>
+<div class="viewcode-block" id="HolonomicDrive.driveVoltage"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.driveVoltage">[docs]</a>    <span class="k">def</span> <span class="nf">driveVoltage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">turn</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">magnitude</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_disableTalons</span><span class="p">()</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allTalonsEnabled</span><span class="p">():</span>
@@ -165,7 +165,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_setWheels</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span></div>
 
-<div class="viewcode-block" id="HolonomicDrive.driveSpeed"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.driveSpeed">[docs]</a>    <span class="k">def</span> <span class="nf">driveSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span>
+<div class="viewcode-block" id="HolonomicDrive.driveSpeed"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.driveSpeed">[docs]</a>    <span class="k">def</span> <span class="nf">driveSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">turn</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">magnitude</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_disableTalons</span><span class="p">()</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allTalonsEnabled</span><span class="p">():</span>
@@ -179,7 +179,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">SPEED</span></div>
 
     <span class="c1">#Increments position to mock speed mode</span>
-<div class="viewcode-block" id="HolonomicDrive.driveSpeedJeffMode"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.driveSpeedJeffMode">[docs]</a>    <span class="k">def</span> <span class="nf">driveSpeedJeffMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span> 
+<div class="viewcode-block" id="HolonomicDrive.driveSpeedJeffMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.driveSpeedJeffMode">[docs]</a>    <span class="k">def</span> <span class="nf">driveSpeedJeffMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span> 
         <span class="k">if</span> <span class="p">(</span><span class="n">turn</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">magnitude</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_disableTalons</span><span class="p">()</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allTalonsEnabled</span><span class="p">():</span>
@@ -196,7 +196,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">POSITION</span></div>
         
         
-<div class="viewcode-block" id="HolonomicDrive.logCurrent"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.logCurrent">[docs]</a>    <span class="k">def</span> <span class="nf">logCurrent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="HolonomicDrive.logCurrent"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.logCurrent">[docs]</a>    <span class="k">def</span> <span class="nf">logCurrent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FL Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">FRONT_LEFT</span><span class="p">]</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FR Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
@@ -206,7 +206,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BR Current:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">BACK_RIGHT</span><span class="p">]</span><span class="o">.</span><span class="n">getOutputCurrent</span><span class="p">()))</span></div>
 
-<div class="viewcode-block" id="HolonomicDrive.zeroEncoderTargets"><a class="viewcode-back" href="../../holonomicDrive.html#seamonsters.holonomicDrive.HolonomicDrive.zeroEncoderTargets">[docs]</a>    <span class="k">def</span> <span class="nf">zeroEncoderTargets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="HolonomicDrive.zeroEncoderTargets"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.zeroEncoderTargets">[docs]</a>    <span class="k">def</span> <span class="nf">zeroEncoderTargets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">encoderTargets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">getPosition</span><span class="p">()</span></div>
     
@@ -279,7 +279,7 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isControlEnabled</span><span class="p">():</span>
                 <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 
           </div>
@@ -291,6 +291,8 @@
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../seamonsters.html">seamonsters</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
