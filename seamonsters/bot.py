@@ -57,3 +57,6 @@ class CommandBot(RobotBase, seamonsters.commands.CommandGroup):
         Override this for robot initialization.
         """
         print("No robotInit!")
+
+    def isFinished(self):
+        return False
