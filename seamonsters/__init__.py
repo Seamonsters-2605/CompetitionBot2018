@@ -18,7 +18,6 @@ from .joystick import *
 from .logging import *
 from .motorControl import *
 from .path import *
-from .pdp import *
 from .swerveDrive import *
 
 _changeModule(bot)
@@ -30,5 +29,4 @@ _changeModule(joystick)
 _changeModule(logging)
 _changeModule(motorControl)
 _changeModule(path)
-_changeModule(pdp)
 _changeModule(swerveDrive)
