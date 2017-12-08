@@ -1,4 +1,4 @@
-__author__ = "jacobvanthoog"
+__author__ = "seamonsters"
 
 from networktables import NetworkTables
 
