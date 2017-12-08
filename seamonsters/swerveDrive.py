@@ -181,9 +181,9 @@ class SwerveDrive(DriveInterface):
     """
     
     def __init__(self):
-        DriveInterface.__init__(self)
         self.wheels = [ ]
         self.manager = MotorManager()
+        self.driveMode = DriveInterface.DriveMode.VOLTAGE
         
     def setMaxVeloicty(self, velocity):
         """
@@ -194,9 +194,9 @@ class SwerveDrive(DriveInterface):
         10ths of a second, the velocity value is multiplied by 5.
         """
         self.manager.setMaxSpeed(velocity)
-    
+
     def setDriveMode(self, mode):
-        DriveInterface.setDriveMode(self, mode)
+        self.driveMode = mode
         self.manager.setDriveMode(mode)
     
     def addWheel(self, xLocation, yLocation,
@@ -220,10 +220,9 @@ class SwerveDrive(DriveInterface):
                     rotateTalonEncoderTicks)
         self.wheels.append( WheelState(location, wheelController) )
     
-    def drive(self, magnitude, direction, turn, forceDriveMode = None):
-        if forceDriveMode == None:
-            forceDriveMode = self.getDriveMode()
-        self.manager.setDriveMode(forceDriveMode)
+    def drive(self, magnitude, direction, turn):
+        mode = self.driveMode
+        self.manager.setDriveMode(mode)
         for wheel in self.wheels:
             wheel.calcDrive(magnitude, direction, turn)
             wheel.drive()
