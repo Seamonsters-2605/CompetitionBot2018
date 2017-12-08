@@ -1,4 +1,4 @@
-__author__ = 'Dawson'
+__author__ = 'seamonsters'
 
 import ctre
 import math
@@ -35,8 +35,6 @@ class HolonomicDrive(DriveInterface):
         Initialize holonomicDrive with for talons. ticksPerWheelRotation MUST
         be for a full wheel rotation, not necessarily a full motor rotation.
         """
-        DriveInterface.__init__(self)
-        
         self.wheelMotors = [None for i in range(0, 4)]
         self.wheelMotors[HolonomicDrive.FRONT_LEFT] = fl
         self.wheelMotors[HolonomicDrive.FRONT_RIGHT] = fr
@@ -91,13 +89,12 @@ class HolonomicDrive(DriveInterface):
         10ths of a second, the velocity value is multiplied by 5.
         """
         self.maxVelocity = velocity
-    
-    def drive(self, magnitude, direction, turn, forceDriveMode = None):
-        mode = None
-        if forceDriveMode == None:
-            mode = self.driveMode
-        else:
-            mode = forceDriveMode
+
+    def setDriveMode(self, mode):
+        self.driveMode = mode
+
+    def drive(self, magnitude, direction, turn):
+        mode = self.driveMode
         if mode == DriveInterface.DriveMode.VOLTAGE:
             self.driveVoltage(magnitude, direction, turn)
         elif mode == DriveInterface.DriveMode.SPEED:
