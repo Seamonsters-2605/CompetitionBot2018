@@ -1,4 +1,4 @@
-__author__ = "jacobvanthoog"
+__author__ = "seamonsters"
 
 import ctre
 import math
@@ -17,15 +17,8 @@ def setControlMode(talon, driveMode):
 
 class DriveInterface:
     """
-    A generic, abstract interface for driving a robot. Allows 3 different
-    control modes for CANTalons, specified by DriveMode.
-    DriveMode purposefully doesn't have options for configuring things like the
-    maximum velocity of the motors or the ticks-per-rotation for position mode.
-    It is assumed each implementation will have methods for this. But assuming
-    that has been set up in the robotInit method, all DriveInterface classes
-    should be interchangable.
+    A generic, abstract interface for driving a robot.
     """
-
 
     class DriveMode:
         """
@@ -36,26 +29,7 @@ class DriveInterface:
         SPEED = 2
         POSITION = 3
     
-    def __init__(self):
-        self.driveMode = DriveInterface.DriveMode.VOLTAGE
-        self.magnitudeScale = 1
-        self.turnScale = 1
-
-    def setDriveMode(self, mode):
-        """
-        Set the default control mode for driving. If you call drive() without
-        forceDriveMode, this will be used.
-        """
-        self.driveMode = mode
-
-    def getDriveMode(self):
-        """
-        Get the current default control mode, as set by setDriveMode(). The
-        default is SPEED, but implementations may have their own defaults.
-        """
-        return self.driveMode
-    
-    def drive(self, magnitude, direction, turn, forceDriveMode = None):
+    def drive(self, magnitude, direction, turn):
         """
         Drive the robot, with a given magnitude, direction, and turn.
         If forceDriveMode is specified, the current drive mode will be 
@@ -65,7 +39,7 @@ class DriveInterface:
 
 class TestDriveInterface(DriveInterface):
 
-    def drive(self, magnitude, direction, turn, forceDriveMode = None):
+    def drive(self, magnitude, direction, turn):
         print("Drive mag", magnitude, "dir", direction, "turn", turn)
 
 
@@ -86,17 +60,11 @@ class AccelerationFilterDrive(DriveInterface):
         self.previousX = 0.0
         self.previousY = 0.0
         self.previousTurn = 0.0
-        
-    def setDriveMode(self, mode):
-        self.interface.setDriveMode(mode)
-
-    def getDriveMode(self):
-        return self.interface.getDriveMode()
     
-    def drive(self, magnitude, direction, turn, forceDriveMode = None):
+    def drive(self, magnitude, direction, turn):
         magnitude, direction, turn = \
             self._accelerationFilter(magnitude, direction, turn)
-        self.interface.drive(magnitude, direction, turn, forceDriveMode)
+        self.interface.drive(magnitude, direction, turn)
 
     def getFilteredMagnitude(self):
         return math.sqrt(self.previousX ** 2 + self.previousY ** 2)
@@ -159,18 +127,12 @@ class FieldOrientedDrive(DriveInterface):
 
     def zero(self):
         self.origin = self._getYawRadians()
-        
-    def setDriveMode(self, mode):
-        self.interface.setDriveMode(mode)
-
-    def getDriveMode(self):
-        return self.interface.getDriveMode()
     
-    def drive(self, magnitude, direction, turn, forceDriveMode = None):
+    def drive(self, magnitude, direction, turn):
         robotAngle = self._getYawRadians() - self.origin
         direction -= robotAngle
         direction += self.offset
-        self.interface.drive(magnitude, direction, turn, forceDriveMode)
+        self.interface.drive(magnitude, direction, turn)
     
     def _getYawRadians(self):
         return - math.radians(self.ahrs.getYaw())
@@ -198,19 +160,13 @@ class DynamicPIDDrive(DriveInterface):
         self.currentPID = None
         self.driveScales = [0.0 for i in range(0, pidLookBackRange)]
 
-    def setDriveMode(self, mode):
-        self.interface.setDriveMode(mode)
-
-    def getDriveMode(self):
-        return self.interface.getDriveMode()
-
-    def drive(self, magnitude, direction, turn, forceDriveMode=None):
+    def drive(self, magnitude, direction, turn):
         driveScale = max(abs(magnitude), abs(turn * 2))
         self.driveScales.append(driveScale)
         self.driveScales.pop(0)
         self._setPID(self._lerpPID(max(self.driveScales)))
 
-        self.interface.drive(magnitude, direction, turn, forceDriveMode)
+        self.interface.drive(magnitude, direction, turn)
 
     def _setPID(self, pid):
         if pid == self.currentPID:
