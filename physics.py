@@ -59,11 +59,14 @@ class PhysicsEngine:
         
         # read CAN data to get motor speeds
         maxValue = 1024
-        fl = (data['CAN'][self.canFL][valueName] * self.canFLInv / maxValue)
-        fr = (data['CAN'][self.canFR][valueName] * self.canFRInv / maxValue)
-        if not self.drivetrain == "two":
-            bl = (data['CAN'][self.canBL][valueName] * self.canBLInv / maxValue)
-            br = (data['CAN'][self.canBR][valueName] * self.canBRInv / maxValue)
+        try:
+            fl = (data['CAN'][self.canFL][valueName] * self.canFLInv / maxValue)
+            fr = (data['CAN'][self.canFR][valueName] * self.canFRInv / maxValue)
+            if not self.drivetrain == "two":
+                bl = (data['CAN'][self.canBL][valueName] * self.canBLInv / maxValue)
+                br = (data['CAN'][self.canBR][valueName] * self.canBRInv / maxValue)
+        except KeyError:
+            return
 
         if self.drivetrain == "mecanum":
             vx, vy, vw = drivetrains.mecanum_drivetrain(bl, br, fl, fr,
