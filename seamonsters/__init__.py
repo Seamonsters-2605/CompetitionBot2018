@@ -10,7 +10,7 @@ def _changeModule(module):
                 item.__module__ = "seamonsters"
 
 from .bot import *
-from .commands import *
+from .generators import *
 from .drive import *
 from .gamepad import *
 from .holonomicDrive import *
@@ -21,7 +21,7 @@ from .path import *
 from .swerveDrive import *
 
 _changeModule(bot)
-_changeModule(commands)
+_changeModule(generators)
 _changeModule(drive)
 _changeModule(gamepad)
 _changeModule(holonomicDrive)

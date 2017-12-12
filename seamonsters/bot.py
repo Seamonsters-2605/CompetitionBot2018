@@ -1,20 +1,16 @@
 __author__ = "seamonsters"
 
+import traceback
 import hal
-import seamonsters.commands
-
 from wpilib.robotbase import RobotBase
 from wpilib.livewindow import LiveWindow
 
-class CommandBot(RobotBase, seamonsters.commands.CommandGroup):
+class GeneratorBot(RobotBase):
 
     def __init__(self):
         RobotBase.__init__(self)
-        seamonsters.commands.CommandGroup.__init__(self)
-        self.started = False
-
-    def __repr__(self):
-        return "Robot"
+        self.iterator = None
+        self.earlyStop = False
 
     def startCompetition(self):
         hal.report(hal.UsageReporting.kResourceType_Framework,
@@ -30,18 +26,26 @@ class CommandBot(RobotBase, seamonsters.commands.CommandGroup):
             # Wait for new data to arrive
             self.ds.waitForData()
             if self.isDisabled():
-                if self.state != seamonsters.commands.Command.STOPPED:
-                    self.interrupt()
-                    self.run()
+                self.earlyStop = False
+                if self.iterator:
+                    self.iterator.close()
+                    self.iterator = None
                     LiveWindow.setEnabled(False)
                 hal.observeUserProgramDisabled()
-                self.started = False
             else: # not disabled
-                if not self.started:
+                if not self.iterator and not self.earlyStop:
                     LiveWindow.setEnabled(True)
-                    self.started = True
-                    self.start()
-                    self.clear()
+                    try:
+                        if self.isTest():
+                            self.iterator = self.test()
+                        elif self.isAutonomous():
+                            self.iterator = self.autonomous()
+                        else:
+                            self.iterator = self.teleop()
+                    except:
+                        print("Exception while starting sequence!")
+                        traceback.print_exc()
+                        self.earlyStop = True
 
                 if self.isTest():
                     hal.observeUserProgramTest()
@@ -50,13 +54,42 @@ class CommandBot(RobotBase, seamonsters.commands.CommandGroup):
                 else:
                     hal.observeUserProgramTeleop()
 
-                self.run()
+                if self.iterator:
+                    try:
+                        next(self.iterator)
+                    except StopIteration:
+                        print("Robot done.")
+                        self.iterator = None
+                        self.earlyStop = True
+                    except:
+                        print("Exception in robot code!")
+                        traceback.print_exc()
+                        self.iterator = None
+                        self.earlyStop = True
 
     def robotInit(self):
         """
-        Override this for robot initialization.
+        Override this for robot initialization. This should NOT be a generator.
         """
         print("No robotInit!")
 
-    def isFinished(self):
-        return False
+    def teleop(self):
+        """
+        Override this to make a generator for teleop
+        """
+        print("No teleop!")
+        yield
+
+    def autonomous(self):
+        """
+        Override this to make a generator for autonomous
+        """
+        print("No autonomous!")
+        yield
+
+    def test(self):
+        """
+        Override this to make a generator for test mode
+        """
+        print("No test!")
+        yield
