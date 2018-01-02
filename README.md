@@ -1,19 +1,10 @@
-# Seamonsters Robot Code Template
+# Competition Bot 2018!
 
-Template for robot code.
+Clone this to your computer with Git Bash:
 
-Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
-`.\test.bat` (Windows).
+```
+cd ~/Documents
+git clone https://github.com/seamonsters-2605/CompetitionBot2018
+```
 
-## Directory Structure
-
-- `seamonsters/`: The seamonsters library code. It has its own documentation, in
-    `seamonsters/docs/_build/html/index.html` (you can view it online
-    [here](https://rawgit.com/Seamonsters-2605/SeamonstersTemplate/master/seamonsters/docs/_build/html/index.html))
-- `tests/`: Created and used by pyfrc for tests.
-- `deploy.bat` and `deploy.sh`: Windows and *nix versions of scripts for
-    deploying code to robot.
-- `fastdeploy.bat` and `fastdeploy.sh`: Deploy code without testing it.
-- `test.bat` and `test.sh`: Scripts for testing robot code without needing an
-    actual robot to deploy to.
-- `physics.py` and `sim/`: Used for pyfrc robot simulation. See `sim/README` for details.
+Then open PyCharm, choose File > Open, browse to your Documents, and choose CompetitionBot2018 (you might have to click the refresh button for it to appear).
