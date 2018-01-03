@@ -93,3 +93,36 @@ class GeneratorBot(RobotBase):
         """
         print("No test!")
         yield
+
+
+class IterativeRobotInstance:
+    """
+    Allows an "instance" of an IterativeRobot to be created without connecting
+    to HAL or LiveWindow. Allows running teleop/autonomous sequences as a
+    Generator.
+    """
+
+    def __init__(self, robotType):
+        # https://stackoverflow.com/a/19476841
+        self.robotObject = type('', (), {})()
+        self.robotType = robotType
+        robotType.robotInit(self.robotObject)
+
+    def teleopGenerator(self):
+        """
+        A generator which runs teleopInit then teleopPeriodic continuously.
+        """
+        self.robotType.teleopInit(self.robotObject)
+        while True:
+            yield
+            self.robotType.teleopPeriodic(self.robotObject)
+
+    def autonomousGenerator(self):
+        """
+        A generator which runs autonomousInit then autonomousPeriodic
+        continuously.
+        """
+        self.robotType.autonomousInit(self.robotObject)
+        while True:
+            yield
+            self.robotType.autonomousPeriodic(self.robotObject)
