@@ -1,6 +1,5 @@
 __author__ = "jacobvanthoog"
 
-from seamonsters.drive import DriveInterface
 import seamonsters.drive
 from seamonsters.motorControl import *
 import math
@@ -141,7 +140,7 @@ class TalonWheelController(WheelController):
         self.reverseRotateTalon = rotateTalonEncoderTicks < 0
         rotateTalon.changeControlMode(ctre.CANTalon.ControlMode.Position)
         
-        self.driveMode = DriveInterface.DriveMode.VOLTAGE
+        self.driveMode = ctre.CANTalon.ControlMode.PercentVbus
 
     def getCurrentRotation(self):
         ticks = self.rotateTalon.getPosition()
@@ -175,7 +174,7 @@ class TalonWheelController(WheelController):
         self.driveController.update()
     
 
-class SwerveDrive(DriveInterface):
+class SwerveDrive(seamonsters.drive.DriveInterface):
     """
     An implementation of DriveInterface for swerve drives.
     """
@@ -183,7 +182,7 @@ class SwerveDrive(DriveInterface):
     def __init__(self):
         self.wheels = [ ]
         self.manager = MotorManager()
-        self.driveMode = DriveInterface.DriveMode.VOLTAGE
+        self.driveMode = ctre.CANTalon.ControlMode.PercentVbus
         
     def setMaxVeloicty(self, velocity):
         """

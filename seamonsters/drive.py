@@ -1,39 +1,21 @@
 __author__ = "seamonsters"
 
-import ctre
 import math
-
-def setControlMode(talon, driveMode):
-    """
-    Given a DriveInterface.DriveMode, set the control mode of a CANTalon using
-    a ctre.CANTalon.ControlMode.
-    """
-    if driveMode == DriveInterface.DriveMode.VOLTAGE:
-        talon.changeControlMode(ctre.CANTalon.ControlMode.PercentVbus)
-    if driveMode == DriveInterface.DriveMode.SPEED:
-        talon.changeControlMode(ctre.CANTalon.ControlMode.Speed)
-    if driveMode == DriveInterface.DriveMode.POSITION:
-        talon.changeControlMode(ctre.CANTalon.ControlMode.Position)
 
 class DriveInterface:
     """
     A generic, abstract interface for driving a robot.
     """
-
-    class DriveMode:
-        """
-        Control modes for CANTalons. POSITION is incremental position mode (aka
-        "Jeff mode").
-        """
-        VOLTAGE = 1
-        SPEED = 2
-        POSITION = 3
     
     def drive(self, magnitude, direction, turn):
         """
         Drive the robot, with a given magnitude, direction, and turn.
-        If forceDriveMode is specified, the current drive mode will be 
-        overriden. It is expected that this function be called in a loop.
+
+        Magnitude: 0 to 1
+
+        Direction: Counterclockwise positive, radians
+
+        Turn: -1 to 1
         """
         pass
 
