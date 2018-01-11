@@ -1,3 +1,4 @@
 -Field oriented drive
--Drive voltage mode
+-Drive speed mode
+-Drive position mode
 -Encoder logging

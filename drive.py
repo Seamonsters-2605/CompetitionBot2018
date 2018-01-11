@@ -93,10 +93,12 @@ class DriveBot(sea.GeneratorBot):
             self.drive = self.fieldDrive
         else:
             self.drive = self.fieldDrive.interface
-        if sea.getSwitch("Drive voltage mode", True):
-            self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.PercentVbus)
-        else:
+        if sea.getSwitch("Drive speed mode", False):
+            self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
+        elif sea.getSwitch("Drive position mode", False):
             self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Position)
+        else:
+            self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.PercentVbus)
 
         self.encoderLoggingEnabled = sea.getSwitch("Encoder logging", False)
 
