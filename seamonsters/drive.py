@@ -3,6 +3,7 @@ __author__ = "seamonsters"
 import ctre
 import math
 
+
 def talonModeToString(mode):
     if mode == ctre.CANTalon.ControlMode.Disabled:
         return "Disabled"
@@ -30,7 +31,7 @@ class DriveInterface:
     """
     A generic, abstract interface for driving a robot.
     """
-    
+
     def drive(self, magnitude, direction, turn):
         """
         Drive the robot, with a given magnitude, direction, and turn.
@@ -43,8 +44,8 @@ class DriveInterface:
         """
         pass
 
-class TestDriveInterface(DriveInterface):
 
+class TestDriveInterface(DriveInterface):
     def drive(self, magnitude, direction, turn):
         print("Drive mag", magnitude, "dir", direction, "turn", turn)
 
@@ -53,7 +54,7 @@ class AccelerationFilterDrive(DriveInterface):
     """
     Wraps another drive interface, and provides acceleration filtering.
     """
-    
+
     def __init__(self, interface, accelerationRate=.08):
         """
         ``interface`` is the DriveInterface to provide acceleration filtering
@@ -61,12 +62,12 @@ class AccelerationFilterDrive(DriveInterface):
         seconds).
         """
         self.interface = interface
-        
+
         self.accelerationRate = accelerationRate
         self.previousX = 0.0
         self.previousY = 0.0
         self.previousTurn = 0.0
-    
+
     def drive(self, magnitude, direction, turn):
         magnitude, direction, turn = \
             self._accelerationFilter(magnitude, direction, turn)
@@ -80,7 +81,7 @@ class AccelerationFilterDrive(DriveInterface):
 
     def getFilteredTurn(self):
         return self.previousTurn
-    
+
     # returns an tuple of: (magnitude, direction, turn)
     def _accelerationFilter(self, magnitude, direction, turn):
         if abs(self.previousTurn - turn) <= self.accelerationRate:
@@ -90,11 +91,11 @@ class AccelerationFilterDrive(DriveInterface):
                 newTurn = self.previousTurn + self.accelerationRate
             else:
                 newTurn = self.previousTurn - self.accelerationRate
-        
+
         x = magnitude * math.cos(direction)
         y = magnitude * math.sin(direction)
-        distanceToNew = math.sqrt( (x - self.previousX) ** 2 \
-                + (y - self.previousY) ** 2 )
+        distanceToNew = math.sqrt((x - self.previousX) ** 2 \
+                                  + (y - self.previousY) ** 2)
 
         if distanceToNew <= self.accelerationRate:
             newX = x
@@ -104,9 +105,9 @@ class AccelerationFilterDrive(DriveInterface):
         else:
             directionToNew = math.atan2(y - self.previousY, x - self.previousX)
             newX = self.previousX \
-                    + math.cos(directionToNew) * self.accelerationRate
+                   + math.cos(directionToNew) * self.accelerationRate
             newY = self.previousY \
-                    + math.sin(directionToNew) * self.accelerationRate
+                   + math.sin(directionToNew) * self.accelerationRate
             newMagnitude = math.sqrt(newX ** 2 + newY ** 2)
             newDirection = math.atan2(newY, newX)
 
@@ -115,11 +116,12 @@ class AccelerationFilterDrive(DriveInterface):
         self.previousTurn = newTurn
         return newMagnitude, newDirection, newTurn
 
+
 class FieldOrientedDrive(DriveInterface):
     """
     Wraps another drive interface, and provides field orientation.
     """
-    
+
     def __init__(self, interface, ahrs, offset=0.0):
         """
         Create the FieldOrientedDrive with another DriveInterface to wrap and a
@@ -133,15 +135,15 @@ class FieldOrientedDrive(DriveInterface):
 
     def zero(self):
         self.origin = self._getYawRadians()
-    
+
     def drive(self, magnitude, direction, turn):
         robotAngle = self._getYawRadians() - self.origin
         direction -= robotAngle
         direction += self.offset
         self.interface.drive(magnitude, direction, turn)
-    
+
     def _getYawRadians(self):
-        return - math.radians(self.ahrs.getYaw())
+        return - math.radians(self.ahrs.getAngle())
 
 
 class DynamicPIDDrive(DriveInterface):
