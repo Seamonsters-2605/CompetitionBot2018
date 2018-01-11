@@ -1,6 +1,30 @@
 __author__ = "seamonsters"
 
+import ctre
 import math
+
+def talonModeToString(mode):
+    if mode == ctre.CANTalon.ControlMode.Disabled:
+        return "Disabled"
+    elif mode == ctre.CANTalon.ControlMode.PercentVbus:
+        return "PercentVbus"
+    elif mode == ctre.CANTalon.ControlMode.Position:
+        return "Position"
+    elif mode == ctre.CANTalon.ControlMode.Speed:
+        return "Speed"
+    elif mode == ctre.CANTalon.ControlMode.Current:
+        return "Current"
+    elif mode == ctre.CANTalon.ControlMode.Voltage:
+        return "Voltage"
+    elif mode == ctre.CANTalon.ControlMode.Follower:
+        return "Follower"
+    elif mode == ctre.CANTalon.ControlMode.MotionProfile:
+        return "MotionProfile"
+    elif mode == ctre.CANTalon.ControlMode.MotionMagic:
+        return "MotionMagic"
+    else:
+        return str(mode)
+
 
 class DriveInterface:
     """
