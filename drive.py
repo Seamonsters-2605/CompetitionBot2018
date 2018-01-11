@@ -93,6 +93,9 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveControlLog = sea.LogState("Drive Control")
 
+        self.controlMode = "Standard" # or "Tank"
+        self.tick = 0
+
     def teleop(self):
         self.holoDrive.zeroEncoderTargets()
 
@@ -148,32 +151,59 @@ class DriveBot(sea.GeneratorBot):
         else:
             self.fieldDriveLog.update("Disabled")
 
-        turn = self.driverJoystick.getTwist()
-        magnitude = self.driverJoystick.getMagnitude()
-        direction = -self.driverJoystick.getDirectionRadians() + math.pi/2
+        # determines whether we're in standard or tank mode
+        if self.driverJoystick.getRawButton(14):
+            self.controlMode = "Tank"
+        elif self.driverJoystick.getRawButton(13):
+            self.controlMode = "Standard"
+        else:
+            self.controlMode = "Test"
 
-        magnitude = self._joystickPower(magnitude, self.joystickExponent)\
-                    * self.normalScale
-        turn = self._joystickPower(turn, self.joystickExponent, 0.1)\
-                    * self.normalTurnScale
-        if self.automaticDrivePositionMode:
-            if magnitude <= self.speedModeThreshold \
-                    and abs(turn) <= self.speedModeThreshold:
-                self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Position)
-                self.pidDrive.slowPID = self.slowPID
-            else:
-                self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
-                self.pidDrive.slowPID = self.slowPIDSpeedMode
-        # constrain direction to be between 0 and 2pi
-        if direction < 0:
-            circles = math.ceil(-direction / (math.pi*2))
-            direction += circles * math.pi*2
-        direction %= math.pi*2
-        direction = self.roundDirection(direction, 0)
-        direction = self.roundDirection(direction, math.pi/2.0)
-        direction = self.roundDirection(direction, math.pi)
-        direction = self.roundDirection(direction, 3.0*math.pi/2.0)
-        direction = self.roundDirection(direction, math.pi*2)
+        if self.controlMode == "Standard":
+            turn = self.driverJoystick.getRawAxis(3)
+            -magnitude = self.driverJoystick.getMagnitude()
+            direction = -self.driverJoystick.getDirectionRadians() + math.pi/2
+
+            magnitude = self._joystickPower(magnitude, self.joystickExponent)\
+                        * self.normalScale
+            turn = self._joystickPower(turn, self.joystickExponent, 0.1)\
+                        * self.normalTurnScale
+            if self.automaticDrivePositionMode:
+                if magnitude <= self.speedModeThreshold \
+                        and abs(turn) <= self.speedModeThreshold:
+                    self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Position)
+                    self.pidDrive.slowPID = self.slowPID
+                else:
+                    self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
+                    self.pidDrive.slowPID = self.slowPIDSpeedMode
+            # constrain direction to be between 0 and 2pi
+            if direction < 0:
+                circles = math.ceil(-direction / (math.pi*2))
+                direction += circles * math.pi*2
+            direction %= math.pi*2
+            direction = self.roundDirection(direction, 0)
+            direction = self.roundDirection(direction, math.pi/2.0)
+            direction = self.roundDirection(direction, math.pi)
+            direction = self.roundDirection(direction, 3.0*math.pi/2.0)
+            direction = self.roundDirection(direction, math.pi*2)
+
+        elif self.controlMode == "Tank":
+            turn = self.driverJoystick.getX() # joystick side to side is turn
+            magnitude = -self.driverJoystick.getY() # joystick forward and back is speed
+
+        # TODO REAL tank
+        elif self.controlMode == "Test":
+            if self.tick % 50 == 0:
+                print("X: " + str(self.driverJoystick.getX()))
+                print("Y: " + str(self.driverJoystick.getY()))
+                print("Twist: " + str(self.driverJoystick.getRawAxis(3)))
+                print("Throttle 1: " + str(self.driverJoystick.getRawAxis(2)))
+                print("Throttle 2: " + str(self.driverJoystick.getRawAxis(4)))
+
+            self.tick += 1
+            magnitude = 0
+            direction = 0
+            turn = 0
 
         self.drive.drive(magnitude, direction, turn)
 
