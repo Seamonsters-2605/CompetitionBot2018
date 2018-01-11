@@ -3,9 +3,9 @@ __author__ = 'seamonsters'
 import ctre
 import math
 
-from seamonsters.drive import DriveInterface
+import seamonsters.drive
 
-class HolonomicDrive(DriveInterface):
+class HolonomicDrive(seamonsters.drive.DriveInterface):
     """
     An implementation of the DriveInterface for holonomic drive. This allows for
     mecanum/omni drives in the "diamond" configuration. The offset of the wheels
@@ -59,8 +59,8 @@ class HolonomicDrive(DriveInterface):
         # maximum velocity position/jeff mode; multiplied by 5 for speed mode
         self.maxVelocity = 80 * 5
         
-        self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
-        self.driveMode = DriveInterface.DriveMode.VOLTAGE
+        self.previousDriveMode = ctre.CANTalon.ControlMode.PercentVbus
+        self.driveMode = ctre.CANTalon.ControlMode.PercentVbus
 
 
     #USE THESE FEW FUNCTIONS BELOW
@@ -95,11 +95,11 @@ class HolonomicDrive(DriveInterface):
 
     def drive(self, magnitude, direction, turn):
         mode = self.driveMode
-        if mode == DriveInterface.DriveMode.VOLTAGE:
+        if mode == ctre.CANTalon.ControlMode.PercentVbus:
             self.driveVoltage(magnitude, direction, turn)
-        elif mode == DriveInterface.DriveMode.SPEED:
+        elif mode == ctre.CANTalon.ControlMode.Speed:
             self.driveSpeed(magnitude, direction, turn)
-        elif mode == DriveInterface.DriveMode.POSITION:
+        elif mode == ctre.CANTalon.ControlMode.Position:
             self.driveSpeedJeffMode(magnitude, direction, turn)
     
 
@@ -116,7 +116,7 @@ class HolonomicDrive(DriveInterface):
         self._ensureControlMode(ctre.CANTalon.ControlMode.PercentVbus)
         self._calcWheels(magnitude, direction, turn)
         self._setWheels()
-        self.previousDriveMode = DriveInterface.DriveMode.VOLTAGE
+        self.previousDriveMode = ctre.CANTalon.ControlMode.PercentVbus
 
     def driveSpeed(self, magnitude, direction, turn):
         if (turn == 0 and magnitude == 0):
@@ -129,7 +129,7 @@ class HolonomicDrive(DriveInterface):
         self._calcWheels(magnitude, direction, turn)
         self._scaleToMax()
         self._setWheels()
-        self.previousDriveMode = DriveInterface.DriveMode.SPEED
+        self.previousDriveMode = ctre.CANTalon.ControlMode.Speed
 
     #Increments position to mock speed mode
     def driveSpeedJeffMode(self, magnitude, direction, turn): 
@@ -140,13 +140,13 @@ class HolonomicDrive(DriveInterface):
             self.zeroEncoderTargets()
 
         self._ensureControlMode(ctre.CANTalon.ControlMode.Position)
-        if not self.previousDriveMode == DriveInterface.DriveMode.POSITION:
+        if not self.previousDriveMode == ctre.CANTalon.ControlMode.Position:
             self.zeroEncoderTargets()
         self._calcWheels(magnitude, direction, turn)
         self._scaleToMaxJeffMode()
         self._incrementEncoderTargets()
         self._setWheelsJeffMode()
-        self.previousDriveMode = DriveInterface.DriveMode.POSITION
+        self.previousDriveMode = ctre.CANTalon.ControlMode.Position
         
         
     def logCurrent(self):
@@ -189,6 +189,7 @@ class HolonomicDrive(DriveInterface):
             self.stores[i] += turn
 
     def _scaleNumbers(self):
+        # TODO: this looks very wrong
         largest = max(self.stores)
         if largest > 1:
             for number in self.stores:

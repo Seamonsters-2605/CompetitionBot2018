@@ -1,7 +1,6 @@
 __author__ = 'seamonsters'
 
 import ctre
-from seamonsters.drive import DriveInterface
 
 class MotorManager:
     """
@@ -11,7 +10,7 @@ class MotorManager:
     """
     def __init__(self):
         self.talons = [ ]
-        self.driveMode = DriveInterface.DriveMode.VOLTAGE
+        self.driveMode = ctre.CANTalon.ControlMode.PercentVbus
         self.multiModes = [ ]
         self.voltageModes = [ ]
         self.speedModes = [ ]
@@ -43,11 +42,11 @@ class MotorManager:
         
         initial = None
         
-        if self.driveMode == DriveInterface.DriveMode.VOLTAGE:
+        if self.driveMode == ctre.CANTalon.ControlMode.PercentVbus:
             initial = voltage
-        if self.driveMode == DriveInterface.DriveMode.SPEED:
+        if self.driveMode == ctre.CANTalon.ControlMode.Speed:
             initial = speed
-        if self.driveMode == DriveInterface.DriveMode.POSITION:
+        if self.driveMode == ctre.CANTalon.ControlMode.Position:
             initial = jeff
         multi = MultiMode(talon, initial)
         self.multiModes.append(multi)
@@ -57,16 +56,16 @@ class MotorManager:
     def setDriveMode(self, mode):
         """
         Set the drive mode of all MultiMode's, using constants from
-        seamonsters.drive.DriveInterface.DriveMode. Default is VOLTAGE.
+        ctre.CANTalon.ControlMode. Default is PercentVbus.
         """
         self.driveMode = mode
         i = 0
         for m in self.multiModes:
-            if self.driveMode == DriveInterface.DriveMode.VOLTAGE:
+            if self.driveMode == ctre.CANTalon.ControlMode.PercentVbus:
                 m.setSpeedControl(self.voltageModes[i])
-            if self.driveMode == DriveInterface.DriveMode.SPEED:
+            if self.driveMode == ctre.CANTalon.ControlMode.Speed:
                 m.setSpeedControl(self.speedModes[i])
-            if self.driveMode == DriveInterface.DriveMode.POSITION:
+            if self.driveMode == ctre.CANTalon.ControlMode.Position:
                 m.setSpeedControl(self.jeffModes[i])
             i += 1
             
@@ -174,7 +173,7 @@ class VoltageMode(MotorSpeedControl):
         self.speed = 0
         
     def zero(self):
-        if not (self.talon.getControlMode() == \
+        if not (self.talon.getControlMode() ==
                 ctre.CANTalon.ControlMode.PercentVbus):
             self.talon.changeControlMode(
                 ctre.CANTalon.ControlMode.PercentVbus)
@@ -204,7 +203,7 @@ class SpeedMode(MotorSpeedControl):
         self.maxSpeed = 2000
         
     def zero(self):
-        if not (self.talon.getControlMode() == \
+        if not (self.talon.getControlMode() ==
                 ctre.CANTalon.ControlMode.Speed):
             self.talon.changeControlMode(
                 ctre.CANTalon.ControlMode.Speed)
@@ -261,7 +260,7 @@ class JeffMode(MotorSpeedControl):
         """
         Zero the encoder target.
         """
-        if not (self.talon.getControlMode() == \
+        if not (self.talon.getControlMode() ==
                 ctre.CANTalon.ControlMode.Position):
             self.talon.changeControlMode(ctre.CANTalon.ControlMode.Position)
         self.encoderTarget = self.talon.getPosition()
