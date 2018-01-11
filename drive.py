@@ -89,7 +89,7 @@ class DriveBot(sea.GeneratorBot):
     def teleop(self):
         self.holoDrive.zeroEncoderTargets()
 
-        if sea.getSwitch("Field oriented drive", True):
+        if sea.getSwitch("Field oriented drive", False):
             self.drive = self.fieldDrive
         else:
             self.drive = self.fieldDrive.interface
