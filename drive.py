@@ -132,7 +132,7 @@ class DriveBot(sea.GeneratorBot):
 
         turn = self.driverJoystick.getTwist()
         magnitude = self.driverJoystick.getMagnitude()
-        direction = self.driverJoystick.getDirectionRadians() + math.pi/2
+        direction = -self.driverJoystick.getDirectionRadians() + math.pi/2
 
         magnitude = self._joystickPower(magnitude, self.joystickExponent)\
                     * self.normalScale
