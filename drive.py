@@ -109,6 +109,7 @@ class DriveBot(sea.GeneratorBot):
         while True:
             yield
             self.teleopPeriodic()
+            sea.sendLogStates()
 
     def teleopPeriodic(self):
         current = 0
