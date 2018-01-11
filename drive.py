@@ -36,6 +36,7 @@ class DriveBot(sea.GeneratorBot):
         self.fastPIDScale = 0.09
         # PIDF values for slow driving:
         self.slowPID = (30.0, 0.0009, 3.0, 0.0)
+        self.slowPIDSpeedMode = (3.0, 0.0009, 3.0, 0.0)
         # speed at which slow PID's should be used:
         self.slowPIDScale = 0.01
 
@@ -96,7 +97,7 @@ class DriveBot(sea.GeneratorBot):
             self.drive = self.fieldDrive.interface
         if sea.getSwitch("Drive speed mode", False):
             self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
-            self.pidDrive.slowPID = self.fastPID
+            self.pidDrive.slowPID = self.slowPIDSpeedMode
         elif sea.getSwitch("Drive position mode", False):
             self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Position)
             self.pidDrive.slowPID = self.slowPID
