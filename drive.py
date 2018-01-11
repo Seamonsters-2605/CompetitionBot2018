@@ -31,15 +31,15 @@ class DriveBot(sea.GeneratorBot):
         self.driveDirectionDeadZone = math.radians(10)
 
         # PIDF values for fast driving:
-        fastPID = (1.0, 0.0009, 3.0, 0.0)
+        self.fastPID = (1.0, 0.0009, 3.0, 0.0)
         # speed at which fast PID's should be used:
-        fastPIDScale = 0.09
+        self.fastPIDScale = 0.09
         # PIDF values for slow driving:
-        slowPID = (30.0, 0.0009, 3.0, 0.0)
+        self.slowPID = (30.0, 0.0009, 3.0, 0.0)
         # speed at which slow PID's should be used:
-        slowPIDScale = 0.01
+        self.slowPIDScale = 0.01
 
-        pidLookBackRange = 10
+        self.pidLookBackRange = 10
 
         maxVelocity = 650
 
@@ -63,7 +63,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveModeLog = sea.LogState("Drive mode")
 
-        self._setPID(fastPID)
+        self._setPID(self.fastPID)
 
         self.holoDrive = sea.HolonomicDrive(fl, fr, bl, br, ticksPerWheelRotation)
         self.holoDrive.invertDrive(True)
@@ -71,7 +71,8 @@ class DriveBot(sea.GeneratorBot):
         self.holoDrive.setMaxVelocity(maxVelocity)
 
         self.pidDrive = sea.DynamicPIDDrive(self.holoDrive, self.talons,
-            slowPID, slowPIDScale, fastPID, fastPIDScale, pidLookBackRange)
+            self.slowPID, self.slowPIDScale, self.fastPID, self.fastPIDScale,
+            self.pidLookBackRange)
 
         self.ahrs = AHRS.create_spi()  # the NavX
         self.fieldDrive = sea.FieldOrientedDrive(self.pidDrive, self.ahrs,
@@ -95,8 +96,10 @@ class DriveBot(sea.GeneratorBot):
             self.drive = self.fieldDrive.interface
         if sea.getSwitch("Drive speed mode", False):
             self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
+            self.pidDrive.slowPID = self.fastPID
         elif sea.getSwitch("Drive position mode", False):
             self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Position)
+            self.pidDrive.slowPID = self.slowPID
         else:
             self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.PercentVbus)
 
