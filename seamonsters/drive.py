@@ -21,8 +21,6 @@ def talonModeToString(mode):
         return "Follower"
     elif mode == ctre.CANTalon.ControlMode.MotionProfile:
         return "MotionProfile"
-    elif mode == ctre.CANTalon.ControlMode.MotionMagic:
-        return "MotionMagic"
     else:
         return str(mode)
 
