@@ -46,7 +46,8 @@ class MotorTestBot(sea.GeneratorBot):
             talon = self.talons[self.selectedI]
             self.updateTalonLog()
 
-            self.setValue = None
+            if not enteredValue:
+                self.setValue = None
             if self.joy.getRawButton(1):
                 enteredValue = False
                 control = -self.joy.getY() * (self.joy.getTwist() + 1) / 2
@@ -124,8 +125,7 @@ class MotorTestBot(sea.GeneratorBot):
             if command is not None:
                 value = float(command)
                 if self.selectedParameter == MotorTestBot.VALUE:
-                    talon.enable()
-                    talon.set(value)
+                    self.setValue = value
                     enteredValue = True
                 elif self.selectedParameter == MotorTestBot.P:
                     talon.setP(value)
