@@ -18,3 +18,27 @@ def getSwitch(name, defaultValue):
         print("Invalid switch data!")
         return defaultValue
     return switchValues[switchNames.index(name)]
+
+class DashboardCommandReader:
+
+    def __init__(self):
+        self.commandTable = networktables.NetworkTables.getTable('commands')
+        self.reset()
+
+    def reset(self):
+        self.lastCommandId = 0
+        self.commandTable.putString('command', "")
+        self.commandTable.putNumber('id', 0)
+
+    def getCommand(self):
+        try:
+            commandId = self.commandTable.getNumber('id')
+            if commandId != self.lastCommandId:
+                command = self.commandTable.getString('command')
+                command = command.strip()
+                if command != "":
+                    return command
+                self.lastCommandId = commandId
+        except:
+            print("Command error!")
+        return None

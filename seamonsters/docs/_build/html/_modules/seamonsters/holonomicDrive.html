@@ -42,14 +42,14 @@
           <div class="body" role="main">
             
   <h1>Source code for seamonsters.holonomicDrive</h1><div class="highlight"><pre>
-<span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Dawson&#39;</span>
+<span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;seamonsters&#39;</span>
 
 <span class="kn">import</span> <span class="nn">ctre</span>
 <span class="kn">import</span> <span class="nn">math</span>
 
-<span class="kn">from</span> <span class="nn">seamonsters.drive</span> <span class="k">import</span> <span class="n">DriveInterface</span>
+<span class="kn">import</span> <span class="nn">seamonsters.drive</span>
 
-<span class="k">class</span> <span class="nc">HolonomicDrive</span><span class="p">(</span><span class="n">DriveInterface</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">HolonomicDrive</span><span class="p">(</span><span class="n">seamonsters</span><span class="o">.</span><span class="n">drive</span><span class="o">.</span><span class="n">DriveInterface</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An implementation of the DriveInterface for holonomic drive. This allows for</span>
 <span class="sd">    mecanum/omni drives in the &quot;diamond&quot; configuration. The offset of the wheels</span>
@@ -79,8 +79,6 @@
 <span class="sd">        Initialize holonomicDrive with for talons. ticksPerWheelRotation MUST</span>
 <span class="sd">        be for a full wheel rotation, not necessarily a full motor rotation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">DriveInterface</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        
         <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">FRONT_LEFT</span><span class="p">]</span> <span class="o">=</span> <span class="n">fl</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wheelMotors</span><span class="p">[</span><span class="n">HolonomicDrive</span><span class="o">.</span><span class="n">FRONT_RIGHT</span><span class="p">]</span> <span class="o">=</span> <span class="n">fr</span>
@@ -105,8 +103,8 @@
         <span class="c1"># maximum velocity position/jeff mode; multiplied by 5 for speed mode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maxVelocity</span> <span class="o">=</span> <span class="mi">80</span> <span class="o">*</span> <span class="mi">5</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span> <span class="o">=</span> <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span></div>
 
 
     <span class="c1">#USE THESE FEW FUNCTIONS BELOW</span>
@@ -135,18 +133,17 @@
 <span class="sd">        10ths of a second, the velocity value is multiplied by 5.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maxVelocity</span> <span class="o">=</span> <span class="n">velocity</span></div>
-    
-<div class="viewcode-block" id="HolonomicDrive.drive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">,</span> <span class="n">forceDriveMode</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="n">mode</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">forceDriveMode</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">mode</span> <span class="o">=</span> <span class="n">forceDriveMode</span>
-        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span><span class="p">:</span>
+
+<div class="viewcode-block" id="HolonomicDrive.setDriveMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.setDriveMode">[docs]</a>    <span class="k">def</span> <span class="nf">setDriveMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span> <span class="o">=</span> <span class="n">mode</span></div>
+
+<div class="viewcode-block" id="HolonomicDrive.drive"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.drive">[docs]</a>    <span class="k">def</span> <span class="nf">drive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driveMode</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">driveVoltage</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">SPEED</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Speed</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">driveSpeed</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">POSITION</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">driveSpeedJeffMode</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span></div>
     
 
@@ -163,7 +160,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ensureControlMode</span><span class="p">(</span><span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_calcWheels</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_setWheels</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">VOLTAGE</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">PercentVbus</span></div>
 
 <div class="viewcode-block" id="HolonomicDrive.driveSpeed"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.driveSpeed">[docs]</a>    <span class="k">def</span> <span class="nf">driveSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">turn</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">magnitude</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
@@ -176,7 +173,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_calcWheels</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scaleToMax</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_setWheels</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">SPEED</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Speed</span></div>
 
     <span class="c1">#Increments position to mock speed mode</span>
 <div class="viewcode-block" id="HolonomicDrive.driveSpeedJeffMode"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.driveSpeedJeffMode">[docs]</a>    <span class="k">def</span> <span class="nf">driveSpeedJeffMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span> 
@@ -187,13 +184,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">zeroEncoderTargets</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_ensureControlMode</span><span class="p">(</span><span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">==</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">POSITION</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">==</span> <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">zeroEncoderTargets</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_calcWheels</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scaleToMaxJeffMode</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_incrementEncoderTargets</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_setWheelsJeffMode</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">DriveInterface</span><span class="o">.</span><span class="n">DriveMode</span><span class="o">.</span><span class="n">POSITION</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previousDriveMode</span> <span class="o">=</span> <span class="n">ctre</span><span class="o">.</span><span class="n">CANTalon</span><span class="o">.</span><span class="n">ControlMode</span><span class="o">.</span><span class="n">Position</span></div>
         
         
 <div class="viewcode-block" id="HolonomicDrive.logCurrent"><a class="viewcode-back" href="../../seamonsters.html#seamonsters.HolonomicDrive.logCurrent">[docs]</a>    <span class="k">def</span> <span class="nf">logCurrent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -236,6 +233,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">stores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">turn</span>
 
     <span class="k">def</span> <span class="nf">_scaleNumbers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TODO: this looks very wrong</span>
         <span class="n">largest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stores</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">largest</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stores</span><span class="p">:</span>

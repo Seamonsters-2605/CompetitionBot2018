@@ -58,12 +58,7 @@ seconds).</p>
 
 <dl class="method">
 <dt id="seamonsters.AccelerationFilterDrive.drive">
-<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.AccelerationFilterDrive.drive" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.AccelerationFilterDrive.getDriveMode">
-<code class="descname">getDriveMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.getDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.AccelerationFilterDrive.getDriveMode" title="Permalink to this definition">¶</a></dt>
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.AccelerationFilterDrive.drive" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -81,204 +76,25 @@ seconds).</p>
 <code class="descname">getFilteredTurn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.getFilteredTurn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.AccelerationFilterDrive.getFilteredTurn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="seamonsters.AccelerationFilterDrive.setDriveMode">
-<code class="descname">setDriveMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#AccelerationFilterDrive.setDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.AccelerationFilterDrive.setDriveMode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
-<dt id="seamonsters.Command">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">Command</code><a class="headerlink" href="#seamonsters.Command" title="Permalink to this definition">¶</a></dt>
+<dt id="seamonsters.DashboardCommandReader">
+<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">DashboardCommandReader</code><a class="headerlink" href="#seamonsters.DashboardCommandReader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="seamonsters.Command.RUNNING">
-<code class="descname">RUNNING</code><em class="property"> = 2</em><a class="headerlink" href="#seamonsters.Command.RUNNING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="seamonsters.Command.STARTING">
-<code class="descname">STARTING</code><em class="property"> = 1</em><a class="headerlink" href="#seamonsters.Command.STARTING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="seamonsters.Command.STOPPED">
-<code class="descname">STOPPED</code><em class="property"> = 0</em><a class="headerlink" href="#seamonsters.Command.STOPPED" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="seamonsters.DashboardCommandReader.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/dashboard.html#DashboardCommandReader.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DashboardCommandReader.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seamonsters.Command.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#Command.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Command.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="seamonsters.DashboardCommandReader.getCommand">
+<code class="descname">getCommand</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/dashboard.html#DashboardCommandReader.getCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DashboardCommandReader.getCommand" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="seamonsters.Command.end">
-<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#Command.end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Command.end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called when the command completes.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.Command.execute">
-<code class="descname">execute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#Command.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Command.execute" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called continuously, 50 times per second as the command is running.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.Command.initialize">
-<code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#Command.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Command.initialize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called when the command is started.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.Command.interrupt">
-<code class="descname">interrupt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#Command.interrupt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Command.interrupt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cause the command to end early</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.Command.isFinished">
-<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#Command.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Command.isFinished" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the command is finished.
-:return: True if the command is complete</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.Command.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#Command.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Command.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Used internally. Perform a single step of the command.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">if the command is still running</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.Command.start">
-<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#Command.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Command.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Used internally. Mark the command as started.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="seamonsters.CommandBot">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">CommandBot</code><a class="headerlink" href="#seamonsters.CommandBot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wpilib.robotbase.RobotBase</span></code>, <a class="reference internal" href="#seamonsters.CommandGroup" title="seamonsters.CommandGroup"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.CommandGroup</span></code></a></p>
-<dl class="method">
-<dt id="seamonsters.CommandBot.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#CommandBot.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandBot.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandBot.robotInit">
-<code class="descname">robotInit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#CommandBot.robotInit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandBot.robotInit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override this for robot initialization.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandBot.startCompetition">
-<code class="descname">startCompetition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#CommandBot.startCompetition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandBot.startCompetition" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="seamonsters.CommandGroup">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">CommandGroup</code><span class="sig-paren">(</span><em>name='Group'</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.CommandGroup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamonsters.Command" title="seamonsters.Command"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.Command</span></code></a></p>
-<dl class="class">
-<dt id="seamonsters.CommandGroup.Entry">
-<em class="property">class </em><code class="descname">Entry</code><span class="sig-paren">(</span><em>command</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandGroup.Entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandGroup.Entry" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="seamonsters.CommandGroup.Entry.PARALLEL">
-<code class="descname">PARALLEL</code><em class="property"> = 1</em><a class="headerlink" href="#seamonsters.CommandGroup.Entry.PARALLEL" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="seamonsters.CommandGroup.Entry.SEQUENTIAL">
-<code class="descname">SEQUENTIAL</code><em class="property"> = 0</em><a class="headerlink" href="#seamonsters.CommandGroup.Entry.SEQUENTIAL" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandGroup.Entry.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>command</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandGroup.Entry.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandGroup.Entry.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandGroup.__init__">
-<code class="descclassname">CommandGroup.</code><code class="descname">__init__</code><span class="sig-paren">(</span><em>name='Group'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandGroup.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandGroup.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandGroup.addParallel">
-<code class="descclassname">CommandGroup.</code><code class="descname">addParallel</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandGroup.addParallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandGroup.addParallel" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandGroup.addSequential">
-<code class="descclassname">CommandGroup.</code><code class="descname">addSequential</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandGroup.addSequential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandGroup.addSequential" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandGroup.clear">
-<code class="descclassname">CommandGroup.</code><code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandGroup.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandGroup.clear" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandGroup.isFinished">
-<code class="descclassname">CommandGroup.</code><code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandGroup.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandGroup.isFinished" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if all the Commands in this group
-have been started and have finished.</p>
-<p>Teams may override this method, although they should probably
-reference super().isFinished() if they do.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">whether this CommandGroup is finished</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="seamonsters.CommandWrapper">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">CommandWrapper</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.CommandWrapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamonsters.Command" title="seamonsters.Command"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.Command</span></code></a></p>
-<p>Wraps another command. This is meant to be extended to do useful things.</p>
-<dl class="method">
-<dt id="seamonsters.CommandWrapper.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandWrapper.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandWrapper.end">
-<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandWrapper.end" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandWrapper.execute">
-<code class="descname">execute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandWrapper.execute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandWrapper.initialize">
-<code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandWrapper.initialize" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.CommandWrapper.isFinished">
-<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#CommandWrapper.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.CommandWrapper.isFinished" title="Permalink to this definition">¶</a></dt>
+<dt id="seamonsters.DashboardCommandReader.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/dashboard.html#DashboardCommandReader.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DashboardCommandReader.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -287,61 +103,14 @@ reference super().isFinished() if they do.</p>
 <dt id="seamonsters.DriveInterface">
 <em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">DriveInterface</code><a class="headerlink" href="#seamonsters.DriveInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>A generic, abstract interface for driving a robot. Allows 3 different
-control modes for CANTalons, specified by DriveMode.
-DriveMode purposefully doesn&#8217;t have options for configuring things like the
-maximum velocity of the motors or the ticks-per-rotation for position mode.
-It is assumed each implementation will have methods for this. But assuming
-that has been set up in the robotInit method, all DriveInterface classes
-should be interchangable.</p>
-<dl class="class">
-<dt id="seamonsters.DriveInterface.DriveMode">
-<em class="property">class </em><code class="descname">DriveMode</code><a class="reference internal" href="_modules/seamonsters/drive.html#DriveInterface.DriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DriveInterface.DriveMode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Control modes for CANTalons. POSITION is incremental position mode (aka
-&#8220;Jeff mode&#8221;).</p>
-<dl class="attribute">
-<dt id="seamonsters.DriveInterface.DriveMode.POSITION">
-<code class="descname">POSITION</code><em class="property"> = 3</em><a class="headerlink" href="#seamonsters.DriveInterface.DriveMode.POSITION" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="seamonsters.DriveInterface.DriveMode.SPEED">
-<code class="descname">SPEED</code><em class="property"> = 2</em><a class="headerlink" href="#seamonsters.DriveInterface.DriveMode.SPEED" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="seamonsters.DriveInterface.DriveMode.VOLTAGE">
-<code class="descname">VOLTAGE</code><em class="property"> = 1</em><a class="headerlink" href="#seamonsters.DriveInterface.DriveMode.VOLTAGE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.DriveInterface.__init__">
-<code class="descclassname">DriveInterface.</code><code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DriveInterface.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DriveInterface.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<p>A generic, abstract interface for driving a robot.</p>
 <dl class="method">
 <dt id="seamonsters.DriveInterface.drive">
-<code class="descclassname">DriveInterface.</code><code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DriveInterface.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DriveInterface.drive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Drive the robot, with a given magnitude, direction, and turn.
-If forceDriveMode is specified, the current drive mode will be 
-overriden. It is expected that this function be called in a loop.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.DriveInterface.getDriveMode">
-<code class="descclassname">DriveInterface.</code><code class="descname">getDriveMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DriveInterface.getDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DriveInterface.getDriveMode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the current default control mode, as set by setDriveMode(). The
-default is SPEED, but implementations may have their own defaults.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.DriveInterface.setDriveMode">
-<code class="descclassname">DriveInterface.</code><code class="descname">setDriveMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DriveInterface.setDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DriveInterface.setDriveMode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the default control mode for driving. If you call drive() without
-forceDriveMode, this will be used.</p>
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DriveInterface.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DriveInterface.drive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drive the robot, with a given magnitude, direction, and turn.</p>
+<p>Magnitude: 0 to 1</p>
+<p>Direction: Counterclockwise positive, radians</p>
+<p>Turn: -1 to 1</p>
 </dd></dl>
 
 </dd></dl>
@@ -381,35 +150,7 @@ between, the P/I/D/F values are interpolated.</p>
 
 <dl class="method">
 <dt id="seamonsters.DynamicPIDDrive.drive">
-<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DynamicPIDDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DynamicPIDDrive.drive" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.DynamicPIDDrive.getDriveMode">
-<code class="descname">getDriveMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DynamicPIDDrive.getDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DynamicPIDDrive.getDriveMode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.DynamicPIDDrive.setDriveMode">
-<code class="descname">setDriveMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DynamicPIDDrive.setDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DynamicPIDDrive.setDriveMode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="seamonsters.EnsureFinishedCommand">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">EnsureFinishedCommand</code><span class="sig-paren">(</span><em>command</em>, <em>requiredCount</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.EnsureFinishedCommand" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamonsters.CommandWrapper" title="seamonsters.CommandWrapper"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.CommandWrapper</span></code></a></p>
-<p>Waits until isFinished() of the wrapped command returns True for a certain
-number of steps before finishing.</p>
-<dl class="method">
-<dt id="seamonsters.EnsureFinishedCommand.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>command</em>, <em>requiredCount</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#EnsureFinishedCommand.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.EnsureFinishedCommand.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.EnsureFinishedCommand.isFinished">
-<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#EnsureFinishedCommand.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.EnsureFinishedCommand.isFinished" title="Permalink to this definition">¶</a></dt>
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#DynamicPIDDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.DynamicPIDDrive.drive" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -429,17 +170,7 @@ value in radians to add to all direction inputs.</p>
 
 <dl class="method">
 <dt id="seamonsters.FieldOrientedDrive.drive">
-<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.FieldOrientedDrive.drive" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.FieldOrientedDrive.getDriveMode">
-<code class="descname">getDriveMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive.getDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.FieldOrientedDrive.getDriveMode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.FieldOrientedDrive.setDriveMode">
-<code class="descname">setDriveMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive.setDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.FieldOrientedDrive.setDriveMode" title="Permalink to this definition">¶</a></dt>
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#FieldOrientedDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.FieldOrientedDrive.drive" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -450,37 +181,19 @@ value in radians to add to all direction inputs.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="seamonsters.ForeverCommand">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">ForeverCommand</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.ForeverCommand" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamonsters.CommandWrapper" title="seamonsters.CommandWrapper"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.CommandWrapper</span></code></a></p>
-<p>Wraps a command. isFinished() always returns False.</p>
-<dl class="method">
-<dt id="seamonsters.ForeverCommand.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#ForeverCommand.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.ForeverCommand.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.ForeverCommand.isFinished">
-<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#ForeverCommand.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.ForeverCommand.isFinished" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="seamonsters.Gamepad">
 <em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">Gamepad</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.Gamepad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamonsters.JoystickBase" title="seamonsters.JoystickBase"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.JoystickBase</span></code></a></p>
-<p>An extended Joystick specifically designed for Logitech gamepads. Like
-seamonsters.joystick.JoystickUtils, it adds dead zones and changes positive
-x to direction 0. The gamepad mode switch MUST be at X!</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wpilib.joystick.Joystick</span></code></p>
+<p>An extended Joystick specifically designed for Logitech gamepads. It
+adds dead zones and changes positive x to direction 0. The gamepad mode
+switch MUST be at X!</p>
 <p>The Gamepad class has constants defined for the numbers of gamepad buttons.
 These include the colored A, B, X, and Y buttons; the left and right
 bumpers; the left and right triggers; the left and right joysticks when
 pressed; the Back and Start buttons; and the 4 d-pad buttons. The state
 of these buttons can be checked with
 <code class="docutils literal"><span class="pre">gamepad.getRawButton(Gamepad.BUTTON_CONSTANT)</span></code>.</p>
-<p>For more of Gamepad&#8217;s supported methods, see
-<code class="docutils literal"><span class="pre">seamonsters.joystick.JoystickUtils</span></code>, and <a class="reference external" href="http://robotpy.readthedocs.io/en/latest/wpilib/Joystick.html">wpilib.joystick</a></p>
+<p>For more of Gamepad&#8217;s supported methods, see <a class="reference external" href="http://robotpy.readthedocs.io/en/latest/wpilib/Joystick.html">wpilib.joystick</a></p>
 <dl class="attribute">
 <dt id="seamonsters.Gamepad.A">
 <code class="descname">A</code><em class="property"> = 1</em><a class="headerlink" href="#seamonsters.Gamepad.A" title="Permalink to this definition">¶</a></dt>
@@ -587,7 +300,7 @@ getDirection() says 0 is positive y. This version uses positive x.</p>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getLMagnitude">
-<code class="descname">getLMagnitude</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getLMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getLMagnitude" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getLMagnitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getLMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getLMagnitude" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the magnitude of the left joystick. The dead zone is enabled by
 default; set enableDeadZone to False to disable it.</p>
 </dd></dl>
@@ -600,14 +313,14 @@ default; set enableDeadZone to False to disable it.</p>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getLX">
-<code class="descname">getLX</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getLX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getLX" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getLX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getLX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getLX" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the x-axis of the left joystick. The dead zone is enabled by
 default; set enableDeadZone to False to disable it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getLY">
-<code class="descname">getLY</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getLY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getLY" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getLY</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getLY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getLY" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the y-axis of the left joystick. The dead zone is enabled by
 default; set enableDeadZone to False to disable it.</p>
 </dd></dl>
@@ -621,7 +334,7 @@ getDirection() says 0 is positive y. This version uses positive x.</p>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getRMagnitude">
-<code class="descname">getRMagnitude</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRMagnitude" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getRMagnitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRMagnitude" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the magnitude of the right joystick. The dead zone is enabled by
 default; set enableDeadZone to False to disable it.</p>
 </dd></dl>
@@ -634,14 +347,14 @@ default; set enableDeadZone to False to disable it.</p>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getRX">
-<code class="descname">getRX</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRX" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getRX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRX" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the x-axis of the right joystick. The dead zone is enabled by
 default; set enableDeadZone to False to disable it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getRY">
-<code class="descname">getRY</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRY" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getRY</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRY" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the y-axis of the right joystick. The dead zone is enabled by
 default; set enableDeadZone to False to disable it.</p>
 </dd></dl>
@@ -653,32 +366,32 @@ default; set enableDeadZone to False to disable it.</p>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getRawLMagnitude">
-<code class="descname">getRawLMagnitude</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawLMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawLMagnitude" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getRawLMagnitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawLMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawLMagnitude" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getRawLX">
-<code class="descname">getRawLX</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawLX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawLX" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getRawLX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawLX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawLX" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getRawLY">
-<code class="descname">getRawLY</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawLY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawLY" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getRawLY</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawLY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawLY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getRawRMagnitude">
-<code class="descname">getRawRMagnitude</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawRMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawRMagnitude" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getRawRMagnitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawRMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawRMagnitude" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getRawRX">
-<code class="descname">getRawRX</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawRX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawRX" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getRawRX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawRX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawRX" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="seamonsters.Gamepad.getRawRY">
-<code class="descname">getRawRY</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawRY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawRY" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getRawRY</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.getRawRY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.getRawRY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -686,18 +399,6 @@ default; set enableDeadZone to False to disable it.</p>
 <code class="descname">inDeadZone</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.inDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.inDeadZone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if a value between -1 and 1 is within the position deadzone.
 Return a boolean value.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.Gamepad.invertX">
-<code class="descname">invertX</code><span class="sig-paren">(</span><em>enabled=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.invertX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.invertX" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose whether to invert the value of the x axis.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.Gamepad.invertY">
-<code class="descname">invertY</code><span class="sig-paren">(</span><em>enabled=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.invertY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.invertY" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose whether to invert the value of the y axis.</p>
 </dd></dl>
 
 <dl class="method">
@@ -712,12 +413,44 @@ Return a boolean value.</p>
 <dd><p>Check if the right joystick is in the deadzone. Return a boolean value.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="seamonsters.GeneratorBot">
+<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">GeneratorBot</code><a class="headerlink" href="#seamonsters.GeneratorBot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wpilib.robotbase.RobotBase</span></code></p>
 <dl class="method">
-<dt id="seamonsters.Gamepad.setDeadZone">
-<code class="descname">setDeadZone</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/gamepad.html#Gamepad.setDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.Gamepad.setDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the deadzone of the position of both joysticks, on a scale of 0 to
-1. If the magnitude is within this range it will be reported as 0.
-Default value is 0.08 (8 percent).</p>
+<dt id="seamonsters.GeneratorBot.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#GeneratorBot.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.GeneratorBot.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.GeneratorBot.autonomous">
+<code class="descname">autonomous</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#GeneratorBot.autonomous"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.GeneratorBot.autonomous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this to make a generator for autonomous</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.GeneratorBot.robotInit">
+<code class="descname">robotInit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#GeneratorBot.robotInit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.GeneratorBot.robotInit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this for robot initialization. This should NOT be a generator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.GeneratorBot.startCompetition">
+<code class="descname">startCompetition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#GeneratorBot.startCompetition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.GeneratorBot.startCompetition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.GeneratorBot.teleop">
+<code class="descname">teleop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#GeneratorBot.teleop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.GeneratorBot.teleop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this to make a generator for teleop</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.GeneratorBot.test">
+<code class="descname">test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#GeneratorBot.test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.GeneratorBot.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this to make a generator for test mode</p>
 </dd></dl>
 
 </dd></dl>
@@ -767,7 +500,7 @@ be for a full wheel rotation, not necessarily a full motor rotation.</p>
 
 <dl class="method">
 <dt id="seamonsters.HolonomicDrive.drive">
-<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/holonomicDrive.html#HolonomicDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.HolonomicDrive.drive" title="Permalink to this definition">¶</a></dt>
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/holonomicDrive.html#HolonomicDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.HolonomicDrive.drive" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -797,6 +530,11 @@ be for a full wheel rotation, not necessarily a full motor rotation.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="seamonsters.HolonomicDrive.setDriveMode">
+<code class="descname">setDriveMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/holonomicDrive.html#HolonomicDrive.setDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.HolonomicDrive.setDriveMode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="seamonsters.HolonomicDrive.setMaxVelocity">
 <code class="descname">setMaxVelocity</code><span class="sig-paren">(</span><em>velocity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/holonomicDrive.html#HolonomicDrive.setMaxVelocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.HolonomicDrive.setMaxVelocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the max encoder velocity for position/jeff and speed mode.
@@ -819,6 +557,33 @@ the default.</p>
 <dt id="seamonsters.HolonomicDrive.zeroEncoderTargets">
 <code class="descname">zeroEncoderTargets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/holonomicDrive.html#HolonomicDrive.zeroEncoderTargets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.HolonomicDrive.zeroEncoderTargets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="seamonsters.IterativeRobotInstance">
+<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">IterativeRobotInstance</code><span class="sig-paren">(</span><em>robotType</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.IterativeRobotInstance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Allows an &#8220;instance&#8221; of an IterativeRobot to be created without connecting
+to HAL or LiveWindow. Allows running teleop/autonomous sequences as a
+Generator.</p>
+<dl class="method">
+<dt id="seamonsters.IterativeRobotInstance.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>robotType</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#IterativeRobotInstance.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.IterativeRobotInstance.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.IterativeRobotInstance.autonomousGenerator">
+<code class="descname">autonomousGenerator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#IterativeRobotInstance.autonomousGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.IterativeRobotInstance.autonomousGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator which runs autonomousInit then autonomousPeriodic
+continuously.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seamonsters.IterativeRobotInstance.teleopGenerator">
+<code class="descname">teleopGenerator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/bot.html#IterativeRobotInstance.teleopGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.IterativeRobotInstance.teleopGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator which runs teleopInit then teleopPeriodic continuously.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -872,181 +637,6 @@ the main loop, 50 times per second.</p>
 <dt id="seamonsters.JeffMode.zero">
 <code class="descname">zero</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#JeffMode.zero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JeffMode.zero" title="Permalink to this definition">¶</a></dt>
 <dd><p>Zero the encoder target.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="seamonsters.JoystickBase">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">JoystickBase</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.JoystickBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wpilib.joystick.Joystick</span></code></p>
-<p>The base for other joystick utilities classes. This has methods for checking
-whether buttons have been pressed or released.</p>
-<dl class="method">
-<dt id="seamonsters.JoystickBase.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickBase.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickBase.buttonPressed">
-<code class="descname">buttonPressed</code><span class="sig-paren">(</span><em>b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase.buttonPressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickBase.buttonPressed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the specified button was pressed between the most recent 
-updateButtons() call and the call before that.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickBase.buttonReleased">
-<code class="descname">buttonReleased</code><span class="sig-paren">(</span><em>b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase.buttonReleased"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickBase.buttonReleased" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the specified button was released between the most recent 
-updateButtons() call and the call before that.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickBase.getJoystickButton">
-<code class="descname">getJoystickButton</code><span class="sig-paren">(</span><em>buttonNumber</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase.getJoystickButton"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickBase.getJoystickButton" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickBase.updateButtons">
-<code class="descname">updateButtons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickBase.updateButtons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickBase.updateButtons" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the current state of the buttons. Call this in the main loop.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="seamonsters.JoystickUtils">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">JoystickUtils</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.JoystickUtils" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamonsters.JoystickBase" title="seamonsters.JoystickBase"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.JoystickBase</span></code></a></p>
-<p>An extended Joystick with extra utilities for deadzones and a new definition
-of direction: positive X is now zero, which is more standard.</p>
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getDirection">
-<code class="descname">getDirection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getDirection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getDirection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the direction of the joystick. wpilib.Joystick&#8217;s built-in
-getDirection() says 0 is positive y. This version uses positive x.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getMagnitude">
-<code class="descname">getMagnitude</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getMagnitude" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the magnitude of the joystick. The dead zone is enabled by default;
-set enableDeadZone to False to disable it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getRawMagnitude">
-<code class="descname">getRawMagnitude</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getRawMagnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getRawMagnitude" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getRawTwist">
-<code class="descname">getRawTwist</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getRawTwist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getRawTwist" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getRawX">
-<code class="descname">getRawX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getRawX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getRawX" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getRawY">
-<code class="descname">getRawY</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getRawY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getRawY" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getRawZ">
-<code class="descname">getRawZ</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getRawZ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getRawZ" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getTwist">
-<code class="descname">getTwist</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getTwist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getTwist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the twist of the joystick. The dead zone is enabled by default; set
-enableDeadZone to False to disable it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getX">
-<code class="descname">getX</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getX" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the value of the x-axis. The dead zone is enabled by default; set
-enableDeadZone to False to disable it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getY">
-<code class="descname">getY</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getY" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the value of the y-axis. The dead zone is enabled by default; set
-enableDeadZone to False to disable it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.getZ">
-<code class="descname">getZ</code><span class="sig-paren">(</span><em>enableDeadZone=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.getZ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.getZ" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the value of the z-axis. The dead zone is enabled by default; set
-enableDeadZone to False to disable it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.invertX">
-<code class="descname">invertX</code><span class="sig-paren">(</span><em>enabled=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.invertX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.invertX" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose whether to invert the value of the x axis.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.invertY">
-<code class="descname">invertY</code><span class="sig-paren">(</span><em>enabled=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.invertY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.invertY" title="Permalink to this definition">¶</a></dt>
-<dd><p>Choose whether to invert the value of the y axis.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.positionInDeadZone">
-<code class="descname">positionInDeadZone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.positionInDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.positionInDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the position of the joystick is currently in the deadzone.
-Return a boolean value.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.setPositionDeadZone">
-<code class="descname">setPositionDeadZone</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.setPositionDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.setPositionDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the deadzone of the position of the joystick, on a scale of 0 to 1.
-If the magnitude is within this range it will be reported as 0. Default
-value is 0.05 (5 percent).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.setTwistDeadZone">
-<code class="descname">setTwistDeadZone</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.setTwistDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.setTwistDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the deadzone of the twist of the joystick, on a scale of 0 to 1.
-If the twist is within this range it will be reported as 0. Default
-value is 0.1 (10 percent).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.setZDeadZone">
-<code class="descname">setZDeadZone</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.setZDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.setZDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the deadzone of the z-axis of the joystick, on a scale of 0 to 1.
-If the value is within this range it will be reported as 0. Default
-value is 0.1 (10 percent).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.twistInDeadZone">
-<code class="descname">twistInDeadZone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.twistInDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.twistInDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the twist of the joystick is currently in the deadzone.
-Return a boolean value.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.JoystickUtils.zInDeadZone">
-<code class="descname">zInDeadZone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/joystick.html#JoystickUtils.zInDeadZone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.JoystickUtils.zInDeadZone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the z-axis of the joystick is currently in the deadzone.
-Return a boolean value.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1115,7 +705,7 @@ This MultiMode is returned.</p>
 <dt id="seamonsters.MotorManager.setDriveMode">
 <code class="descname">setDriveMode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/motorControl.html#MotorManager.setDriveMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.MotorManager.setDriveMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the drive mode of all MultiMode&#8217;s, using constants from
-seamonsters.drive.DriveInterface.DriveMode. Default is VOLTAGE.</p>
+ctre.CANTalon.ControlMode. Default is PercentVbus.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1200,46 +790,6 @@ will be called.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="seamonsters.PDPMonitor">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">PDPMonitor</code><span class="sig-paren">(</span><em>channels</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.PDPMonitor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Monitors and prints the current of a group of PDP channels.</p>
-<dl class="method">
-<dt id="seamonsters.PDPMonitor.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>channels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/pdp.html#PDPMonitor.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.PDPMonitor.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="docutils literal"><span class="pre">channels</span></code> is a list of channel numbers (0 - 15) to monitor.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.PDPMonitor.update">
-<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/pdp.html#PDPMonitor.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.PDPMonitor.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call this every loop (50 times per second) to monitor the currents.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="seamonsters.PrintCommand">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">PrintCommand</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.PrintCommand" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamonsters.Command" title="seamonsters.Command"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.Command</span></code></a></p>
-<dl class="method">
-<dt id="seamonsters.PrintCommand.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#PrintCommand.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.PrintCommand.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.PrintCommand.initialize">
-<code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#PrintCommand.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.PrintCommand.initialize" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.PrintCommand.isFinished">
-<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#PrintCommand.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.PrintCommand.isFinished" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="seamonsters.SpeedMode">
 <em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">SpeedMode</code><span class="sig-paren">(</span><em>talon</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.SpeedMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#seamonsters.MotorSpeedControl" title="seamonsters.MotorSpeedControl"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.MotorSpeedControl</span></code></a></p>
@@ -1311,7 +861,7 @@ wheel will be added in test mode, in which it only logs events.</p>
 
 <dl class="method">
 <dt id="seamonsters.SwerveDrive.drive">
-<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#SwerveDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.SwerveDrive.drive" title="Permalink to this definition">¶</a></dt>
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/swerveDrive.html#SwerveDrive.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.SwerveDrive.drive" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1371,7 +921,7 @@ second). Speed mode behaves similarly, but since wpilib uses units of
 <dd><p>Bases: <a class="reference internal" href="#seamonsters.DriveInterface" title="seamonsters.DriveInterface"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.DriveInterface</span></code></a></p>
 <dl class="method">
 <dt id="seamonsters.TestDriveInterface.drive">
-<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em>, <em>forceDriveMode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#TestDriveInterface.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.TestDriveInterface.drive" title="Permalink to this definition">¶</a></dt>
+<code class="descname">drive</code><span class="sig-paren">(</span><em>magnitude</em>, <em>direction</em>, <em>turn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/drive.html#TestDriveInterface.drive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.TestDriveInterface.drive" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1442,22 +992,6 @@ second). Speed mode behaves similarly, but since wpilib uses units of
 </dd></dl>
 
 <dl class="class">
-<dt id="seamonsters.WaitCommand">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">WaitCommand</code><span class="sig-paren">(</span><em>waitTime</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.WaitCommand" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamonsters.Command" title="seamonsters.Command"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.Command</span></code></a></p>
-<dl class="method">
-<dt id="seamonsters.WaitCommand.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>waitTime</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#WaitCommand.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.WaitCommand.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.WaitCommand.isFinished">
-<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#WaitCommand.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.WaitCommand.isFinished" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="seamonsters.WheelController">
 <em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">WheelController</code><a class="headerlink" href="#seamonsters.WheelController" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
@@ -1513,28 +1047,10 @@ drive mode max velocities have already been included in this.</p>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="seamonsters.WhileRunningCommand">
-<em class="property">class </em><code class="descclassname">seamonsters.</code><code class="descname">WhileRunningCommand</code><span class="sig-paren">(</span><em>command</em>, <em>watchCommand</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.WhileRunningCommand" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#seamonsters.CommandWrapper" title="seamonsters.CommandWrapper"><code class="xref py py-class docutils literal"><span class="pre">seamonsters.CommandWrapper</span></code></a></p>
-<p>Wraps one command, but tracks a different command (<code class="docutils literal"><span class="pre">watchCommand</span></code>) for
-isFinished().</p>
-<dl class="method">
-<dt id="seamonsters.WhileRunningCommand.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>command</em>, <em>watchCommand</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#WhileRunningCommand.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.WhileRunningCommand.__init__" title="Permalink to this definition">¶</a></dt>
+<dl class="function">
+<dt id="seamonsters.deadZone">
+<code class="descclassname">seamonsters.</code><code class="descname">deadZone</code><span class="sig-paren">(</span><em>value</em>, <em>deadZone=0.08</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.deadZone" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.WhileRunningCommand.initialize">
-<code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#WhileRunningCommand.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.WhileRunningCommand.initialize" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="seamonsters.WhileRunningCommand.isFinished">
-<code class="descname">isFinished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seamonsters/commands.html#WhileRunningCommand.isFinished"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seamonsters.WhileRunningCommand.isFinished" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
 
 <dl class="function">
 <dt id="seamonsters.direction">
@@ -1542,9 +1058,23 @@ isFinished().</p>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="seamonsters.globalGamepad">
-<code class="descclassname">seamonsters.</code><code class="descname">globalGamepad</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.globalGamepad" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="seamonsters.ensureTrue">
+<code class="descclassname">seamonsters.</code><code class="descname">ensureTrue</code><span class="sig-paren">(</span><em>iterable</em>, <em>requiredCount</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.ensureTrue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait until the iterable yields True for a certain number of consecutive
+iterations before finishing.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="seamonsters.forever">
+<code class="descclassname">seamonsters.</code><code class="descname">forever</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.forever" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate forever.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="seamonsters.getSwitch">
+<code class="descclassname">seamonsters.</code><code class="descname">getSwitch</code><span class="sig-paren">(</span><em>name</em>, <em>defaultValue</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.getSwitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get whether a switch on the dashboard is enabled.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="seamonsters.magnitude">
@@ -1557,6 +1087,14 @@ isFinished().</p>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="seamonsters.parallel">
+<code class="descclassname">seamonsters.</code><code class="descname">parallel</code><span class="sig-paren">(</span><em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.parallel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a group of iterables in parallel. Ends when none are left running.</p>
+<p>If any iterable yields a function, it will be added to the set of running
+iterables.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="seamonsters.readPoints">
 <code class="descclassname">seamonsters.</code><code class="descname">readPoints</code><span class="sig-paren">(</span><em>filePath</em>, <em>pixelsPerUnit</em>, <em>leftMargin</em>, <em>bottomMargin</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.readPoints" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1567,16 +1105,46 @@ isFinished().</p>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="seamonsters.setControlMode">
-<code class="descclassname">seamonsters.</code><code class="descname">setControlMode</code><span class="sig-paren">(</span><em>talon</em>, <em>driveMode</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.setControlMode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a DriveInterface.DriveMode, set the control mode of a CANTalon using
-a ctre.CANTalon.ControlMode.</p>
-</dd></dl>
+<dt id="seamonsters.sequence">
+<code class="descclassname">seamonsters.</code><code class="descname">sequence</code><span class="sig-paren">(</span><em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.sequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="seamonsters.talonModeToString">
+<code class="descclassname">seamonsters.</code><code class="descname">talonModeToString</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.talonModeToString" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="seamonsters.test_swervedrive_forward">
 <code class="descclassname">seamonsters.</code><code class="descname">test_swervedrive_forward</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.test_swervedrive_forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="function">
+<dt id="seamonsters.timeLimit">
+<code class="descclassname">seamonsters.</code><code class="descname">timeLimit</code><span class="sig-paren">(</span><em>iterable</em>, <em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.timeLimit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the iterable until it finishes or the given time limit has passed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="seamonsters.untilTrue">
+<code class="descclassname">seamonsters.</code><code class="descname">untilTrue</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.untilTrue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the iterable until it yields True, then stop.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="seamonsters.wait">
+<code class="descclassname">seamonsters.</code><code class="descname">wait</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for a certain number of iterations.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="seamonsters.watch">
+<code class="descclassname">seamonsters.</code><code class="descname">watch</code><span class="sig-paren">(</span><em>*iterables</em><span class="sig-paren">)</span><a class="headerlink" href="#seamonsters.watch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a group of iterables in parallel. Ends when the last iterables in the
+given list has finished, regardless of the others.</p>
+<p>If any iterable yields a function, it will be added to the set of running
+iterables.</p>
+</dd></dl>
 
 </div>
 
