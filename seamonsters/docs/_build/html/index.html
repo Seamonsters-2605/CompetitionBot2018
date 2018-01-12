@@ -69,89 +69,65 @@ refer either to Voltage or PercentVbus mode on CANTalons. Also, some classes use
 <tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.AccelerationFilterDrive" title="seamonsters.AccelerationFilterDrive"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.AccelerationFilterDrive</span></code></a>(interface)</td>
 <td>Wraps another drive interface, and provides acceleration filtering.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.Command" title="seamonsters.Command"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.Command</span></code></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.DashboardCommandReader" title="seamonsters.DashboardCommandReader"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.DashboardCommandReader</span></code></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.CommandBot" title="seamonsters.CommandBot"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.CommandBot</span></code></a>()</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.CommandGroup" title="seamonsters.CommandGroup"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.CommandGroup</span></code></a>([name])</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.CommandWrapper" title="seamonsters.CommandWrapper"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.CommandWrapper</span></code></a>(command)</td>
-<td>Wraps another command.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.DriveInterface" title="seamonsters.DriveInterface"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.DriveInterface</span></code></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.DriveInterface" title="seamonsters.DriveInterface"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.DriveInterface</span></code></a></td>
 <td>A generic, abstract interface for driving a robot.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.DynamicAxis" title="seamonsters.DynamicAxis"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.DynamicAxis</span></code></a>([exponent,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.DynamicAxis" title="seamonsters.DynamicAxis"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.DynamicAxis</span></code></a>([exponent,&nbsp;...])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.DynamicPIDDrive" title="seamonsters.DynamicPIDDrive"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.DynamicPIDDrive</span></code></a>(interface,&nbsp;...)</td>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.DynamicPIDDrive" title="seamonsters.DynamicPIDDrive"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.DynamicPIDDrive</span></code></a>(interface,&nbsp;...)</td>
 <td>Wraps another drive interface.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.EnsureFinishedCommand" title="seamonsters.EnsureFinishedCommand"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.EnsureFinishedCommand</span></code></a>(command,&nbsp;...)</td>
-<td>Waits until isFinished() of the wrapped command returns True for a certain number of steps before finishing.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.FieldOrientedDrive" title="seamonsters.FieldOrientedDrive"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.FieldOrientedDrive</span></code></a>(interface,&nbsp;ahrs)</td>
 <td>Wraps another drive interface, and provides field orientation.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.ForeverCommand" title="seamonsters.ForeverCommand"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.ForeverCommand</span></code></a>(command)</td>
-<td>Wraps a command.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.Gamepad" title="seamonsters.Gamepad"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.Gamepad</span></code></a>(port)</td>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.Gamepad" title="seamonsters.Gamepad"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.Gamepad</span></code></a>(port)</td>
 <td>An extended Joystick specifically designed for Logitech gamepads.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.GeneratorBot" title="seamonsters.GeneratorBot"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.GeneratorBot</span></code></a>()</td>
+<td></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.HolonomicDrive" title="seamonsters.HolonomicDrive"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.HolonomicDrive</span></code></a>(fl,&nbsp;fr,&nbsp;bl,&nbsp;br,&nbsp;...)</td>
 <td>An implementation of the DriveInterface for holonomic drive.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.JeffMode" title="seamonsters.JeffMode"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.JeffMode</span></code></a>(talon)</td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.IterativeRobotInstance" title="seamonsters.IterativeRobotInstance"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.IterativeRobotInstance</span></code></a>(robotType)</td>
+<td>Allows an &#8220;instance&#8221; of an IterativeRobot to be created without connecting to HAL or LiveWindow.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.JeffMode" title="seamonsters.JeffMode"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.JeffMode</span></code></a>(talon)</td>
 <td>&#8220;Jeff Mode&#8221; is incremental position mode &#8211; it constantly increments the</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.JoystickBase" title="seamonsters.JoystickBase"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.JoystickBase</span></code></a>(port)</td>
-<td>The base for other joystick utilities classes.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.JoystickUtils" title="seamonsters.JoystickUtils"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.JoystickUtils</span></code></a>(port)</td>
-<td>An extended Joystick with extra utilities for deadzones and a new definition of direction: positive X is now zero, which is more standard.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.LogState" title="seamonsters.LogState"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.LogState</span></code></a>(name[,&nbsp;logFrequency])</td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.LogState" title="seamonsters.LogState"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.LogState</span></code></a>(name[,&nbsp;logFrequency])</td>
 <td>Represents a value important to the user that is constantly changing.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.MotorManager" title="seamonsters.MotorManager"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.MotorManager</span></code></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.MotorManager" title="seamonsters.MotorManager"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.MotorManager</span></code></a>()</td>
 <td>A motor manager manages many CANTalons, with associated MultiMode&#8217;s.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.MotorSpeedControl" title="seamonsters.MotorSpeedControl"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.MotorSpeedControl</span></code></a></td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.MotorSpeedControl" title="seamonsters.MotorSpeedControl"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.MotorSpeedControl</span></code></a></td>
 <td>An abstract interface for controlling the speed of a motor.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.MultiMode" title="seamonsters.MultiMode"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.MultiMode</span></code></a>(talon,&nbsp;speedControl)</td>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.MultiMode" title="seamonsters.MultiMode"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.MultiMode</span></code></a>(talon,&nbsp;speedControl)</td>
 <td>An implementation of MotorSpeedControl that wraps another MotorSpeedControl implementation.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.PDPMonitor" title="seamonsters.PDPMonitor"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.PDPMonitor</span></code></a>(channels)</td>
-<td>Monitors and prints the current of a group of PDP channels.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.PrintCommand" title="seamonsters.PrintCommand"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.PrintCommand</span></code></a>(message)</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.SpeedMode" title="seamonsters.SpeedMode"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.SpeedMode</span></code></a>(talon)</td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.SpeedMode" title="seamonsters.SpeedMode"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.SpeedMode</span></code></a>(talon)</td>
 <td>A CANTalon in speed mode.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.SwerveDrive" title="seamonsters.SwerveDrive"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.SwerveDrive</span></code></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.SwerveDrive" title="seamonsters.SwerveDrive"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.SwerveDrive</span></code></a>()</td>
 <td>An implementation of DriveInterface for swerve drives.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.TalonWheelController" title="seamonsters.TalonWheelController"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.TalonWheelController</span></code></a>(...)</td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.TalonWheelController" title="seamonsters.TalonWheelController"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.TalonWheelController</span></code></a>(...)</td>
 <td>A wheel controller controlling two CANTalons.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.TestDriveInterface" title="seamonsters.TestDriveInterface"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.TestDriveInterface</span></code></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.TestDriveInterface" title="seamonsters.TestDriveInterface"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.TestDriveInterface</span></code></a></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.TestWheelController" title="seamonsters.TestWheelController"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.TestWheelController</span></code></a>(number)</td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.TestWheelController" title="seamonsters.TestWheelController"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.TestWheelController</span></code></a>(number)</td>
 <td>A wheel controller that logs all events and does nothing else.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.VoltageMode" title="seamonsters.VoltageMode"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.VoltageMode</span></code></a>(talon)</td>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.VoltageMode" title="seamonsters.VoltageMode"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.VoltageMode</span></code></a>(talon)</td>
 <td>A CANTalon in voltage mode (actually PercentVbus).</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.WaitCommand" title="seamonsters.WaitCommand"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.WaitCommand</span></code></a>(waitTime)</td>
-<td></td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.WheelController" title="seamonsters.WheelController"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.WheelController</span></code></a></td>
 <td>An interface for controlling a single swerve drive wheel</td>
@@ -159,14 +135,20 @@ refer either to Voltage or PercentVbus mode on CANTalons. Also, some classes use
 <tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.WheelState" title="seamonsters.WheelState"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.WheelState</span></code></a>(location,&nbsp;controller)</td>
 <td>Keeps track of the current state of a single wheels, calculates all the necessary, vector math, and controls a WheelController.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.WhileRunningCommand" title="seamonsters.WhileRunningCommand"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.WhileRunningCommand</span></code></a>(command,&nbsp;...)</td>
-<td>Wraps one command, but tracks a different command (<code class="docutils literal"><span class="pre">watchCommand</span></code>) for isFinished().</td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.deadZone" title="seamonsters.deadZone"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.deadZone</span></code></a>(value[,&nbsp;deadZone])</td>
+<td></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.direction" title="seamonsters.direction"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.direction</span></code></a>(vector)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.globalGamepad" title="seamonsters.globalGamepad"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.globalGamepad</span></code></a>(port)</td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.ensureTrue" title="seamonsters.ensureTrue"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.ensureTrue</span></code></a>(iterable,&nbsp;requiredCount)</td>
+<td>Wait until the iterable yields True for a certain number of consecutive iterations before finishing.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.forever" title="seamonsters.forever"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.forever</span></code></a>()</td>
+<td>Iterate forever.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.getSwitch" title="seamonsters.getSwitch"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.getSwitch</span></code></a>(name,&nbsp;defaultValue)</td>
+<td>Get whether a switch on the dashboard is enabled.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.magnitude" title="seamonsters.magnitude"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.magnitude</span></code></a>(vector)</td>
 <td></td>
@@ -174,17 +156,35 @@ refer either to Voltage or PercentVbus mode on CANTalons. Also, some classes use
 <tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.normalize" title="seamonsters.normalize"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.normalize</span></code></a>(vector)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.readPoints" title="seamonsters.readPoints"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.readPoints</span></code></a>(filePath,&nbsp;...)</td>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.parallel" title="seamonsters.parallel"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.parallel</span></code></a>(\*iterables)</td>
+<td>Run a group of iterables in parallel.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.readPoints" title="seamonsters.readPoints"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.readPoints</span></code></a>(filePath,&nbsp;...)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.sendLogStates" title="seamonsters.sendLogStates"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.sendLogStates</span></code></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.sendLogStates" title="seamonsters.sendLogStates"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.sendLogStates</span></code></a>()</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.setControlMode" title="seamonsters.setControlMode"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.setControlMode</span></code></a>(talon,&nbsp;driveMode)</td>
-<td>Given a DriveInterface.DriveMode, set the control mode of a CANTalon using a ctre.CANTalon.ControlMode.</td>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.sequence" title="seamonsters.sequence"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.sequence</span></code></a>(\*iterables)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.talonModeToString" title="seamonsters.talonModeToString"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.talonModeToString</span></code></a>(mode)</td>
+<td></td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.test_swervedrive_forward" title="seamonsters.test_swervedrive_forward"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.test_swervedrive_forward</span></code></a>()</td>
 <td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.timeLimit" title="seamonsters.timeLimit"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.timeLimit</span></code></a>(iterable,&nbsp;time)</td>
+<td>Run the iterable until it finishes or the given time limit has passed.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.untilTrue" title="seamonsters.untilTrue"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.untilTrue</span></code></a>(iterable)</td>
+<td>Run the iterable until it yields True, then stop.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="seamonsters.html#seamonsters.wait" title="seamonsters.wait"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.wait</span></code></a>(time)</td>
+<td>Wait for a certain number of iterations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="seamonsters.html#seamonsters.watch" title="seamonsters.watch"><code class="xref py py-obj docutils literal"><span class="pre">seamonsters.watch</span></code></a>(\*iterables)</td>
+<td>Run a group of iterables in parallel.</td>
 </tr>
 </tbody>
 </table>
