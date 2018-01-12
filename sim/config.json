@@ -15,14 +15,6 @@
       "px_per_ft": 10,
       
       "objects": [
-        {
-          "color": "sea green",
-          "points": [ [2, 2], [6, 2], [6, 6], [2, 6] ]
-        },
-        { "name": "Field",
-          "color": "white",
-          "points": [ [0, 0], [54, 0], [54, 27], [0, 27] ]
-        },
         { "name": "Platform",
           "color": "red",
           "points":[ [21.8,8.2], [32.0,8.2],[32.0,18.9],[21.8,18.9] ]
