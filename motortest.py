@@ -5,6 +5,13 @@ from networktables import NetworkTables
 
 class MotorTestBot(sea.GeneratorBot):
 
+    VALUE = 4
+    P = 0
+    I = 1
+    D = 2
+    F = 3
+    NUM_PARAMETERS = 5
+
     def robotInit(self):
         self.talons = [ctre.CANTalon(i) for i in range(0,8)]
         for talon in self.talons:
@@ -28,20 +35,24 @@ class MotorTestBot(sea.GeneratorBot):
         self.statusLog.update("Running!")
 
         self.selectedI = 0
-        self.selectedParameter = 0
+        self.selectedParameter = MotorTestBot.VALUE
         self.commandReader.reset()
+        self.setValue = 0
+
+        enteredValue = False
 
         while True:
             yield
             talon = self.talons[self.selectedI]
             self.updateTalonLog()
 
-            setValue = None
+            self.setValue = None
             if self.joy.getRawButton(1):
+                enteredValue = False
                 control = -self.joy.getY() * (self.joy.getTwist() + 1) / 2
                 mode = talon.getControlMode()
                 if mode == ctre.CANTalon.ControlMode.PercentVbus:
-                    setValue = control
+                    self.setValue = control
                 elif mode == ctre.CANTalon.ControlMode.Position:
                     pass # TODO
                 elif mode == ctre.CANTalon.ControlMode.Speed:
@@ -49,13 +60,13 @@ class MotorTestBot(sea.GeneratorBot):
                 elif mode == ctre.CANTalon.ControlMode.Current:
                     pass  # TODO
                 elif mode == ctre.CANTalon.ControlMode.Voltage:
-                    setValue = control * 12
-            self.setLog.update(setValue)
-            if setValue is not None:
+                    self.setValue = control * 12
+            if self.setValue is not None:
                 talon.enable()
-                talon.set(setValue)
+                talon.set(self.setValue)
             else:
-                talon.disable()
+                if not enteredValue:
+                    talon.disable()
 
             sea.sendLogStates()
 
@@ -78,19 +89,19 @@ class MotorTestBot(sea.GeneratorBot):
 
             if self.joy.getRawButton(3):
                 self.selectedParameter += 1
-                if self.selectedParameter > 3:
-                    self.selectedParameter = 3
+                if self.selectedParameter >= MotorTestBot.NUM_PARAMETERS:
+                    self.selectedParameter = 0
                 self.updateTalonLog()
                 sea.sendLogStates()
-                while self.joy.getRawButton(7):
+                while self.joy.getRawButton(3):
                     yield
             if self.joy.getRawButton(2):
                 self.selectedParameter -= 1
                 if self.selectedParameter < 0:
-                    self.selectedParameter = 0
+                    self.selectedParameter = MotorTestBot.NUM_PARAMETERS - 1
                 self.updateTalonLog()
                 sea.sendLogStates()
-                while self.joy.getRawButton(6):
+                while self.joy.getRawButton(2):
                     yield
 
             if self.joy.getRawButton(9):
@@ -112,13 +123,17 @@ class MotorTestBot(sea.GeneratorBot):
             command = self.commandReader.getCommand()
             if command is not None:
                 value = float(command)
-                if self.selectedParameter == 0:
+                if self.selectedParameter == MotorTestBot.VALUE:
+                    talon.enable()
+                    talon.set(value)
+                    enteredValue = True
+                elif self.selectedParameter == MotorTestBot.P:
                     talon.setP(value)
-                elif self.selectedParameter == 1:
+                elif self.selectedParameter == MotorTestBot.I:
                     talon.setI(value)
-                elif self.selectedParameter == 2:
+                elif self.selectedParameter == MotorTestBot.D:
                     talon.setD(value)
-                elif self.selectedParameter == 3:
+                elif self.selectedParameter == MotorTestBot.F:
                     talon.setF(value)
 
     def updateTalonLog(self):
@@ -141,6 +156,11 @@ class MotorTestBot(sea.GeneratorBot):
             if i != 3:
                 pidfStr += ","
         self.pidLog.update(pidfStr)
+
+        if self.selectedParameter == MotorTestBot.VALUE:
+            self.setLog.update('[' + str(self.setValue) + ']')
+        else:
+            self.setLog.update(self.setValue)
 
 if __name__ == "__main__":
     wpilib.run(MotorTestBot)
