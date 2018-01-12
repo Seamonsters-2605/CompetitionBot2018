@@ -36,9 +36,9 @@ class DashboardCommandReader:
             if commandId != self.lastCommandId:
                 command = self.commandTable.getString('command')
                 command = command.strip()
+                self.lastCommandId = commandId
                 if command != "":
                     return command
-                self.lastCommandId = commandId
         except:
             print("Command error!")
         return None
