@@ -17,7 +17,7 @@ class MotorTestBot(sea.GeneratorBot):
         self.encoderPositionLog = sea.LogState("Encoder Position")
         self.encoderSpeedLog = sea.LogState("Encoder Speed")
         self.pidLog = sea.LogState("PIDF")
-        self.joystickLog = sea.LogState("Control")
+        self.setLog = sea.LogState("Set")
 
         self.joy = wpilib.Joystick(0)
 
@@ -31,21 +31,27 @@ class MotorTestBot(sea.GeneratorBot):
             talon = self.talons[selectedI]
             self.updateTalonLog(selectedI, talon)
 
+            setValue = None
             if self.joy.getRawButton(1):
-                control = -self.joy.getY()
+                control = -self.joy.getY() * (self.joy.getTwist() + 1) / 2
                 mode = talon.getControlMode()
-                value = None
                 if mode == ctre.CANTalon.ControlMode.PercentVbus:
-                    value = control
+                    setValue = control
+                elif mode == ctre.CANTalon.ControlMode.Position:
+                    pass # TODO
+                elif mode == ctre.CANTalon.ControlMode.Speed:
+                    pass  # TODO
+                elif mode == ctre.CANTalon.ControlMode.Current:
+                    pass  # TODO
                 elif mode == ctre.CANTalon.ControlMode.Voltage:
-                    value = control * 12
-                self.joystickLog.update(value)
-                if value is not None:
-                    talon.set(value)
+                    setValue = control * 12
+            self.setLog.update(setValue)
+            if setValue is not None:
                 talon.enable()
+                talon.set(setValue)
             else:
-                self.joystickLog.update("Off")
                 talon.disable()
+
             sea.sendLogStates()
 
             if self.joy.getRawButton(5):
