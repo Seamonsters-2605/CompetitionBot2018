@@ -97,14 +97,14 @@ class DriveBot(sea.GeneratorBot):
         self.controlMode = "Standard" # or "Tank"
         self.tick = 0
 
-        self.turnDeadzone = .1
-        self.mainDeadzone = .1
+        self.twistDeadzone = .1
+        self.joystickDeadzone = .1
 
-        self.maxTurnMagnitude = .2
-        self.maxMagnitude = .3
+        self.turnCapMult = .2
+        self.magnitudeCapMult = .3
 
-        self.magnitudeMult = 1
-        self.turnMult = 1
+        self.magnitudeThrottle = 1
+        self.turnThrottle = 1
 
     def teleop(self):
         self.holoDrive.zeroEncoderTargets()
@@ -198,17 +198,59 @@ class DriveBot(sea.GeneratorBot):
             direction = self.roundDirection(direction, math.pi*2)
 
         elif self.controlMode == "Tank":
+            self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
+            self.pidDrive.slowPID = self.slowPIDSpeedMode
+
             turn = self.driverJoystick.getX() # joystick side to side is turn
+            if turn > 0:
+                turn = (turn - self.joystickDeadzone) / (1 - self.joystickDeadzone)
+            elif turn < 0:
+                turn = (turn + self.joystickDeadzone) / (1 - self.joystickDeadzone)
+
             magnitude = -self.driverJoystick.getY() # joystick forward and back is speed
+            if magnitude > 0:
+                magnitude = (magnitude - self.joystickDeadzone) / (1 - self.joystickDeadzone)
+            elif magnitude < 0:
+                magnitude = (magnitude + self.joystickDeadzone) / (1 - self.joystickDeadzone)
+
+            self.turnThrottle = (self.driverJoystick.getRawAxis(4) - 1) / -2
+            self.magnitudeThrottle = (self.driverJoystick.getRawAxis(2) - 1) / -2
+
+            turn *= self.turnCapMult
+            magnitude *= self.magnitudeThrottle #* self.magnitudeCapMult
+
+            direction = math.pi / 2
+
+            pov = self.driverJoystick.getPOV()
+            if 0 < pov and pov < 180:
+                pov = 1
+            elif 180 < pov and pov < 360:
+                pov = -1
+            else:
+                pov = 0
+
+            strafe = pov * self.turnThrottle # turnThrottle controls strafe speed in Tank mode
+            # TODO This angle calculation
+            if strafe != 0:
+                direction = math.tan(magnitude / strafe)
+
+            print ("Direction in pi: " + str(direction / math.pi))
+
+            magnitude = 0
+            turn = 0
 
         # TODO REAL tank
         elif self.controlMode == "Test":
             turn = -self.driverJoystick.getRawAxis(3)
-            if abs(turn) < self.turnDeadzone:
-                turn = 0
-            magnitude = self.driverJoystick.getMagnitude()
-            if magnitude < self.mainDeadzone:
+            if turn > 0:
+                turn = (turn - self.twistDeadzone) / (1 - self.twistDeadzone)
+            elif turn < 0:
+                turn = (turn + self.twistDeadzone) / (1 - self.twistDeadzone)
+
+            magnitude = (self.driverJoystick.getMagnitude() - self.joystickDeadzone) / (1 - self.joystickDeadzone)
+            if magnitude < 0:
                 magnitude = 0
+
             direction = -self.driverJoystick.getDirectionRadians()
             if magnitude == 0:
                 direction = 0
@@ -221,13 +263,13 @@ class DriveBot(sea.GeneratorBot):
             direction = self.roundDirection(direction, 3.0 * math.pi / 2.0)
             direction = self.roundDirection(direction, math.pi * 2)
 
-            self.turnMult = (self.driverJoystick.getRawAxis(4) - 1) / -2
-            self.turnMult *= self.maxTurnMagnitude
-            self.magnitudeMult = (self.driverJoystick.getRawAxis(2) - 1) / -2
-            self.magnitudeMult *= self.maxMagnitude
+            direction -= (math.pi / 2)
 
-            turn *= self.turnMult
-            magnitude *= self.magnitudeMult
+            self.turnThrottle = (self.driverJoystick.getRawAxis(4) - 1) / -2
+            self.magnitudeThrottle = (self.driverJoystick.getRawAxis(2) - 1) / -2
+
+            turn *= (self.turnThrottle * self.turnCapMult)
+            magnitude *= (self.magnitudeThrottle * self.magnitudeCapMult)
 
         self.drive.drive(magnitude, direction, turn)
 
