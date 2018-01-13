@@ -93,8 +93,18 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveControlLog = sea.LogState("Drive Control")
 
+        # Tad's vars
         self.controlMode = "Standard" # or "Tank"
         self.tick = 0
+
+        self.turnDeadzone = .1
+        self.mainDeadzone = .1
+
+        self.maxTurnMagnitude = .2
+        self.maxMagnitude = .3
+
+        self.magnitudeMult = 1
+        self.turnMult = 1
 
     def teleop(self):
         self.holoDrive.zeroEncoderTargets()
@@ -161,7 +171,7 @@ class DriveBot(sea.GeneratorBot):
 
         if self.controlMode == "Standard":
             turn = self.driverJoystick.getRawAxis(3)
-            -magnitude = self.driverJoystick.getMagnitude()
+            magnitude = self.driverJoystick.getMagnitude()
             direction = -self.driverJoystick.getDirectionRadians() + math.pi/2
 
             magnitude = self._joystickPower(magnitude, self.joystickExponent)\
@@ -193,17 +203,31 @@ class DriveBot(sea.GeneratorBot):
 
         # TODO REAL tank
         elif self.controlMode == "Test":
-            if self.tick % 50 == 0:
-                print("X: " + str(self.driverJoystick.getX()))
-                print("Y: " + str(self.driverJoystick.getY()))
-                print("Twist: " + str(self.driverJoystick.getRawAxis(3)))
-                print("Throttle 1: " + str(self.driverJoystick.getRawAxis(2)))
-                print("Throttle 2: " + str(self.driverJoystick.getRawAxis(4)))
+            turn = -self.driverJoystick.getRawAxis(3)
+            if abs(turn) < self.turnDeadzone:
+                turn = 0
+            magnitude = self.driverJoystick.getMagnitude()
+            if magnitude < self.mainDeadzone:
+                magnitude = 0
+            direction = -self.driverJoystick.getDirectionRadians()
+            if magnitude == 0:
+                direction = 0
 
-            self.tick += 1
-            magnitude = 0
-            direction = 0
-            turn = 0
+            # makes dir work better
+            direction += (math.pi / 2)
+            direction = self.roundDirection(direction, 0)
+            direction = self.roundDirection(direction, math.pi / 2.0)
+            direction = self.roundDirection(direction, math.pi)
+            direction = self.roundDirection(direction, 3.0 * math.pi / 2.0)
+            direction = self.roundDirection(direction, math.pi * 2)
+
+            self.turnMult = (self.driverJoystick.getRawAxis(4) - 1) / -2
+            self.turnMult *= self.maxTurnMagnitude
+            self.magnitudeMult = (self.driverJoystick.getRawAxis(2) - 1) / -2
+            self.magnitudeMult *= self.maxMagnitude
+
+            turn *= self.turnMult
+            magnitude *= self.magnitudeMult
 
         self.drive.drive(magnitude, direction, turn)
 
