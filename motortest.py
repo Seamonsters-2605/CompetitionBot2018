@@ -69,45 +69,33 @@ class MotorTestBot(sea.GeneratorBot):
                 self.selectedI += 1
                 if self.selectedI >= len(self.talons):
                     self.selectedI = len(self.talons) - 1
-                self.updateTalonLog()
-                while self.joy.getRawButton(5):
-                    yield
+                yield from self.buttonHeld(5)
             if self.joy.getRawButton(4):
                 self.selectedI -= 1
                 if self.selectedI < 0:
                     self.selectedI = 0
-                self.updateTalonLog()
-                while self.joy.getRawButton(4):
-                    yield
+                yield from self.buttonHeld(4)
 
             if self.joy.getRawButton(3):
                 self.selectedParameter += 1
                 if self.selectedParameter >= MotorTestBot.NUM_PARAMETERS:
                     self.selectedParameter = 0
-                self.updateTalonLog()
-                while self.joy.getRawButton(3):
-                    yield
+                yield from self.buttonHeld(3)
             if self.joy.getRawButton(2):
                 self.selectedParameter -= 1
                 if self.selectedParameter < 0:
                     self.selectedParameter = MotorTestBot.NUM_PARAMETERS - 1
-                self.updateTalonLog()
-                while self.joy.getRawButton(2):
-                    yield
+                yield from self.buttonHeld(2)
 
             if self.joy.getRawButton(9):
                 talon.setControlMode((talon.getControlMode() + 1) % 8)
-                self.updateTalonLog()
-                while self.joy.getRawButton(9):
-                    yield
+                yield from self.buttonHeld(9)
             if self.joy.getRawButton(8):
                 mode = talon.getControlMode() - 1
                 if mode < 0:
                     mode = 7
                 talon.setControlMode(mode)
-                self.updateTalonLog()
-                while self.joy.getRawButton(8):
-                    yield
+                yield from self.buttonHeld(8)
 
             command = self.commandReader.getCommand()
             if command is not None:
@@ -124,6 +112,11 @@ class MotorTestBot(sea.GeneratorBot):
                     talon.setD(value)
                 elif self.selectedParameter == MotorTestBot.F:
                     talon.setF(value)
+
+    def buttonHeld(self, buttonNum):
+        while self.joy.getRawButton(buttonNum):
+            self.updateTalonLog()
+            yield
 
     def updateTalonLog(self):
         talon = self.talons[self.selectedI]
