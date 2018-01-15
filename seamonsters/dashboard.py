@@ -1,4 +1,5 @@
 import networktables
+import traceback
 
 def getSwitch(name, defaultValue):
     """
@@ -32,13 +33,13 @@ class DashboardCommandReader:
 
     def getCommand(self):
         try:
-            commandId = self.commandTable.getNumber('id')
+            commandId = self.commandTable.getNumber('id', 0)
             if commandId != self.lastCommandId:
-                command = self.commandTable.getString('command')
+                command = self.commandTable.getString('command', '')
                 command = command.strip()
                 self.lastCommandId = commandId
                 if command != "":
                     return command
         except:
-            print("Command error!")
+            traceback.print_exc()
         return None
