@@ -62,6 +62,7 @@ class MotorTestBot(sea.GeneratorBot):
                         talon.enable()
                         talon.set(self.setValue)
                     self.updateTalonLog()
+                    yield
                 self.setValue = None
                 talon.disable()
 
