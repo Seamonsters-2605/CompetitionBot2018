@@ -100,13 +100,19 @@ class DriveBot(sea.GeneratorBot):
         self.twistDeadzone = .05
         self.joystickDeadzone = .05
 
-        self.turnCapMult = .2
+        self.turnCapMult = .3
         self.magnitudeCapMult = .3
+
+        self.turnRampUp = 1.3 # this is a multiplier
+        self.magnitudeRampUp = 1.3 # this is a multiplier
+
+        self.rampUpDelay = .5
+        self.rampUpTime = 1.5
 
         self.magnitudeThrottle = 1
         self.turnThrottle = 1
 
-        self.twistExponent = 2
+        self.twistExponent = 1
 
     def test(self):
         self.holoDrive.zeroEncoderTargets()
@@ -185,6 +191,24 @@ class DriveBot(sea.GeneratorBot):
             if magnitude == 0:
                 direction = 0
 
+            # Ramp up
+            if turn == 1:
+                print("RAMPING UP")
+                self.tick += 1
+
+                delayTicks = self.rampUpDelay * 50
+                timeTicks = self.rampUpTime * 50
+
+                if self.tick > delayTicks:
+                    mult = (self.tick - delayTicks) / timeTicks
+                    if mult > 1:
+                        mult = 1
+                    mult *= (self.turnRampUp - 1)
+
+                    turn *= (1 + mult)
+            else:
+                self.tick = 0
+
             # makes dir work better
             direction += (math.pi / 2)
             direction = self.roundDirection(direction, 0)
@@ -197,7 +221,8 @@ class DriveBot(sea.GeneratorBot):
             self.magnitudeThrottle = (self.driverJoystick.getRawAxis(2) - 1) / -2
 
             turn *= (self.turnThrottle * self.turnCapMult)
-            magnitude *= (self.magnitudeThrottle * self.magnitudeCapMult)
+            magnitude *= self.magnitudeThrottle * self.magnitudeCapMult
+
 
             """if self.automaticDrivePositionMode:
                 if magnitude <= self.speedModeThreshold \
