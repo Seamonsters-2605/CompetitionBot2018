@@ -4,7 +4,7 @@ import wpilib
 import inspect, os
 import configparser
 from pyfrc.physics import drivetrains
-
+import ctre
 import robotpy_ext.common_drivers.navx
 
 # make the NavX work with the physics simulator
@@ -55,6 +55,9 @@ class PhysicsEngine:
         pass
 
     def _readMotor(self, data, motor):
+        controlMode = data['CAN'][motor]['control_mode']
+        if controlMode != ctre.ControlMode.PercentOutput:
+            return 0.0
         value = data['CAN'][motor]['value'] / 1024.0
         if value < -1:
             value = -1.0
