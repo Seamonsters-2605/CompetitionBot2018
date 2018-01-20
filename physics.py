@@ -4,7 +4,7 @@ import wpilib
 import inspect, os
 import configparser
 from pyfrc.physics import drivetrains
-
+import ctre
 import robotpy_ext.common_drivers.navx
 
 # make the NavX work with the physics simulator
@@ -54,17 +54,25 @@ class PhysicsEngine:
     def initialize(self, hal_data):
         pass
 
+    def _readMotor(self, data, motor):
+        controlMode = data['CAN'][motor]['control_mode']
+        if controlMode != ctre.ControlMode.PercentOutput:
+            return 0.0
+        value = data['CAN'][motor]['value'] / 1024.0
+        if value < -1:
+            value = -1.0
+        if value > 1:
+            value = 1.0
+        return value
+
     def update_sim(self, data, time, elapsed):
-        valueName = 'value'
-        
         # read CAN data to get motor speeds
-        maxValue = 1024
         try:
-            fl = (data['CAN'][self.canFL][valueName] * self.canFLInv / maxValue)
-            fr = (data['CAN'][self.canFR][valueName] * self.canFRInv / maxValue)
+            fl = self._readMotor(data, self.canFL) * self.canFLInv
+            fr = self._readMotor(data, self.canFR) * self.canFRInv
             if not self.drivetrain == "two":
-                bl = (data['CAN'][self.canBL][valueName] * self.canBLInv / maxValue)
-                br = (data['CAN'][self.canBR][valueName] * self.canBRInv / maxValue)
+                bl = self._readMotor(data, self.canBL) * self.canBLInv
+                br = self._readMotor(data, self.canBR) * self.canBRInv
         except KeyError:
             return
 
