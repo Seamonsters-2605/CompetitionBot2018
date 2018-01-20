@@ -4,6 +4,7 @@ import traceback
 import hal
 from wpilib.robotbase import RobotBase
 from wpilib.livewindow import LiveWindow
+from wpilib.smartdashboard import SmartDashboard
 
 class GeneratorBot(RobotBase):
 
@@ -12,10 +13,10 @@ class GeneratorBot(RobotBase):
         self.iterator = None
         self.earlyStop = False
 
-    def startCompetition(self):
         hal.report(hal.UsageReporting.kResourceType_Framework,
                    hal.UsageReporting.kFramework_Iterative)
 
+    def startCompetition(self):
         self.robotInit()
 
         # Tell the DS that the robot is ready to be enabled
@@ -66,6 +67,8 @@ class GeneratorBot(RobotBase):
                         traceback.print_exc()
                         self.iterator = None
                         self.earlyStop = True
+                SmartDashboard.updateValues()
+                LiveWindow.updateValues()
 
     def robotInit(self):
         """

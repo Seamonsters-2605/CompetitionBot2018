@@ -5,21 +5,19 @@ import math
 
 
 def talonModeToString(mode):
-    if mode == ctre.CANTalon.ControlMode.Disabled:
+    if mode == ctre.ControlMode.Disabled:
         return "Disabled"
-    elif mode == ctre.CANTalon.ControlMode.PercentVbus:
-        return "PercentVbus"
-    elif mode == ctre.CANTalon.ControlMode.Position:
+    elif mode == ctre.ControlMode.PercentOutput:
+        return "PercentOutput"
+    elif mode == ctre.ControlMode.Position:
         return "Position"
-    elif mode == ctre.CANTalon.ControlMode.Speed:
-        return "Speed"
-    elif mode == ctre.CANTalon.ControlMode.Current:
+    elif mode == ctre.ControlMode.Velocity:
+        return "Velocity"
+    elif mode == ctre.ControlMode.Current:
         return "Current"
-    elif mode == ctre.CANTalon.ControlMode.Voltage:
-        return "Voltage"
-    elif mode == ctre.CANTalon.ControlMode.Follower:
+    elif mode == ctre.ControlMode.Follower:
         return "Follower"
-    elif mode == ctre.CANTalon.ControlMode.MotionProfile:
+    elif mode == ctre.ControlMode.MotionProfile:
         return "MotionProfile"
     else:
         return str(mode)
