@@ -177,7 +177,10 @@ class DynamicPIDDrive(DriveInterface):
             return
         self.currentPID = pid
         for talon in self.talons:
-            talon.setPID(pid[0], pid[1], pid[2], pid[3])
+            talon.config_kP(0, pid[0], 0)
+            talon.config_kI(0, pid[1], 0)
+            talon.config_kD(0, pid[2], 0)
+            talon.config_kF(0, pid[3], 0)
 
     def _lerpPID(self, magnitude):
         if magnitude <= self.slowPIDScale:
