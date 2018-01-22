@@ -114,6 +114,8 @@ class DriveBot(sea.GeneratorBot):
 
         self.twistExponent = 1
 
+        self.testMode = True
+
     def test(self):
         self.holoDrive.zeroEncoderTargets()
 
@@ -172,131 +174,73 @@ class DriveBot(sea.GeneratorBot):
         else:
             self.fieldDriveLog.update("Disabled")
 
-        # determines whether we're in standard or tank mode
-        if self.driverJoystick.getRawButton(14):
-            self.controlMode = "Tank"
-        elif self.driverJoystick.getRawButton(13):
-            self.controlMode = "Standard"
+        # no static switch for control mode
+        turn = -self.driverJoystick.getRawAxis(3)
+
+        magnitude = self.driverJoystick.getMagnitude()
+
+        direction = -self.driverJoystick.getDirectionRadians()
+        if magnitude == 0:
+            direction = 0
+
+        # Ramp up
+        """if turn == 1:
+            print("RAMPING UP")
+            self.tick += 1
+
+            delayTicks = self.rampUpDelay * 50
+            timeTicks = self.rampUpTime * 50
+
+            if self.tick > delayTicks:
+                mult = (self.tick - delayTicks) / timeTicks
+                if mult > 1:
+                    mult = 1
+                mult *= (self.turnRampUp - 1)
+
+                turn *= (1 + mult)
         else:
-            self.controlMode = "Test"
+            self.tick = 0"""
 
-        if self.controlMode == "Standard":
-            turn = -self.driverJoystick.getRawAxis(3)
-            turn = self.improvedJoystickPower(turn, self.twistDeadzone, 1)
+        # makes dir work better
+        direction += (math.pi / 2)
+        direction = self.roundDirection(direction, 0)
+        direction = self.roundDirection(direction, math.pi / 2.0)
+        direction = self.roundDirection(direction, math.pi)
+        direction = self.roundDirection(direction, 3.0 * math.pi / 2.0)
+        direction = self.roundDirection(direction, math.pi * 2)
 
-            magnitude = self.improvedJoystickPower(self.driverJoystick.getMagnitude(),
-                                                   self.joystickDeadzone, self.joystickExponent)
+        #self.turnThrottle = (self.driverJoystick.getRawAxis(4) - 1) / -2
+        #self.magnitudeThrottle = (self.driverJoystick.getRawAxis(2) - 1) / -2
 
-            direction = -self.driverJoystick.getDirectionRadians()
-            if magnitude == 0:
-                direction = 0
+        #turn *= (self.turnThrottle * self.turnCapMult)
+        #magnitude *= self.magnitudeThrottle * self.magnitudeCapMult
 
-            # Ramp up
-            if turn == 1:
-                print("RAMPING UP")
-                self.tick += 1
+        throttle = (self.driverJoystick.getRawAxis(2) - 1.0) / -2.0
 
-                delayTicks = self.rampUpDelay * 50
-                timeTicks = self.rampUpTime * 50
+        turn *= throttle * self.turnCapMult
+        magnitude *= throttle * self.magnitudeCapMult
 
-                if self.tick > delayTicks:
-                    mult = (self.tick - delayTicks) / timeTicks
-                    if mult > 1:
-                        mult = 1
-                    mult *= (self.turnRampUp - 1)
-
-                    turn *= (1 + mult)
+        """if self.automaticDrivePositionMode:
+            if magnitude <= self.speedModeThreshold \
+                    and abs(turn) <= self.speedModeThreshold:
+                self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Position)
+                self.pidDrive.slowPID = self.slowPID
             else:
-                self.tick = 0
+                self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
+                self.pidDrive.slowPID = self.slowPIDSpeedMode"""
 
-            # makes dir work better
-            direction += (math.pi / 2)
-            direction = self.roundDirection(direction, 0)
-            direction = self.roundDirection(direction, math.pi / 2.0)
-            direction = self.roundDirection(direction, math.pi)
-            direction = self.roundDirection(direction, 3.0 * math.pi / 2.0)
-            direction = self.roundDirection(direction, math.pi * 2)
-
-            self.turnThrottle = (self.driverJoystick.getRawAxis(4) - 1) / -2
-            self.magnitudeThrottle = (self.driverJoystick.getRawAxis(2) - 1) / -2
-
-            turn *= (self.turnThrottle * self.turnCapMult)
-            magnitude *= self.magnitudeThrottle * self.magnitudeCapMult
-
-
-            """if self.automaticDrivePositionMode:
-                if magnitude <= self.speedModeThreshold \
-                        and abs(turn) <= self.speedModeThreshold:
-                    self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Position)
-                    self.pidDrive.slowPID = self.slowPID
-                else:
-                    self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
-                    self.pidDrive.slowPID = self.slowPIDSpeedMode"""
-
-        elif self.controlMode == "Tank":
-            self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
-            self.pidDrive.slowPID = self.slowPIDSpeedMode
-
-            turn = self.improvedJoystickPower(self.driverJoystick.getX(), # joystick side to side is turn
-                                              self.joystickDeadzone, self.joystickExponent)
-
-            magnitude = self.improvedJoystickPower(-self.driverJoystick.getY(), # joystick forward and back is speed
-                                                    self.joystickDeadzone, self.joystickExponent)
-
-            self.turnThrottle = (self.driverJoystick.getRawAxis(4) - 1) / -2
-            self.magnitudeThrottle = (self.driverJoystick.getRawAxis(2) - 1) / -2
-
-            turn *= self.turnCapMult
-            magnitude *= self.magnitudeThrottle #* self.magnitudeCapMult
-
-            direction = math.pi / 2
-
-            pov = self.driverJoystick.getPOV()
-            if 0 < pov and pov < 180:
-                pov = 1
-            elif 180 < pov and pov < 360:
-                pov = -1
-            else:
-                pov = 0
-
-            strafe = pov * self.turnThrottle # turnThrottle controls strafe speed in Tank mode
-            # TODO This angle calculation
-            if strafe != 0:
-                direction = math.tan(magnitude / strafe)
-
-            print ("Direction in pi: " + str(direction / math.pi))
-
+        if self.testMode:
             magnitude = 0
             turn = 0
+            direction = math.pi / 2
 
-        # TODO REAL tank
-        elif self.controlMode == "Test":
-            turn = self.driverJoystick.getRawAxis(3)
-            magnitude = self.driverJoystick.getMagnitude()
-            direction = -self.driverJoystick.getDirectionRadians() + math.pi / 2
+            self.tick += 1
 
-            magnitude = self._joystickPower(magnitude, self.joystickExponent) \
-                        * self.normalScale
-            turn = self._joystickPower(turn, self.joystickExponent, 0.1) \
-                   * self.normalTurnScale
-            if self.automaticDrivePositionMode:
-                if magnitude <= self.speedModeThreshold \
-                        and abs(turn) <= self.speedModeThreshold:
-                    self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Position)
-                    self.pidDrive.slowPID = self.slowPID
-                else:
-                    self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
-                    self.pidDrive.slowPID = self.slowPIDSpeedMode
-            # constrain direction to be between 0 and 2pi
-            if direction < 0:
-                circles = math.ceil(-direction / (math.pi * 2))
-                direction += circles * math.pi * 2
-            direction %= math.pi * 2
-            direction = self.roundDirection(direction, 0)
-            direction = self.roundDirection(direction, math.pi / 2.0)
-            direction = self.roundDirection(direction, math.pi)
-            direction = self.roundDirection(direction, 3.0 * math.pi / 2.0)
-            direction = self.roundDirection(direction, math.pi * 2)
+            if self.tick % 25 == 0:
+                #print("X: " + str(self.driverJoystick.getX()))
+                #print("Y: " + str(self.driverJoystick.getY()))
+                print("Direction in pi: " + str(self.driverJoystick.getDirectionRadians() / math.pi))
+
 
         self.drive.drive(magnitude, direction, turn)
 
