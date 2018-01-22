@@ -7,8 +7,8 @@ def getSwitch(name, defaultValue):
     """
     table = networktables.NetworkTables.getTable('dashboard')
     try:
-        switchNames = table.getStringArray('switchnames')
-        switchValues = table.getBooleanArray('switchvalues')
+        switchNames = table.getStringArray('switchnames', [])
+        switchValues = table.getBooleanArray('switchvalues', [])
     except BaseException as e:
         print("Exception while getting switch", e)
         return defaultValue
