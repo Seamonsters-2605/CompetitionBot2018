@@ -210,11 +210,6 @@ class DriveBot(sea.GeneratorBot):
             if self.joystickExponent == 3:
                 self.joystickExponent = 1
 
-        if self.driverJoystick.getRawButtonReleased(3):
-            self.twistExponent += 1
-            if self.twistExponent == 3:
-                self.twistExponent = 1
-
         magnitude = magnitude ** self.joystickExponent
         if turn != 0:
             turn = (abs(turn) ** self.twistExponent) / (turn / abs(turn))
@@ -234,16 +229,13 @@ class DriveBot(sea.GeneratorBot):
                 self.pidDrive.slowPID = self.slowPIDSpeedMode
 
         if self.testMode:
-            magnitude = 0
-            turn = 0
-            direction = math.pi / 2
 
             self.tick += 1
 
             if self.tick % 25 == 0:
                 #print("X: " + str(self.driverJoystick.getX()))
                 #print("Y: " + str(self.driverJoystick.getY()))
-                print("Direction in pi: " + str(self.driverJoystick.getDirectionRadians() / math.pi))
+                print("Direction in pi: " + str(-self.driverJoystick.getDirectionRadians() / math.pi))
 
         self.drive.drive(magnitude, direction, turn)
 
