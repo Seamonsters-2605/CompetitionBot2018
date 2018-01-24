@@ -104,7 +104,7 @@ class DriveBot(sea.GeneratorBot):
         self.joystickDeadzone = .05
 
         self.turnCapMult = .3
-        self.magnitudeCapMult = .3
+        self.magnitudeCapMult = .45
 
         self.turnRampUp = 1.3 # this is a multiplier
         self.magnitudeRampUp = 1.3 # this is a multiplier
@@ -114,7 +114,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.twistExponent = 1
 
-        self.testMode = True
+        self.testMode = False
 
     def teleop(self):
         self.holoDrive.resetTargetPositions()
@@ -203,11 +203,20 @@ class DriveBot(sea.GeneratorBot):
         direction = self.roundDirection(direction, 3.0 * math.pi / 2.0)
         direction = self.roundDirection(direction, math.pi * 2)
 
-        #self.turnThrottle = (self.driverJoystick.getRawAxis(4) - 1) / -2
-        #self.magnitudeThrottle = (self.driverJoystick.getRawAxis(2) - 1) / -2
+        # FOR TESTING -- TOGGLE TWIST EXPONENTS
+        if self.driverJoystick.getRawButtonReleased(2):
+            self.joystickExponent += 1
+            if self.joystickExponent == 3:
+                self.joystickExponent = 1
 
-        #turn *= (self.turnThrottle * self.turnCapMult)
-        #magnitude *= self.magnitudeThrottle * self.magnitudeCapMult
+        if self.driverJoystick.getRawButtonReleased(3):
+            self.twistExponent += 1
+            if self.twistExponent == 3:
+                self.twistExponent = 1
+
+        magnitude = magnitude ** self.joystickExponent
+        if turn != 0:
+            turn = (abs(turn) ** self.twistExponent) / (turn / abs(turn))
 
         throttle = (self.driverJoystick.getRawAxis(2) - 1.0) / -2.0
 
