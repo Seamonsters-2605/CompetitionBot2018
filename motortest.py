@@ -47,6 +47,10 @@ class MotorTestBot(sea.GeneratorBot):
                 self.setValue = None
                 talon.disable()
 
+            if self.joy.getRawButton(2):
+                talon.set(ctre.ControlMode.Position,
+                          talon.getSelectedSensorPosition(0))
+
             if self.joy.getRawButton(5):
                 self.selectedI += 1
                 if self.selectedI >= len(self.talons):
@@ -57,6 +61,12 @@ class MotorTestBot(sea.GeneratorBot):
                 if self.selectedI < 0:
                     self.selectedI = 0
                 yield from self.buttonHeld(4)
+
+            command = self.commandReader.getCommand()
+            if command != None:
+                print("Got a command", command)
+                talon.set(ctre.ControlMode.Position,
+                          talon.getSelectedSensorPosition(0) + int(command))
 
     def buttonHeld(self, buttonNum):
         while self.joy.getRawButton(buttonNum):
