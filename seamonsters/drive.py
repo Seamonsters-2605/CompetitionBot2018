@@ -133,13 +133,14 @@ class FieldOrientedDrive(DriveInterface):
         self.origin = self._getYawRadians()
 
     def drive(self, magnitude, direction, turn):
-        robotAngle = self._getYawRadians() - self.origin
-        direction -= robotAngle
-        direction += self.offset
+        direction -= self.getRobotOffset()
         self.interface.drive(magnitude, direction, turn)
 
     def _getYawRadians(self):
         return - math.radians(self.ahrs.getAngle())
+
+    def getRobotOffset(self):
+        return self._getYawRadians() - self.origin - self.offset
 
 
 class DynamicPIDDrive(DriveInterface):
