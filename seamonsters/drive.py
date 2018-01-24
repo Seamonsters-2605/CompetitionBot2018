@@ -5,24 +5,20 @@ import math
 
 
 def talonModeToString(mode):
-    if mode == ctre.CANTalon.ControlMode.Disabled:
+    if mode == ctre.ControlMode.Disabled:
         return "Disabled"
-    elif mode == ctre.CANTalon.ControlMode.PercentVbus:
-        return "PercentVbus"
-    elif mode == ctre.CANTalon.ControlMode.Position:
+    elif mode == ctre.ControlMode.PercentOutput:
+        return "PercentOutput"
+    elif mode == ctre.ControlMode.Position:
         return "Position"
-    elif mode == ctre.CANTalon.ControlMode.Speed:
-        return "Speed"
-    elif mode == ctre.CANTalon.ControlMode.Current:
+    elif mode == ctre.ControlMode.Velocity:
+        return "Velocity"
+    elif mode == ctre.ControlMode.Current:
         return "Current"
-    elif mode == ctre.CANTalon.ControlMode.Voltage:
-        return "Voltage"
-    elif mode == ctre.CANTalon.ControlMode.Follower:
+    elif mode == ctre.ControlMode.Follower:
         return "Follower"
-    elif mode == ctre.CANTalon.ControlMode.MotionProfile:
+    elif mode == ctre.ControlMode.MotionProfile:
         return "MotionProfile"
-    elif mode == ctre.CANTalon.ControlMode.MotionMagic:
-        return "MotionMagic"
     else:
         return str(mode)
 
@@ -181,7 +177,10 @@ class DynamicPIDDrive(DriveInterface):
             return
         self.currentPID = pid
         for talon in self.talons:
-            talon.setPID(pid[0], pid[1], pid[2], pid[3])
+            talon.config_kP(0, pid[0], 0)
+            talon.config_kI(0, pid[1], 0)
+            talon.config_kD(0, pid[2], 0)
+            talon.config_kF(0, pid[3], 0)
 
     def _lerpPID(self, magnitude):
         if magnitude <= self.slowPIDScale:

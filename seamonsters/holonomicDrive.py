@@ -10,9 +10,7 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
     An implementation of the DriveInterface for holonomic drive. This allows for
     mecanum/omni drives in the "diamond" configuration. The offset of the wheels
     can be changed -- default is .25 pi radians (or 45 degrees), which is ideal
-    for our regular mecanum wheels or the typical omni drive's. If you want this
-    code to work with Jeff's drivetrain just change the angle offset to 27/180
-    pi radians (27 degrees).
+    for our regular mecanum wheels or the typical omni drive's.
     
     This class can also control a tank drive, although it isn't ideal for that.
     Just set the wheel offset to 0.
@@ -20,7 +18,7 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
     PLEASE READ:
     
     Right side driving forward is assumed to be +1. Turning counter-clockwise is
-    assumed to be +1. Meet these requriements and THEN use invertDrive() if it
+    assumed to be +1. Meet these requirements and THEN use invertDrive() if it
     is all backwards. Turn should be passed in as -Joystick.getX, most likely.
     """
 
@@ -30,11 +28,7 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
     BACK_LEFT = 2
     BACK_RIGHT = 3
 
-    def __init__(self, fl, fr, bl, br, ticksPerWheelRotation):
-        """
-        Initialize holonomicDrive with for talons. ticksPerWheelRotation MUST
-        be for a full wheel rotation, not necessarily a full motor rotation.
-        """
+    def __init__(self, fl, fr, bl, br, ticksPerWheelRotation=0):
         self.wheelMotors = [None for i in range(0, 4)]
         self.wheelMotors[HolonomicDrive.FRONT_LEFT] = fl
         self.wheelMotors[HolonomicDrive.FRONT_RIGHT] = fr
@@ -44,26 +38,21 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
         self.ticksPerWheelRotation = ticksPerWheelRotation
 
         # stores the currently calculated voltage or velocity that will be sent
-        # to the CANTalons, for each wheel
-        self.stores = [0.0, 0.0, 0.0, 0.0]
+        # to the talons, for each wheel
+        self.targetVelocities = [0.0, 0.0, 0.0, 0.0]
         
-        # for position/jeff mode: stores the current target position for each
-        # wheel
-        self.encoderTargets = [0.0, 0.0, 0.0, 0.0]
+        # for position mode: stores the current target position for each wheel
+        self.targetPositions = [0.0, 0.0, 0.0, 0.0]
         
         self.wheelOffset = math.pi / 4
         
         # can be 1 for normal driving, or -1 to invert all motors
         self.invert = 1
         
-        # maximum velocity position/jeff mode; multiplied by 5 for speed mode
+        # maximum velocity position mode; multiplied by 5 for velocity mode
         self.maxVelocity = 80 * 5
-        
-        self.previousDriveMode = ctre.CANTalon.ControlMode.PercentVbus
-        self.driveMode = ctre.CANTalon.ControlMode.PercentVbus
 
-
-    #USE THESE FEW FUNCTIONS BELOW
+        self.driveMode = ctre.ControlMode.PercentOutput
     
     def invertDrive(self, enabled=True):
         """
@@ -82,10 +71,10 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
 
     def setMaxVelocity(self, velocity):
         """
-        Sets the max encoder velocity for position/jeff and speed mode.
+        Sets the max encoder velocity for position and velocity mode.
         Default is 400. For position mode, this is the maximum difference
         between target and current position for every iteration (50 times per
-        second). Speed mode behaves similarly, but since wpilib uses units of
+        second). Velocity mode behaves similarly, but since wpilib uses units of
         10ths of a second, the velocity value is multiplied by 5.
         """
         self.maxVelocity = velocity
@@ -95,142 +84,105 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
 
     def drive(self, magnitude, direction, turn):
         mode = self.driveMode
-        if mode == ctre.CANTalon.ControlMode.PercentVbus:
+        if mode == ctre.ControlMode.PercentOutput:
             self.driveVoltage(magnitude, direction, turn)
-        elif mode == ctre.CANTalon.ControlMode.Speed:
-            self.driveSpeed(magnitude, direction, turn)
-        elif mode == ctre.CANTalon.ControlMode.Position:
-            self.driveSpeedJeffMode(magnitude, direction, turn)
-    
+        elif mode == ctre.ControlMode.Velocity:
+            self.driveVelocity(magnitude, direction, turn)
+        elif mode == ctre.ControlMode.Position:
+            self.drivePosition(magnitude, direction, turn)
 
-    # these functions ignore the current driveMode setting. They are not part of
-    # DriveInterface
-    
     def driveVoltage(self, magnitude, direction, turn):
-        if (turn == 0 and magnitude == 0):
-            self._disableTalons()
-        elif not self._allTalonsEnabled():
-            self._enableTalons()
-            self.zeroEncoderTargets()
-        
-        self._ensureControlMode(ctre.CANTalon.ControlMode.PercentVbus)
+        if turn == 0 and magnitude == 0:
+            self._disableMotors()
+            return
         self._calcWheels(magnitude, direction, turn)
-        self._setWheels()
-        self.previousDriveMode = ctre.CANTalon.ControlMode.PercentVbus
+        self._setMotorVelocities()
 
-    def driveSpeed(self, magnitude, direction, turn):
+    def driveVelocity(self, magnitude, direction, turn):
         if (turn == 0 and magnitude == 0):
-            self._disableTalons()
-        elif not self._allTalonsEnabled():
-            self._enableTalons()
-            self.zeroEncoderTargets()
-        
-        self._ensureControlMode(ctre.CANTalon.ControlMode.Speed)
+            self._disableMotors()
+            return
         self._calcWheels(magnitude, direction, turn)
-        self._scaleToMax()
-        self._setWheels()
-        self.previousDriveMode = ctre.CANTalon.ControlMode.Speed
+        self._scaleVelocityMode()
+        self._setMotorVelocities()
 
-    #Increments position to mock speed mode
-    def driveSpeedJeffMode(self, magnitude, direction, turn): 
+    # Increments positions to mock velocity mode
+    def drivePosition(self, magnitude, direction, turn):
         if (turn == 0 and magnitude == 0):
-            self._disableTalons()
-        elif not self._allTalonsEnabled():
-            self._enableTalons()
-            self.zeroEncoderTargets()
-
-        self._ensureControlMode(ctre.CANTalon.ControlMode.Position)
-        if not self.previousDriveMode == ctre.CANTalon.ControlMode.Position:
-            self.zeroEncoderTargets()
+            self._disableMotors()
+            return
+        if not self._motorsInPositionMode():
+            self.resetTargetPositions()
         self._calcWheels(magnitude, direction, turn)
-        self._scaleToMaxJeffMode()
-        self._incrementEncoderTargets()
-        self._setWheelsJeffMode()
-        self.previousDriveMode = ctre.CANTalon.ControlMode.Position
-        
-        
-    def logCurrent(self):
-        print("FL Current:", str(
-            self.wheelMotors[HolonomicDrive.FRONT_LEFT].getOutputCurrent()))
-        print("FR Current:", str(
-            self.wheelMotors[HolonomicDrive.FRONT_RIGHT].getOutputCurrent()))
-        print("BL Current:", str(
-            self.wheelMotors[HolonomicDrive.BACK_LEFT].getOutputCurrent()))
-        print("BR Current:", str(
-            self.wheelMotors[HolonomicDrive.BACK_RIGHT].getOutputCurrent()))
+        self._scalePositionMode()
+        self._incrementTargetPositions()
+        self._setMotorPositions()
 
-    def zeroEncoderTargets(self):
+    def resetTargetPositions(self):
         for i in range(0, 4):
-            self.encoderTargets[i] = self.wheelMotors[i].getPosition()
-    
+            self.targetPositions[i] = \
+                self.wheelMotors[i].getSelectedSensorPosition(0)
     
     def _calcWheels(self, magnitude, direction, turn):
-        self.stores = [0.0, 0.0, 0.0, 0.0]
+        self.targetVelocities = [0.0, 0.0, 0.0, 0.0]
         self._addStrafe(magnitude, direction)
         self._addTurn(turn)
-        self._scaleNumbers()
+        largest = max([abs(v) for v in self.targetVelocities])
+        if largest > 1:
+            self.targetVelocities = \
+                [number / largest for number in self.targetVelocities]
 
     def _addStrafe(self, magnitude, direction):
         if magnitude > 1.0:
-            fixedMagnitude = 1.0
-        else:
-            fixedMagnitude = magnitude
-        self.stores[HolonomicDrive.FRONT_LEFT] += fixedMagnitude \
-                * (math.sin(direction + self.wheelOffset)) * -1
-        self.stores[HolonomicDrive.FRONT_RIGHT] += fixedMagnitude \
-                * (math.sin((direction - self.wheelOffset)))
-        self.stores[HolonomicDrive.BACK_LEFT] += fixedMagnitude \
-                * (math.sin((direction - self.wheelOffset))) * -1
-        self.stores[HolonomicDrive.BACK_RIGHT] += fixedMagnitude \
-                * (math.sin((direction + self.wheelOffset)))
+            magnitude = 1.0
+        elif magnitude < -1.0:
+            magnitude = -1.0
+        self.targetVelocities[HolonomicDrive.FRONT_LEFT] += \
+            magnitude * (math.sin(direction + self.wheelOffset)) * -1
+        self.targetVelocities[HolonomicDrive.FRONT_RIGHT] += \
+            magnitude * (math.sin((direction - self.wheelOffset)))
+        self.targetVelocities[HolonomicDrive.BACK_LEFT] += \
+            magnitude * (math.sin((direction - self.wheelOffset))) * -1
+        self.targetVelocities[HolonomicDrive.BACK_RIGHT] += \
+            magnitude * (math.sin((direction + self.wheelOffset)))
 
     def _addTurn(self, turn):
         for i in range(0,4):
-            self.stores[i] += turn
+            self.targetVelocities[i] += turn
 
-    def _scaleNumbers(self):
-        # TODO: this looks very wrong
-        largest = max(self.stores)
-        if largest > 1:
-            for number in self.stores:
-                number = number / largest
-
-    def _incrementEncoderTargets(self):
+    def _incrementTargetPositions(self):
         for i in range(0, 4):
-            if not abs(self.wheelMotors[i].getPosition() \
-                    - self.encoderTargets[i]) > self.ticksPerWheelRotation:
-                self.encoderTargets[i] += self.stores[i] * self.invert
+            self.targetPositions[i] += self.targetVelocities[i] * self.invert
 
-    def _setWheels(self):
-        for i in range(0, 4):
-            self.wheelMotors[i].set(self.stores[i] * self.invert)
-
-    def _setWheelsJeffMode(self):
-        for i in range(0, 4):
-            self.wheelMotors[i].set(self.encoderTargets[i])
-
-    def _scaleToMax(self):
+    def _scaleVelocityMode(self):
         for i in range(0,4):
-            self.stores[i] *= self.maxVelocity * 5
+            self.targetVelocities[i] *= self.maxVelocity * 5
 
-    def _scaleToMaxJeffMode(self):
+    def _scalePositionMode(self):
         for i in range(0,4):
-            self.stores[i] *= self.maxVelocity
+            self.targetVelocities[i] *= self.maxVelocity
 
-    def _ensureControlMode(self, controlMode):
+    def _setMotorVelocities(self):
         for i in range(0, 4):
-            self.wheelMotors[i].changeControlMode(controlMode)
-    
-    def _enableTalons(self):
-        for i in range(0, 4):
-            self.wheelMotors[i].enable()
+            self.wheelMotors[i].set(self.driveMode,
+                                    self.targetVelocities[i] * self.invert)
 
-    def _disableTalons(self):
+    def _setMotorPositions(self):
         for i in range(0, 4):
-            self.wheelMotors[i].disable()
+            currentPos = self.wheelMotors[i].getSelectedSensorPosition(0)
+            if abs(currentPos - self.targetPositions[i]) \
+                    > self.ticksPerWheelRotation * 1.5:
+                print("Holonomic wheel error!!")
+                self.targetPositions[i] = currentPos
+            self.wheelMotors[i].set(ctre.ControlMode.Position,
+                                    self.targetPositions[i])
 
-    def _allTalonsEnabled(self):
-        for i in range(0, 4):
-            if not self.wheelMotors[i].isControlEnabled():
+    def _disableMotors(self):
+        for motor in self.wheelMotors:
+            motor.disable()
+
+    def _motorsInPositionMode(self):
+        for motor in self.wheelMotors:
+            if not motor.getControlMode() == ctre.ControlMode.Position:
                 return False
         return True

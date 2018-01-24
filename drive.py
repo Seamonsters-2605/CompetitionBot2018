@@ -48,6 +48,7 @@ class DriveBot(sea.GeneratorBot):
         # the motor gear has 12 teeth and the wheel has 85 teeth
         # 85 / 12 * 400 = 2833.333 = ~2833
         ticksPerWheelRotation = 2833
+        # ticksPerWheelRotation = 83584
 
         # for switching between speed/position mode
         self.speedModeThreshold = 0.05
@@ -56,20 +57,22 @@ class DriveBot(sea.GeneratorBot):
 
         self.driverJoystick = wpilib.Joystick(0)
 
-        fl = ctre.CANTalon(2)
-        fr = ctre.CANTalon(1)
-        bl = ctre.CANTalon(0)
-        br = ctre.CANTalon(3)
+        fl = ctre.WPI_TalonSRX(2)
+        fr = ctre.WPI_TalonSRX(1)
+        bl = ctre.WPI_TalonSRX(0)
+        br = ctre.WPI_TalonSRX(3)
         self.talons = [fl, fr, bl, br]
 
         for talon in self.talons:
-            talon.setFeedbackDevice(ctre.CANTalon.FeedbackDevice.QuadEncoder)
+            talon.configSelectedFeedbackSensor(
+                ctre.FeedbackDevice.QuadEncoder, 0, 0)
 
         self.driveModeLog = sea.LogState("Drive mode")
 
         self._setPID(self.fastPID)
 
-        self.holoDrive = sea.HolonomicDrive(fl, fr, bl, br, ticksPerWheelRotation)
+        self.holoDrive = sea.HolonomicDrive(fl, fr, bl, br,
+                                            ticksPerWheelRotation)
         self.holoDrive.invertDrive(True)
         self.holoDrive.setWheelOffset(math.radians(45.0))  # angle of rollers
         self.holoDrive.setMaxVelocity(maxVelocity)
@@ -109,9 +112,6 @@ class DriveBot(sea.GeneratorBot):
         self.rampUpDelay = .5
         self.rampUpTime = 1.5
 
-        self.magnitudeThrottle = 1
-        self.turnThrottle = 1
-
         self.twistExponent = 1
 
         self.testMode = True
@@ -120,7 +120,7 @@ class DriveBot(sea.GeneratorBot):
         self.holoDrive.zeroEncoderTargets()
 
     def teleop(self):
-        self.holoDrive.zeroEncoderTargets()
+        self.holoDrive.resetTargetPositions()
 
         if sea.getSwitch("Field oriented drive", False):
             self.drive = self.fieldDrive
@@ -130,13 +130,13 @@ class DriveBot(sea.GeneratorBot):
             sea.getSwitch("Automatic drive position mode", False)
         if sea.getSwitch("Drive speed mode", False) \
                 or self.automaticDrivePositionMode:
-            self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
+            self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
             self.pidDrive.slowPID = self.slowPIDSpeedMode
         elif sea.getSwitch("Drive position mode", False):
-            self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Position)
+            self.holoDrive.setDriveMode(ctre.ControlMode.Position)
             self.pidDrive.slowPID = self.slowPID
         else:
-            self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.PercentVbus)
+            self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
 
         self.encoderLoggingEnabled = sea.getSwitch("Encoder logging", False)
 
@@ -156,18 +156,15 @@ class DriveBot(sea.GeneratorBot):
         if self.encoderLoggingEnabled:
             encoderLogText = ""
             for talon in self.talons:
-                encoderLogText += str(talon.getPosition()) + " "
+                encoderLogText += str(talon.getSelectedSensorPosition(0)) + " "
             self.encoderLog.update(encoderLogText)
             speedLogText = ""
             for talon in self.talons:
-                speedLogText += str(talon.getEncVelocity()) + " "
+                speedLogText += str(talon.getSelectedSensorVelocity(0)) + " "
             self.speedLog.update(speedLogText)
 
-        if not self.talons[0].isEnabled():
-            self.driveModeLog.update("Off")
-        else:
-            self.driveModeLog.update(sea.talonModeToString(
-                self.talons[0].getControlMode()))
+        self.driveModeLog.update(sea.talonModeToString(
+            self.talons[0].getControlMode()))
 
         if self.drive is self.fieldDrive:
             self.fieldDriveLog.update("Enabled")
@@ -223,10 +220,10 @@ class DriveBot(sea.GeneratorBot):
         """if self.automaticDrivePositionMode:
             if magnitude <= self.speedModeThreshold \
                     and abs(turn) <= self.speedModeThreshold:
-                self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Position)
+                self.holoDrive.setDriveMode(ctre.ControlMode.Position)
                 self.pidDrive.slowPID = self.slowPID
             else:
-                self.holoDrive.setDriveMode(ctre.CANTalon.ControlMode.Speed)
+                self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
                 self.pidDrive.slowPID = self.slowPIDSpeedMode"""
 
         if self.testMode:
@@ -241,12 +238,14 @@ class DriveBot(sea.GeneratorBot):
                 #print("Y: " + str(self.driverJoystick.getY()))
                 print("Direction in pi: " + str(self.driverJoystick.getDirectionRadians() / math.pi))
 
-
         self.drive.drive(magnitude, direction, turn)
 
     def _setPID(self, pid):
         for talon in self.talons:
-            talon.setPID(pid[0], pid[1], pid[2], pid[3])
+            talon.config_kP(0, pid[0], 0)
+            talon.config_kI(0, pid[1], 0)
+            talon.config_kD(0, pid[2], 0)
+            talon.config_kF(0, pid[3], 0)
 
     def _joystickPower(self, value, exponent, deadZone = 0.08):
         value = sea.deadZone(value, deadZone)

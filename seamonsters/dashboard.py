@@ -1,4 +1,5 @@
 import networktables
+import traceback
 
 def getSwitch(name, defaultValue):
     """
@@ -6,8 +7,8 @@ def getSwitch(name, defaultValue):
     """
     table = networktables.NetworkTables.getTable('dashboard')
     try:
-        switchNames = table.getStringArray('switchnames')
-        switchValues = table.getBooleanArray('switchvalues')
+        switchNames = table.getStringArray('switchnames', [])
+        switchValues = table.getBooleanArray('switchvalues', [])
     except BaseException as e:
         print("Exception while getting switch", e)
         return defaultValue
@@ -18,3 +19,27 @@ def getSwitch(name, defaultValue):
         print("Invalid switch data!")
         return defaultValue
     return switchValues[switchNames.index(name)]
+
+class DashboardCommandReader:
+
+    def __init__(self):
+        self.commandTable = networktables.NetworkTables.getTable('commands')
+        self.reset()
+
+    def reset(self):
+        self.lastCommandId = 0
+        self.commandTable.putString('command', "")
+        self.commandTable.putNumber('id', 0)
+
+    def getCommand(self):
+        try:
+            commandId = self.commandTable.getNumber('id', 0)
+            if commandId != self.lastCommandId:
+                command = self.commandTable.getString('command', '')
+                command = command.strip()
+                self.lastCommandId = commandId
+                if command != "":
+                    return command
+        except:
+            traceback.print_exc()
+        return None
