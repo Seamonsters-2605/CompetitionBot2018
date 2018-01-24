@@ -171,12 +171,12 @@ class DriveBot(sea.GeneratorBot):
 
         # no static switch for control mode
         turn = -self.driverJoystick.getRawAxis(3)
-
         magnitude = self.driverJoystick.getMagnitude()
-
-        direction = -self.driverJoystick.getDirectionRadians()
         if magnitude == 0:
             direction = 0
+        else:
+            direction = -self.driverJoystick.getDirectionRadians() + math.pi / 2
+            direction = self.roundDirection(direction, math.pi/2)
 
         # Ramp up
         """if turn == 1:
@@ -195,14 +195,6 @@ class DriveBot(sea.GeneratorBot):
                 turn *= (1 + mult)
         else:
             self.tick = 0"""
-
-        # makes dir work better
-        direction += (math.pi / 2)
-        direction = self.roundDirection(direction, 0)
-        direction = self.roundDirection(direction, math.pi / 2.0)
-        direction = self.roundDirection(direction, math.pi)
-        direction = self.roundDirection(direction, 3.0 * math.pi / 2.0)
-        direction = self.roundDirection(direction, math.pi * 2)
 
         # FOR TESTING -- TOGGLE TWIST EXPONENTS
         if self.driverJoystick.getRawButtonReleased(2):
@@ -256,11 +248,11 @@ class DriveBot(sea.GeneratorBot):
         else:
             return 0
 
-    def roundDirection(self, value, target):
-        if abs(value - target) <= self.driveDirectionDeadZone:
-            return target
-        else:
-            return value
+    def roundDirection(self, value, increment):
+        roundedValue = round(float(value) / increment) * increment
+        if abs(roundedValue - value) < self.driveDirectionDeadZone:
+            return roundedValue
+        return value
 
 if __name__ == "__main__":
     wpilib.run(DriveBot)
