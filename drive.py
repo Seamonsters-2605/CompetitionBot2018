@@ -187,13 +187,13 @@ class DriveBot(sea.GeneratorBot):
             self.magnitudeExponent += 1
             if self.magnitudeExponent == 3:
                 self.magnitudeExponent = 1
-
-        magnitude = magnitude ** self.magnitudeExponent
-        if turn != 0:
-            turn = (abs(turn) ** self.twistExponent) / (turn / abs(turn))
+            print("Magnitude exponent:", self.magnitudeExponent)
 
         throttle = (self.driverJoystick.getRawAxis(2) - 1.0) / -2.0
-
+        magnitude = self._joystickPower(magnitude, self.magnitudeExponent,
+                                        deadzone=0)
+        turn = self._joystickPower(turn, self.twistExponent,
+                                   deadzone=0)
         turn *= throttle * self.turnScale
         magnitude *= throttle * self.magnitudeScale
 
