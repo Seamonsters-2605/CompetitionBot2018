@@ -116,9 +116,6 @@ class DriveBot(sea.GeneratorBot):
 
         self.testMode = True
 
-    def test(self):
-        self.holoDrive.zeroEncoderTargets()
-
     def teleop(self):
         self.holoDrive.resetTargetPositions()
 
