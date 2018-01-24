@@ -246,29 +246,21 @@ class DriveBot(sea.GeneratorBot):
             talon.config_kD(0, pid[2], 0)
             talon.config_kF(0, pid[3], 0)
 
-    def _joystickPower(self, value, exponent, deadZone = 0.08):
-        value = sea.deadZone(value, deadZone)
-        newValue = float(abs(value)) ** float(exponent)
-        if value < 0:
-            newValue = -newValue
-        return newValue
+    def _joystickPower(self, value, exponent, deadzone = 0.08):
+        if value > deadzone:
+            result = (value - deadzone) / (1 - deadzone)
+            return result ** float(exponent)
+        elif value < -deadzone:
+            result = (value + deadzone) / (1 - deadzone)
+            return -(abs(result) ** float(exponent))
+        else:
+            return 0
 
     def roundDirection(self, value, target):
         if abs(value - target) <= self.driveDirectionDeadZone:
             return target
         else:
             return value
-
-    # tad's stuff
-    def improvedJoystickPower(self, value, deadzone, exponent):
-        if value > deadzone:
-            result = (value - deadzone) / (1 - deadzone)
-            return result ** float(exponent)
-        elif value < -deadzone:
-            result = (value + deadzone) / (1 - deadzone)
-            return result ** float(exponent)
-        else:
-            return 0
 
 if __name__ == "__main__":
     wpilib.run(DriveBot)
