@@ -103,7 +103,6 @@ class DriveBot(sea.GeneratorBot):
 
     def teleop(self):
         self.holoDrive.resetTargetPositions()
-        self.fieldDrive.zero()
 
         self.tick = 0
         while True:
@@ -138,9 +137,13 @@ class DriveBot(sea.GeneratorBot):
             self.talons[0].getControlMode()))
 
         if self.drive is self.fieldDrive:
-            self.fieldDriveLog.update("Enabled")
+            robotOffset = self.fieldDrive.getRobotOffset()
+            self.fieldDriveLog.update(int(math.degrees(robotOffset)))
         else:
             self.fieldDriveLog.update("Disabled")
+
+        if self.driverJoystick.getRawButton(4):
+            self.fieldDrive.zero()
 
         # no static switch for control mode
         turn = -self.driverJoystick.getRawAxis(3)
