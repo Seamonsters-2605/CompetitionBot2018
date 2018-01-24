@@ -5,6 +5,7 @@ import wpilib
 import ctre
 from robotpy_ext.common_drivers.navx import AHRS
 import seamonsters as sea
+import camera
 
 class DriveBot(sea.GeneratorBot):
 
@@ -124,8 +125,8 @@ class DriveBot(sea.GeneratorBot):
         else:
             self.drive = self.fieldDrive.interface
         self.automaticDrivePositionMode = \
-            sea.getSwitch("Automatic drive position mode", False)
-        if sea.getSwitch("Drive speed mode", False) \
+            sea.getSwitch("Automatic drive position mode", True)
+        if sea.getSwitch("Drive speed mode", True) \
                 or self.automaticDrivePositionMode:
             self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
             self.pidDrive.slowPID = self.slowPIDSpeedMode
