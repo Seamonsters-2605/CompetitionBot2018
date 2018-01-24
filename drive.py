@@ -13,19 +13,12 @@ class DriveBot(sea.GeneratorBot):
         ### CONSTANTS ###
 
         # normal speed scale, out of 1:
-        self.normalScale = 0.37
-        # speed scale when fast button is pressed:
-        self.fastScale = 1.0
-        # speed scale when slow button is pressed:
-        self.slowScale = 0.07
+        self.magnitudeScale = 0.45
         # normal turning speed scale:
-        self.normalTurnScale = 0.25
-        # turning speed scale when fast button is pressed
-        self.fastTurnScale = 0.34
+        self.turnScale = 0.3
 
-        self.joystickExponent = 2
-        self.fastJoystickExponent = .5
-        self.slowJoystickExponent = 4
+        self.magnitudeExponent = 2
+        self.twistExponent = 1
 
         # if the joystick direction is within this number of radians on either
         # side of straight up, left, down, or right, it will be rounded
@@ -53,6 +46,14 @@ class DriveBot(sea.GeneratorBot):
 
         # for switching between speed/position mode
         self.speedModeThreshold = 0.05
+
+        # Tad's vars
+
+        self.turnRampUp = 1.3 # this is a multiplier
+        self.magnitudeRampUp = 1.3 # this is a multiplier
+
+        self.rampUpDelay = .5
+        self.rampUpTime = 1.5
 
         ### END OF CONSTANTS ###
 
@@ -99,23 +100,6 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveParamLog = sea.LogState("Drive Params")
 
-        # Tad's vars
-        self.controlMode = "Standard" # or "Tank"
-        self.tick = 0
-
-        self.twistDeadzone = .05
-        self.joystickDeadzone = .05
-
-        self.turnCapMult = .3
-        self.magnitudeCapMult = .45
-
-        self.turnRampUp = 1.3 # this is a multiplier
-        self.magnitudeRampUp = 1.3 # this is a multiplier
-
-        self.rampUpDelay = .5
-        self.rampUpTime = 1.5
-
-        self.twistExponent = 1
 
     def teleop(self):
         self.holoDrive.resetTargetPositions()
@@ -139,6 +123,7 @@ class DriveBot(sea.GeneratorBot):
         self.encoderLoggingEnabled = sea.getSwitch("Encoder logging", False)
         self.testMode = sea.getSwitch("Test Mode", False)
 
+        self.tick = 0
         while True:
             yield
             self.teleopPeriodic()
@@ -199,18 +184,18 @@ class DriveBot(sea.GeneratorBot):
 
         # FOR TESTING -- TOGGLE TWIST EXPONENTS
         if self.driverJoystick.getRawButtonReleased(2):
-            self.joystickExponent += 1
-            if self.joystickExponent == 3:
-                self.joystickExponent = 1
+            self.magnitudeExponent += 1
+            if self.magnitudeExponent == 3:
+                self.magnitudeExponent = 1
 
-        magnitude = magnitude ** self.joystickExponent
+        magnitude = magnitude ** self.magnitudeExponent
         if turn != 0:
             turn = (abs(turn) ** self.twistExponent) / (turn / abs(turn))
 
         throttle = (self.driverJoystick.getRawAxis(2) - 1.0) / -2.0
 
-        turn *= throttle * self.turnCapMult
-        magnitude *= throttle * self.magnitudeCapMult
+        turn *= throttle * self.turnScale
+        magnitude *= throttle * self.magnitudeScale
 
         if self.automaticDrivePositionMode:
             if magnitude <= self.speedModeThreshold \
@@ -235,7 +220,7 @@ class DriveBot(sea.GeneratorBot):
             talon.config_kD(0, pid[2], 0)
             talon.config_kF(0, pid[3], 0)
 
-    def _joystickPower(self, value, exponent, deadzone = 0.08):
+    def _joystickPower(self, value, exponent, deadzone = 0.05):
         if value > deadzone:
             result = (value - deadzone) / (1 - deadzone)
             return result ** float(exponent)
