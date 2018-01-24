@@ -214,14 +214,14 @@ class DriveBot(sea.GeneratorBot):
         turn *= throttle * self.turnCapMult
         magnitude *= throttle * self.magnitudeCapMult
 
-        """if self.automaticDrivePositionMode:
+        if self.automaticDrivePositionMode:
             if magnitude <= self.speedModeThreshold \
                     and abs(turn) <= self.speedModeThreshold:
                 self.holoDrive.setDriveMode(ctre.ControlMode.Position)
                 self.pidDrive.slowPID = self.slowPID
             else:
                 self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
-                self.pidDrive.slowPID = self.slowPIDSpeedMode"""
+                self.pidDrive.slowPID = self.slowPIDSpeedMode
 
         if self.testMode:
             magnitude = 0
