@@ -3,3 +3,4 @@
 -Drive position mode
 +Automatic drive position mode
 -Encoder logging
+-Test Mode

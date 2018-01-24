@@ -97,6 +97,8 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveControlLog = sea.LogState("Drive Control")
 
+        self.driveParamLog = sea.LogState("Drive Params")
+
         # Tad's vars
         self.controlMode = "Standard" # or "Tank"
         self.tick = 0
@@ -114,8 +116,6 @@ class DriveBot(sea.GeneratorBot):
         self.rampUpTime = 1.5
 
         self.twistExponent = 1
-
-        self.testMode = False
 
     def teleop(self):
         self.holoDrive.resetTargetPositions()
@@ -137,6 +137,7 @@ class DriveBot(sea.GeneratorBot):
             self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
 
         self.encoderLoggingEnabled = sea.getSwitch("Encoder logging", False)
+        self.testMode = sea.getSwitch("Test Mode", False)
 
         while True:
             yield
@@ -221,15 +222,11 @@ class DriveBot(sea.GeneratorBot):
                 self.pidDrive.slowPID = self.slowPIDSpeedMode
 
         if self.testMode:
-
-            self.tick += 1
-
-            if self.tick % 25 == 0:
-                #print("X: " + str(self.driverJoystick.getX()))
-                #print("Y: " + str(self.driverJoystick.getY()))
-                print("Direction in pi: " + str(-self.driverJoystick.getDirectionRadians() / math.pi))
-
-        self.drive.drive(magnitude, direction, turn)
+            self.driveParamLog.update(('%.3f' % magnitude) + "," +
+                                      str(int(math.degrees(direction))) + "," +
+                                      ('%.3f' % turn))
+        else:
+            self.drive.drive(magnitude, direction, turn)
 
     def _setPID(self, pid):
         for talon in self.talons:
