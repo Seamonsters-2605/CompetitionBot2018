@@ -58,7 +58,7 @@ class PhysicsEngine:
         controlMode = data['CAN'][motor]['control_mode']
         if controlMode != ctre.ControlMode.PercentOutput:
             return 0.0
-        value = data['CAN'][motor]['value'] / 1024.0
+        value = data['CAN'][motor]['value']
         if value < -1:
             value = -1.0
         if value > 1:
