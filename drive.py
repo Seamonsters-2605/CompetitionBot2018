@@ -5,6 +5,7 @@ import wpilib
 import ctre
 from robotpy_ext.common_drivers.navx import AHRS
 import seamonsters as sea
+import camera
 
 class DriveBot(sea.GeneratorBot):
 
