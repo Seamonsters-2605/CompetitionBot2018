@@ -103,25 +103,7 @@ class DriveBot(sea.GeneratorBot):
 
     def teleop(self):
         self.holoDrive.resetTargetPositions()
-
-        if sea.getSwitch("Field oriented drive", False):
-            self.drive = self.fieldDrive
-        else:
-            self.drive = self.fieldDrive.interface
-        self.automaticDrivePositionMode = \
-            sea.getSwitch("Automatic drive position mode", True)
-        if sea.getSwitch("Drive speed mode", True) \
-                or self.automaticDrivePositionMode:
-            self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
-            self.pidDrive.slowPID = self.slowPIDSpeedMode
-        elif sea.getSwitch("Drive position mode", False):
-            self.holoDrive.setDriveMode(ctre.ControlMode.Position)
-            self.pidDrive.slowPID = self.slowPID
-        else:
-            self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
-
-        self.encoderLoggingEnabled = sea.getSwitch("Encoder logging", False)
-        self.testMode = sea.getSwitch("Test Mode", False)
+        self.fieldDrive.zero()
 
         self.tick = 0
         while True:
@@ -137,7 +119,7 @@ class DriveBot(sea.GeneratorBot):
             self.currentLog.update(str(current) + "!")
         else:
             self.currentLog.update(current)
-        if self.encoderLoggingEnabled:
+        if sea.getSwitch("Encoder logging", False):
             encoderLogText = ""
             for talon in self.talons:
                 encoderLogText += str(talon.getSelectedSensorPosition(0)) + " "
@@ -146,6 +128,11 @@ class DriveBot(sea.GeneratorBot):
             for talon in self.talons:
                 speedLogText += str(talon.getSelectedSensorVelocity(0)) + " "
             self.speedLog.update(speedLogText)
+
+        if sea.getSwitch("Field oriented drive", False):
+            self.drive = self.fieldDrive
+        else:
+            self.drive = self.fieldDrive.interface
 
         self.driveModeLog.update(sea.talonModeToString(
             self.talons[0].getControlMode()))
@@ -197,16 +184,24 @@ class DriveBot(sea.GeneratorBot):
         turn *= throttle * self.turnScale
         magnitude *= throttle * self.magnitudeScale
 
-        if self.automaticDrivePositionMode:
+        mode = ctre.ControlMode.PercentOutput
+        if sea.getSwitch("Drive speed mode", True):
+            mode = ctre.ControlMode.Velocity
+        elif sea.getSwitch("Drive position mode", False):
+            mode = ctre.ControlMode.Position
+        if sea.getSwitch("Automatic drive position mode", True):
             if magnitude <= self.speedModeThreshold \
                     and abs(turn) <= self.speedModeThreshold:
-                self.holoDrive.setDriveMode(ctre.ControlMode.Position)
-                self.pidDrive.slowPID = self.slowPID
+                mode = ctre.ControlMode.Position
             else:
-                self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
-                self.pidDrive.slowPID = self.slowPIDSpeedMode
+                mode = ctre.ControlMode.Velocity
+        self.holoDrive.setDriveMode(mode)
+        if mode == ctre.ControlMode.Position:
+            self.pidDrive.slowPID = self.slowPID
+        elif mode == ctre.ControlMode.Velocity:
+            self.pidDrive.slowPID = self.slowPIDSpeedMode
 
-        if self.testMode:
+        if sea.getSwitch("Test Mode", False):
             self.driveParamLog.update(('%.3f' % magnitude) + "," +
                                       str(int(math.degrees(direction))) + "," +
                                       ('%.3f' % turn))
