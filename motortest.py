@@ -1,7 +1,6 @@
 import wpilib
 import ctre
 import seamonsters as sea
-from networktables import NetworkTables
 
 class MotorTestBot(sea.GeneratorBot):
 
