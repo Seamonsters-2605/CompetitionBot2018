@@ -6,17 +6,12 @@ import ctre
 from robotpy_ext.common_drivers.navx import AHRS
 import seamonsters as sea
 import camera
+import robotconfig
 
 class DriveBot(sea.GeneratorBot):
 
     def robotInit(self):
         ### CONSTANTS ###
-
-        # normal speed scale, out of 1:
-        self.magnitudeScale = 0.45
-        # normal turning speed scale:
-        self.turnScale = 0.3
-
         self.magnitudeExponent = 2
         self.twistExponent = 1
 
@@ -35,14 +30,6 @@ class DriveBot(sea.GeneratorBot):
         self.slowPIDScale = 0.01
 
         self.pidLookBackRange = 10
-
-        maxVelocity = 650
-
-        # encoder has 100 raw ticks -- with a QuadEncoder that makes 400 ticks
-        # the motor gear has 12 teeth and the wheel has 85 teeth
-        # 85 / 12 * 400 = 2833.333 = ~2833
-        ticksPerWheelRotation = 2833
-        # ticksPerWheelRotation = 83584
 
         # for switching between speed/position mode
         self.speedModeThreshold = 0.05
@@ -74,10 +61,10 @@ class DriveBot(sea.GeneratorBot):
         self._setPID(self.fastPID)
 
         self.holoDrive = sea.HolonomicDrive(fl, fr, bl, br,
-                                            ticksPerWheelRotation)
+                                            robotconfig.ticksPerWheelRotation)
         self.holoDrive.invertDrive(True)
         self.holoDrive.setWheelOffset(math.radians(45.0))  # angle of rollers
-        self.holoDrive.setMaxVelocity(maxVelocity)
+        self.holoDrive.setMaxVelocity(robotconfig.maxVelocity)
 
         self.pidDrive = sea.DynamicPIDDrive(self.holoDrive, self.talons,
             self.slowPID, self.slowPIDScale, self.fastPID, self.fastPIDScale,
@@ -184,15 +171,16 @@ class DriveBot(sea.GeneratorBot):
                                         deadzone=0)
         turn = self._joystickPower(turn, self.twistExponent,
                                    deadzone=0)
-        turn *= throttle * self.turnScale
-        magnitude *= throttle * self.magnitudeScale
+        turn *= throttle * robotconfig.turnScale
+        magnitude *= throttle * robotconfig.magnitudeScale
 
         mode = ctre.ControlMode.PercentOutput
-        if sea.getSwitch("Drive speed mode", True):
+        if sea.getSwitch("Drive speed mode", False):
             mode = ctre.ControlMode.Velocity
         elif sea.getSwitch("Drive position mode", False):
             mode = ctre.ControlMode.Position
-        if sea.getSwitch("Automatic drive position mode", True):
+        if sea.getSwitch("Automatic drive position mode",
+                         robotconfig.theRobot=="Leviathan"):
             if magnitude <= self.speedModeThreshold \
                     and abs(turn) <= self.speedModeThreshold:
                 mode = ctre.ControlMode.Position
