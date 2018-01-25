@@ -11,5 +11,5 @@ if theRobot == "Leviathan":
 elif theRobot == "2018":
     ticksPerWheelRotation = 83584
     magnitudeScale = 1.0
-    turnScale = 0.3
+    turnScale = 1.0
     maxVelocity = 650
