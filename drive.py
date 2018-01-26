@@ -42,6 +42,8 @@ class DriveBot(sea.GeneratorBot):
         self.rampUpDelay = .5
         self.rampUpTime = 1.5
 
+        self.magnitudeCapped = True
+
         ### END OF CONSTANTS ###
 
         self.driverJoystick = wpilib.Joystick(0)
@@ -159,12 +161,19 @@ class DriveBot(sea.GeneratorBot):
         else:
             self.tick = 0"""
 
-        # FOR TESTING -- TOGGLE TWIST EXPONENTS
+        # FOR TESTING -- TOGGLE JOYSTICK EXPONENTS
         if self.driverJoystick.getRawButtonReleased(2):
             self.magnitudeExponent += 1
             if self.magnitudeExponent == 3:
                 self.magnitudeExponent = 1
             print("Magnitude exponent:", self.magnitudeExponent)
+
+        # FOR TESTING -- TOGGLE MAGNITUDE CAP
+        if self.driverJoystick.getRawButtonReleased(3):
+            self.magnitudeCapped = not self.magnitudeCapped
+
+        if self.magnitudeCapped and magnitude > 1:
+            magnitude = 1
 
         throttle = (self.driverJoystick.getRawAxis(2) - 1.0) / -2.0
         magnitude = self._joystickPower(magnitude, self.magnitudeExponent,
