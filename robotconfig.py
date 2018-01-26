@@ -20,9 +20,9 @@ if theRobot == "Leviathan":
     slowPIDScale = 0.01
 elif theRobot == "2018":
     ticksPerWheelRotation = 83584
-    magnitudeScale = .45
-    turnScale = .3
-    maxVelocity = 19177
+    magnitudeScale = 1.0
+    turnScale = 1.0
+    maxVelocity = 13424
 
     # PIDF values for fast driving:
     fastPID = (0.1, 0.0009, 3.0, 0.0)
