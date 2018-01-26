@@ -194,11 +194,11 @@ class DriveBot(sea.GeneratorBot):
             self.pidDrive.slowPID = robotconfig.slowPIDSpeedMode
             self.pidDrive.fastPID = robotconfig.fastPIDSpeedMode
 
-        if sea.getSwitch("Test Mode", False):
+        if sea.getSwitch("Drive param logging", False):
             self.driveParamLog.update(('%.3f' % magnitude) + "," +
                                       str(int(math.degrees(direction))) + "," +
                                       ('%.3f' % turn))
-        else:
+        if not sea.getSwitch("DON'T DRIVE", False):
             self.drive.drive(magnitude, direction, turn)
 
     def _setPID(self, pid):

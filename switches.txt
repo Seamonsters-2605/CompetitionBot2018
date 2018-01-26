@@ -3,4 +3,5 @@
 -Drive position mode
 +Automatic drive position mode
 -Encoder logging
--Test Mode
+-Drive param logging
+-DON'T DRIVE
