@@ -19,16 +19,6 @@ class DriveBot(sea.GeneratorBot):
         # side of straight up, left, down, or right, it will be rounded
         self.driveDirectionDeadZone = math.radians(10)
 
-        # PIDF values for fast driving:
-        self.fastPID = (1.0, 0.0009, 3.0, 0.0)
-        # speed at which fast PID's should be used:
-        self.fastPIDScale = 0.09
-        # PIDF values for slow driving:
-        self.slowPID = (30.0, 0.0009, 3.0, 0.0)
-        self.slowPIDSpeedMode = (3.0, 0.0009, 3.0, 0.0)
-        # speed at which slow PID's should be used:
-        self.slowPIDScale = 0.01
-
         self.pidLookBackRange = 10
 
         # for switching between speed/position mode
@@ -60,7 +50,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveModeLog = sea.LogState("Drive mode")
 
-        self._setPID(self.fastPID)
+        self._setPID(robotconfig.fastPID)
 
         self.holoDrive = sea.HolonomicDrive(fl, fr, bl, br,
                                             robotconfig.ticksPerWheelRotation)
@@ -69,8 +59,9 @@ class DriveBot(sea.GeneratorBot):
         self.holoDrive.setMaxVelocity(robotconfig.maxVelocity)
 
         self.pidDrive = sea.DynamicPIDDrive(self.holoDrive, self.talons,
-            self.slowPID, self.slowPIDScale, self.fastPID, self.fastPIDScale,
-            self.pidLookBackRange)
+                                            robotconfig.slowPID, robotconfig.slowPIDScale,
+                                            robotconfig.fastPID, robotconfig.fastPIDScale,
+                                            self.pidLookBackRange)
 
         self.ahrs = AHRS.create_spi()  # the NavX
         self.fieldDrive = sea.FieldOrientedDrive(self.pidDrive, self.ahrs,
@@ -197,9 +188,11 @@ class DriveBot(sea.GeneratorBot):
                 mode = ctre.ControlMode.Velocity
         self.holoDrive.setDriveMode(mode)
         if mode == ctre.ControlMode.Position:
-            self.pidDrive.slowPID = self.slowPID
+            self.pidDrive.slowPID = robotconfig.slowPID
+            self.pidDrive.fastPID = robotconfig.fastPID
         elif mode == ctre.ControlMode.Velocity:
-            self.pidDrive.slowPID = self.slowPIDSpeedMode
+            self.pidDrive.slowPID = robotconfig.slowPIDSpeedMode
+            self.pidDrive.fastPID = robotconfig.fastPIDSpeedMode
 
         if sea.getSwitch("Test Mode", False):
             self.driveParamLog.update(('%.3f' % magnitude) + "," +
