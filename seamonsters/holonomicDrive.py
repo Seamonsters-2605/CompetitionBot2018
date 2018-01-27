@@ -5,18 +5,19 @@ import math
 
 import seamonsters.drive
 
+
 class HolonomicDrive(seamonsters.drive.DriveInterface):
     """
     An implementation of the DriveInterface for holonomic drive. This allows for
     mecanum/omni drives in the "diamond" configuration. The offset of the wheels
     can be changed -- default is .25 pi radians (or 45 degrees), which is ideal
     for our regular mecanum wheels or the typical omni drive's.
-    
+
     This class can also control a tank drive, although it isn't ideal for that.
     Just set the wheel offset to 0.
-    
+
     PLEASE READ:
-    
+
     Right side driving forward is assumed to be +1. Turning counter-clockwise is
     assumed to be +1. Meet these requirements and THEN use invertDrive() if it
     is all backwards. Turn should be passed in as -Joystick.getX, most likely.
@@ -28,56 +29,34 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
     BACK_LEFT = 2
     BACK_RIGHT = 3
 
-    def __init__(self, fl, fr, bl, br, ticksPerWheelRotation=0):
+    def __init__(self, fl, fr, bl, br):
         self.wheelMotors = [None for i in range(0, 4)]
         self.wheelMotors[HolonomicDrive.FRONT_LEFT] = fl
         self.wheelMotors[HolonomicDrive.FRONT_RIGHT] = fr
         self.wheelMotors[HolonomicDrive.BACK_LEFT] = bl
         self.wheelMotors[HolonomicDrive.BACK_RIGHT] = br
-        
-        self.ticksPerWheelRotation = ticksPerWheelRotation
 
         # stores the currently calculated voltage or velocity that will be sent
         # to the talons, for each wheel
         self.targetVelocities = [0.0, 0.0, 0.0, 0.0]
-        
+
         # for position mode: stores the current target position for each wheel
         self.targetPositions = [0.0, 0.0, 0.0, 0.0]
-        
+
         self.wheelOffset = math.pi / 4
-        
         # can be 1 for normal driving, or -1 to invert all motors
         self.invert = 1
-        
-        # maximum velocity position mode; multiplied by 5 for velocity mode
-        self.maxVelocity = 80 * 5
+        self.maxVelocityPositionMode = 400
+        self.maxVelocitySpeedMode = 400 * 5
+        self.maxError = 400
 
         self.driveMode = ctre.ControlMode.PercentOutput
-    
+
     def invertDrive(self, enabled=True):
         """
         If invertDrive is enabled, all motor directions will be inverted.
         """
         self.invert = -1 if enabled else 1
-
-    def setWheelOffset(self, angleInRadians):
-        """
-        Set the offset angle at which the wheels exert force -- in radians. 0 is
-        facing forward (tank drive). 1/4 pi (45 degrees) is a "diamond"
-        configuration. 1/4 pi is a typical angle for omni/mecanum drives, and is
-        the default.
-        """
-        self.wheelOffset = angleInRadians
-
-    def setMaxVelocity(self, velocity):
-        """
-        Sets the max encoder velocity for position and velocity mode.
-        Default is 400. For position mode, this is the maximum difference
-        between target and current position for every iteration (50 times per
-        second). Velocity mode behaves similarly, but since wpilib uses units of
-        10ths of a second, the velocity value is multiplied by 5.
-        """
-        self.maxVelocity = velocity
 
     def setDriveMode(self, mode):
         self.driveMode = mode
@@ -122,7 +101,7 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
         for i in range(0, 4):
             self.targetPositions[i] = \
                 self.wheelMotors[i].getSelectedSensorPosition(0)
-    
+
     def _calcWheels(self, magnitude, direction, turn):
         self.targetVelocities = [0.0, 0.0, 0.0, 0.0]
         self._addStrafe(magnitude, direction)
@@ -147,7 +126,7 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
             magnitude * (math.sin((direction + self.wheelOffset)))
 
     def _addTurn(self, turn):
-        for i in range(0,4):
+        for i in range(0, 4):
             self.targetVelocities[i] += turn
 
     def _incrementTargetPositions(self):
@@ -155,12 +134,12 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
             self.targetPositions[i] += self.targetVelocities[i] * self.invert
 
     def _scaleVelocityMode(self):
-        for i in range(0,4):
-            self.targetVelocities[i] *= self.maxVelocity * 5
+        for i in range(0, 4):
+            self.targetVelocities[i] *= self.maxVelocitySpeedMode
 
     def _scalePositionMode(self):
-        for i in range(0,4):
-            self.targetVelocities[i] *= self.maxVelocity
+        for i in range(0, 4):
+            self.targetVelocities[i] *= self.maxVelocityPositionMode
 
     def _setMotorVelocities(self):
         for i in range(0, 4):
@@ -170,8 +149,7 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
     def _setMotorPositions(self):
         for i in range(0, 4):
             currentPos = self.wheelMotors[i].getSelectedSensorPosition(0)
-            if abs(currentPos - self.targetPositions[i]) \
-                    > self.ticksPerWheelRotation * 1.5:
+            if abs(currentPos - self.targetPositions[i]) > self.maxError:
                 print("Holonomic wheel error!!")
                 self.targetPositions[i] = currentPos
             self.wheelMotors[i].set(ctre.ControlMode.Position,
