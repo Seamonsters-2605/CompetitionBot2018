@@ -32,8 +32,6 @@ class DriveBot(sea.GeneratorBot):
         self.rampUpDelay = .5
         self.rampUpTime = 1.5
 
-        self.magnitudeCapped = True
-
         ### END OF CONSTANTS ###
 
         self.driverJoystick = wpilib.Joystick(0)
@@ -129,7 +127,8 @@ class DriveBot(sea.GeneratorBot):
             self.fieldDrive.zero()
 
         # no static switch for control mode
-        turn = -self.driverJoystick.getRawAxis(3)
+        turn = -self.driverJoystick.getRawAxis(3)\
+               - self.driverJoystick.getRawAxis(4) / 2
         magnitude = self.driverJoystick.getMagnitude()
         if magnitude == 0:
             direction = 0
@@ -161,13 +160,6 @@ class DriveBot(sea.GeneratorBot):
             if self.magnitudeExponent == 3:
                 self.magnitudeExponent = 1
             print("Magnitude exponent:", self.magnitudeExponent)
-
-        # FOR TESTING -- TOGGLE MAGNITUDE CAP
-        if self.driverJoystick.getRawButtonReleased(3):
-            self.magnitudeCapped = not self.magnitudeCapped
-
-        if self.magnitudeCapped and magnitude > 1:
-            magnitude = 1
 
         throttle = (self.driverJoystick.getRawAxis(2) - 1.0) / -2.0
         magnitude = self._joystickPower(magnitude, self.magnitudeExponent,
@@ -213,9 +205,13 @@ class DriveBot(sea.GeneratorBot):
     def _joystickPower(self, value, exponent, deadzone = 0.05):
         if value > deadzone:
             result = (value - deadzone) / (1 - deadzone)
+            if result > 1:
+                return 1.0
             return result ** float(exponent)
         elif value < -deadzone:
             result = (value + deadzone) / (1 - deadzone)
+            if result < -1:
+                return -1.0
             return -(abs(result) ** float(exponent))
         else:
             return 0
