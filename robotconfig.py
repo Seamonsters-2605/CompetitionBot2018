@@ -27,10 +27,10 @@ elif theRobot == "2018":
     maxVelocitySpeedMode = 10000
 
     # PIDF values for fast driving:
-    fastPID = (0.1, 0.0, 3.0, 0.0)
+    fastPID = (0.05, 0.0, 3.0, 0.0)
     fastPIDSpeedMode = (0.2, 0.0009, 3.0, 0.0)
     # speed at which fast PID's should be used:
-    fastPIDScale = 0.09
+    fastPIDScale = 0.12
     # PIDF values for slow driving:
     slowPID = (3.0, 0.0, 3.0, 0.0)
     slowPIDSpeedMode = (1.0, 0.0009, 3.0, 0.0)
