@@ -182,8 +182,7 @@ class DriveBot(sea.GeneratorBot):
             mode = ctre.ControlMode.Velocity
         elif sea.getSwitch("Drive position mode", False):
             mode = ctre.ControlMode.Position
-        if sea.getSwitch("Automatic drive position mode",
-                         robotconfig.theRobot=="Leviathan"):
+        if sea.getSwitch("Automatic drive position mode", True):
             if magnitude <= self.speedModeThreshold \
                     and abs(turn) <= self.speedModeThreshold:
                 mode = ctre.ControlMode.Position
