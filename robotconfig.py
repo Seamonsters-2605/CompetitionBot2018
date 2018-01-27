@@ -23,8 +23,8 @@ elif theRobot == "2018":
     maxError = 20896 * 1.5
     magnitudeScale = 1.0
     turnScale = 0.5
-    maxVelocityPositionMode = 6000
-    maxVelocitySpeedMode = 10000
+    maxVelocityPositionMode = 6000 * .8
+    maxVelocitySpeedMode = 10000 * .8
 
     # PIDF values for fast driving:
     fastPID = (0.07, 0.0, 3.0, 0.0)
