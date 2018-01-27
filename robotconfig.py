@@ -22,7 +22,7 @@ if theRobot == "Leviathan":
 elif theRobot == "2018":
     maxError = 20896 * 1.5
     magnitudeScale = 1.0
-    turnScale = 1.0
+    turnScale = 0.5
     maxVelocityPositionMode = 6000
     maxVelocitySpeedMode = 10000
 
