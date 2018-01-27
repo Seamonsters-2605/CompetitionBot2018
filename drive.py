@@ -21,9 +21,6 @@ class DriveBot(sea.GeneratorBot):
 
         self.pidLookBackRange = 10
 
-        # for switching between speed/position mode
-        self.speedModeThreshold = 0.05
-
         # Tad's vars
 
         self.turnRampUp = 1.3 # this is a multiplier
@@ -175,18 +172,24 @@ class DriveBot(sea.GeneratorBot):
         elif sea.getSwitch("Drive position mode", False):
             mode = ctre.ControlMode.Position
         if sea.getSwitch("Automatic drive position mode", True):
-            if magnitude <= self.speedModeThreshold \
-                    and abs(turn) <= self.speedModeThreshold:
+            if magnitude <= robotconfig.speedModeThreshold \
+                    and abs(turn) <= robotconfig.speedModeThreshold:
                 mode = ctre.ControlMode.Position
             else:
                 mode = ctre.ControlMode.Velocity
-        self.holoDrive.setDriveMode(mode)
+        if mode == ctre.ControlMode.Velocity:
+            if self.holoDrive.driveMode == ctre.ControlMode.Disabled:
+                robotconfig.fastPIDSpeedMode[3] = 0
+            elif self.holoDrive.driveMode == ctre.ControlMode.Position:
+                robotconfig.fastPIDSpeedMode[3] = \
+                    robotconfig.positionToSpeedFeedForward
         if mode == ctre.ControlMode.Position:
             self.pidDrive.slowPID = robotconfig.slowPID
             self.pidDrive.fastPID = robotconfig.fastPID
         elif mode == ctre.ControlMode.Velocity:
             self.pidDrive.slowPID = robotconfig.slowPIDSpeedMode
             self.pidDrive.fastPID = robotconfig.fastPIDSpeedMode
+        self.holoDrive.setDriveMode(mode)
 
         if sea.getSwitch("Drive param logging", False):
             self.driveParamLog.update(('%.3f' % magnitude) + "," +
