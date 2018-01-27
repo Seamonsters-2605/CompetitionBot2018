@@ -52,11 +52,11 @@ class DriveBot(sea.GeneratorBot):
 
         self._setPID(robotconfig.fastPID)
 
-        self.holoDrive = sea.HolonomicDrive(fl, fr, bl, br,
-                                            robotconfig.ticksPerWheelRotation)
+        self.holoDrive = sea.HolonomicDrive(fl, fr, bl, br)
         self.holoDrive.invertDrive(True)
-        self.holoDrive.setWheelOffset(math.radians(45.0))  # angle of rollers
-        self.holoDrive.setMaxVelocity(robotconfig.maxVelocity)
+        self.holoDrive.maxError = robotconfig.maxError
+        self.holoDrive.maxVelocityPositionMode = robotconfig.maxVelocityPositionMode
+        self.holoDrive.maxVelocitySpeedMode = robotconfig.maxVelocitySpeedMode
 
         self.pidDrive = sea.DynamicPIDDrive(self.holoDrive, self.talons,
                                             robotconfig.slowPID, robotconfig.slowPIDScale,
@@ -82,6 +82,9 @@ class DriveBot(sea.GeneratorBot):
 
 
     def teleop(self):
+        for talon in self.talons:
+            talon.setSelectedSensorPosition(0, 0, 10)
+
         self.holoDrive.resetTargetPositions()
 
         self.tick = 0
