@@ -1,7 +1,5 @@
 -Field oriented drive
--Drive speed mode
--Drive position mode
-+Automatic drive position mode
+-Drive voltage mode
 -Encoder logging
 -Drive param logging
 -DON'T DRIVE

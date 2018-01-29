@@ -123,7 +123,6 @@ class DriveBot(sea.GeneratorBot):
         if self.driverJoystick.getRawButton(4):
             self.fieldDrive.zero()
 
-        # no static switch for control mode
         turn = -self.driverJoystick.getRawAxis(3)\
                - self.driverJoystick.getRawAxis(4) / 2
         magnitude = self.driverJoystick.getMagnitude()
@@ -158,7 +157,15 @@ class DriveBot(sea.GeneratorBot):
                 self.magnitudeExponent = 1
             print("Magnitude exponent:", self.magnitudeExponent)
 
-        throttle = (self.driverJoystick.getRawAxis(2) - 1.0) / -2.0
+        # 3 possible positions of the throttle
+        gear = round(self.driverJoystick.getRawAxis(2) + 1.0)
+        if gear == 0:
+            throttle = 1
+        elif gear == 1:
+            throttle = 0.5
+        else:
+            throttle = 0.1
+
         magnitude = self._joystickPower(magnitude, self.magnitudeExponent,
                                         deadzone=0)
         turn = self._joystickPower(turn, self.twistExponent,
@@ -166,30 +173,16 @@ class DriveBot(sea.GeneratorBot):
         turn *= throttle * robotconfig.turnScale
         magnitude *= throttle * robotconfig.magnitudeScale
 
-        mode = ctre.ControlMode.PercentOutput
-        if sea.getSwitch("Drive speed mode", False):
-            mode = ctre.ControlMode.Velocity
-        elif sea.getSwitch("Drive position mode", False):
-            mode = ctre.ControlMode.Position
-        if sea.getSwitch("Automatic drive position mode", True):
-            if magnitude <= robotconfig.speedModeThreshold \
-                    and abs(turn) <= robotconfig.speedModeThreshold:
-                mode = ctre.ControlMode.Position
-            else:
-                mode = ctre.ControlMode.Velocity
-        if mode == ctre.ControlMode.Velocity:
-            if self.holoDrive.driveMode == ctre.ControlMode.Disabled:
-                robotconfig.fastPIDSpeedMode[3] = 0
-            elif self.holoDrive.driveMode == ctre.ControlMode.Position:
-                robotconfig.fastPIDSpeedMode[3] = \
-                    robotconfig.positionToSpeedFeedForward
-        if mode == ctre.ControlMode.Position:
+        if sea.getSwitch("Drive voltage mode", False):
+            self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
+        elif gear == 2:
+            self.holoDrive.setDriveMode(ctre.ControlMode.Position)
             self.pidDrive.slowPID = robotconfig.slowPID
             self.pidDrive.fastPID = robotconfig.fastPID
-        elif mode == ctre.ControlMode.Velocity:
+        else:
+            self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
             self.pidDrive.slowPID = robotconfig.slowPIDSpeedMode
             self.pidDrive.fastPID = robotconfig.fastPIDSpeedMode
-        self.holoDrive.setDriveMode(mode)
 
         if sea.getSwitch("Drive param logging", False):
             self.driveParamLog.update(('%.3f' % magnitude) + "," +
