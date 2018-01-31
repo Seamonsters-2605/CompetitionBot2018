@@ -88,6 +88,25 @@ class DriveBot(sea.GeneratorBot):
             self.teleopPeriodic()
             sea.sendLogStates()
 
+    def autonomous(self):
+        print("Starting autonomous!")
+        for talon in self.talons:
+            talon.setSelectedSensorPosition(0, 0, 10)
+
+        self.holoDrive.resetTargetPositions()
+
+        yield from sea.parallel(self.sendLogStatesGenerator(),
+                                self.autonomousSequence())
+
+    def sendLogStatesGenerator(self):
+        while True:
+            yield
+            sea.sendLogStates()
+
+    def autonomousSequence(self):
+        yield
+
+
     def teleopPeriodic(self):
         current = 0
         for talon in self.talons:
