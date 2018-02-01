@@ -10,8 +10,8 @@ class MyRobot(wpilib.IterativeRobot):
         self.joystick = wpilib.Joystick(1)
 
     def teleopPeriodic(self):
-        self.leftBelt.set(self.joystick.getRawAxis(2) * 0.2)
-        self.rightBelt.set(self.joystick.getRawAxis(1) * 0.2)
+        self.leftBelt.set(self.joystick.getRawAxis(2) * -0.2)
+        self.rightBelt.set(self.joystick.getRawAxis(1) * -0.2)
 
         if(self.joystick.getRawButton(1)):
             self.leftBelt.set(1)
