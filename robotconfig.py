@@ -1,4 +1,4 @@
-theRobot = "2018"
+theRobot = "Leviathan"
 
 if theRobot == "Leviathan":
     # encoder has 100 raw ticks -- with a QuadEncoder that makes 400 ticks
