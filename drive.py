@@ -4,9 +4,11 @@ import math
 import wpilib
 import ctre
 from robotpy_ext.common_drivers.navx import AHRS
+from networktables import NetworkTables
 import seamonsters as sea
 import camera
 import robotconfig
+import auto_sequence
 
 class DriveBot(sea.GeneratorBot):
 
@@ -75,6 +77,8 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveParamLog = sea.LogState("Drive Params")
 
+        self.vision = NetworkTables.getTable('limelight')
+
 
     def teleop(self):
         for talon in self.talons:
@@ -96,16 +100,12 @@ class DriveBot(sea.GeneratorBot):
         self.holoDrive.resetTargetPositions()
 
         yield from sea.parallel(self.sendLogStatesGenerator(),
-                                self.autonomousSequence())
+            auto_sequence.autoSequence(self.drive, self.vision))
 
     def sendLogStatesGenerator(self):
         while True:
             yield
             sea.sendLogStates()
-
-    def autonomousSequence(self):
-        yield
-
 
     def teleopPeriodic(self):
         current = 0
