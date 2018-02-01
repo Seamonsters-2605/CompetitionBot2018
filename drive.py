@@ -98,9 +98,11 @@ class DriveBot(sea.GeneratorBot):
             talon.setSelectedSensorPosition(0, 0, 10)
 
         self.holoDrive.resetTargetPositions()
+        self._setPID(robotconfig.slowPIDSpeedMode)
 
         yield from sea.parallel(self.sendLogStatesGenerator(),
-            auto_sequence.autoSequence(self.drive, self.vision))
+            auto_sequence.autoSequence(self.holoDrive, self.vision))
+        print("Auto sequence complete!")
 
     def sendLogStatesGenerator(self):
         while True:
