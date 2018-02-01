@@ -7,7 +7,7 @@ class MyRobot(wpilib.IterativeRobot):
     def robotInit(self):
         self.leftBelt = ctre.WPI_TalonSRX(4)
         self.rightBelt = ctre.WPI_TalonSRX(5)
-        self.joystick = wpilib.Joystick(0)
+        self.joystick = wpilib.Joystick(1)
 
     def teleopPeriodic(self):
         self.leftBelt.set(self.joystick.getRawAxis(2) * 0.2)
