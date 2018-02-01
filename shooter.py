@@ -16,20 +16,14 @@ class MyRobot(wpilib.IterativeRobot):
         if(self.joystick.getRawButton(1)):
             self.leftBelt.set(1)
             self.rightBelt.set(1)
-            for i in range(50):
-                yield
 
         if(self.joystick.getRawButton(2)):
             self.leftBelt.set(0.2)
             self.rightBelt.set(0.2)
-            for i in range(50):
-                yield
 
         if(self.joystick.getRawButton(4)):
             self.leftBelt.set(-0.2)
             self.rightBelt.set(-0.2)
-            for i in range(50):
-                yield
 
 if __name__ == "__main__":
     wpilib.run(MyRobot, physics_enabled=True)
