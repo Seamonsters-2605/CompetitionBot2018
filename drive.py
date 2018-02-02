@@ -219,6 +219,7 @@ class DriveBot(sea.GeneratorBot):
         if not sea.getSwitch("DON'T DRIVE", False):
             self.drive.drive(magnitude, direction, turn)
 
+
     def _setPID(self, pid):
         for talon in self.talons:
             talon.config_kP(0, pid[0], 0)
@@ -245,6 +246,7 @@ class DriveBot(sea.GeneratorBot):
         if abs(roundedValue - value) < self.driveDirectionDeadZone:
             return roundedValue
         return value
+
 
 if __name__ == "__main__":
     wpilib.run(DriveBot)

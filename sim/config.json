@@ -35,6 +35,10 @@
         {"color": "sea green",
           "points":[ [13.25,11],[14.91,11],[14.91,16.16],[13.25,16.16]]
         },
+        { "name": "Red Auto Line",
+          "color": "red",
+          "points":[ [10,0],[10.33,0],[10.33,26.927],[10,26.927]]
+        },
         { "name":"Power Cube Zone Red",
           "color": "yellow",
           "points":[ [8.33,11.75],[11.75,11.75],[11.75,15.25],[8.33,15.25]]
@@ -101,6 +105,10 @@
         },
         {"color": "sea green",
           "points":[ [39.09,11],[40.75,11],[40.75,16.16],[39.09,16.16]]
+        },
+        { "name":"Blue Auto Line",
+          "color": "blue",
+          "points":[ [43.5,0],[43.83,0],[43.83,26.8333],[43.5,26.8333]]
         },
         { "name":"Power Cube Zone Blue",
           "color": "yellow",
