@@ -7,8 +7,6 @@ from robotpy_ext.common_drivers.navx import AHRS
 import seamonsters as sea
 import camera
 import robotconfig
-from  networktables import NetworkTables
-import strafe_to_align
 
 class DriveBot(sea.GeneratorBot):
 
@@ -77,7 +75,6 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveParamLog = sea.LogState("Drive Params")
 
-        self.vision = NetworkTables.getTable('limelight')
 
     def teleop(self):
         for talon in self.talons:
@@ -86,8 +83,6 @@ class DriveBot(sea.GeneratorBot):
         self.holoDrive.resetTargetPositions()
 
         self.tick = 0
-        self.holoDrive.setDriveMode(ctre.ControlMode.Position)
-        yield from strafe_to_align.strafeAlign(self.fieldDrive.interface, self.vision)
 
 
     def teleopPeriodic(self):
