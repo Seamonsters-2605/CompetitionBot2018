@@ -83,6 +83,10 @@ class DriveBot(sea.GeneratorBot):
         self.holoDrive.resetTargetPositions()
 
         self.tick = 0
+        while True:
+            yield
+            self.teleopPeriodic()
+            sea.sendLogStates()
 
 
     def teleopPeriodic(self):
