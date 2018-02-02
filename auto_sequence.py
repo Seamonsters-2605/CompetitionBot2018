@@ -1,4 +1,4 @@
 import auto_commands
-
+import strafe_to_align
 def autoSequence(drive, vision):
-    yield from auto_commands.driveForward(drive, 3*12, 0.1)
+    yield from strafe_to_align.strafeAlign(drive,vision,10)
