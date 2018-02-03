@@ -13,7 +13,7 @@ def getSwitch(name, defaultValue):
         print("Exception while getting switch", e)
         return defaultValue
     if not name in switchNames:
-        print("Couldn't find switch name", name)
+        #print("Couldn't find switch name", name)
         return defaultValue
     if len(switchNames) != len(switchValues):
         print("Invalid switch data!")
