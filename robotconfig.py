@@ -1,6 +1,6 @@
 import math
 
-theRobot = "Leviathan"
+theRobot = "2018"
 
 wheelCircumference = 6 * math.pi
 
