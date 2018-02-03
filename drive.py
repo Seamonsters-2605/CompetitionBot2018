@@ -144,8 +144,8 @@ class DriveBot(sea.GeneratorBot):
         if self.driverJoystick.getRawButton(4):
             self.fieldDrive.zero()
 
-        turn = -self.driverJoystick.getRawAxis(3)\
-               - self.driverJoystick.getRawAxis(4) / 2
+        turn = -self.driverJoystick.getRawAxis(3) / 2 \
+               - self.driverJoystick.getRawAxis(4)
         magnitude = self.driverJoystick.getMagnitude()
         if magnitude == 0:
             direction = 0
