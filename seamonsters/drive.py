@@ -201,6 +201,52 @@ class DynamicPIDDrive(DriveInterface):
             return tuple(pidList)
 
 
+class MultiDrive(DriveInterface):
+    """
+    Wraps another DriveInterface, and allows ``drive()`` to be called multiple
+    times in a loop. The values for all of these calls are averaged together,
+    and sent to the wrapped interface when ``update()`` is called.
+    """
+
+    def __init__(self, interface):
+        super().__init__()
+        self.interface = interface
+        self._reset()
+
+    def _reset(self):
+        self.totalX = 0
+        self.totalY = 0
+        self.totalTurn = 0
+        self.numDriveCalls = 0
+        self.numTurnCalls = 0
+
+    def drive(self, magnitude, direction, turn):
+        self.totalX += magnitude * math.cos(direction)
+        self.totalY += magnitude * math.sin(direction)
+        self.totalTurn += turn
+
+        if magnitude != 0:
+            self.numDriveCalls += 1
+        if turn != 0:
+            self.numTurnCalls += 1
+
+    def update(self):
+        if self.numDriveCalls == 0:
+            x = 0
+            y = 0
+        else:
+            x = float(self.totalX) / float(self.numDriveCalls)
+            y = float(self.totalY) / float(self.numDriveCalls)
+        if self.numTurnCalls == 0:
+            turn = 0
+        else:
+            turn = float(self.totalTurn) / float(self.numTurnCalls)
+        magnitude = math.sqrt(x ** 2 + y ** 2)
+        direction = math.atan2(y, x)
+        self.interface.drive(magnitude, direction, turn)
+        self._reset()
+
+
 if __name__ == "__main__":
     # test acceleration filter drive
     filterDrive = AccelerationFilterDrive(TestDriveInterface())
