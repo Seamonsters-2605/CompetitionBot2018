@@ -14,5 +14,8 @@ class MainRobot(sea.GeneratorBot):
         yield from sea.parallel(drive.DriveBot.teleop(self.driveObject),
                                 self.shooterInstance.teleopGenerator())
 
+    def autonomous(self):
+        yield from drive.DriveBot.autonomous(self.driveObject)
+
 if __name__ == "__main__":
     wpilib.run(MainRobot)
