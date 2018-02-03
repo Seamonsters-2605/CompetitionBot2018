@@ -9,21 +9,25 @@ def strafeAlign(drive,vision,visionOffset):
     while True:
         yield
         sea.sendLogStates()
-        xOffset = vision.getNumber('tx',"no visionX")
+
+        hasTarget = vision.getNumber('tv', "no visionX")
+        xOffset = vision.getNumber('tx', "no visionX")
         exponent = 0.8
-        if xOffset == "no visionX":
+        if xOffset == "no visionX" or not hasTarget:
             print('no vision')
             continue
-        totalOffest = xOffset - visionOffset
-        exOffset = abs(totalOffest) ** exponent / 13.9
-        if totalOffest < 0:
-            drive.drive(-exOffset,0,0)
-        if totalOffest > 0:
-            drive.drive(exOffset,0,0)
-        if abs(totalOffest) <= 0.5:
+        totalOffset = xOffset - visionOffset
+        exOffset = abs(totalOffset) ** exponent / 13.9
+        if abs(totalOffset) <= 0.5:
             #Original tolerance: 1
+            print('done')
             continue
-        # Original: exponent:0.65, denominator:15
+        elif totalOffset < -0.5:
+            drive.drive(-exOffset,0,0)
+            print(xOffset)
+        elif totalOffset > 0.5:
+            drive.drive(exOffset,0,0)
+            print(xOffset)
 
 
 
