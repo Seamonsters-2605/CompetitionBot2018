@@ -7,7 +7,6 @@ from networktables import NetworkTables
 def strafeAlign(drive,vision,visionOffset):
 
     while True:
-        yield
         sea.sendLogStates()
 
         hasTarget = vision.getNumber('tv', "no visionX")
@@ -18,16 +17,18 @@ def strafeAlign(drive,vision,visionOffset):
             continue
         totalOffset = xOffset - visionOffset
         exOffset = abs(totalOffset) ** exponent / 13.9
-        if abs(totalOffset) <= 0.5:
-            #Original tolerance: 1
-            print('done')
-            continue
-        elif totalOffset < -0.5:
+        if totalOffset < -0.5:
             drive.drive(-exOffset,0,0)
             print(xOffset)
         elif totalOffset > 0.5:
             drive.drive(exOffset,0,0)
             print(xOffset)
+        if abs(totalOffset) <= 0.5:
+            #Original tolerance: 1
+            yield True
+        else:
+            yield False
+
 
 
 
