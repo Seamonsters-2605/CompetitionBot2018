@@ -107,7 +107,7 @@ class IterativeRobotInstance:
 
     def __init__(self, robotType):
         # https://stackoverflow.com/a/19476841
-        self.robotObject = type('', (), {})()
+        self.robotObject = robotType.__new__(robotType)
         self.robotType = robotType
         robotType.robotInit(self.robotObject)
 

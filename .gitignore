@@ -226,7 +226,9 @@ __pycache__/
 # Emacs things
 \#*
 .\#*
+
 .cache/
+.pytest_cache
 
 # cloud9 things
 .~c9*

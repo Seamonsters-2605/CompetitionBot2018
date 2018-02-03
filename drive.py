@@ -4,9 +4,11 @@ import math
 import wpilib
 import ctre
 from robotpy_ext.common_drivers.navx import AHRS
+from networktables import NetworkTables
 import seamonsters as sea
 import camera
 import robotconfig
+import auto_sequence
 
 class DriveBot(sea.GeneratorBot):
 
@@ -75,6 +77,8 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveParamLog = sea.LogState("Drive Params")
 
+        self.vision = NetworkTables.getTable('limelight')
+
 
     def teleop(self):
         for talon in self.talons:
@@ -86,6 +90,23 @@ class DriveBot(sea.GeneratorBot):
         while True:
             yield
             self.teleopPeriodic()
+            sea.sendLogStates()
+
+    def autonomous(self):
+        print("Starting autonomous!")
+        for talon in self.talons:
+            talon.setSelectedSensorPosition(0, 0, 10)
+
+        self.holoDrive.resetTargetPositions()
+        self._setPID(robotconfig.slowPIDSpeedMode)
+
+        yield from sea.parallel(self.sendLogStatesGenerator(),
+            auto_sequence.autoSequence(self.holoDrive, self.vision))
+        print("Auto sequence complete!")
+
+    def sendLogStatesGenerator(self):
+        while True:
+            yield
             sea.sendLogStates()
 
     def teleopPeriodic(self):
@@ -191,6 +212,7 @@ class DriveBot(sea.GeneratorBot):
         if not sea.getSwitch("DON'T DRIVE", False):
             self.drive.drive(magnitude, direction, turn)
 
+
     def _setPID(self, pid):
         for talon in self.talons:
             talon.config_kP(0, pid[0], 0)
@@ -217,6 +239,7 @@ class DriveBot(sea.GeneratorBot):
         if abs(roundedValue - value) < self.driveDirectionDeadZone:
             return roundedValue
         return value
+
 
 if __name__ == "__main__":
     wpilib.run(DriveBot)
