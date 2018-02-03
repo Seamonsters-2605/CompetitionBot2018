@@ -2,6 +2,18 @@ import ctre
 from seamonsters import HolonomicDrive
 import robotconfig
 
+def driveContinuous(drive, magnitude, direction, turn):
+    try:
+        while True:
+            drive.drive(magnitude, direction, turn)
+            yield
+    except:
+        drive.drive(0, 0, 0)
+
+def updateMultiDrive(multiDrive):
+    while True:
+        multiDrive.update()
+
 def driveForward(holoDrive, distance, speed):
     wheelMotors = holoDrive.wheelMotors
     speed *= robotconfig.maxVelocityPositionMode
