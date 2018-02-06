@@ -67,8 +67,9 @@ class GeneratorBot(RobotBase):
                         traceback.print_exc()
                         self.iterator = None
                         self.earlyStop = True
-                SmartDashboard.updateValues()
-                LiveWindow.updateValues()
+                # disabling both of these for now - they cause delays
+                #SmartDashboard.updateValues()
+                #LiveWindow.updateValues()
 
     def robotInit(self):
         """
