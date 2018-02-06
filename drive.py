@@ -23,6 +23,10 @@ class DriveBot(sea.GeneratorBot):
 
         self.pidLookBackRange = 10
 
+        self.strafeScales = [0.1, 0.2, 0.2]
+        self.forwardScales = [0.1, 0.5, 1.0]
+        self.turnScales = [0.1, 0.3, 0.3]
+
         # Tad's vars
 
         self.turnRampUp = 1.3 # this is a multiplier
@@ -144,14 +148,13 @@ class DriveBot(sea.GeneratorBot):
         if self.driverJoystick.getRawButton(4):
             self.fieldDrive.zero()
 
-        turn = -self.driverJoystick.getRawAxis(3) / 2 \
+        # 3 possible positions of the throttle
+        gear = 2 - round(self.driverJoystick.getRawAxis(2) + 1.0)
+
+        fwd = self.driverJoystick.getY()
+        strafe = self.driverJoystick.getX()
+        turn = -self.driverJoystick.getRawAxis(3) \
                - self.driverJoystick.getRawAxis(4)
-        magnitude = self.driverJoystick.getMagnitude()
-        if magnitude == 0:
-            direction = 0
-        else:
-            direction = -self.driverJoystick.getDirectionRadians() + math.pi / 2
-            direction = self.roundDirection(direction, math.pi/2)
 
         # Ramp up
         """if turn == 1:
@@ -178,28 +181,19 @@ class DriveBot(sea.GeneratorBot):
                 self.magnitudeExponent = 1
             print("Magnitude exponent:", self.magnitudeExponent)
 
-        # 3 possible positions of the throttle
-        gear = round(self.driverJoystick.getRawAxis(2) + 1.0)
-        if gear == 0:
-            throttle = 1
-        elif gear == 1:
-            throttle = 0.5
-        else:
-            throttle = 0.1
+        fwd = self._joystickPower(fwd, self.magnitudeExponent, deadzone=0)
+        strafe = self._joystickPower(strafe, self.magnitudeExponent, deadzone=0)
+        turn = self._joystickPower(turn, self.twistExponent, deadzone=0)
+        fwd *= self.forwardScales[gear]
+        strafe *= self.strafeScales[gear]
+        turn *= self.turnScales[gear]
 
-        magnitude = self._joystickPower(magnitude, self.magnitudeExponent,
-                                        deadzone=0)
-        turn = self._joystickPower(turn, self.twistExponent,
-                                   deadzone=0)
-        turn *= throttle * robotconfig.turnScale
-        magnitude *= throttle * robotconfig.magnitudeScale
+        magnitude = math.sqrt(fwd**2 + strafe**2)
+        direction = -math.atan2(fwd, strafe)
+        direction = self.roundDirection(direction, math.pi/2)
 
         if sea.getSwitch("Drive voltage mode", False):
             self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
-        elif gear == 2:
-            self.holoDrive.setDriveMode(ctre.ControlMode.Position)
-            self.pidDrive.slowPID = robotconfig.slowPID
-            self.pidDrive.fastPID = robotconfig.fastPID
         else:
             self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
             self.pidDrive.slowPID = robotconfig.slowPIDSpeedMode

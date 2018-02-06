@@ -10,8 +10,6 @@ if theRobot == "Leviathan":
     # 85 / 12 * 400 = 2833.333 = ~2833
     ticksPerWheelRotation = 2833
     maxError = ticksPerWheelRotation * 1.5
-    magnitudeScale = 0.45
-    turnScale = 0.3
     maxVelocityPositionMode = 650
     maxVelocitySpeedMode = maxVelocityPositionMode * 5
 
@@ -28,8 +26,6 @@ if theRobot == "Leviathan":
 elif theRobot == "2018":
     ticksPerWheelRotation = 20896
     maxError = ticksPerWheelRotation * 1.5
-    magnitudeScale = 1.0
-    turnScale = 0.5
     maxVelocityPositionMode = 6000 * .8
     maxVelocitySpeedMode = 10000 * .8
 
