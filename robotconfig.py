@@ -13,29 +13,29 @@ if theRobot == "Leviathan":
     maxVelocityPositionMode = 650
     maxVelocitySpeedMode = maxVelocityPositionMode * 5
 
-    # PIDF values for fast driving:
-    fastPID = (1.0, 0.0009, 3.0, 0.0)
-    fastPIDSpeedMode = (1.0, 0.0009, 3.0, 0.0)
-    # speed at which fast PID's should be used:
-    fastPIDScale = 0.09
-    # PIDF values for slow driving:
-    slowPID = (30.0, 0.0009, 3.0, 0.0)
-    slowPIDSpeedMode = (3.0, 0.0009, 3.0, 0.0)
-    # speed at which slow PID's should be used:
-    slowPIDScale = 0.01
+    positionModePIDs = (
+        (30.0, 0.0009, 3.0, 0.0),
+        (1.0, 0.0009, 3.0, 0.0),
+        (1.0, 0.0009, 3.0, 0.0)
+    )
+    speedModePIDs = (
+        (3.0, 0.0009, 3.0, 0.0),
+        (1.0, 0.0009, 3.0, 0.0),
+        (1.0, 0.0009, 3.0, 0.0)
+    )
 elif theRobot == "2018":
     ticksPerWheelRotation = 20896
     maxError = ticksPerWheelRotation * 1.5
     maxVelocityPositionMode = 6000 * .8
     maxVelocitySpeedMode = 10000 * .8
 
-    # PIDF values for fast driving:
-    fastPID = (0.07, 0.0, 3.0, 0.0)
-    fastPIDSpeedMode = (0.1, 0.0009, 3.0, 0.0)
-    # speed at which fast PID's should be used:
-    fastPIDScale = 0.09
-    # PIDF values for slow driving:
-    slowPID = (1.5, 0.0, 3.0, 0.0)
-    slowPIDSpeedMode = (1.0, 0.0009, 3.0, 0.0)
-    # speed at which slow PID's should be used:
-    slowPIDScale = 0.01
+    positionModePIDs = (
+        (1.5, 0.0, 3.0, 0.0), # slow
+        (0.07, 0.0, 3.0, 0.0), # medium
+        (0.07, 0.0, 3.0, 0.0) # fast
+    )
+    speedModePIDs = (
+        (1.0, 0.0009, 3.0, 0.0), # slow
+        (0.1, 0.0009, 3.0, 0.0), # medium
+        (0.1, 0.0009, 3.0, 0.0) # fast
+    )

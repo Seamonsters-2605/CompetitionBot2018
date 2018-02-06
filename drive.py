@@ -25,9 +25,9 @@ class DriveBot(sea.GeneratorBot):
 
         self.pidLookBackRange = 10
 
-        self.strafeScales = [0.1, 0.2, 0.2]
-        self.forwardScales = [0.1, 0.5, 1.0]
-        self.turnScales = [0.1, 0.3, 0.3]
+        self.strafeScales = (0.1, 0.2, 0.2)
+        self.forwardScales = (0.1, 0.5, 1.0)
+        self.turnScales = (0.1, 0.3, 0.3)
 
         # Tad's vars
 
@@ -53,21 +53,14 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveModeLog = sea.LogState("Drive mode")
 
-        self._setPID(robotconfig.fastPID)
-
         self.holoDrive = sea.HolonomicDrive(fl, fr, bl, br)
         self.holoDrive.invertDrive(True)
         self.holoDrive.maxError = robotconfig.maxError
         self.holoDrive.maxVelocityPositionMode = robotconfig.maxVelocityPositionMode
         self.holoDrive.maxVelocitySpeedMode = robotconfig.maxVelocitySpeedMode
 
-        self.pidDrive = sea.DynamicPIDDrive(self.holoDrive, self.talons,
-                                            robotconfig.slowPID, robotconfig.slowPIDScale,
-                                            robotconfig.fastPID, robotconfig.fastPIDScale,
-                                            self.pidLookBackRange)
-
         self.ahrs = AHRS.create_spi()  # the NavX
-        self.fieldDrive = sea.FieldOrientedDrive(self.pidDrive, self.ahrs,
+        self.fieldDrive = sea.FieldOrientedDrive(self.holoDrive, self.ahrs,
             offset=0)
         self.fieldDrive.zero()
 
@@ -105,7 +98,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.holoDrive.resetTargetPositions()
         self.holoDrive.setDriveMode(ctre.ControlMode.Position)
-        self._setPID(robotconfig.slowPIDSpeedMode)
+        self._setPID(robotconfig.positionModePIDs[1])
         yield from sea.parallel(self.sendLogStatesGenerator(),
             auto_sequence.autonomous(self.holoDrive, self.ahrs, self.vision))
         print("Auto sequence complete!")
@@ -198,8 +191,7 @@ class DriveBot(sea.GeneratorBot):
             self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
         else:
             self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
-            self.pidDrive.slowPID = robotconfig.slowPIDSpeedMode
-            self.pidDrive.fastPID = robotconfig.fastPIDSpeedMode
+            self._setPID(robotconfig.speedModePIDs[gear])
 
         if sea.getSwitch("Drive param logging", False):
             self.driveParamLog.update(('%.3f' % magnitude) + "," +
