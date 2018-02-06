@@ -9,6 +9,8 @@ import seamonsters as sea
 import camera
 import robotconfig
 import auto_sequence
+import rotation_align
+
 
 class DriveBot(sea.GeneratorBot):
 
@@ -22,6 +24,10 @@ class DriveBot(sea.GeneratorBot):
         self.driveDirectionDeadZone = math.radians(10)
 
         self.pidLookBackRange = 10
+
+        # NAVX stuff
+
+        self.ahrs = AHRS.create_spi()
 
         # Tad's vars
 
@@ -101,7 +107,7 @@ class DriveBot(sea.GeneratorBot):
         self._setPID(robotconfig.slowPIDSpeedMode)
 
         yield from sea.parallel(self.sendLogStatesGenerator(),
-            auto_sequence.autoSequence(self.holoDrive, self.vision))
+            auto_sequence.autoSequence(self.holoDrive, self.vision, self.ahrs))
         print("Auto sequence complete!")
 
     def sendLogStatesGenerator(self):
