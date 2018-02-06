@@ -29,10 +29,6 @@ class DriveBot(sea.GeneratorBot):
         self.forwardScales = [0.1, 0.5, 1.0]
         self.turnScales = [0.1, 0.3, 0.3]
 
-        # NAVX stuff
-
-        self.ahrs = AHRS.create_spi()
-
         # Tad's vars
 
         self.turnRampUp = 1.3 # this is a multiplier
@@ -108,9 +104,10 @@ class DriveBot(sea.GeneratorBot):
             talon.setSelectedSensorPosition(0, 0, 10)
 
         self.holoDrive.resetTargetPositions()
+        self.holoDrive.setDriveMode(ctre.ControlMode.Position)
         self._setPID(robotconfig.slowPIDSpeedMode)
         yield from sea.parallel(self.sendLogStatesGenerator(),
-            auto_sequence.autoSequence(self.holoDrive, self.vision, self.ahrs))
+            auto_sequence.autonomous(self.holoDrive, self.ahrs, self.vision))
         print("Auto sequence complete!")
 
     def sendLogStatesGenerator(self):

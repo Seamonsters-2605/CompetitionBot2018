@@ -13,6 +13,7 @@ def driveContinuous(drive, magnitude, direction, turn):
 def updateMultiDrive(multiDrive):
     while True:
         multiDrive.update()
+        yield
 
 def driveForward(holoDrive, distance, speed):
     wheelMotors = holoDrive.wheelMotors
