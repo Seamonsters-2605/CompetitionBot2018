@@ -23,9 +23,9 @@ class DriveBot(sea.GeneratorBot):
 
         self.pidLookBackRange = 10
 
-        self.strafeScales = [0.1, 0.2, 0.2]
-        self.forwardScales = [0.1, 0.5, 1.0]
-        self.turnScales = [0.1, 0.3, 0.3]
+        self.strafeScales = (0.1, 0.2, 0.2)
+        self.forwardScales = (0.1, 0.5, 1.0)
+        self.turnScales = (0.1, 0.3, 0.3)
 
         # Tad's vars
 
