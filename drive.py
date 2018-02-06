@@ -51,21 +51,14 @@ class DriveBot(sea.GeneratorBot):
 
         self.driveModeLog = sea.LogState("Drive mode")
 
-        self._setPID(robotconfig.fastPID)
-
         self.holoDrive = sea.HolonomicDrive(fl, fr, bl, br)
         self.holoDrive.invertDrive(True)
         self.holoDrive.maxError = robotconfig.maxError
         self.holoDrive.maxVelocityPositionMode = robotconfig.maxVelocityPositionMode
         self.holoDrive.maxVelocitySpeedMode = robotconfig.maxVelocitySpeedMode
 
-        self.pidDrive = sea.DynamicPIDDrive(self.holoDrive, self.talons,
-                                            robotconfig.slowPID, robotconfig.slowPIDScale,
-                                            robotconfig.fastPID, robotconfig.fastPIDScale,
-                                            self.pidLookBackRange)
-
         self.ahrs = AHRS.create_spi()  # the NavX
-        self.fieldDrive = sea.FieldOrientedDrive(self.pidDrive, self.ahrs,
+        self.fieldDrive = sea.FieldOrientedDrive(self.holoDrive, self.ahrs,
             offset=0)
         self.fieldDrive.zero()
 
@@ -102,7 +95,7 @@ class DriveBot(sea.GeneratorBot):
             talon.setSelectedSensorPosition(0, 0, 10)
 
         self.holoDrive.resetTargetPositions()
-        self._setPID(robotconfig.slowPIDSpeedMode)
+        self._setPID(robotconfig.positionModePIDs[1])
 
         yield from sea.parallel(self.sendLogStatesGenerator(),
             auto_sequence.autoSequence(self.holoDrive, self.vision))
@@ -196,8 +189,7 @@ class DriveBot(sea.GeneratorBot):
             self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
         else:
             self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
-            self.pidDrive.slowPID = robotconfig.slowPIDSpeedMode
-            self.pidDrive.fastPID = robotconfig.fastPIDSpeedMode
+            self._setPID(robotconfig.speedModePIDs[gear])
 
         if sea.getSwitch("Drive param logging", False):
             self.driveParamLog.update(('%.3f' % magnitude) + "," +
