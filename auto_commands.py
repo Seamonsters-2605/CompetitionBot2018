@@ -15,6 +15,17 @@ def updateMultiDrive(multiDrive):
         multiDrive.update()
         yield
 
+def watchWheelRotation(motor, distance):
+    moveTicks = int(float(distance) * robotconfig.ticksPerWheelRotation
+                    / robotconfig.wheelCircumference)
+    targetPosition = motor.getSelectedSensorPosition(0) + moveTicks
+    while True:
+        pos = motor.getSelectedSensorPosition(0)
+        if moveTicks > 0:
+            yield pos >= targetPosition
+        else:
+            yield pos <= targetPosition
+
 def driveForward(holoDrive, distance, speed):
     wheelMotors = holoDrive.wheelMotors
     speed *= robotconfig.maxVelocityPositionMode
