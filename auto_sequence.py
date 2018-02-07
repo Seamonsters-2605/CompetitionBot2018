@@ -62,3 +62,9 @@ def autonomous(drive, ahrs, vision):
     #yield from sea.watch(auto_commands.driveForward(drive, 49, .5), strafe_to_align.strafeAlign(drive, vision, 10))
     #yield from auto_shoot.Shooter.shootMotor(1, 200)
 
+
+def findTarget(vision, initialWait, timeLimit):
+    yield from sea.wait(initialWait)
+    yield from sea.timeLimit(
+        sea.ensureTrue(auto_vision.checkForVisionTarget(vision), 25),
+        timeLimit - initialWait)
