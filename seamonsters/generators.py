@@ -18,7 +18,7 @@ def parallel(*iterables):
 def watch(*iterables):
     """
     Run a group of iterables in parallel. Ends when the last iterables in the
-    given list has finished, regardless of the others.
+    given list has finished or yields True, regardless of the others.
 
     If any iterable yields a function, it will be added to the set of running
     iterables.
@@ -38,6 +38,8 @@ def watch(*iterables):
                     if iter == watch:
                         return
                     toRemove.append(iter)
+                if result == True and iter == watch:
+                    return
                 if isinstance(result, types.GeneratorType):
                     iterables.append(result)
             for iter in toRemove:
