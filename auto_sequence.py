@@ -10,14 +10,20 @@ from robotpy_ext.common_drivers.navx import AHRS
 
 def autoSequence(drive, vision):
     switchPosition = wpilib.DriverStation.getInstance().getGameSpecificMessage()
+    if len(switchPosition) == 0:
+        print("No game message!")
+        return
     if switchPosition[0] == "L":
             switchPos1 = 75
             switchPos2 = 120
             switchPos3 = 244
-    if switchPosition[0] == "R":
+    elif switchPosition[0] == "R":
             switchPos1 = 244
             switchPos2 = 75
             switchPos3 = 75
+    else:
+        print("Invalid game message!")
+        return
     for i in range(60):
         drive.drive(.3, math.pi/2, 0)
         yield
