@@ -98,7 +98,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.holoDrive.resetTargetPositions()
         self.holoDrive.setDriveMode(ctre.ControlMode.Position)
-        self._setPID(robotconfig.positionModePIDs[1])
+        self._setPID(robotconfig.speedModePIDs[0])
         yield from sea.parallel(self.sendLogStatesGenerator(),
             auto_sequence.autonomous(self.holoDrive, self.ahrs, self.vision))
         print("Auto sequence complete!")
@@ -197,7 +197,11 @@ class DriveBot(sea.GeneratorBot):
             self.driveParamLog.update(('%.3f' % magnitude) + "," +
                                       str(int(math.degrees(direction))) + "," +
                                       ('%.3f' % turn))
-        if not sea.getSwitch("DON'T DRIVE", False):
+        elif self.driverJoystick.getRawButton(1):
+            self._setPID(robotconfig.speedModePIDs[2])
+            for talon in self.talons:
+                talon.set(ctre.ControlMode.Velocity, 0)
+        elif not sea.getSwitch("DON'T DRIVE", False):
             self.drive.drive(magnitude, direction, turn)
 
     def test(self):

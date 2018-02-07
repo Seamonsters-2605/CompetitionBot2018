@@ -6,5 +6,5 @@ def rotation(drive, ahrs):
     print("AAAAAAAA")
     while True:
         offset = ahrs.getAngle() - startAngle
-        drive.drive(0, 0, offset/50)
+        drive.drive(0, 0, offset/75)
         yield
