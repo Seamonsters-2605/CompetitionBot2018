@@ -73,3 +73,4 @@ def driveForward(holoDrive, distance, speed):
 
 def driveToTargetDistance(drive, vision):
     # TODO
+    stuff = 0
