@@ -9,7 +9,6 @@ import seamonsters as sea
 import camera
 import robotconfig
 import auto_sequence
-import rotation_align
 
 
 class DriveBot(sea.GeneratorBot):

@@ -1,10 +1,10 @@
 import math
 import ctre
 import auto_commands
-import strafe_to_align
+import auto_vision
 import auto_shoot
 import seamonsters as sea
-import rotation_align
+import auto_navx
 import wpilib
 from robotpy_ext.common_drivers.navx import AHRS
 
@@ -47,15 +47,15 @@ def autoSequence(drive, vision):
             yield
         drive.drive(0, 0, 0)
     yield from sea.wait(25)
-    yield from sea.ensureTrue(strafe_to_align.strafeAlign(drive, vision, 0), 20)
+    yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
     drive.drive(0, 0, 0)
-    yield from sea.watch(strafe_to_align.strafeAlign(drive, vision, 0),
+    yield from sea.watch(auto_vision.strafeAlign(drive, vision, 0),
                          auto_commands.driveContinuous(drive, .3, math.pi/2, 0), sea.wait(90))
     drive.drive(0, 0, 0)
 
 def autonomous(drive, ahrs, vision):
     multiDrive = sea.MultiDrive(drive)
-    yield from sea.parallel(rotation_align.rotation(multiDrive, ahrs),
+    yield from sea.parallel(auto_navx.rotation(multiDrive, ahrs),
                             autoSequence(multiDrive, vision), auto_commands.updateMultiDrive(multiDrive))
 
 
