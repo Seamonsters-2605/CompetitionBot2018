@@ -1,6 +1,7 @@
 import ctre
 from seamonsters import HolonomicDrive
 import robotconfig
+from networktables import NetworkTables
 
 def driveContinuous(drive, magnitude, direction, turn):
     try:
@@ -69,3 +70,7 @@ def driveForward(holoDrive, distance, speed):
             motor.set(ctre.ControlMode.Position, current)
         if done:
             break
+
+def driveToTargetDistance(drive, vision):
+    # TODO
+    stuff = 0

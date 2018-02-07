@@ -208,6 +208,16 @@ class DriveBot(sea.GeneratorBot):
         elif not sea.getSwitch("DON'T DRIVE", False):
             self.drive.drive(magnitude, direction, turn)
 
+    def test(self):
+        for talon in self.talons:
+            talon.setSelectedSensorPosition(0, 0, 10)
+
+        self.holoDrive.resetTargetPositions()
+
+        while True:
+            yield
+            area = self.vision.getNumber('ta', "It borked")
+            print("Area: " + str(area))
 
     def _setPID(self, pid):
         for talon in self.talons:
