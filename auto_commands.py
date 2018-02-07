@@ -1,4 +1,6 @@
+import math
 import ctre
+import seamonsters as sea
 from seamonsters import HolonomicDrive
 import robotconfig
 from networktables import NetworkTables
@@ -11,23 +13,49 @@ def driveContinuous(drive, magnitude, direction, turn):
     except:
         drive.drive(0, 0, 0)
 
+def driveDistance(drive, distance, speed):
+    holoDrive = _findTheHoloDrive(drive)
+    motor = holoDrive.wheelMotors[HolonomicDrive.FRONT_RIGHT]
+    moveTicks = int(float(distance) * robotconfig.ticksPerWheelRotation
+                     / robotconfig.wheelCircumference * holoDrive.invert)
+    targetPosition = motor.getSelectedSensorPosition(0) + moveTicks
+    def checkTheMotor():
+        yield
+        while True:
+            pos = motor.getSelectedSensorPosition(0)
+            print(pos, targetPosition, moveTicks)
+            if moveTicks > 0:
+                if pos >= targetPosition:
+                    break
+                else:
+                    yield
+            else:
+                if pos <= targetPosition:
+                    break
+                else:
+                    yield
+        print("Reached position!")
+    yield from sea.watch(driveContinuous(drive, speed, math.pi/2, 0),
+                         checkTheMotor())
+    print("Ending driveDistance!")
+
+def _findTheHoloDrive(drive):
+    if isinstance(drive, HolonomicDrive):
+        return drive
+    else:
+        try:
+            return _findTheHoloDrive(drive.interface)
+        except AttributeError:
+            raise TypeError("Not a HolonomicDrive or wrapper!")
+
+
 def updateMultiDrive(multiDrive):
     while True:
         multiDrive.update()
         yield
 
-def watchWheelRotation(motor, distance):
-    moveTicks = int(float(distance) * robotconfig.ticksPerWheelRotation
-                    / robotconfig.wheelCircumference)
-    targetPosition = motor.getSelectedSensorPosition(0) + moveTicks
-    while True:
-        pos = motor.getSelectedSensorPosition(0)
-        if moveTicks > 0:
-            yield pos >= targetPosition
-        else:
-            yield pos <= targetPosition
-
 def driveForward(holoDrive, distance, speed):
+    holoDrive = _findTheHoloDrive(holoDrive)
     wheelMotors = holoDrive.wheelMotors
     speed *= robotconfig.maxVelocityPositionMode
     moveTicks = int(float(distance) * robotconfig.ticksPerWheelRotation
