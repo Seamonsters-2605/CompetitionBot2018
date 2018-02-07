@@ -3,46 +3,52 @@ import ctre
 import seamonsters as sea
 import math
 from networktables import NetworkTables
-class MyRobot (wpilib.IterativeRobot):
+
+
+class MyRobot(wpilib.IterativeRobot):
     def teleopInit(self):
         self.table = NetworkTables.getTable("limelight")
         self.yOffset = vision.getNumber('ty', "no visionY")  # verticle offset from -20.5 to 20.5 degrees
-        self.xOffset = vision.getNumber('tx', "no visionX")#horizontal offset from -27 to 27 degrees
-        self.visRotVal = vision.getNumber('ts', "no visionX") + 1 #all values from 90 to zero are negitive ie: -90 to 0 and added +1 becasue 90 degrees would be parallel
-        self.exponent = 0.8
-       #self.zMotor = ctre.WPI_TalonSRX(2)
+        self.xOffset = vision.getNumber('tx', "no visionX")  # horizontal offset from -27 to 27 degrees
+        self.visRotVal = vision.getNumber('ts',"no visionX") + 1  # all values from 90 to zero are negitive ie: -90 to 0 and added +1 becasue 90 degrees would be parallel
+        #self.exponent = 0.8
+        # self.zMotor = ctre.WPI_TalonSRX(2)
         self.xMotor = ctre.WPI_TalonSRX(0)
         self.yMotor = ctre.WPI_TalonSRX(1)
         self.dynamicZeroY = 0
         self.dynamicZeroX = 0
-        self.motorRotY = self.yMotor.set(ctre.ControlMode.Position, position)
-        self.motorRotX = self.xMotor.set(ctre.ControlMode.Position, position)
-        #self.motorRotZ = self.zMotor.set(ctre.ControlMode.Position, position)
-    def teleopPeriodic(self): # in here i do not know how to sperate teh rotation values from x to y so i put some numbers in replacement in diffy and diffx
+        self.motorRotY = self.yMotor.set()
+        self.motorRotX = self.xMotor.set()
+        # self.motorRotZ = self.zMotor.set(ctre.ControlMode.Position, position)
+
+    def teleopPeriodic(self):  # in here i do not know how to sperate teh rotation values from x to y so i put some numbers in replacement in diffy and diffx
         sea.sendLogStates()
         print(self.yOffset)
         print(self.xOffset)
-        if abs(self.VisRotVal) >= 0 and abs(self.visRotVal) <=15: #edit 15 to see best possible angle
-            self.dynamicZeroY = self.yOffset #stores value of place on Y axis when between 0 and 15 degrees
+        if abs(self.visRotVal) >= 0 and abs(self.visRotVal) <= 15:  # edit 15 to see best possible angle
+            self.dynamicZeroY = self.yOffset  # stores value of place on Y axis when between 0 and 15 degrees
             self.dynamicZeroX = self.xOffset  # stores value of place on Y axis when between 0 and 15 degrees
-            self.diffY = (-self.dynamicZeroY + -self.yOffset)* 4.3 # did this to turn it into a value of 89 degrees edit this later values are screwed up
-            self.diffX = (-self.dynamicZeroX + -self.xOffset)* 3.3 # did this to turn it into a value of 89 degrees, i currently do not know what "position" mean in numbers but im guessing 360 for now
+            self.diffY = -self.dynamicZeroY + -math.log(self.yOffset) * 4.3 # did this to turn it into a value of 89 degrees edit this later values are screwed up
+            self.diffX = -self.dynamicZeroX + -math.log(self.xOffset) * 3.3
+            # did this to turn it into a value of 89 degrees, i currently do not know what "position" mean in numbers but im guessing 360 for now
         if self.yOffset > self.dynamicZeroY:
-            self.motorRotY(ctre.ControlMode.Position, self.diffY)
+            self.motorRotY(1,self.diffY)#edit of 1 is correct
         elif self.yOffset < self.dynamicZeroY:
-            self.motorRotY(ctre.ControlMode.Position, self.diffY)
+            self.motorRotY(1, self.diffY)
 
         if self.xOffset > self.dynamicZeroX:
-            self.motorRotX(ctre.ControlMode.Position, self.diffX)
+            self.motorRotX(1, self.diffX)
         elif self.xOffset < self.dynamicZeroX:
-            self.motorRotX(ctre.ControlMode.Position, self.diffX)
+            self.motorRotX(1, self.diffX)
 
-            
         if self.xOffset == "no visionX":
             print('no vision X')
-            #tehre were continues here place them back if it is vital it was giving em an error so i got annoyed and removed them
+            # tehre were continues here place them back if it is vital it was giving em an error so i got annoyed and removed them
         if self.yOffset == "no visionY":
             print('no vision Y')
+
+        #### print VVVV the angles test VVVVV #####
+
 
 if __name__ == "__main__":
     wpilib.run(MyRobot, physics_enabled=True)
