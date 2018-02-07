@@ -1,6 +1,6 @@
 import math
 
-theRobot = "Leviathan"
+theRobot = "2018"
 
 wheelCircumference = 6 * math.pi
 
@@ -30,7 +30,7 @@ elif theRobot == "2018":
     maxVelocitySpeedMode = 10000 * .8
 
     positionModePIDs = (
-        (1.5, 0.0, 3.0, 0.0), # slow
+        (0.8, 0.0, 10.0, 0.0), # slow
         (0.07, 0.0, 3.0, 0.0), # medium
         (0.07, 0.0, 3.0, 0.0) # fast
     )
