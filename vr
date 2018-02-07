@@ -3,45 +3,46 @@ import ctre
 import seamonsters as sea
 import math
 from networktables import NetworkTables
-def strafeAlign(self,drive,vision):
-
-    while True:
-        yield
+class MyRobot (wpilib.IterativeRobot):
+    def teleopInit(self):
+        self.table = NetworkTables.getTable("limelight")
+        self.yOffset = vision.getNumber('ty', "no visionY")  # verticle offset from -20.5 to 20.5 degrees
+        self.xOffset = vision.getNumber('tx', "no visionX")#horizontal offset from -27 to 27 degrees
+        self.visRotVal = vision.getNumber('ts', "no visionX") + 1 #all values from 90 to zero are negitive ie: -90 to 0 and added +1 becasue 90 degrees would be parallel
+        self.exponent = 0.8
+       #self.zMotor = ctre.WPI_TalonSRX(2)
+        self.xMotor = ctre.WPI_TalonSRX(0)
+        self.yMotor = ctre.WPI_TalonSRX(1)
+        self.dynamicZeroY = 0
+        self.dynamicZeroX = 0
+        self.motorRotY = self.yMotor.set(ctre.ControlMode.Position, position)
+        self.motorRotX = self.xMotor.set(ctre.ControlMode.Position, position)
+        #self.motorRotZ = self.zMotor.set(ctre.ControlMode.Position, position)
+    def teleopPeriodic(self): # in here i do not know how to sperate teh rotation values from x to y so i put some numbers in replacement in diffy and diffx
         sea.sendLogStates()
-        xOffset = vision.getNumber('tx',"no visionX")
-        yOffset =  vision.getNumber('ty', "no vision y")
-        degrot = abs(vision.getNumber('ts', "NO SKEW"))
-        crossx = vision.getNumber('cx0')
-        crossy = vision.getNumber('cy0')
-        exponent = 0.8
-        exOffset = abs(xOffset)**exponent/13.9
-        eyOffset = abs(yOffset) ** exponent / 13.9
-        x1 = self.fl.drive.drive()
-        y1 = self.fr.drive.drive()
-        pos = 0
-        # Original: exponent:0.65, denominator:15
-        if degrot == 90:
-            crossy = pos #change pos to varibiale if jacob disappoves.
-        if yOffset == "no vision y":
-            print('no vision')
-            continue
-        if yOffset > pos:
-                y1(exOffset,0,0)
-        if yOffset < pos:
-                y1(-exOffset,0,0)
-        if abs(xOffset) <= 0.5:
-            #Original tolerance: 1
-                continue
+        print(self.yOffset)
+        print(self.xOffset)
+        if abs(self.VisRotVal) >= 0 and abs(self.visRotVal) <=15: #edit 15 to see best possible angle
+            self.dynamicZeroY = self.yOffset #stores value of place on Y axis when between 0 and 15 degrees
+            self.dynamicZeroX = self.xOffset  # stores value of place on Y axis when between 0 and 15 degrees
+            self.diffY = (-self.dynamicZeroY + -self.yOffset)* 4.3 # did this to turn it into a value of 89 degrees edit this later values are screwed up
+            self.diffX = (-self.dynamicZeroX + -self.xOffset)* 3.3 # did this to turn it into a value of 89 degrees, i currently do not know what "position" mean in numbers but im guessing 360 for now
+        if self.yOffset > self.dynamicZeroY:
+            self.motorRotY(ctre.ControlMode.Position, self.diffY)
+        elif self.yOffset < self.dynamicZeroY:
+            self.motorRotY(ctre.ControlMode.Position, self.diffY)
 
-        if xOffset == "no visionX":
-            print('no vision')
-            continue
-        if yOffset > pos:
-                x1(exOffset,0,0)
-        if xOffset < pos:
-                x1(-exOffset,0,0)
-        if abs(xOffset) <= 0.5:
-            #Original tolerance: 1
-                continue
-#a
-    #    if xOffset >
+        if self.xOffset > self.dynamicZeroX:
+            self.motorRotX(ctre.ControlMode.Position, self.diffX)
+        elif self.xOffset < self.dynamicZeroX:
+            self.motorRotX(ctre.ControlMode.Position, self.diffX)
+
+            
+        if self.xOffset == "no visionX":
+            print('no vision X')
+            #tehre were continues here place them back if it is vital it was giving em an error so i got annoyed and removed them
+        if self.yOffset == "no visionY":
+            print('no vision Y')
+
+if __name__ == "__main__":
+    wpilib.run(MyRobot, physics_enabled=True)
