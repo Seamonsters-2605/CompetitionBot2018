@@ -27,7 +27,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.strafeScales = (0.1, 0.2, 0.2)
         self.forwardScales = (0.15, 0.5, 1.0)
-        self.turnScales = (0.05, 0.3, 0.3)
+        self.turnScales = (0.05, 0.25, 0.35)
 
         # Tad's vars
 
