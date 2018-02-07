@@ -18,6 +18,10 @@ class MainRobot(sea.GeneratorBot):
             self.timerLogState.update(i // 50)
             yield
 
+    def test(self):
+        yield from sea.parallel(drive.DriveBot.test(self.driveObject),
+                                self.timer())
+
     def teleop(self):
         yield from sea.parallel(drive.DriveBot.teleop(self.driveObject),
                                 self.shooterInstance.teleopGenerator(),
