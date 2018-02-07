@@ -4,6 +4,11 @@ import seamonsters as sea
 import math
 from networktables import NetworkTables
 
+def checkForVisionTarget(vision):
+    while True:
+        hasTarget = vision.getNumber('tv', 0)
+        yield bool(hasTarget)
+
 def strafeAlign(drive,vision,visionOffset):
 
     while True:
