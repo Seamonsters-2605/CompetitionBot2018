@@ -14,6 +14,7 @@ def strafeAlign(drive,vision,visionOffset):
         exponent = 0.8
         if xOffset == "no visionX" or not hasTarget:
             print('no vision')
+            yield
             continue
         totalOffset = xOffset - visionOffset
         exOffset = abs(totalOffset) ** exponent / 13.9

@@ -98,7 +98,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.holoDrive.resetTargetPositions()
         self.holoDrive.setDriveMode(ctre.ControlMode.Position)
-        self._setPID(robotconfig.positionModePIDs[1])
+        self._setPID(robotconfig.speedModePIDs[0])
         yield from sea.parallel(self.sendLogStatesGenerator(),
             auto_sequence.autonomous(self.holoDrive, self.ahrs, self.vision))
         print("Auto sequence complete!")
