@@ -214,10 +214,34 @@ class DriveBot(sea.GeneratorBot):
 
         self.holoDrive.resetTargetPositions()
 
-        while True:
+        targetRealArea = 64
+        dist = 96
+        oldFocal = 1.35424
+        focal = 11.40137
+
+        areaSum = 0
+        sumTicks = 200
+
+        for i in range(sumTicks):
             yield
             area = self.vision.getNumber('ta', "It borked")
-            print("Area: " + str(area))
+            #print("Area: " + str(area))
+            try:
+                areaSum += area
+            except:
+                sumTicks -= 1
+
+
+            self.drive = self.fieldDrive
+            self.drive.drive(0, 0, 0)
+
+        avgArea = areaSum / sumTicks
+        print("Avg area: " + str(avgArea))
+        #print("Est. Focal Dist: " + str(dist * (avgArea ** 0.5) / (targetRealArea ** 0.5)))
+
+        estDist = focal * (targetRealArea ** 0.5) / (avgArea ** 0.5)
+        estDist2 = oldFocal * targetRealArea / avgArea
+        print("Est. Dist: " + str(estDist2))
 
     def _setPID(self, pid):
         for talon in self.talons:

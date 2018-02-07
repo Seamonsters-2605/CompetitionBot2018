@@ -100,5 +100,12 @@ def driveForward(holoDrive, distance, speed):
             break
 
 def driveToTargetDistance(drive, vision):
-    # TODO
-    stuff = 0
+    # each vision target strip is 16x2 in, with a 4in gap (64 in accurate area)
+    targetRealArea = 64
+
+    # experimental focal distance
+    focalDist = 600
+
+    perceivedArea = vision.getNumber('ta','borked')
+
+    distance = focalDist * (targetRealArea ** 0.5) / (perceivedArea ** 0.5)
