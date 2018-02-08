@@ -28,13 +28,3 @@ def strafeAlign(drive,vision,visionOffset):
             yield True
         else:
             yield False
-
-
-
-
-
-
-
-
-
-

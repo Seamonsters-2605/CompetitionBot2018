@@ -26,9 +26,6 @@ def autoSequence(drive, vision):
         drive.drive(.3, math.pi/2, 0)
         yield
     drive.drive(0, 0, 0)
-   # yield from sea.watch(sea.untilTrue(auto_commands.watchWheelRotation(
-    #    drive.interface.wheelMotors[sea.HolonomicDrive.FRONT_RIGHT], 70)),
-     #                    auto_commands.driveContinuous(drive, .3, math.pi/2, 0))
     yield from sea.wait(25)
     if wpilib.DriverStation.getInstance().getLocation() == 1:
         for i in range(switchPos1):
@@ -61,10 +58,6 @@ def autonomous(drive, ahrs, vision):
     multiDrive = sea.MultiDrive(drive)
     yield from sea.parallel(auto_navx.rotation(multiDrive, ahrs),
                             autoSequence(multiDrive, vision), auto_commands.updateMultiDrive(multiDrive))
-
-
-    #yield from sea.watch(auto_commands.driveForward(drive, 49, .5), strafe_to_align.strafeAlign(drive, vision, 10))
-    #yield from auto_shoot.Shooter.shootMotor(1, 200)
 
 
 def findTarget(vision, initialWait, timeLimit):
