@@ -1,5 +1,5 @@
 import math
-import auto_commands
+import auto_driving
 import auto_vision
 import auto_shoot
 import seamonsters as sea
@@ -51,13 +51,13 @@ def autoSequence(drive, vision):
     yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
     drive.drive(0, 0, 0)
     yield from sea.watch(auto_vision.strafeAlign(drive, vision, 0),
-                         auto_commands.driveContinuous(drive, .3, math.pi/2, 0), sea.wait(90))
+                         auto_driving.driveContinuous(drive, .3, math.pi / 2, 0), sea.wait(90))
     drive.drive(0, 0, 0)
 
 def autonomous(drive, ahrs, vision):
     multiDrive = sea.MultiDrive(drive)
     yield from sea.parallel(auto_navx.rotation(multiDrive, ahrs),
-                            autoSequence(multiDrive, vision), auto_commands.updateMultiDrive(multiDrive))
+                            autoSequence(multiDrive, vision), auto_driving.updateMultiDrive(multiDrive))
 
 
 def findTarget(vision, initialWait, timeLimit):
