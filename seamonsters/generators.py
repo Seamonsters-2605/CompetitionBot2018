@@ -34,9 +34,9 @@ def watch(*iterables):
                 result = None
                 try:
                     result = next(iter)
-                except StopIteration:
+                except StopIteration as e:
                     if iter == watch:
-                        return
+                        return e.value
                     toRemove.append(iter)
                 if result == True and iter == watch:
                     return
