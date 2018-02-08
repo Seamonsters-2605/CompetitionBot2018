@@ -2,4 +2,5 @@
 -Drive voltage mode
 -Encoder logging
 -Drive param logging
+-Current logging
 -DON'T DRIVE

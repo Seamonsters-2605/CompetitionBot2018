@@ -77,6 +77,8 @@ class DriveBot(sea.GeneratorBot):
 
         self.vision = NetworkTables.getTable('limelight')
 
+        self.currentPIDs = None
+
 
     def teleop(self):
         for talon in self.talons:
@@ -88,7 +90,6 @@ class DriveBot(sea.GeneratorBot):
         while True:
             yield
             self.teleopPeriodic()
-            sea.sendLogStates()
 
     def autonomous(self):
         print("Starting autonomous!")
@@ -98,23 +99,20 @@ class DriveBot(sea.GeneratorBot):
         self.holoDrive.resetTargetPositions()
         self.holoDrive.setDriveMode(ctre.ControlMode.Position)
         self._setPID(robotconfig.positionModePIDs[1])
-        yield from sea.parallel(self.sendLogStatesGenerator(),
-            auto_sequence.autonomous(self.holoDrive, self.ahrs, self.vision))
+        yield from auto_sequence.autonomous(
+            self.holoDrive, self.ahrs, self.vision)
         print("Auto sequence complete!")
 
-    def sendLogStatesGenerator(self):
-        while True:
-            yield
-            sea.sendLogStates()
-
     def teleopPeriodic(self):
-        current = 0
-        for talon in self.talons:
-            current += talon.getOutputCurrent()
-        if current > 50:
-            self.currentLog.update(str(current) + "!")
-        else:
-            self.currentLog.update(current)
+        if sea.getSwitch("Current logging", False):
+            current = 0
+            for talon in self.talons:
+                current += talon.getOutputCurrent()
+                pass
+            if current > 50:
+                self.currentLog.update(str(current) + "!")
+            else:
+                self.currentLog.update(current)
         if sea.getSwitch("Encoder logging", False):
             encoderLogText = ""
             for talon in self.talons:
@@ -130,8 +128,7 @@ class DriveBot(sea.GeneratorBot):
         else:
             self.drive = self.fieldDrive.interface
 
-        self.driveModeLog.update(sea.talonModeToString(
-            self.talons[0].getControlMode()))
+        self.driveModeLog.update(self.holoDrive.motorState)
 
         if self.drive is self.fieldDrive:
             robotOffset = self.fieldDrive.getRobotOffset()
@@ -243,11 +240,14 @@ class DriveBot(sea.GeneratorBot):
         print("Est. Dist: " + str(estDist2))
 
     def _setPID(self, pid):
+        if pid == self.currentPIDs:
+            return
         for talon in self.talons:
             talon.config_kP(0, pid[0], 0)
             talon.config_kI(0, pid[1], 0)
             talon.config_kD(0, pid[2], 0)
             talon.config_kF(0, pid[3], 0)
+        self.currentPIDs = pid
 
     def _joystickPower(self, value, exponent, deadzone = 0.05):
         if value > deadzone:
