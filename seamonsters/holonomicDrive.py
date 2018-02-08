@@ -53,6 +53,8 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
         self.driveMode = ctre.ControlMode.PercentOutput
         self.motorState = None
 
+        self.errorCheckCount = 0
+
     def invertDrive(self, enabled=True):
         """
         If invertDrive is enabled, all motor directions will be inverted.
@@ -91,7 +93,7 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
         if (turn == 0 and magnitude == 0):
             self._disableMotors()
             return
-        if not self._motorsInPositionMode():
+        if not self.motorState == ctre.ControlMode.Position:
             self.resetTargetPositions()
         self._calcWheels(magnitude, direction, turn)
         self._scalePositionMode()
@@ -149,14 +151,16 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
         self.motorState = self.driveMode
 
     def _setMotorPositions(self):
+        self.errorCheckCount += 1
         for i in range(0, 4):
-            currentPos = self.wheelMotors[i].getSelectedSensorPosition(0)
-            if abs(currentPos - self.targetPositions[i]) > self.maxError:
-                print("Holonomic wheel error!!")
-                self.targetPositions[i] = currentPos
+            if self.errorCheckCount % 20 == 0:
+                currentPos = self.wheelMotors[i].getSelectedSensorPosition(0)
+                if abs(currentPos - self.targetPositions[i]) > self.maxError:
+                    print("Holonomic wheel error!!")
+                    self.targetPositions[i] = currentPos
             self.wheelMotors[i].set(ctre.ControlMode.Position,
                                     self.targetPositions[i])
-        self.motorState = self.driveMode
+        self.motorState = ctre.ControlMode.Position
 
     def _disableMotors(self):
         if self.motorState == ctre.ControlMode.Disabled:
@@ -164,9 +168,3 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
         for motor in self.wheelMotors:
             motor.disable()
         self.motorState = ctre.ControlMode.Disabled
-
-    def _motorsInPositionMode(self):
-        for motor in self.wheelMotors:
-            if not motor.getControlMode() == ctre.ControlMode.Position:
-                return False
-        return True
