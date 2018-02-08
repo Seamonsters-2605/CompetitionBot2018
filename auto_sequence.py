@@ -70,7 +70,15 @@ def autonomous(drive, ahrs, vision):
 
 
 def findTarget(vision, initialWait, timeLimit):
+    """
+    Return if the target was found or not
+    """
     yield from sea.wait(initialWait)
-    yield from sea.timeLimit(
-        sea.ensureTrue(auto_vision.checkForVisionTarget(vision), 25),
+    ensureFoundTargetGenerator = sea.ensureTrue(
+        auto_vision.checkForVisionTarget(vision), 25)
+    # foundTarget will be True if ensureFoundTargetGenerator passed
+    # and None if the time limit cut it off early
+    foundTarget = yield from sea.timeLimit(
+        sea.returnValue(ensureFoundTargetGenerator, True),
         timeLimit - initialWait)
+    return bool(foundTarget)
