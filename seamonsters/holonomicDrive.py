@@ -51,6 +51,7 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
         self.maxError = 400
 
         self.driveMode = ctre.ControlMode.PercentOutput
+        self.motorState = None
 
     def invertDrive(self, enabled=True):
         """
@@ -145,6 +146,7 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
         for i in range(0, 4):
             self.wheelMotors[i].set(self.driveMode,
                                     self.targetVelocities[i] * self.invert)
+        self.motorState = self.driveMode
 
     def _setMotorPositions(self):
         for i in range(0, 4):
@@ -154,10 +156,14 @@ class HolonomicDrive(seamonsters.drive.DriveInterface):
                 self.targetPositions[i] = currentPos
             self.wheelMotors[i].set(ctre.ControlMode.Position,
                                     self.targetPositions[i])
+        self.motorState = self.driveMode
 
     def _disableMotors(self):
+        if self.motorState == ctre.ControlMode.Disabled:
+            return
         for motor in self.wheelMotors:
             motor.disable()
+        self.motorState = ctre.ControlMode.Disabled
 
     def _motorsInPositionMode(self):
         for motor in self.wheelMotors:
