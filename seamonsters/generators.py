@@ -66,6 +66,7 @@ def forever():
 def timeLimit(iterable, time):
     """
     Run the iterable until it finishes or the given time limit has passed.
+    Return the value of the iterable if it ends early, None otherwise.
     """
     return itertools.islice(iterable, time)
 
@@ -89,3 +90,11 @@ def ensureTrue(iterable, requiredCount):
         if count > requiredCount:
             break
         yield
+
+def returnValue(iterable, value):
+    """
+    Run an iterable but change the return value.
+    :return: value
+    """
+    yield from iterable
+    return value
