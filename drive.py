@@ -81,8 +81,8 @@ class DriveBot(sea.GeneratorBot):
 
 
     def teleop(self):
-        for talon in self.talons:
-            talon.setSelectedSensorPosition(0, 0, 10)
+        #for talon in self.talons:
+        #    talon.setSelectedSensorPosition(0, 0, 10)
 
         self.holoDrive.resetTargetPositions()
 
@@ -93,8 +93,8 @@ class DriveBot(sea.GeneratorBot):
 
     def autonomous(self):
         print("Starting autonomous!")
-        for talon in self.talons:
-            talon.setSelectedSensorPosition(0, 0, 10)
+        #for talon in self.talons:
+        #    talon.setSelectedSensorPosition(0, 0, 10)
 
         self.holoDrive.resetTargetPositions()
         self.holoDrive.setDriveMode(ctre.ControlMode.Position)
