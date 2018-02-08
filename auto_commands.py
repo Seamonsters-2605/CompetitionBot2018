@@ -23,7 +23,6 @@ def driveDistance(drive, distance, speed):
         yield
         while True:
             pos = motor.getSelectedSensorPosition(0)
-            print(pos, targetPosition, moveTicks)
             if moveTicks > 0:
                 if pos >= targetPosition:
                     break
@@ -34,10 +33,8 @@ def driveDistance(drive, distance, speed):
                     break
                 else:
                     yield
-        print("Reached position!")
     yield from sea.watch(driveContinuous(drive, speed, math.pi/2, 0),
                          checkTheMotor())
-    print("Ending driveDistance!")
 
 def _findTheHoloDrive(drive):
     if isinstance(drive, HolonomicDrive):
@@ -73,12 +70,9 @@ def driveForward(holoDrive, distance, speed):
         currentTargets.append(currentPos)
         targetPositions.append(targetPos)
 
-    print("Moving", moveTicks)
-
     while True:
         yield
         done = True
-        print(currentTargets[0], targetPositions[0])
         for i in range(0, 4):
             motor = wheelMotors[i]
             target = targetPositions[i]

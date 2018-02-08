@@ -25,10 +25,8 @@ def strafeAlign(drive,vision,visionOffset):
         exOffset = abs(totalOffset) ** exponent / 13.9
         if totalOffset < -0.5:
             drive.drive(-exOffset,0,0)
-            print(xOffset)
         elif totalOffset > 0.5:
             drive.drive(exOffset,0,0)
-            print(xOffset)
         if abs(totalOffset) <= 0.5:
             #Original tolerance: 1
             yield True
