@@ -1,8 +1,4 @@
-import wpilib
-import ctre
 import seamonsters as sea
-import math
-from networktables import NetworkTables
 
 def checkForVisionTarget(vision):
     while True:

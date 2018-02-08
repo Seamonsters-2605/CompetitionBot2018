@@ -1,5 +1,3 @@
-import ctre
-from robotpy_ext.common_drivers.navx import AHRS
 
 def rotation(drive, ahrs):
     startAngle = ahrs.getAngle()

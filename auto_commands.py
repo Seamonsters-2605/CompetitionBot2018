@@ -3,7 +3,6 @@ import ctre
 import seamonsters as sea
 from seamonsters import HolonomicDrive
 import robotconfig
-from networktables import NetworkTables
 
 def driveContinuous(drive, magnitude, direction, turn):
     try:

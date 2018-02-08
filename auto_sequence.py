@@ -1,12 +1,10 @@
 import math
-import ctre
 import auto_commands
 import auto_vision
 import auto_shoot
 import seamonsters as sea
 import auto_navx
 import wpilib
-from robotpy_ext.common_drivers.navx import AHRS
 
 def autoSequence(drive, vision):
     switchPosition = wpilib.DriverStation.getInstance().getGameSpecificMessage()
