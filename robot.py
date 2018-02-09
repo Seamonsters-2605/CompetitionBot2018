@@ -22,7 +22,7 @@ class MainRobot(sea.GeneratorBot):
                 new_t = time.time()
                 timeDiff = new_t - last_t
                 last_t = new_t
-            self.timerLogState.update(timeDiff)
+            self.timerLogState.update('%.3f' % timeDiff)
             yield
 
     def test(self):
