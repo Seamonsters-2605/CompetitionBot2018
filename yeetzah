@@ -1,0 +1,47 @@
+import wpilib
+import ctre
+import seamonsters as sea
+import math
+from networktables import NetworkTables
+def strafeAlign(self,drive,vision):
+
+    while True:
+        yield
+        sea.sendLogStates()
+        xOffset = vision.getNumber('tx',"no visionX")
+        yOffset =  vision.getNumber('ty', "no vision y")
+        degrot = abs(vision.getNumber('ts', "NO SKEW"))
+        crossx = vision.getNumber('cx0')
+        crossy = vision.getNumber('cy0')
+        exponent = 0.8
+        exOffset = abs(xOffset)**exponent/13.9
+        eyOffset = abs(yOffset) ** exponent / 13.9
+        x1 = self.fl.drive.drive()
+        y1 = self.fr.drive.drive()
+        pos = 0
+        # Original: exponent:0.65, denominator:15
+        if degrot == 90:
+            crossy = pos #change pos to varibiale if jacob disappoves.
+        if yOffset == "no vision y":
+            print('no vision')
+            continue
+        if yOffset > pos:
+                y1(exOffset,0,0)
+        if yOffset < pos:
+                y1(-exOffset,0,0)
+        if abs(xOffset) <= 0.5:
+            #Original tolerance: 1
+                continue
+
+        if xOffset == "no visionX":
+            print('no vision')
+            continue
+        if yOffset > pos:
+                x1(exOffset,0,0)
+        if xOffset < pos:
+                x1(-exOffset,0,0)
+        if abs(xOffset) <= 0.5:
+            #Original tolerance: 1
+                continue
+#a
+    #    if xOffset >
