@@ -5,7 +5,10 @@
       "w": 3,
       "h": 2,
       "starting_x": 2.5,
-      "starting_y": 5,
+      "starting_y": 15,
+      "starting_y_location1": 5,
+      "starting_y_location2": 15,
+      "starting_y_location3": 23,
       "starting_angle": 0
     },
     
