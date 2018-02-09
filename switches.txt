@@ -4,3 +4,4 @@
 -Drive param logging
 -Current logging
 -DON'T DRIVE
+-Activate Switch
