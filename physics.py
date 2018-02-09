@@ -80,6 +80,11 @@ class PhysicsEngine:
 
         self.maxVel = int(physics.get('maxvel', '8000'))
 
+        ds = config['ds']
+        location = int(ds.get('location', '1'))
+        team = 1 if (ds.get('team', 'red').lower() == 'blue') else 0
+        self.allianceStation = location - 1 + team * 3
+
     def initialize(self, hal_data):
         self.visionTable = NetworkTables.getTable('limelight')
         self.visionTable.putNumber('tv', 1)
@@ -87,6 +92,7 @@ class PhysicsEngine:
         self.visionTable.putNumber('ty', 0)
         self.visionTable.putNumber('ts', 0)
         self.visionTable.putNumber('ta', 5)
+        hal_data['alliance_station'] = self.allianceStation
 
     def update_sim(self, data, time, elapsed):
 
