@@ -6,6 +6,7 @@ import configparser
 from pyfrc.physics import drivetrains
 import ctre
 import robotpy_ext.common_drivers.navx
+from networktables import NetworkTables
 
 # make the NavX work with the physics simulator
 def createAnalogGyro():
@@ -80,9 +81,15 @@ class PhysicsEngine:
         self.maxVel = int(physics.get('maxvel', '8000'))
 
     def initialize(self, hal_data):
-        pass
+        self.visionTable = NetworkTables.getTable('limelight')
+        self.visionTable.putNumber('tv', 1)
+        self.visionTable.putNumber('tx', 0)
+        self.visionTable.putNumber('ty', 0)
+        self.visionTable.putNumber('ts', 0)
+        self.visionTable.putNumber('ta', 5)
 
     def update_sim(self, data, time, elapsed):
+
         fl = self.flMotor.getSpeed(data, self.maxVel)
         fr = self.frMotor.getSpeed(data, self.maxVel)
         bl = self.blMotor.getSpeed(data, self.maxVel)
