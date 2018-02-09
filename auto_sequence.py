@@ -24,45 +24,43 @@ def autoSequence(drive, vision):
     else:
         print("Invalid game message!")
         return
-    #for i in range(50):
-        #drive.drive(.3, math.pi/2, 0)
-        #yield
-    #drive.drive(0, 0, 0)
+
     yield from sea.wait(25)
     if wpilib.DriverStation.getInstance().getLocation() == 1:
         if switchPos1 == 75:
+            for i in range(50):
+                drive.drive(.3, math.pi / 2, 0)
+                yield
+            drive.drive(0, 0, 0)
             for i in range(switchPos1):
                 drive.drive(i/150, 0, 0)
                 yield
         elif switchPos1 == 244:
-            #for i in range(50):
                 yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, -1), 225)
                 yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 0.2), 30)
-
+        drive.drive(0, 0, 0)
     elif wpilib.DriverStation.getInstance().getLocation() == 2:
         if switchPos2 == 75:
+            for i in range(50):
+                drive.drive(.3, math.pi / 2, 0)
+                yield
+            drive.drive(0, 0, 0)
             for i in range(switchPos2):
                 drive.drive(i/150, 0, 0)
                 yield
         elif switchPos2 == 120:
-            for i in range(100):
-                yield from auto_driving.driveContinuous(drive, .3, -1.57, 0)
-                #drive.drive(-i/240, 0, 0)
-                #yield
-            for i in range(switchPos2):
-                drive.drive(.3, math.pi/2, 0)
-                yield
+                yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, 1), 100)
+                yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 0.2), 30)
         drive.drive(0, 0, 0)
     elif wpilib.DriverStation.getInstance().getLocation() == 3:
         if switchPos3 == 244:
-            for i in range(100):
-                yield from auto_driving.driveContinuous(drive, .3, -1.57, 0)
-                #drive.drive(-i/488, 0, 0)
-                #yield
-            for i in range(switchPos3):
-                drive.drive(.3, math.pi/2, 0)
-                yield
+            yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, -1), 225)
+            yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 0.2), 30)
         elif switchPos3 == 75:
+            for i in range(50):
+                drive.drive(.3, math.pi / 2, 0)
+                yield
+            drive.drive(0, 0, 0)
             for i in range(switchPos3):
                 drive.drive(-i/150, 0, 0)
                 yield
@@ -71,7 +69,7 @@ def autoSequence(drive, vision):
     yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
     drive.drive(0, 0, 0)
     yield from sea.watch(auto_vision.strafeAlign(drive, vision, 0),
-                         auto_driving.drive(.3, math.pi/2, 0), sea.wait(100))
+                         drive.drive(.3, math.pi/2, 0), sea.wait(70))
     drive.drive(0, 0, 0)
 
 def autonomous(drive, ahrs, vision):
