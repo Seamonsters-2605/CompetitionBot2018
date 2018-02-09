@@ -54,8 +54,8 @@ def autoSequence(drive, vision):
         drive.drive(0, 0, 0)
     elif wpilib.DriverStation.getInstance().getLocation() == 3:
         if switchPos3 == 244:
-            yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, -1), 225)
-            yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 0.2), 30)
+            yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, 1), 230)
+            yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, -0.2), 30)
         elif switchPos3 == 75:
             for i in range(50):
                 drive.drive(.3, math.pi / 2, 0)
