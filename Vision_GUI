@@ -1,0 +1,29 @@
+import tkinter as tk
+from tkinter import *
+from tkinter import ttk
+from tkinter import filedialog
+from tkinter import messagebox
+
+from networktables import NetworkTables
+
+def show_values():
+    print(w1.get(), w2.get())
+
+master = Tk()
+var = IntVar()
+pad = 1
+padplus = pad-20
+
+w1 = Scale(master,from_=0,to=42)
+w1.pack(side=LEFT)
+w2 = Scale(master, from_=0, to=20)
+w2.pack(side=LEFT)
+
+
+master.geometry("{1}x{1}+0+0".format(
+    master.winfo_screenwidth()-padplus, master.winfo_screenheight()-padplus))
+c = Checkbutton(master, text="Stuff", variable=var)  #Make Checkbutton
+c.pack(side=RIGHT)
+
+Button(master, text='Show', command=show_values).pack() #Show values button
+mainloop()
