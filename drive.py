@@ -98,7 +98,7 @@ class DriveBot(sea.GeneratorBot):
         self.holoDrive.setDriveMode(ctre.ControlMode.Position)
         self._setPID(robotconfig.positionModePIDs[0])
         yield from auto_sequence.autonomous(
-            self.holoDrive, self.ahrs, self.vision)
+            self.holoDrive, self.ahrs, self.vision, self.theRobot.shooterBot)
         print("Auto sequence complete!")
 
     def teleopPeriodic(self):

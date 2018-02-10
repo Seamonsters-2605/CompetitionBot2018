@@ -105,7 +105,7 @@ def autoSequence(drive, vision):
                              auto_driving.driveContinuous(drive, .3, math.pi / 2, 0), sea.wait(90))
         drive.drive(0, 0, 0)
 
-def autonomous(drive, ahrs, vision):
+def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)
     yield from sea.parallel(auto_navx.rotation(multiDrive, ahrs),
                             autoSequence(multiDrive, vision), auto_driving.updateMultiDrive(multiDrive))

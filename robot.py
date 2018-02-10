@@ -8,13 +8,17 @@ class MainRobot(sea.GeneratorBot):
 
     def robotInit(self):
         self.driverJoystick = wpilib.Joystick(0)
-        self.driveObject = drive.DriveBot.__new__(drive.DriveBot)
-        self.driveObject.driverJoystick = self.driverJoystick
-        self.driveObject.theRobot = self
-        drive.DriveBot.robotInit(self.driveObject)
-        self.shooterInstance = sea.IterativeRobotInstance(shooter.MyRobot)
 
-        self.shooterInstance.robotObject.joystick = self.driverJoystick
+        self.driveBot = drive.DriveBot.__new__(drive.DriveBot)
+        self.driveBot.theRobot = self
+        self.driveBot.driverJoystick = self.driverJoystick
+        drive.DriveBot.robotInit(self.driveBot)
+
+        self.shooterInstance = sea.IterativeRobotInstance(shooter.MyRobot)
+        self.shooterBot = self.shooterInstance.robotObject
+        self.shooterBot.theRobot = self
+        self.shooterBot.driverJoystick = self.driverJoystick
+
         self.timerLogState = sea.LogState("Time")
 
     def timer(self):
@@ -31,7 +35,7 @@ class MainRobot(sea.GeneratorBot):
             yield
 
     def test(self):
-        yield from sea.parallel(drive.DriveBot.test(self.driveObject),
+        yield from sea.parallel(drive.DriveBot.test(self.driveBot),
                                 self.timer(),
                                 self.sendLogStatesGenerator())
 
@@ -42,13 +46,13 @@ class MainRobot(sea.GeneratorBot):
 
     def teleop(self):
         yield from sea.parallel(
-            drive.DriveBot.teleop(self.driveObject),
+            drive.DriveBot.teleop(self.driveBot),
             self.shooterInstance.teleopGenerator(),
             self.timer(),
             self.sendLogStatesGenerator())
 
     def autonomous(self):
-        yield from sea.parallel(drive.DriveBot.autonomous(self.driveObject),
+        yield from sea.parallel(drive.DriveBot.autonomous(self.driveBot),
                                 self.timer(),
                                 self.sendLogStatesGenerator())
 

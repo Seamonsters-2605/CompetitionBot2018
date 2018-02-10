@@ -9,8 +9,8 @@ class MyRobot(wpilib.IterativeRobot):
         self.rightBelt = ctre.WPI_TalonSRX(5)
 
     def teleopPeriodic(self):
-        pov = self.joystick.getPOV()
-        if self.joystick.getRawButton(2):
+        pov = self.driverJoystick.getPOV()
+        if self.driverJoystick.getRawButton(2):
             self.leftBelt.set(1)
             self.rightBelt.set(1)
         elif pov == 0:
