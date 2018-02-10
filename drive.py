@@ -163,11 +163,11 @@ class DriveBot(sea.GeneratorBot):
             self.tick = 0"""
 
         # FOR TESTING -- TOGGLE JOYSTICK EXPONENTS
-        if self.driverJoystick.getRawButtonReleased(2):
+        """if self.driverJoystick.getRawButtonReleased(2):
             self.magnitudeExponent += 1
             if self.magnitudeExponent == 3:
                 self.magnitudeExponent = 1
-            print("Magnitude exponent:", self.magnitudeExponent)
+            print("Magnitude exponent:", self.magnitudeExponent)"""
 
         fwd = self._joystickPower(fwd, self.magnitudeExponent, deadzone=0)
         strafe = self._joystickPower(strafe, self.magnitudeExponent, deadzone=0)
