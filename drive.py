@@ -26,7 +26,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.strafeScales = (0.1, 0.2, 0.2)
         self.forwardScales = (0.15, 0.5, 1.0)
-        self.turnScales = (0.05, 0.20, 0.35)
+        self.turnScales = (0.15, 0.20, 0.35)
 
         # Tad's vars
 
@@ -98,7 +98,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.holoDrive.resetTargetPositions()
         self.holoDrive.setDriveMode(ctre.ControlMode.Position)
-        self._setPID(robotconfig.positionModePIDs[1])
+        self._setPID(robotconfig.positionModePIDs[0])
         yield from auto_sequence.autonomous(
             self.holoDrive, self.ahrs, self.vision)
         print("Auto sequence complete!")
