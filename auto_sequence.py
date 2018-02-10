@@ -1,7 +1,6 @@
 import math
 import auto_driving
 import auto_vision
-import auto_shoot
 import seamonsters as sea
 import auto_navx
 import wpilib
