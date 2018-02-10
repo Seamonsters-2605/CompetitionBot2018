@@ -7,23 +7,29 @@ class MyRobot(wpilib.IterativeRobot):
     def robotInit(self):
         self.leftBelt = ctre.WPI_TalonSRX(4)
         self.rightBelt = ctre.WPI_TalonSRX(5)
-        self.joystick = wpilib.Joystick(1)
 
     def teleopPeriodic(self):
-        self.leftBelt.set(self.joystick.getRawAxis(2) * -0.4)
-        self.rightBelt.set(self.joystick.getRawAxis(1) * -0.4)
-
-        if(self.joystick.getRawButton(1)):
+        pov = self.joystick.getPOV()
+        if self.joystick.getRawButton(2):
             self.leftBelt.set(1)
             self.rightBelt.set(1)
-
-        if(self.joystick.getRawButton(2)):
+        elif pov == 0:
             self.leftBelt.set(0.4)
             self.rightBelt.set(0.4)
-
-        if(self.joystick.getRawButton(4)):
+        elif pov == 180:
             self.leftBelt.set(-0.15)
             self.rightBelt.set(-0.15)
+        else:
+            self.leftBelt.set(0)
+            self.rightBelt.set(0)
+
+    def shootGenerator(self):
+        self.leftBelt.set(0.4)
+        self.rightBelt.set(0.4)
+        for i in range(70):
+            yield
+        self.leftBelt.set(0)
+        self.rightBelt.set(0)
 
 if __name__ == "__main__":
     wpilib.run(MyRobot, physics_enabled=True)

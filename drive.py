@@ -38,8 +38,6 @@ class DriveBot(sea.GeneratorBot):
 
         ### END OF CONSTANTS ###
 
-        self.driverJoystick = wpilib.Joystick(0)
-
         fl = ctre.WPI_TalonSRX(2)
         fr = ctre.WPI_TalonSRX(1)
         bl = ctre.WPI_TalonSRX(0)
@@ -143,9 +141,8 @@ class DriveBot(sea.GeneratorBot):
         gear = 2 - round(self.driverJoystick.getRawAxis(2) + 1.0)
 
         fwd = self.driverJoystick.getY()
-        strafe = self.driverJoystick.getX()
-        turn = -self.driverJoystick.getRawAxis(3) \
-               - self.driverJoystick.getRawAxis(4)
+        strafe = self.driverJoystick.getRawAxis(4)
+        turn = -self.driverJoystick.getX() - self.driverJoystick.getRawAxis(3)
 
         # Ramp up
         """if turn == 1:

@@ -7,9 +7,14 @@ import time
 class MainRobot(sea.GeneratorBot):
 
     def robotInit(self):
+        self.driverJoystick = wpilib.Joystick(0)
         self.driveObject = drive.DriveBot.__new__(drive.DriveBot)
+        self.driveObject.driverJoystick = self.driverJoystick
+        self.driveObject.theRobot = self
         drive.DriveBot.robotInit(self.driveObject)
         self.shooterInstance = sea.IterativeRobotInstance(shooter.MyRobot)
+
+        self.shooterInstance.robotObject.joystick = self.driverJoystick
         self.timerLogState = sea.LogState("Time")
 
     def timer(self):
