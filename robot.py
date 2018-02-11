@@ -12,12 +12,12 @@ class MainRobot(sea.GeneratorBot):
         self.driveBot = drive.DriveBot.__new__(drive.DriveBot)
         self.driveBot.theRobot = self
         self.driveBot.driverJoystick = self.driverJoystick
-        drive.DriveBot.robotInit(self.driveBot)
+        self.driveBot.robotInit()
 
-        self.shooterInstance = sea.IterativeRobotInstance(shooter.MyRobot)
-        self.shooterBot = self.shooterInstance.robotObject
+        self.shooterBot = shooter.MyRobot.__new__(shooter.MyRobot)
         self.shooterBot.theRobot = self
         self.shooterBot.driverJoystick = self.driverJoystick
+        self.shooterBot.robotInit()
 
         self.timerLogState = sea.LogState("Time")
 
@@ -35,7 +35,7 @@ class MainRobot(sea.GeneratorBot):
             yield
 
     def test(self):
-        yield from sea.parallel(drive.DriveBot.test(self.driveBot),
+        yield from sea.parallel(self.driveBot.test(),
                                 self.timer(),
                                 self.sendLogStatesGenerator())
 
@@ -46,15 +46,26 @@ class MainRobot(sea.GeneratorBot):
 
     def teleop(self):
         yield from sea.parallel(
-            drive.DriveBot.teleop(self.driveBot),
-            self.shooterInstance.teleopGenerator(),
+            self.driveBot.teleop(),
+            self.wait_mode(),
             self.timer(),
             self.sendLogStatesGenerator())
 
     def autonomous(self):
-        yield from sea.parallel(drive.DriveBot.autonomous(self.driveBot),
+        yield from sea.parallel(self.driveBot.autonomous(),
                                 self.timer(),
                                 self.sendLogStatesGenerator())
+    def wait_shootmode(self):
+        while not self.driverJoystick.getRawButton(9):
+            yield
 
+    def wait_liftmode(self):
+        while not self.driverJoystick.getRawButton(10):
+            yield
+
+    def wait_mode(self):
+        while True:
+            yield from sea.watch(self.shooterBot.teleop(),self.wait_liftmode())
+            yield from self.wait_shootmode()
 if __name__ == "__main__":
     wpilib.run(MainRobot)
