@@ -233,7 +233,7 @@ class DriveBot(sea.GeneratorBot):
 
         avgArea = areaSum / sumTicks
         print("Avg area: " + str(avgArea))
-        #print("Est. Focal Dist: " + str(dist * (avgArea ** 0.5) / (targetRealArea ** 0.5)))
+        print("Est. Focal Dist: " + str(dist * (avgArea ** 0.5) / (targetRealArea ** 0.5)))
 
         estDist = focal * (targetRealArea ** 0.5) / (avgArea ** 0.5)
         estDist2 = oldFocal * targetRealArea / avgArea
