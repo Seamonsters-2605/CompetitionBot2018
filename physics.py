@@ -6,11 +6,49 @@ import configparser
 from pyfrc.physics import drivetrains
 import ctre
 import robotpy_ext.common_drivers.navx
+from networktables import NetworkTables
 
 # make the NavX work with the physics simulator
 def createAnalogGyro():
     return wpilib.AnalogGyro(0)
 robotpy_ext.common_drivers.navx.AHRS.create_spi = createAnalogGyro
+
+class SimulatedTalon:
+
+    def __init__(self, name):
+        if name == '':
+            self.port = None
+        else:
+            self.port = abs(int(name))
+        self.inv = -1 if name.startswith('-') else 1
+        self.lastPosition = 0
+
+    def getSpeed(self, data, maxVel):
+        if self.port == None:
+            return 0.0
+        try:
+            talonData = data['CAN'][self.port]
+            controlMode = talonData['control_mode']
+            if controlMode == ctre.ControlMode.PercentOutput:
+                value = talonData['value']
+                if value < -1:
+                    value = -1.0
+                if value > 1:
+                    value = 1.0
+                return value * self.inv
+            elif controlMode == ctre.ControlMode.Position:
+                targetPos = talonData['pid0_target']
+                diff = targetPos - self.lastPosition
+                self.lastPosition = targetPos
+                talonData['quad_position'] = targetPos # update encoders
+                return diff / maxVel * 5 * self.inv
+            elif controlMode == ctre.ControlMode.Velocity:
+                targetVel = talonData['pid0_target']
+                return targetVel / maxVel * self.inv
+            else:
+                return 0.0
+        except KeyError:
+            return 0.0
 
 class PhysicsEngine:
 
@@ -35,46 +73,33 @@ class PhysicsEngine:
         self.speed = float(physics.get('speed', '6'))
         self.drivetrain = physics.get('drivetrain', 'four')
 
-        flName = physics.get('canfl', '0')
-        self.canFL = abs(int(flName))
-        self.canFLInv = -1 if flName.startswith('-') else 1
+        self.flMotor = SimulatedTalon(physics.get('canfl', '0'))
+        self.frMotor = SimulatedTalon(physics.get('canfr', '0'))
+        self.blMotor = SimulatedTalon(physics.get('canbl', '0'))
+        self.brMotor = SimulatedTalon(physics.get('canbr', '0'))
 
-        frName = physics.get('canfr', '0')
-        self.canFR = abs(int(frName))
-        self.canFRInv = -1 if frName.startswith('-') else 1
+        self.maxVel = int(physics.get('maxvel', '8000'))
 
-        blName = physics.get('canbl', '0')
-        self.canBL = abs(int(blName))
-        self.canBLInv = -1 if blName.startswith('-') else 1
-
-        brName = physics.get('canbr', '0')
-        self.canBR = abs(int(brName))
-        self.canBRInv = -1 if brName.startswith('-') else 1
+        ds = config['ds']
+        location = int(ds.get('location', '1'))
+        team = 1 if (ds.get('team', 'red').lower() == 'blue') else 0
+        self.allianceStation = location - 1 + team * 3
 
     def initialize(self, hal_data):
-        pass
-
-    def _readMotor(self, data, motor):
-        controlMode = data['CAN'][motor]['control_mode']
-        if controlMode != ctre.ControlMode.PercentOutput:
-            return 0.0
-        value = data['CAN'][motor]['value']
-        if value < -1:
-            value = -1.0
-        if value > 1:
-            value = 1.0
-        return value
+        self.visionTable = NetworkTables.getTable('limelight')
+        self.visionTable.putNumber('tv', 1)
+        self.visionTable.putNumber('tx', 0)
+        self.visionTable.putNumber('ty', 0)
+        self.visionTable.putNumber('ts', 0)
+        self.visionTable.putNumber('ta', 5)
+        hal_data['alliance_station'] = self.allianceStation
 
     def update_sim(self, data, time, elapsed):
-        # read CAN data to get motor speeds
-        try:
-            fl = self._readMotor(data, self.canFL) * self.canFLInv
-            fr = self._readMotor(data, self.canFR) * self.canFRInv
-            if not self.drivetrain == "two":
-                bl = self._readMotor(data, self.canBL) * self.canBLInv
-                br = self._readMotor(data, self.canBR) * self.canBRInv
-        except KeyError:
-            return
+
+        fl = self.flMotor.getSpeed(data, self.maxVel)
+        fr = self.frMotor.getSpeed(data, self.maxVel)
+        bl = self.blMotor.getSpeed(data, self.maxVel)
+        br = self.brMotor.getSpeed(data, self.maxVel)
 
         if self.drivetrain == "mecanum":
             vx, vy, vw = drivetrains.mecanum_drivetrain(bl, br, fl, fr,

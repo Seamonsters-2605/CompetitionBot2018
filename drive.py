@@ -26,7 +26,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.strafeScales = (0.1, 0.2, 0.2)
         self.forwardScales = (0.15, 0.5, 1.0)
-        self.turnScales = (0.05, 0.20, 0.35)
+        self.turnScales = (0.15, 0.20, 0.35)
 
         # Tad's vars
 
@@ -37,8 +37,6 @@ class DriveBot(sea.GeneratorBot):
         self.rampUpTime = 1.5
 
         ### END OF CONSTANTS ###
-
-        self.driverJoystick = wpilib.Joystick(0)
 
         fl = ctre.WPI_TalonSRX(2)
         fr = ctre.WPI_TalonSRX(1)
@@ -98,9 +96,9 @@ class DriveBot(sea.GeneratorBot):
 
         self.holoDrive.resetTargetPositions()
         self.holoDrive.setDriveMode(ctre.ControlMode.Position)
-        self._setPID(robotconfig.positionModePIDs[1])
+        self._setPID(robotconfig.positionModePIDs[0])
         yield from auto_sequence.autonomous(
-            self.holoDrive, self.ahrs, self.vision)
+            self.holoDrive, self.ahrs, self.vision, self.theRobot.shooterBot)
         print("Auto sequence complete!")
 
     def teleopPeriodic(self):
@@ -143,9 +141,8 @@ class DriveBot(sea.GeneratorBot):
         gear = 2 - round(self.driverJoystick.getRawAxis(2) + 1.0)
 
         fwd = self.driverJoystick.getY()
-        strafe = self.driverJoystick.getX()
-        turn = -self.driverJoystick.getRawAxis(3) \
-               - self.driverJoystick.getRawAxis(4)
+        strafe = self.driverJoystick.getRawAxis(4)
+        turn = -self.driverJoystick.getX() - self.driverJoystick.getRawAxis(3)
 
         # Ramp up
         """if turn == 1:
@@ -166,11 +163,11 @@ class DriveBot(sea.GeneratorBot):
             self.tick = 0"""
 
         # FOR TESTING -- TOGGLE JOYSTICK EXPONENTS
-        if self.driverJoystick.getRawButtonReleased(2):
+        """if self.driverJoystick.getRawButtonReleased(2):
             self.magnitudeExponent += 1
             if self.magnitudeExponent == 3:
                 self.magnitudeExponent = 1
-            print("Magnitude exponent:", self.magnitudeExponent)
+            print("Magnitude exponent:", self.magnitudeExponent)"""
 
         fwd = self._joystickPower(fwd, self.magnitudeExponent, deadzone=0)
         strafe = self._joystickPower(strafe, self.magnitudeExponent, deadzone=0)

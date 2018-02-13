@@ -7,9 +7,18 @@ import time
 class MainRobot(sea.GeneratorBot):
 
     def robotInit(self):
-        self.driveObject = drive.DriveBot.__new__(drive.DriveBot)
-        drive.DriveBot.robotInit(self.driveObject)
-        self.shooterInstance = sea.IterativeRobotInstance(shooter.MyRobot)
+        self.driverJoystick = wpilib.Joystick(0)
+
+        self.driveBot = drive.DriveBot.__new__(drive.DriveBot)
+        self.driveBot.theRobot = self
+        self.driveBot.driverJoystick = self.driverJoystick
+        self.driveBot.robotInit()
+
+        self.shooterBot = shooter.MyRobot.__new__(shooter.MyRobot)
+        self.shooterBot.theRobot = self
+        self.shooterBot.driverJoystick = self.driverJoystick
+        self.shooterBot.robotInit()
+
         self.timerLogState = sea.LogState("Time")
 
     def timer(self):
@@ -22,11 +31,11 @@ class MainRobot(sea.GeneratorBot):
                 new_t = time.time()
                 timeDiff = new_t - last_t
                 last_t = new_t
-            self.timerLogState.update(timeDiff)
+            self.timerLogState.update('%.3f' % timeDiff)
             yield
 
     def test(self):
-        yield from sea.parallel(drive.DriveBot.test(self.driveObject),
+        yield from sea.parallel(self.driveBot.test(),
                                 self.timer(),
                                 self.sendLogStatesGenerator())
 
@@ -37,15 +46,26 @@ class MainRobot(sea.GeneratorBot):
 
     def teleop(self):
         yield from sea.parallel(
-            drive.DriveBot.teleop(self.driveObject),
-            self.shooterInstance.teleopGenerator(),
+            self.driveBot.teleop(),
+            self.wait_mode(),
             self.timer(),
             self.sendLogStatesGenerator())
 
     def autonomous(self):
-        yield from sea.parallel(drive.DriveBot.autonomous(self.driveObject),
+        yield from sea.parallel(self.driveBot.autonomous(),
                                 self.timer(),
                                 self.sendLogStatesGenerator())
+    def wait_shootmode(self):
+        while not self.driverJoystick.getRawButton(9):
+            yield
 
+    def wait_liftmode(self):
+        while not self.driverJoystick.getRawButton(10):
+            yield
+
+    def wait_mode(self):
+        while True:
+            yield from sea.watch(self.shooterBot.teleop(),self.wait_liftmode())
+            yield from self.wait_shootmode()
 if __name__ == "__main__":
     wpilib.run(MainRobot)

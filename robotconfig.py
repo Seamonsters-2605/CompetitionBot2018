@@ -24,7 +24,7 @@ if theRobot == "Leviathan":
         (1.0, 0.0009, 3.0, 0.0)
     )
 elif theRobot == "2018":
-    ticksPerWheelRotation = 20896
+    ticksPerWheelRotation = 8017
     maxError = ticksPerWheelRotation * 1.5
     maxVelocitySpeedMode = 8000
     maxVelocityPositionMode = maxVelocitySpeedMode / 5
