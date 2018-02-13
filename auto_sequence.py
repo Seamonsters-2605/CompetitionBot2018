@@ -6,70 +6,60 @@ import seamonsters as sea
 import auto_navx
 import wpilib
 
+def right_right(drive):
+    for i in range(50):
+        drive.drive(.3, math.pi / 2, 0)
+        yield
+    drive.drive(0, 0, 0)
+    for i in range(75):
+        drive.drive(-i / 150, 0, 0)
+        yield
+
+def right_left(drive):
+    yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, 1), 230)
+    yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, -0.2), 30)
+
+def mid_right(drive):
+    for i in range(50):
+        drive.drive(.3, math.pi / 2, 0)
+        yield
+    drive.drive(0, 0, 0)
+    for i in range(75):
+        drive.drive(i / 150, 0, 0)
+        yield
+
+def mid_left(drive):
+    yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, -1), 225)
+    yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 0.2), 30)
+
+def left_right(drive):
+    yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, -1), 225)
+    yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 0.2), 30)
+
+def left_left(drive):
+    for i in range(50):
+        drive.drive(.3, math.pi / 2, 0)
+        yield
+    for i in range(75):
+        drive.drive(i / 150, 0, 0)
+        yield
 
 def autoSequence(drive, vision):
+    vision.getEntry('camMode').setNumber(0)
+
     switchPosition = wpilib.DriverStation.getInstance().getGameSpecificMessage()
+    startPosition =  wpilib.DriverStation.getInstance().getLocation()
     if len(switchPosition) == 0:
         print("No game message!")
         return
-    if switchPosition[0] == "L":
-            switchPos1 = 75
-            switchPos2 = 120
-            switchPos3 = 244
-    elif switchPosition[0] == "R":
-            switchPos1 = 244
-            switchPos2 = 75
-            switchPos3 = 75
 
-    else:
-        print("Invalid game message!")
-        return
+    start_l = {"L": left_left, "R": left_right}
+    start_m = {"L": mid_left, "R": mid_right}
+    start_r = {"L": right_left, "R": right_right}
 
-    yield from sea.wait(25)
-    if wpilib.DriverStation.getInstance().getLocation() == 1:
-        if switchPos1 == 75:
-            for i in range(50):
-                drive.drive(.3, math.pi / 2, 0)
-                yield
-            drive.drive(0, 0, 0)
-            for i in range(switchPos1):
-                drive.drive(i/150, 0, 0)
-                yield
-        elif switchPos1 == 244:
-                yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, -1), 225)
-                yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 0.2), 30)
-        drive.drive(0, 0, 0)
-    elif wpilib.DriverStation.getInstance().getLocation() == 2:
-        if switchPos2 == 75:
-            for i in range(50):
-                drive.drive(.3, math.pi / 2, 0)
-                yield
-            drive.drive(0, 0, 0)
-            for i in range(switchPos2):
-                drive.drive(i/150, 0, 0)
-                yield
-        elif switchPos2 == 120:
-                yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, 1), 100)
-                yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 0.2), 30)
-        drive.drive(0, 0, 0)
-    elif wpilib.DriverStation.getInstance().getLocation() == 3:
-        if switchPos3 == 244:
-            yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, 1), 230)
-            yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, -0.2), 30)
-        elif switchPos3 == 75:
-            for i in range(50):
-                drive.drive(.3, math.pi / 2, 0)
-                yield
-            drive.drive(0, 0, 0)
-            for i in range(switchPos3):
-                drive.drive(-i/150, 0, 0)
-                yield
-        drive.drive(0, 0, 0)
-    #yield from sea.wait(25)
-    yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
-    drive.drive(0, 0, 0)
-    yield from sea.watch(auto_vision.strafeAlign(drive, vision, 0),
-                         drive.drive(.3, math.pi/2, 0), sea.wait(70))
+    targets = [start_l, start_m, start_r]
+    drive_func = targets[startPosition - 1][switchPosition[0]]
+    drive_func(drive)
     drive.drive(0, 0, 0)
 
 def autonomous(drive, ahrs, vision):
