@@ -218,7 +218,7 @@ class DriveBot(sea.GeneratorBot):
         for i in range(sumTicks):
             yield
             area = self.vision.getNumber('ta', "It borked")
-            #print("Area: " + str(area))
+            print("Area: " + str(area))
             try:
                 areaSum += area
             except:
@@ -230,11 +230,13 @@ class DriveBot(sea.GeneratorBot):
 
         avgArea = areaSum / sumTicks
         print("Avg area: " + str(avgArea))
-        print("Est. Focal Dist: " + str(dist * (avgArea ** 0.5) / (targetRealArea ** 0.5)))
 
-        estDist = focal * (targetRealArea ** 0.5) / (avgArea ** 0.5)
-        estDist2 = oldFocal * targetRealArea / avgArea
-        print("Est. Dist: " + str(estDist2))
+        estFocal = dist * math.sqrt(avgArea) / math.sqrt(targetRealArea)
+
+        print("Est. Focal Dist: " + str(estFocal))
+
+        estDist = focal * math.sqrt(targetRealArea) / math.sqrt(avgArea)
+        print("Est. Dist: " + str(estDist))
 
     def _setPID(self, pid):
         if pid == self.currentPIDs:
