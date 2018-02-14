@@ -19,21 +19,26 @@ def autoSequence(drive, vision):
         return
 
     if not sea.getSwitch("Activate Switch", False):
-        start_l = {"L": left_left, "R": left_right, "None": left_cross}
-        start_m = {"L": mid_left, "R": mid_right, "None": mid_cross}
-        start_r = {"L": right_left, "R": right_right, "None": right_cross}
+        attempt_switch = switchPosition[0]
+    else:
+        attempt_switch = "cross" + switchPosition[0]
 
-        targets = [start_l, start_m, start_r]
-        drive_func = targets[startPosition - 1][switchPosition[0]]
-        drive_func(drive)
+    start_l = {"L": left_left, "R": left_right, "crossL":left_cross, "crossR":left_cross}
+    start_m = {"L": mid_left, "R": mid_right, "crossR": mid_cross_right,"crossL": mid_cross_left}
+    start_r = {"L": right_left, "R": right_right, "crossL":right_cross, "crossR": right_cross}
 
-        #align with vision
-        yield from sea.wait(25)
-        yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
-        drive.drive(0, 0, 0)
-        yield from sea.watch(auto_vision.strafeAlign(drive, vision, 0),
-                             auto_driving.driveContinuous(drive, .3, math.pi / 2, 0), sea.wait(90))
-        drive.drive(0, 0, 0)
+    targets = [start_l, start_m, start_r]
+    drive_func = targets[startPosition - 1][attempt_switch]
+    drive_func(drive)
+
+    #align with vision
+    yield from sea.wait(25)
+    yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
+    drive.drive(0, 0, 0)
+    yield from sea.watch(auto_vision.strafeAlign(drive, vision, 0),
+                         auto_driving.driveContinuous(drive, .3, math.pi / 2, 0), sea.wait(90))
+    drive.drive(0, 0, 0)
+
 
 def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)
