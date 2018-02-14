@@ -4,100 +4,30 @@ import auto_vision
 import seamonsters as sea
 import auto_navx
 import wpilib
+from auto_strategies import *
+
+
 
 def autoSequence(drive, vision):
-    switchPosition = wpilib.DriverStation.getInstance().getGameSpecificMessage()
-    if not sea.getSwitch("Activate Switch", False):
-        if wpilib.DriverStation.getInstance().getLocation() == 1:
-            for i in range(200):
-                drive.drive(.3, math.pi/2, 0)
-                yield
-            drive.drive(0, 0, 0)
-        elif wpilib.DriverStation.getInstance().getLocation() == 2:
-            for i in range(60):
-                drive.drive(.3, math.pi/2, 0)
-                yield
-            drive.drive(0, 0, 0)
-            if switchPosition[0] == "L":
-                for i in range(150):
-                    drive.drive(i/300, 0, 0)
-                    yield
-                drive.drive(0, 0, 0)
-            elif switchPosition[0] == "R":
-                for i in range(200):
-                    drive.drive(-i/400, 0, 0)
-                    yield
-                drive.drive(0, 0, 0)
-            for i in range(150):
-                drive.drive(.3, math.pi / 2, 0)
-                yield
-            drive.drive(0, 0, 0)
-        elif wpilib.DriverStation.getInstance().getLocation() == 3:
-            for i in range(200):
-                drive.drive(.3, math.pi/2, 0)
-                yield
-            drive.drive(0, 0, 0)
-    elif sea.getSwitch("Activate Switch", False):
-        if len(switchPosition) == 0:
-            print("No game message!")
-            return
-        if switchPosition[0] == "L":
-                switchPos1 = 75
-                switchPos2 = 120
-                switchPos3 = 244
-        elif switchPosition[0] == "R":
-                switchPos1 = 244
-                switchPos2 = 75
-                switchPos3 = 75
-        else:
-            print("Invalid game message!")
-            return
 
-        yield from sea.wait(25)
-        if wpilib.DriverStation.getInstance().getLocation() == 1:
-            if switchPosition[0] == "L":
-                for i in range(60):
-                    drive.drive(.3, math.pi / 2, 0)
-                    yield
-                drive.drive(0, 0, 0)
-                for i in range(switchPos1):
-                    drive.drive(.3, 0, 0)
-                    yield
-                drive.drive(0, 0, 0)
-            if switchPosition[0] == "R":
-                yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, -1), 225)
-                yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 0.2), 30)
-        elif wpilib.DriverStation.getInstance().getLocation() == 2:
-            if switchPos2 == 75:
-                for i in range(60):
-                    drive.drive(.3, math.pi / 2, 0)
-                    yield
-                drive.drive(0, 0, 0)
-                for i in range(switchPos2):
-                    drive.drive(i/150, 0, 0)
-                    yield
-            elif switchPos2 == 120:
-                for i in range(60):
-                    drive.drive(.3, math.pi / 2, 0)
-                    yield
-                drive.drive(0, 0, 0)
-                for i in range(switchPos2):
-                    drive.drive(-i/240, 0, 0)
-                    yield
-            drive.drive(0, 0, 0)
-        elif wpilib.DriverStation.getInstance().getLocation() == 3:
-            if switchPosition[0] == "L":
-                yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1.6, 1), 230)
-                yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, -0.2), 30)
-            if switchPosition[0] == "R":
-                for i in range(60):
-                    drive.drive(.3, math.pi / 2, 0)
-                    yield
-                drive.drive(0, 0, 0)
-                for i in range(switchPos3):
-                    drive.drive(-.3, 0, 0)
-                    yield
-                drive.drive(0, 0, 0)
+    vision.getEntry('camMode').setNumber(0)
+
+    switchPosition = wpilib.DriverStation.getInstance().getGameSpecificMessage()
+    startPosition =  wpilib.DriverStation.getInstance().getLocation()
+    if len(switchPosition) == 0:
+        print("No game message!")
+        return
+
+    if not sea.getSwitch("Activate Switch", False):
+        start_l = {"L": left_left, "R": left_right, "None": left_cross}
+        start_m = {"L": mid_left, "R": mid_right, "None": mid_cross}
+        start_r = {"L": right_left, "R": right_right, "None": right_cross}
+
+        targets = [start_l, start_m, start_r]
+        drive_func = targets[startPosition - 1][switchPosition[0]]
+        drive_func(drive)
+
+        #align with vision
         yield from sea.wait(25)
         yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
         drive.drive(0, 0, 0)
