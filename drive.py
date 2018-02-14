@@ -82,6 +82,10 @@ class DriveBot(sea.GeneratorBot):
         #for talon in self.talons:
         #    talon.setSelectedSensorPosition(0, 0, 10)
 
+        sea.setActiveCameraURL('http://10.26.5.6:5800')
+        #sea.setActiveCameraURL('http://10.26.5.2:1187/stream.mjpg')
+        self.vision.getEntry('camMode').setNumber(1)
+
         self.holoDrive.resetTargetPositions()
 
         self.tick = 0
@@ -93,6 +97,9 @@ class DriveBot(sea.GeneratorBot):
         print("Starting autonomous!")
         #for talon in self.talons:
         #    talon.setSelectedSensorPosition(0, 0, 10)
+
+        sea.setActiveCameraURL('')
+        self.vision.getEntry('camMode').setNumber(0)
 
         self.holoDrive.resetTargetPositions()
         self.holoDrive.setDriveMode(ctre.ControlMode.Position)
