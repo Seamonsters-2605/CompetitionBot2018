@@ -44,6 +44,9 @@ class DriveBot(sea.GeneratorBot):
         br = ctre.WPI_TalonSRX(3)
         self.talons = [fl, fr, bl, br]
 
+        self.mode = True
+
+
         for talon in self.talons:
             talon.configSelectedFeedbackSensor(
                 ctre.FeedbackDevice.QuadEncoder, 0, 0)
@@ -128,6 +131,7 @@ class DriveBot(sea.GeneratorBot):
                 speedLogText += str(talon.getSelectedSensorVelocity(0)) + " "
             self.speedLog.update(speedLogText)
 
+
         if sea.getSwitch("Field oriented drive", False):
             self.drive = self.fieldDrive
         else:
@@ -206,7 +210,16 @@ class DriveBot(sea.GeneratorBot):
             for talon in self.talons:
                 talon.set(ctre.ControlMode.Velocity, 0)
         elif not sea.getSwitch("DON'T DRIVE", False):
-            self.drive.drive(magnitude, direction, turn)
+            if self.mode == False:
+                sea.setActiveCameraURL('http://10.26.5.2:1187/stream.mjpg')
+                self.drive.drive(magnitude, direction + math.pi, turn)
+            else:
+                sea.setActiveCameraURL('http://10.26.5.6:5800')
+                self.drive.drive(magnitude, direction, turn)
+
+        if self.driverJoystick.getRawButtonPressed(4):
+            self.mode = not self.mode
+
 
     def test(self):
         for talon in self.talons:
@@ -214,7 +227,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.holoDrive.resetTargetPositions()
 
-        targetRealArea = 64
+        targetRealArea = 122.4
         dist = 120
         focal8 = 11.538400625742273
         focal10 = 11.056585532507528
