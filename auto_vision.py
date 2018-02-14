@@ -28,3 +28,7 @@ def strafeAlign(drive,vision,visionOffset):
             yield True
         else:
             yield False
+
+def driveToTargetDistance(drive, vision):
+
+    help = 0

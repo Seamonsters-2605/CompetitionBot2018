@@ -215,34 +215,40 @@ class DriveBot(sea.GeneratorBot):
         self.holoDrive.resetTargetPositions()
 
         targetRealArea = 64
-        dist = 96
-        oldFocal = 1.35424
-        focal = 11.40137
+        dist = 120
+        focal8 = 11.538400625742273
+        focal10 = 11.056585532507528
 
-        areaSum = 0
-        sumTicks = 200
+        avgAreas = [0]*5
 
-        for i in range(sumTicks):
-            yield
-            area = self.vision.getNumber('ta', "It borked")
-            print("Area: " + str(area))
-            try:
-                areaSum += area
-            except:
-                sumTicks -= 1
+        borkCount = 0
 
+        for n in range(5):
+            areaSum = 0
+            sumTicks = 200
+            for i in range(sumTicks):
+                yield
+                area = self.vision.getNumber('ta', "It borked")
+                try:
+                    areaSum += area
+                except:
+                    sumTicks -= 1
 
-            self.drive = self.fieldDrive
-            self.drive.drive(0, 0, 0)
+                self.drive = self.fieldDrive
+                self.drive.drive(0, 0, 0)
+            avgAreas[n] = areaSum / sumTicks
+            print("Avg area " + str(n) + ": " + str(areaSum / sumTicks))
 
-        avgArea = areaSum / sumTicks
-        print("Avg area: " + str(avgArea))
+        overallAvg = 0
+        for i in avgAreas:
+            overallAvg += i
+        overallAvg *= 1/5
 
-        estFocal = dist * math.sqrt(avgArea) / math.sqrt(targetRealArea)
+        estFocal = dist * math.sqrt(overallAvg) / math.sqrt(targetRealArea)
 
         print("Est. Focal Dist: " + str(estFocal))
 
-        estDist = focal * math.sqrt(targetRealArea) / math.sqrt(avgArea)
+        estDist = focal8 * math.sqrt(targetRealArea) / math.sqrt(overallAvg)
         print("Est. Dist: " + str(estDist))
 
     def _setPID(self, pid):
