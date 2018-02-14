@@ -20,6 +20,10 @@ def getSwitch(name, defaultValue):
         return defaultValue
     return switchValues[switchNames.index(name)]
 
+def setActiveCameraURL(url):
+    table = networktables.NetworkTables.getTable('dashboard')
+    table.putString('cam', url)
+
 class DashboardCommandReader:
 
     def __init__(self):
