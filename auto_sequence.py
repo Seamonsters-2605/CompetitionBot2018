@@ -55,7 +55,7 @@ def autoSequence(drive, vision, angleHolder):
         yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
         drive.drive(0, 0, 0)
         yield from sea.watch(auto_vision.strafeAlign(drive, vision, 0),
-                             auto_driving.driveContinuous(drive, .3, math.pi / 2, 0), sea.wait(90))
+                             auto_driving.driveContinuous(drive, .3, math.pi / 2, 0), sea.wait(65))
         drive.drive(0, 0, 0)
 
 def autonomous(drive, ahrs, vision, shooter):
