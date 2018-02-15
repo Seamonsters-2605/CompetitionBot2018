@@ -11,21 +11,21 @@ def autoSequence(drive, vision, angleHolder):
     switchPosition = wpilib.DriverStation.getInstance().getGameSpecificMessage()
     if not sea.getSwitch("Activate Switch", True):
         if wpilib.DriverStation.getInstance().getLocation() == 1:
-            yield from auto_strategies.left_cross(drive)
+            yield from auto_strategies.left_cross(drive, angleHolder)
         elif wpilib.DriverStation.getInstance().getLocation() == 2:
             yield from auto_driving.driveDistance(drive, 50, .3)
             yield
             drive.drive(0, 0, 0)
             if switchPosition[0] == "L":
-                yield from auto_strategies.mid_cross_left(drive)
+                yield from auto_strategies.mid_cross_left(drive, angleHolder)
             elif switchPosition[0] == "R":
-                yield from auto_strategies.mid_cross_right(drive)
+                yield from auto_strategies.mid_cross_right(drive, angleHolder)
             for i in range(150):
                 drive.drive(.3, math.pi / 2, 0)
                 yield
             drive.drive(0, 0, 0)
         elif wpilib.DriverStation.getInstance().getLocation() == 3:
-            yield from auto_strategies.right_cross(drive)
+            yield from auto_strategies.right_cross(drive, angleHolder)
     else:
         if len(switchPosition) == 0:
             print("No game message!")
