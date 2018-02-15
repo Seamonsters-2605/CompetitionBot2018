@@ -15,12 +15,12 @@ def left_left(drive, angleHolder):
     drive.drive(0, 0, 0)
 
 def left_right(drive, angleHolder):
-    #yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, -1.2), 50)
+    yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, -1.2), 50)
     yield from auto_driving.driveDistance(drive, 25, .3)
     angleHolder[0] = 90
     yield from auto_driving.driveDistance(drive, 120, .3)
     angleHolder[0] = 0
-    #yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 1.2), 50)
+    yield from sea.timeLimit(auto_driving.driveContinuous(drive, .3, 1, 1.2), 50)
 
 def left_cross(drive, angleHolder):
     yield from auto_driving.driveDistance(drive, 120, .3)

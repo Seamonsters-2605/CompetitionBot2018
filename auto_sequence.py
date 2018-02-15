@@ -8,7 +8,7 @@ from auto_strategies import *
 
 
 
-def autoSequence(drive, vision, autoHolder):
+def autoSequence(drive, vision, angleHolder):
 
     vision.getEntry('camMode').setNumber(0)
 
@@ -18,10 +18,10 @@ def autoSequence(drive, vision, autoHolder):
         print("No game message!")
         return
 
-    if not sea.getSwitch("Activate Switch", False):
-        attempt_switch = switchPosition[0]
-    else:
+    if not sea.getSwitch("Activate Switch", defaultValue = False):
         attempt_switch = "cross" + switchPosition[0]
+    else:
+        attempt_switch = switchPosition[0]
 
     start_l = {"L": left_left, "R": left_right, "crossL":left_cross, "crossR":left_cross}
     start_m = {"L": mid_left, "R": mid_right, "crossR": mid_cross_right,"crossL": mid_cross_left}
@@ -29,7 +29,7 @@ def autoSequence(drive, vision, autoHolder):
 
     targets = [start_l, start_m, start_r]
     drive_func = targets[startPosition - 1][attempt_switch]
-    drive_func(drive, autoHolder)
+    drive_func(drive, angleHolder)
 
     #align with vision
     yield from sea.wait(25)
@@ -41,9 +41,10 @@ def autoSequence(drive, vision, autoHolder):
 
 
 def autonomous(drive, ahrs, vision, shooter):
+    angleHolder = [0.0]
     multiDrive = sea.MultiDrive(drive)
-    yield from sea.parallel(auto_navx.rotation(multiDrive, ahrs),
-                            autoSequence(multiDrive, vision), auto_driving.updateMultiDrive(multiDrive))
+    yield from sea.parallel(auto_navx.rotation(multiDrive, ahrs, angleHolder),
+                            autoSequence(multiDrive, vision, angleHolder), auto_driving.updateMultiDrive(multiDrive))
 
 
 def findTarget(vision, initialWait, timeLimit):
