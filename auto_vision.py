@@ -29,6 +29,23 @@ def strafeAlign(drive,vision,visionOffset):
         else:
             yield False
 
+# half-assed and untested
 def driveToTargetDistance(drive, vision):
 
-    help = 0
+    help = "plz"
+
+    focal = 945 # made up
+    targetDist = 36
+
+    while True:
+        yield
+        yOffset = vision.getNumber('ty', "send halp")
+        inaccurateEstDist = focal / yOffset
+
+        if inaccurateEstDist < targetDist:
+            move = 0
+            # TODO stop
+        else:
+            speed = (inaccurateEstDist - targetDist) / 120
+
+
