@@ -8,7 +8,7 @@ from auto_strategies import *
 
 
 
-def autoSequence(drive, vision):
+def autoSequence(drive, vision, autoHolder):
 
     vision.getEntry('camMode').setNumber(0)
 
@@ -29,7 +29,7 @@ def autoSequence(drive, vision):
 
     targets = [start_l, start_m, start_r]
     drive_func = targets[startPosition - 1][attempt_switch]
-    drive_func(drive)
+    drive_func(drive, autoHolder)
 
     #align with vision
     yield from sea.wait(25)
