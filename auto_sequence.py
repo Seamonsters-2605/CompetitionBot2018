@@ -32,7 +32,7 @@ def autoSequence(drive, vision, angleHolder):
             return
 
 
-        yield from sea.wait(5)
+        yield from sea.wait(25)
         if wpilib.DriverStation.getInstance().getLocation() == 1:
             if switchPosition[0] == "L":
                 yield from auto_strategies.left_left(drive, angleHolder)
@@ -51,7 +51,7 @@ def autoSequence(drive, vision, angleHolder):
             if switchPosition[0] == "R":
                 yield from auto_strategies.right_right(drive, angleHolder)
 
-        yield from sea.wait(25)
+        yield from sea.wait(5)
         yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
         drive.drive(0, 0, 0)
         yield from sea.watch(auto_vision.strafeAlign(drive, vision, 0),
