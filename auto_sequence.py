@@ -17,9 +17,9 @@ def autoSequence(drive, vision, angleHolder):
             yield
             drive.drive(0, 0, 0)
             if switchPosition[0] == "L":
-                yield from auto_strategies.mid_cross_left(drive)
-            elif switchPosition[0] == "R":
                 yield from auto_strategies.mid_cross_right(drive)
+            elif switchPosition[0] == "R":
+                yield from auto_strategies.mid_cross_left(drive)
             for i in range(150):
                 drive.drive(.3, math.pi / 2, 0)
                 yield
