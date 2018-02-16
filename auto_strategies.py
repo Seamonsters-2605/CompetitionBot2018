@@ -33,12 +33,15 @@ def left_cross(drive, angleHolder):
 
 def mid_left(drive, angleHolder):
     print("running mid_left")
-    yield from auto_driving.driveDistance(drive, 50, .3)
-    yield
+    yield from auto_driving.driveDistance(drive, 58, .3)
+    angleHolder[0] = -90
+    yield from sea.wait(30)
+    yield from auto_driving.driveDistance(drive,65,.3)
+    angleHolder[0] = 0
     drive.drive(0, 0, 0)
-    for i in range(90):
+    '''for i in range(90):
         drive.drive(-i / 150, 0, 0)
-        yield
+        yield'''
 
 def mid_right(drive, angleHolder):
     print("running mid_right")
@@ -75,7 +78,7 @@ def right_left(drive, angleHolder):
 
 def right_right(drive, angleHolder):
     print("running right_right")
-    yield from auto_driving.driveDistance(drive, 55, .3)
+    yield from auto_driving.driveDistance(drive, 57, .3)
     angleHolder[0] = -90
     yield from sea.wait(30)
     yield from auto_driving.driveDistance(drive,45,.3)
