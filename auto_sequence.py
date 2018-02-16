@@ -9,7 +9,7 @@ import auto_strategies
 def autoSequence(drive, vision, angleHolder):
     angleHolder[0] = 0
     switchPosition = wpilib.DriverStation.getInstance().getGameSpecificMessage()
-    if not sea.getSwitch("Activate Switch", True):
+    if not sea.getSwitch("Activate Switch", False):
         if wpilib.DriverStation.getInstance().getLocation() == 1:
             yield from auto_strategies.left_cross(drive, angleHolder)
         elif wpilib.DriverStation.getInstance().getLocation() == 2:
@@ -17,9 +17,9 @@ def autoSequence(drive, vision, angleHolder):
             yield
             drive.drive(0, 0, 0)
             if switchPosition[0] == "L":
-                yield from auto_strategies.mid_cross_left(drive, angleHolder)
-            elif switchPosition[0] == "R":
                 yield from auto_strategies.mid_cross_right(drive, angleHolder)
+            elif switchPosition[0] == "R":
+                yield from auto_strategies.mid_cross_left(drive, angleHolder)
             for i in range(150):
                 drive.drive(.3, math.pi / 2, 0)
                 yield
@@ -55,7 +55,7 @@ def autoSequence(drive, vision, angleHolder):
         yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
         drive.drive(0, 0, 0)
         yield from sea.watch(auto_vision.strafeAlign(drive, vision, 0),
-                             auto_driving.driveDistance(drive,45,.3))
+                             auto_driving.driveDistance(drive, 40, .3))
 
         drive.drive(0, 0, 0)
 
