@@ -8,20 +8,22 @@ import wpilib
 def left_left(drive, angleHolder):
     print("running left_left")
     yield from auto_driving.driveDistance(drive, 50, .3)
-    yield
-    drive.drive(0, 0, 0)
-    for i in range(75):
+    angleHolder[0] = 90
+    yield from auto_driving.driveDistance(drive,10,.3)
+    angleHolder[0] = 0
+    #yield from auto_driving.driveDistance()
+    '''for i in range(75):
         drive.drive(.3, 0, 0)
-        yield
+        yield'''
     drive.drive(0, 0, 0)
 
 def left_right(drive, angleHolder):
     print("running left_right")
     yield from auto_driving.driveDistance(drive, 25, .3)
     angleHolder[0] = 90
-    yield from auto_driving.driveDistance(drive, 125, .3)
+    yield from auto_driving.driveDistance(drive, 115, .3)
     angleHolder[0] = 0
-    yield from auto_driving.driveDistance(drive,60,.3)
+    yield from auto_driving.driveDistance(drive,70,.3)
     yield
     drive.drive(0,0,0)
 
@@ -46,7 +48,7 @@ def mid_right(drive, angleHolder):
     angleHolder[0] = 0
     yield
     drive.drive(0, 0, 0)
-    
+
 def mid_cross_right(drive, angleHolder):
     print("running mid_cross_right")
     angleHolder[0] = 90
