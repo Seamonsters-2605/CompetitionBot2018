@@ -9,9 +9,9 @@ if not "%1"=="" (
 
 echo Deploying robot %file%
 
-py "%file%" deploy --builtin --nc --nonstandard && (
+py "%file%" deploy --builtin --nonstandard && (
 	pause
 ) || (
-	python "%file%" deploy --builtin --nc --nonstandard
+	python "%file%" deploy --builtin --nonstandard
 	pause
 )
