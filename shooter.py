@@ -20,11 +20,11 @@ class MyRobot(sea.GeneratorBot):
                     self.leftBelt.set(1)
                     self.rightBelt.set(1)
                 elif pov == 0:
-                    self.leftBelt.set(0.4)
-                    self.rightBelt.set(0.4)
+                    self.leftBelt.set(0.6)
+                    self.rightBelt.set(0.6)
                 elif pov == 180:
-                    self.leftBelt.set(-0.15)
-                    self.rightBelt.set(-0.15)
+                    self.leftBelt.set(-0.3)
+                    self.rightBelt.set(-0.3)
                 else:
                     self.leftBelt.set(0)
                     self.rightBelt.set(0)
@@ -33,8 +33,8 @@ class MyRobot(sea.GeneratorBot):
             self.leftBelt.set(0)
             self.rightBelt.set(0)
     def shootGenerator(self):
-        self.leftBelt.set(0.4)
-        self.rightBelt.set(0.4)
+        self.leftBelt.set(0.6)
+        self.rightBelt.set(0.6)
         for i in range(70):
             yield
         self.leftBelt.set(0)
