@@ -35,7 +35,6 @@ def autoSequence(drive, vision, angleHolder):
                 print("No game message!")
                 return
 
-
             yield from sea.wait(25)
             if wpilib.DriverStation.getInstance().getLocation() == 1:
                 if switchPosition[0] == "L":
@@ -59,14 +58,15 @@ def autoSequence(drive, vision, angleHolder):
         yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
         drive.drive(0, 0, 0)
         yield from sea.watch(auto_vision.strafeAlign(drive, vision, 0),
-                             auto_driving.driveDistance(drive, 40, .3))
+                                auto_driving.driveDistance(drive, 40, .5))
     elif switchExchange == True:
         print('Heading to exchange')
         if wpilib.DriverStation.getInstance().getLocation() == 1:
             yield from auto_exchange.leftEx(drive,angleHolder)
         elif wpilib.DriverStation.getInstance().getLocation() == 2:
             yield from auto_exchange.midEx(drive,angleHolder)
-    #drive.drive(0, 0, 0)
+    drive.drive(0, 0, 0)
+
 
 def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)
