@@ -33,10 +33,10 @@ def left_cross(drive, rotationTracker):
 
 def mid_left(drive, rotationTracker):
     print("running mid_left")
-    yield from auto_driving.driveDistance(drive, 42, .33)
+    yield from auto_driving.driveDistance(drive, 35, .33)
     rotationTracker.setTargetOffsetRotation(-90)
     #yield from sea.wait(30)
-    yield from auto_driving.driveDistance(drive,90,.33)
+    yield from auto_driving.driveDistance(drive,100,.33)
     rotationTracker.setTargetOffsetRotation(0)
     yield
     drive.drive(0, 0, 0)
@@ -68,9 +68,9 @@ def mid_cross_left(drive, rotationTracker):
 
 def right_left(drive, rotationTracker):
     print("running right_left")
-    yield from auto_driving.driveDistance(drive, 40, .33)
+    yield from auto_driving.driveDistance(drive, 35, .33)
     rotationTracker.setTargetOffsetRotation(-90)
-    yield from auto_driving.driveDistance(drive, 200, .33)
+    yield from auto_driving.driveDistance(drive, 200, .45)
     rotationTracker.setTargetOffsetRotation(0)
 
 def right_right(drive, rotationTracker):

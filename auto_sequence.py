@@ -6,7 +6,7 @@ import auto_navx
 import wpilib
 import auto_strategies
 
-def autoSequence(drive, vision, rotationTracker):
+def autoSequence(drive, vision, rotationTracker, shooter):
     switchPosition = wpilib.DriverStation.getInstance().getGameSpecificMessage()
     if not sea.getSwitch("Activate Switch", False):
         if wpilib.DriverStation.getInstance().getLocation() == 1:
@@ -54,8 +54,9 @@ def autoSequence(drive, vision, rotationTracker):
         yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
         yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0),20)
         drive.drive(0, 0, 0)
-        yield from sea.watch(auto_driving.driveDistance(drive, 40, .5))
+        yield from sea.watch(auto_driving.driveDistance(drive, 53, .5))
         drive.drive(0, 0, 0)
+        yield from shooter.shootGenerator()
 
 def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)
@@ -63,7 +64,7 @@ def autonomous(drive, ahrs, vision, shooter):
     rotationTracker.resetOrigin()
     rotationTracker.setTargetOffsetRotation(0)
     yield from sea.parallel(
-        rotationTracker.rotateToTarget(),autoSequence(multiDrive, vision, rotationTracker),auto_driving.updateMultiDrive(multiDrive))
+        rotationTracker.rotateToTarget(),autoSequence(multiDrive, vision, rotationTracker, shooter),auto_driving.updateMultiDrive(multiDrive))
 
 
 def findTarget(vision, initialWait, timeLimit):
