@@ -132,6 +132,16 @@
         { "name":"Blue Side Marker",
           "color": "blue",
           "points":[ [53.58,2.583],[53.997,2.583],[53.997,24.66],[53.58,24.66]]
+        },
+        {
+          "name":"Left Vision Target",
+          "color": "green",
+          "points":[ [11.5, 8.5], [12.5, 8.5], [12.5, 9.5], [11.5, 9.5]]
+        },
+        {
+          "name":"Right Vision Target",
+          "color": "green",
+          "points":[ [11.5, 17.5], [12.5, 17.5], [12.5, 18.5], [11.5, 18.5]]
         }
         ]
 
