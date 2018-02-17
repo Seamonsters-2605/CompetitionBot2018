@@ -38,6 +38,11 @@ class DriveBot(sea.GeneratorBot):
 
         ### END OF CONSTANTS ###
 
+        try:
+            self.driverJoystick
+        except AttributeError:
+            self.driverJoystick = wpilib.Joystick(0)
+
         fl = ctre.WPI_TalonSRX(2)
         fr = ctre.WPI_TalonSRX(1)
         bl = ctre.WPI_TalonSRX(0)

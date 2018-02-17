@@ -2,6 +2,7 @@ import wpilib
 import seamonsters as sea
 import drive
 import shooter
+import lifter
 import time
 
 class MainRobot(sea.GeneratorBot):
@@ -18,6 +19,11 @@ class MainRobot(sea.GeneratorBot):
         self.shooterBot.theRobot = self
         self.shooterBot.driverJoystick = self.driverJoystick
         self.shooterBot.robotInit()
+
+        self.lifterBot = lifter.Lifter.__new__(lifter.Lifter)
+        self.lifterBot.theRobot = self
+        self.lifterBot.driverJoystick = self.driverJoystick
+        self.lifterBot.robotInit()
 
         self.timerLogState = sea.LogState("Time")
 
@@ -56,16 +62,16 @@ class MainRobot(sea.GeneratorBot):
                                 self.timer(),
                                 self.sendLogStatesGenerator())
     def wait_shootmode(self):
-        while not self.driverJoystick.getRawButton(9):
+        while not self.driverJoystick.getRawButton(11):
             yield
 
     def wait_liftmode(self):
-        while not self.driverJoystick.getRawButton(10):
+        while not self.driverJoystick.getRawButton(12):
             yield
 
     def wait_mode(self):
         while True:
             yield from sea.watch(self.shooterBot.teleop(),self.wait_liftmode())
-            yield from self.wait_shootmode()
+            yield from sea.watch(self.lifterBot.teleop(),self.wait_shootmode())
 if __name__ == "__main__":
     wpilib.run(MainRobot)

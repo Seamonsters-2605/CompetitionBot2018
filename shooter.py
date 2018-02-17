@@ -7,6 +7,10 @@ class MyRobot(sea.GeneratorBot):
     def robotInit(self):
         self.leftBelt = ctre.WPI_TalonSRX(4)
         self.rightBelt = ctre.WPI_TalonSRX(5)
+        try:
+            self.driverJoystick
+        except AttributeError:
+            self.driverJoystick = wpilib.Joystick(0)
 
     def teleop(self):
         try:

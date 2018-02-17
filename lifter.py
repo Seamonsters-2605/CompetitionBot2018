@@ -1,56 +1,59 @@
 import wpilib
 import ctre
+import seamonsters as sea
 
 WING_SPEED = .75
 CURRENT_LIMIT = 200
 
-class Lifter(wpilib.IterativeRobot):
+class Lifter(sea.GeneratorBot):
 
     def robotInit(self):
         self.leftWing = ctre.WPI_TalonSRX(6)
         self.rightWing = ctre.WPI_TalonSRX(7)
-        self.joystick = wpilib.Joystick(0)
+        try:
+            self.driverJoystick
+        except AttributeError:
+            self.driverJoystick = wpilib.Joystick(0)
 
-    def teleopInit(self):        
+    def teleop(self):
         self.leftWingRunning = True
         self.rightWingRunning = True
-
-    def teleopPeriodic(self):
-        if self.leftWingRunning:
-            current = self.leftWing.getOutputCurrent()
-            print(current)
-            if current > CURRENT_LIMIT:
-                self.leftWing.set(0)
-                self.leftWingRunning = False
-            elif self.joystick.getRawButton(5):
-                self.leftWing.set(-WING_SPEED)
-            elif self.joystick.getRawButton(9):
-                self.leftWing.set(WING_SPEED)
+        while True:
+            if self.leftWingRunning:
+                current = self.leftWing.getOutputCurrent()
+                print(current)
+                if current > CURRENT_LIMIT:
+                    self.leftWing.set(0)
+                    self.leftWingRunning = False
+                elif self.driverJoystick.getRawButton(5):
+                    self.leftWing.set(-WING_SPEED)
+                elif self.driverJoystick.getRawButton(9):
+                    self.leftWing.set(WING_SPEED)
+                else:
+                    self.leftWing.set(0)
             else:
                 self.leftWing.set(0)
-        else:
-            self.leftWing.set(0)
-            print("no left wing!!!")
+                print("no left wing!!!")
 
-        if self.rightWingRunning:
-            current = self.rightWing.getOutputCurrent()
-            print(current)
-            if current > CURRENT_LIMIT:
-                self.rightWing.set(0)
-                self.rightWingRunning = False
-            elif self.joystick.getRawButton(4):
-                self.rightWing.set(-WING_SPEED)
-            elif self.joystick.getRawButton(3):
-                self.rightWing.set(WING_SPEED)
+            if self.rightWingRunning:
+                current = self.rightWing.getOutputCurrent()
+                print(current)
+                if current > CURRENT_LIMIT:
+                    self.rightWing.set(0)
+                    self.rightWingRunning = False
+                elif self.driverJoystick.getRawButton(4):
+                    self.rightWing.set(-WING_SPEED)
+                elif self.driverJoystick.getRawButton(3):
+                    self.rightWing.set(WING_SPEED)
+                else:
+                    self.rightWing.set(0)
             else:
                 self.rightWing.set(0)
-        else:
-            self.rightWing.set(0)
-            print("no right wing!!!")
+                print("no right wing!!!")
 
-        if self.joystick.getRawButton(8):
-            self.leftWingRunning = True
-            self.rightWingRunning = True
+            if self.driverJoystick.getRawButton(8):
+                self.leftWingRunning = True
+                self.rightWingRunning = True
 
 
 if __name__ == "__main__":
