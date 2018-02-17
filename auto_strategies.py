@@ -19,11 +19,11 @@ def left_left(drive, angleHolder):
 
 def left_right(drive, angleHolder):
     print("running left_right")
-    yield from auto_driving.driveDistance(drive, 25, .33)
+    yield from auto_driving.driveDistance(drive, 10,.33)
     angleHolder[0] = 90
-    yield from auto_driving.driveDistance(drive, 115, .33)
+    yield from auto_driving.driveDistance(drive, 100, .33)
     angleHolder[0] = 0
-    #yield from auto_driving.driveDistance(drive,70,.33)
+    yield from auto_driving.driveDistance(drive,60,.33)
     yield
     drive.drive(0,0,0)
 
