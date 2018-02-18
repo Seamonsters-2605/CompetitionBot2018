@@ -29,6 +29,12 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         drive.drive(0, 0, 0)
         yield from shooter.shootGenerator()
 
+    if strategy == auto_strategies.STRAT_SWITCHSIDE:
+        yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+        yield from auto_driving.driveDistance(drive, 25, .5)
+        drive.drive(0, 0, 0)
+        yield from shooter.shootGenerator()
+
 def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)
     rotationTracker = auto_navx.RotationTracker(multiDrive, ahrs)
