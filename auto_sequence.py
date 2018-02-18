@@ -13,9 +13,14 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         yield
         return
     switchPosition = gameMessage[0]
-    strategy = auto_strategies.STRAT_SWITCHFRONT \
-        if sea.getSwitch("Activate Switch", True) \
-        else auto_strategies.STRAT_CROSSLINE
+
+    strategy = None
+    for strat in auto_strategies.STRATEGIES:
+        switchName = switchPosition + " " + strat
+        if sea.getSwitch(switchName, False):
+            strategy = strat
+    if strategy is None:
+        strategy = auto_strategies.STRAT_CROSSLINE
 
     print("Location:", location)
     print("Switch position:", switchPosition)

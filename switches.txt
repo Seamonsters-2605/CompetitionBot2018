@@ -4,4 +4,11 @@
 -Drive param logging
 -Current logging
 -DON'T DRIVE
--Activate Switch
+-L Cross line
+-L Switch front
+-L Switch side
+-L Exchange
+-R Cross line
+-R Switch front
+-R Switch side
+-R Exchange

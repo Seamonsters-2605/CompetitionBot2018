@@ -12,6 +12,7 @@ STRAT_CROSSLINE = "Cross line"
 STRAT_SWITCHFRONT = "Switch front"
 STRAT_SWITCHSIDE = "Switch side"
 STRAT_EXCHANGE = "Exchange"
+STRATEGIES = [STRAT_CROSSLINE,STRAT_SWITCHFRONT,STRAT_SWITCHSIDE,STRAT_EXCHANGE]
 
 # Names: start location, switch direction, strategy
 
