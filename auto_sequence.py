@@ -34,22 +34,23 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
         yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
         drive.drive(0, 0, 0)
-        yield from sea.watch(auto_driving.driveDistance(drive, 53, .5))
+        yield from sea.timeLimit(auto_driving.driveDistance(drive, 53, .5), 100)
         drive.drive(0, 0, 0)
-        yield from shooter.shootGenerator()
+        yield from sea.watch(
+            auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
+            shooter.shootGenerator())
 
     if strategy == auto_strategies.STRAT_SWITCHSIDE:
         yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-        yield from auto_driving.driveDistance(drive, 25, .5)
+        yield from sea.timeLimit(auto_driving.driveDistance(drive, 30, .5), 100)
         drive.drive(0, 0, 0)
-        yield from shooter.shootGenerator()
+        yield from sea.watch(
+            auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
+            shooter.shootGenerator())
 
     if strategy == auto_strategies.STRAT_EXCHANGE:
-        yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, -13),
-                                  20)
-        yield from auto_driving.driveDistance(drive, -10, -.33)
-        drive.drive(0, 0, 0)
-        yield from shooter.dropGenerator()
+        pass
+        #yield from shooter.dropGenerator()
 
 def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)
