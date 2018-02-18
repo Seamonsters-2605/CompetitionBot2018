@@ -92,7 +92,8 @@ class DriveBot(sea.GeneratorBot):
 
         sea.setActiveCameraURL('http://10.26.5.6:5800')
         #sea.setActiveCameraURL('http://10.26.5.2:1187/stream.mjpg')
-        self.vision.getEntry('camMode').setNumber(1)
+        self.vision.getEntry('ledMode').setNumber(1) # off
+        self.vision.getEntry('camMode').setNumber(1) # driver camera
 
         self.holoDrive.resetTargetPositions()
 
@@ -107,7 +108,8 @@ class DriveBot(sea.GeneratorBot):
         #    talon.setSelectedSensorPosition(0, 0, 10)
 
         sea.setActiveCameraURL('')
-        self.vision.getEntry('camMode').setNumber(0)
+        self.vision.getEntry('ledMode').setNumber(0) # on
+        self.vision.getEntry('camMode').setNumber(0) # vision processing
 
         self.holoDrive.resetTargetPositions()
         self.holoDrive.setDriveMode(ctre.ControlMode.Position)
