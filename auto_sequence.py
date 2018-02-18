@@ -13,9 +13,18 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         yield
         return
     switchPosition = gameMessage[0]
-    strategy = auto_strategies.STRAT_SWITCHFRONT \
-        if sea.getSwitch("Activate Switch", True) \
-        else auto_strategies.STRAT_CROSSLINE
+
+    strategy = None
+    for strat in auto_strategies.STRATEGIES:
+        switchName = switchPosition + " " + strat
+        if sea.getSwitch(switchName, False):
+            strategy = strat
+    if strategy is None:
+        strategy = auto_strategies.STRAT_CROSSLINE
+
+    print("Location:", location)
+    print("Switch position:", switchPosition)
+    print("Strategy:", strategy)
 
     stratGenerator = auto_strategies.LOCATION_STRATEGIES[location]\
         [switchPosition][strategy]
@@ -25,9 +34,23 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
         yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
         drive.drive(0, 0, 0)
-        yield from sea.watch(auto_driving.driveDistance(drive, 53, .5))
+        yield from sea.timeLimit(auto_driving.driveDistance(drive, 53, .5), 50)
         drive.drive(0, 0, 0)
-        yield from shooter.shootGenerator()
+        yield from sea.watch(
+            auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
+            shooter.shootGenerator())
+
+    if strategy == auto_strategies.STRAT_SWITCHSIDE:
+        yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+        yield from sea.timeLimit(auto_driving.driveDistance(drive, 30, .5), 50)
+        drive.drive(0, 0, 0)
+        yield from sea.watch(
+            auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
+            shooter.shootGenerator())
+
+    if strategy == auto_strategies.STRAT_EXCHANGE:
+        pass
+        #yield from shooter.dropGenerator()
 
 def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)
@@ -36,18 +59,3 @@ def autonomous(drive, ahrs, vision, shooter):
     rotationTracker.setTargetOffsetRotation(0)
     yield from sea.parallel(
         rotationTracker.rotateToTarget(),autoSequence(multiDrive, vision, rotationTracker, shooter),auto_driving.updateMultiDrive(multiDrive))
-
-
-def findTarget(vision, initialWait, timeLimit):
-    """
-    Return if the target was found or not
-    """
-    yield from sea.wait(initialWait)
-    ensureFoundTargetGenerator = sea.ensureTrue(
-        auto_vision.checkForVisionTarget(vision), 25)
-    # foundTarget will be True if ensureFoundTargetGenerator passed
-    # and None if the time limit cut it off early
-    foundTarget = yield from sea.timeLimit(
-        sea.returnValue(ensureFoundTargetGenerator, True),
-        timeLimit - initialWait)
-    return bool(foundTarget)

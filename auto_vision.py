@@ -33,3 +33,18 @@ def strafeAlign(drive,vision,visionOffset):
 def driveToTargetDistance(drive, vision):
 
     help = 0
+
+
+def findTarget(vision, initialWait, timeLimit):
+    """
+    Return if the target was found or not
+    """
+    yield from sea.wait(initialWait)
+    ensureFoundTargetGenerator = sea.ensureTrue(
+        checkForVisionTarget(vision), 25)
+    # foundTarget will be True if ensureFoundTargetGenerator passed
+    # and None if the time limit cut it off early
+    foundTarget = yield from sea.timeLimit(
+        sea.returnValue(ensureFoundTargetGenerator, True),
+        timeLimit - initialWait)
+    return bool(foundTarget)
