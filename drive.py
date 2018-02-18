@@ -198,6 +198,18 @@ class DriveBot(sea.GeneratorBot):
         direction = -math.atan2(fwd, strafe)
         direction = self.roundDirection(direction, math.pi/2)
 
+        pov = self.driverJoystick.getPOV()
+        if pov == 90:
+            gear = 0
+            magnitude = .20
+            direction = 0
+            turn = .08
+        if pov == 270:
+            gear = 0
+            magnitude = .20
+            direction = math.pi
+            turn = -.08
+
         if sea.getSwitch("Drive voltage mode", False):
             self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
         elif gear != 0:
