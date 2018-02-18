@@ -34,7 +34,7 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
         yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
         drive.drive(0, 0, 0)
-        yield from sea.timeLimit(auto_driving.driveDistance(drive, 53, .5), 100)
+        yield from sea.timeLimit(auto_driving.driveDistance(drive, 53, .5), 50)
         drive.drive(0, 0, 0)
         yield from sea.watch(
             auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
@@ -42,7 +42,7 @@ def autoSequence(drive, vision, rotationTracker, shooter):
 
     if strategy == auto_strategies.STRAT_SWITCHSIDE:
         yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-        yield from sea.timeLimit(auto_driving.driveDistance(drive, 30, .5), 100)
+        yield from sea.timeLimit(auto_driving.driveDistance(drive, 30, .5), 50)
         drive.drive(0, 0, 0)
         yield from sea.watch(
             auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
