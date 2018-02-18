@@ -39,6 +39,13 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         drive.drive(0, 0, 0)
         yield from shooter.shootGenerator()
 
+    if strategy == auto_strategies.STRAT_EXCHANGE:
+        yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, -13),
+                                  20)
+        yield from auto_driving.driveDistance(drive, -10, -.33)
+        drive.drive(0, 0, 0)
+        yield from shooter.dropGenerator()
+
 def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)
     rotationTracker = auto_navx.RotationTracker(multiDrive, ahrs)
@@ -46,18 +53,3 @@ def autonomous(drive, ahrs, vision, shooter):
     rotationTracker.setTargetOffsetRotation(0)
     yield from sea.parallel(
         rotationTracker.rotateToTarget(),autoSequence(multiDrive, vision, rotationTracker, shooter),auto_driving.updateMultiDrive(multiDrive))
-
-
-def findTarget(vision, initialWait, timeLimit):
-    """
-    Return if the target was found or not
-    """
-    yield from sea.wait(initialWait)
-    ensureFoundTargetGenerator = sea.ensureTrue(
-        auto_vision.checkForVisionTarget(vision), 25)
-    # foundTarget will be True if ensureFoundTargetGenerator passed
-    # and None if the time limit cut it off early
-    foundTarget = yield from sea.timeLimit(
-        sea.returnValue(ensureFoundTargetGenerator, True),
-        timeLimit - initialWait)
-    return bool(foundTarget)

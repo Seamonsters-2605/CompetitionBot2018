@@ -11,6 +11,7 @@ SWITCH_RIGHT = "R"
 STRAT_CROSSLINE = "Cross line"
 STRAT_SWITCHFRONT = "Switch front"
 STRAT_SWITCHSIDE = "Switch side"
+STRAT_EXCHANGE = "Exchange"
 
 # Names: start location, switch direction, strategy
 
@@ -45,6 +46,10 @@ def loc1_left_switchSide(drive, rotationTracker):
     print("running loc1_left_switchSide")
     yield from loc1_crossLine(drive, rotationTracker)
     rotationTracker.setTargetOffsetRotation(90)
+
+def loc1_exchange(drive, rotationTracker):
+    print("running loc1_exchange")
+    yield from auto_driving.driveDistance(drive, 10, .33)
 
 def loc2_left_switchFront(drive, rotationTracker):
     print("running loc2_left_switchFront")
@@ -102,6 +107,11 @@ def loc2_right_switchSide(drive, rotationTracker):
     yield from loc2_left_crossLine(drive, rotationTracker)
     rotationTracker.setTargetOffsetRotation(-90)
 
+def loc2_exchange(drive, rotationTracker):
+    print("running loc2_exchange")
+    yield from auto_driving.driveDistance(drive, 10, .33)
+    yield from sea.timeLimit(auto_driving.driveContinuous(drive, -.33, 0, 0),30)
+
 def loc3_left_switchFront(drive, rotationTracker):
     print("running loc3_left_switchFront")
     yield from auto_driving.driveDistance(drive, 35, .33)
@@ -132,11 +142,13 @@ LOCATION1_STRATEGIES = {
     SWITCH_LEFT: {
         STRAT_CROSSLINE: loc1_crossLine,
         STRAT_SWITCHFRONT: loc1_left_switchFront,
-        STRAT_SWITCHSIDE: loc1_left_switchSide
+        STRAT_SWITCHSIDE: loc1_left_switchSide,
+        STRAT_EXCHANGE: loc1_exchange
     },
     SWITCH_RIGHT: {
         STRAT_CROSSLINE: loc1_crossLine,
-        STRAT_SWITCHFRONT: loc1_right_switchFront
+        STRAT_SWITCHFRONT: loc1_right_switchFront,
+        STRAT_EXCHANGE: loc1_exchange
     }
 }
 
@@ -144,12 +156,14 @@ LOCATION2_STRATEGIES = {
     SWITCH_LEFT: {
         STRAT_CROSSLINE: loc2_left_crossLine,
         STRAT_SWITCHFRONT: loc2_left_switchFront,
-        STRAT_SWITCHSIDE: loc2_left_switchSide
+        STRAT_SWITCHSIDE: loc2_left_switchSide,
+        STRAT_EXCHANGE: loc2_exchange
     },
     SWITCH_RIGHT: {
         STRAT_CROSSLINE: loc2_right_crossLine,
         STRAT_SWITCHFRONT: loc2_right_switchFront,
-        STRAT_SWITCHSIDE: loc2_right_switchSide
+        STRAT_SWITCHSIDE: loc2_right_switchSide,
+        STRAT_EXCHANGE: loc2_exchange
     }
 }
 
