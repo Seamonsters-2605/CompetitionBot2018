@@ -17,6 +17,10 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         if sea.getSwitch("Activate Switch", True) \
         else auto_strategies.STRAT_CROSSLINE
 
+    print("Location:", location)
+    print("Switch position:", switchPosition)
+    print("Strategy:", strategy)
+
     stratGenerator = auto_strategies.LOCATION_STRATEGIES[location]\
         [switchPosition][strategy]
     yield from stratGenerator(drive, rotationTracker)
