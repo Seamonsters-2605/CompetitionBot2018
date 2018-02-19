@@ -51,6 +51,10 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         yield from sea.watch(
             auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
             shooter.shootGenerator())
+        if switchPosition[0] == "L":
+            yield from auto_strategies.left_switchSide_pickUpCube(drive, rotationTracker, shooter)
+        if switchPosition[0] == "R":
+            yield from auto_strategies.right_switchSide_pickUpCube(drive, rotationTracker, shooter)
 
     if strategy == auto_strategies.STRAT_EXCHANGE:
         yield from shooter.shootGenerator()

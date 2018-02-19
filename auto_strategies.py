@@ -82,7 +82,7 @@ def loc2_left_crossLine(drive, rotationTracker):
     rotationTracker.setTargetOffsetRotation(90)
     yield from auto_driving.driveDistance(drive, 70, .6)
     rotationTracker.setTargetOffsetRotation(0)
-    yield from auto_driving.driveDistance(drive, 120, .33)
+    yield from auto_driving.driveDistance(drive, 140, .33)
 
 def loc2_right_crossLine(drive, rotationTracker):
     print("running loc2_right_crossLine")
@@ -96,6 +96,38 @@ def loc2_left_switchSide(drive, rotationTracker):
     print("running loc2_left_switchSide")
     yield from loc2_right_crossLine(drive, rotationTracker)
     rotationTracker.setTargetOffsetRotation(90)
+
+def left_switchSide_pickUpCube(drive, rotationTracker, shooter):
+    print("running left_switchSide_pickUpCube")
+    yield from auto_driving.driveDistance(drive, -50, -.33)
+    rotationTracker.setTargetOffsetRotation(0)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, 55, .33)
+    for i in range(30):
+        drive.drive(.3, 0, 0)
+        yield
+    yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, -10, -.33))
+    yield from auto_driving.driveDistance(drive, 10, .3)
+    rotationTracker.setTargetOffsetRotation(180)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, 10, .3)
+    yield from shooter.shootGenerator()
+
+def right_switchSide_pickUpCube(drive, rotationTracker, shooter):
+    print("running right_switchSide_pickUpCube")
+    yield from auto_driving.driveDistance(drive, -20, -.33)
+    rotationTracker.setTargetOffsetRotation(0)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, 65, .33)
+    for i in range(60):
+        drive.drive(-.3, 0, 0)
+        yield
+    yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, -10, -.33))
+    yield from auto_driving.driveDistance(drive, 10, .3)
+    rotationTracker.setTargetOffsetRotation(180)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, 10, .3)
+    yield from shooter.shootGenerator()
 
 def loc2_right_switchSide(drive, rotationTracker):
     print("running loc2_right_switchSide")
