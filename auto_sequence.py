@@ -6,17 +6,20 @@ import auto_navx
 import wpilib
 import auto_strategies
 import auto_exchange
+import auto_override
 
 def autoSequence(drive, vision, angleHolder):
     angleHolder[0] = 0
     switchPosition = wpilib.DriverStation.getInstance().getGameSpecificMessage()
     switchExchange = sea.getSwitch("Move to Exchange",False)
     print(switchExchange)
+    startPos = auto_override.override()
+    print(startPos)
     if switchExchange == False:
         if not sea.getSwitch("Activate Switch", True):
-            if wpilib.DriverStation.getInstance().getLocation() == 1:
+            if startPos == 1:
                 yield from auto_strategies.left_cross(drive, angleHolder)
-            elif wpilib.DriverStation.getInstance().getLocation() == 2:
+            elif startPos == 2:
                 yield from auto_driving.driveDistance(drive, 50, .3)
                 yield
                 drive.drive(0, 0, 0)
@@ -28,7 +31,7 @@ def autoSequence(drive, vision, angleHolder):
                     drive.drive(.3, math.pi / 2, 0)
                     yield
                 drive.drive(0, 0, 0)
-            elif wpilib.DriverStation.getInstance().getLocation() == 3:
+            elif startPos == 3:
                 yield from auto_strategies.right_cross(drive, angleHolder)
         else:
             if len(switchPosition) == 0:
@@ -36,19 +39,19 @@ def autoSequence(drive, vision, angleHolder):
                 return
 
             yield from sea.wait(25)
-            if wpilib.DriverStation.getInstance().getLocation() == 1:
+            if startPos == 1:
                 if switchPosition[0] == "L":
                     yield from auto_strategies.left_left(drive, angleHolder)
                 if switchPosition[0] == "R":
                     yield from auto_strategies.left_right(drive, angleHolder)
 
-            elif wpilib.DriverStation.getInstance().getLocation() == 2:
+            elif startPos == 2:
                 if switchPosition[0] == "R":
                     yield from auto_strategies.mid_right(drive, angleHolder)
                 elif switchPosition[0] == "L":
                     yield from auto_strategies.mid_left(drive, angleHolder)
 
-            elif wpilib.DriverStation.getInstance().getLocation() == 3:
+            elif startPos == 3:
                 if switchPosition[0] == "L":
                     yield from auto_strategies.right_left(drive, angleHolder)
                 if switchPosition[0] == "R":
@@ -61,9 +64,9 @@ def autoSequence(drive, vision, angleHolder):
                                 auto_driving.driveDistance(drive, 40, .5))
     elif switchExchange == True:
         print('Heading to exchange')
-        if wpilib.DriverStation.getInstance().getLocation() == 1:
+        if startPos == 1:
             yield from auto_exchange.leftEx(drive,angleHolder)
-        elif wpilib.DriverStation.getInstance().getLocation() == 2:
+        elif startPos == 2:
             yield from auto_exchange.midEx(drive,angleHolder)
     drive.drive(0, 0, 0)
 

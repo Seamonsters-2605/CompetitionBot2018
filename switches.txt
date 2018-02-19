@@ -6,3 +6,4 @@
 -DON'T DRIVE
 -Activate Switch
 -Move to Exchange
+:StartLoc1,StartLoc2,StartLoc3
