@@ -233,11 +233,12 @@ class DriveBot(sea.GeneratorBot):
 
         self.drive = self.fieldDrive
 
-        while True:
+        """while True:
             yield
 
             x = 0
             y = 0
+
 
             if t < (math.pi / 2) * 50:
                 x = -math.cos(t)
@@ -249,12 +250,19 @@ class DriveBot(sea.GeneratorBot):
                 x = -math.cos(t + math.pi / 2)
                 y = -math.sin(t + math.pi / 2)
 
+            if t < math.pi:
+                x = -math.cos(t)
+                y = t
+
             angle = math.atan2(y, x)
             dAngledt = turnScale / (1 + (y/x) ** 2)
 
             t += 1
 
-            self.drive.drive(speed, angle, dAngledt)
+            self.drive.drive(speed, angle, dAngledt)"""
+
+        yield
+
 
     def _setPID(self, pid):
         if pid == self.currentPIDs:
