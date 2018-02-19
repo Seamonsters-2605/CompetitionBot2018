@@ -53,8 +53,10 @@ def autoSequence(drive, vision, rotationTracker, shooter):
             shooter.shootGenerator())
 
     if strategy == auto_strategies.STRAT_EXCHANGE:
-        pass
-        #yield from shooter.dropGenerator()
+        yield from shooter.shootGenerator()
+        yield from sea.timeLimit(auto_driving.driveDistance(drive, 25, 0.33),
+                                 50)
+        yield from auto_driving.driveDistance(drive, -35, -0.33)
 
 def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)

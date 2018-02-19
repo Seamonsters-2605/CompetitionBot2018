@@ -54,17 +54,14 @@ def loc1_left_switchSide(drive, rotationTracker):
 
 def loc1_exchange(drive, rotationTracker):
     print("running loc1_exchange")
-    yield from auto_driving.driveDistance(drive, 10, .33)
+    yield from auto_driving.driveDistance(drive, 20, .33)
     yield from sea.timeLimit(auto_driving.driveContinuous(drive, 0, 0, 0), 10)
     rotationTracker.setTargetOffsetRotation(90)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
     yield from auto_driving.driveDistance(drive, 25, .33)
     yield from sea.timeLimit(auto_driving.driveContinuous(drive, 0, 0, 0), 10)
-    rotationTracker.setTargetOffsetRotation(0)
+    rotationTracker.setTargetOffsetRotation(180)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-    yield from sea.timeLimit(auto_driving.driveDistance(drive, -10, -.33),
-                             100)
-    drive.drive(0, 0, 0)
 
 def loc2_left_switchFront(drive, rotationTracker):
     print("running loc2_left_switchFront")
@@ -124,17 +121,14 @@ def loc2_right_switchSide(drive, rotationTracker):
 
 def loc2_exchange(drive, rotationTracker):
     print("running loc2_exchange")
-    yield from auto_driving.driveDistance(drive, 10, .33)
+    yield from auto_driving.driveDistance(drive, 20, .33)
     yield from sea.timeLimit(auto_driving.driveContinuous(drive, 0, 0, 0), 10)
     rotationTracker.setTargetOffsetRotation(-90)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
     yield from auto_driving.driveDistance(drive, 40, .33)
     yield from sea.timeLimit(auto_driving.driveContinuous(drive, 0, 0, 0), 10)
-    rotationTracker.setTargetOffsetRotation(0)
+    rotationTracker.setTargetOffsetRotation(-180)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-    yield from sea.timeLimit(auto_driving.driveDistance(drive, -10, -.33),
-                             100)
-    drive.drive(0, 0, 0)
 
 def loc3_left_switchFront(drive, rotationTracker):
     print("running loc3_left_switchFront")
