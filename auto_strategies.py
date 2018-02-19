@@ -8,14 +8,18 @@ import wpilib
 SWITCH_LEFT = "L"
 SWITCH_RIGHT = "R"
 
+STRAT_NONE = "Do nothing"
 STRAT_CROSSLINE = "Cross line"
 STRAT_SWITCHFRONT = "Switch front"
 STRAT_SWITCHSIDE = "Switch side"
 STRAT_EXCHANGE = "Exchange"
-STRATEGIES = [STRAT_CROSSLINE,STRAT_SWITCHFRONT,STRAT_SWITCHSIDE,STRAT_EXCHANGE]
+STRATEGIES = [STRAT_NONE, STRAT_CROSSLINE, STRAT_SWITCHFRONT, STRAT_SWITCHSIDE,
+              STRAT_EXCHANGE]
 
 # Names: start location, switch direction, strategy
 
+def doNothing(drive, rotationTracker):
+    yield
 
 def loc1_left_switchFront(drive, rotationTracker):
     print("running loc1_left_switchFront")
@@ -160,12 +164,14 @@ def loc3_right_switchSide(drive, rotationTracker):
 
 LOCATION1_STRATEGIES = {
     SWITCH_LEFT: {
+        STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc1_crossLine,
         STRAT_SWITCHFRONT: loc1_left_switchFront,
         STRAT_SWITCHSIDE: loc1_left_switchSide,
         STRAT_EXCHANGE: loc1_exchange
     },
     SWITCH_RIGHT: {
+        STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc1_crossLine,
         STRAT_SWITCHFRONT: loc1_right_switchFront,
         STRAT_SWITCHSIDE: loc1_crossLine,
@@ -175,12 +181,14 @@ LOCATION1_STRATEGIES = {
 
 LOCATION2_STRATEGIES = {
     SWITCH_LEFT: {
+        STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc2_left_crossLine,
         STRAT_SWITCHFRONT: loc2_left_switchFront,
         STRAT_SWITCHSIDE: loc2_left_switchSide,
         STRAT_EXCHANGE: loc2_exchange
     },
     SWITCH_RIGHT: {
+        STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc2_right_crossLine,
         STRAT_SWITCHFRONT: loc2_right_switchFront,
         STRAT_SWITCHSIDE: loc2_right_switchSide,
@@ -190,11 +198,13 @@ LOCATION2_STRATEGIES = {
 
 LOCATION3_STRATEGIES = {
     SWITCH_LEFT: {
+        STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc3_crossLine,
         STRAT_SWITCHFRONT: loc3_left_switchFront,
         STRAT_SWITCHSIDE: loc3_crossLine
     },
     SWITCH_RIGHT: {
+        STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc3_crossLine,
         STRAT_SWITCHFRONT: loc3_right_switchFront,
         STRAT_SWITCHSIDE: loc3_right_switchSide
