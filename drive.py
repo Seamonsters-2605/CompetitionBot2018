@@ -9,7 +9,7 @@ import seamonsters as sea
 import camera
 import robotconfig
 import auto_sequence
-
+import auto_navx
 
 class DriveBot(sea.GeneratorBot):
 
@@ -226,6 +226,7 @@ class DriveBot(sea.GeneratorBot):
             talon.setSelectedSensorPosition(0, 0, 10)
 
         self.holoDrive.resetTargetPositions()
+        self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
 
         t = 0
         turnScale = 1
