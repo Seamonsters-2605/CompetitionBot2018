@@ -3,7 +3,7 @@ import ctre
 import seamonsters as sea
 
 WING_SPEED = .75
-CURRENT_LIMIT = 200
+CURRENT_LIMIT = 11
 
 class Lifter(sea.GeneratorBot):
 
