@@ -4,13 +4,13 @@ import wpilib
 
 def override():
     sL = wpilib.DriverStation.getInstance().getLocation()
-    if sea.getSwitch('Loc1',False):
+    if sea.getSwitch('Loc1',defaultValue=False):
         locate = 1
-    elif not sea.getSwitch("Loc2",False):
+    elif sea.getSwitch("Loc2",defaultValue=False):
         locate = 2
-    elif not sea.getSwitch("Loc3",False):
+    elif sea.getSwitch("Loc3",defaultValue=False):
         locate = 3
-    elif not sea.getSwitch("None",False):
+    elif sea.getSwitch("None",defaultValue=False):
         locate = sL
 
 
