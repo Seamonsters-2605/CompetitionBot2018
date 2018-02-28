@@ -5,6 +5,6 @@
 -Current logging
 -DON'T DRIVE
 
-: L Do nothing, L Cross line, L Switch Front, L Switch side, L Exchange
-: R Do nothing, R Cross line, R Switch Front, R Switch side, R Exchange
+: L Do nothing, L Cross line, L Switch front, L Switch side, L Exchange
+: R Do nothing, R Cross line, R Switch front, R Switch side, R Exchange
 : None, Loc1, Loc2, Loc3
