@@ -8,6 +8,8 @@ import auto_strategies
 import auto_override
 
 def autoSequence(drive, vision, rotationTracker, shooter):
+    shooter.stop() # it sometimes is running when auto starts?
+
     gameMessage = wpilib.DriverStation.getInstance().getGameSpecificMessage()
     if gameMessage is None or gameMessage == "":
         yield
@@ -35,8 +37,8 @@ def autoSequence(drive, vision, rotationTracker, shooter):
     if strategy == auto_strategies.STRAT_SWITCHFRONT:
         yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
         if (yield from auto_vision.waitForVision(vision)):
-            yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0),
-                                      20)
+            yield from sea.timeLimit(sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0),
+                                      20), 100)
         else:
             print("Couldn't find vision!")
         drive.drive(0, 0, 0)
@@ -55,10 +57,9 @@ def autoSequence(drive, vision, rotationTracker, shooter):
             shooter.shootGenerator())
 
     if strategy == auto_strategies.STRAT_EXCHANGE:
-        yield from shooter.shootGenerator()
-        yield from sea.timeLimit(auto_driving.driveDistance(drive, 25, 0.33),
-                                 50)
-        yield from auto_driving.driveDistance(drive, -35, -0.33)
+        yield from sea.watch(auto_driving.driveContinuous(drive, 0.1, math.pi/2, 0), shooter.shootGenerator())
+        yield from sea.timeLimit(auto_driving.driveDistance(drive, -45, -0.33), 50)
+        yield from auto_driving.driveDistance(drive, 35, 0.33)
 
 def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)

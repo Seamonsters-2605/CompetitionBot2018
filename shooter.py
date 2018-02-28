@@ -32,17 +32,22 @@ class MyRobot(sea.GeneratorBot):
         finally:
             self.leftBelt.set(0)
             self.rightBelt.set(0)
+
+    def stop(self):
+        self.leftBelt.set(0)
+        self.rightBelt.set(0)
+
     def shootGenerator(self):
-        self.leftBelt.set(0.6)
-        self.rightBelt.set(0.6)
+        self.leftBelt.set(0.45)
+        self.rightBelt.set(0.45)
         for i in range(70):
             yield
         self.leftBelt.set(0)
         self.rightBelt.set(0)
 
     def dropGenerator(self):
-        self.leftBelt.set(-1)
-        self.rightBelt.set(-1)
+        self.leftBelt.set(-0.25)
+        self.rightBelt.set(-0.25)
         for i in range(70):
             yield
         self.leftBelt.set(0)
