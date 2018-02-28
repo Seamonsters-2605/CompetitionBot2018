@@ -95,9 +95,12 @@ class DriveBot(sea.GeneratorBot):
         self.holoDrive.resetTargetPositions()
 
         self.tick = 0
-        while True:
-            yield
-            self.teleopPeriodic()
+        try:
+            while True:
+                yield
+                self.teleopPeriodic()
+        finally:
+            self.drive.drive(0, 0, 0)
 
     def autonomous(self):
         print("Starting autonomous!")
