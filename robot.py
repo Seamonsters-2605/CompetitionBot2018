@@ -53,7 +53,6 @@ class MainRobot(sea.GeneratorBot):
 
     def teleop(self):
         yield from sea.parallel(
-            self.driveBot.teleop(),
             self.wait_mode(),
             self.timer(),
             self.sendLogStatesGenerator())
@@ -74,7 +73,9 @@ class MainRobot(sea.GeneratorBot):
 
     def wait_mode(self):
         while True:
-            yield from sea.watch(self.shooterBot.teleop(),self.wait_liftmode())
+            yield from sea.watch(self.shooterBot.teleop(),
+                                 self.driveBot.teleop(),
+                                 self.wait_liftmode())
             yield from sea.watch(self.lifterBot.teleop(),self.wait_shootmode())
 if __name__ == "__main__":
     wpilib.run(MainRobot)
