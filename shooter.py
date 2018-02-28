@@ -40,18 +40,22 @@ class MyRobot(sea.GeneratorBot):
     def shootGenerator(self):
         self.leftBelt.set(0.45)
         self.rightBelt.set(0.45)
-        for i in range(70):
-            yield
-        self.leftBelt.set(0)
-        self.rightBelt.set(0)
+        try:
+            for i in range(70):
+                yield
+        finally:
+            self.leftBelt.set(0)
+            self.rightBelt.set(0)
 
     def dropGenerator(self):
         self.leftBelt.set(-0.25)
         self.rightBelt.set(-0.25)
-        for i in range(70):
-            yield
-        self.leftBelt.set(0)
-        self.rightBelt.set(0)
+        try:
+            for i in range(70):
+                yield
+        finally:
+            self.leftBelt.set(0)
+            self.rightBelt.set(0)
 
 if __name__ == "__main__":
     wpilib.run(MyRobot, physics_enabled=True)
