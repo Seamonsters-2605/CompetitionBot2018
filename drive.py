@@ -49,8 +49,6 @@ class DriveBot(sea.GeneratorBot):
         br = ctre.WPI_TalonSRX(3)
         self.talons = [fl, fr, bl, br]
 
-        self.mode = True
-
 
         for talon in self.talons:
             talon.configSelectedFeedbackSensor(
@@ -90,8 +88,7 @@ class DriveBot(sea.GeneratorBot):
         #for talon in self.talons:
         #    talon.setSelectedSensorPosition(0, 0, 10)
 
-        sea.setActiveCameraURL('http://10.26.5.6:5800')
-        #sea.setActiveCameraURL('http://10.26.5.2:1187/stream.mjpg')
+        self.mode = True # start going towards intake
         self.vision.getEntry('ledMode').setNumber(1) # off
         self.vision.getEntry('camMode').setNumber(1) # driver camera
 
