@@ -75,7 +75,7 @@ class DriveBot(sea.GeneratorBot):
         self.encoderLog = sea.LogState("Wheel encoders")
         self.speedLog = sea.LogState("Wheel speeds")
 
-        self.driveControlLog = sea.LogState("Drive Control")
+        self.directionLog = sea.LogState("Direction")
 
         self.driveParamLog = sea.LogState("Drive Params")
 
@@ -88,7 +88,7 @@ class DriveBot(sea.GeneratorBot):
         #for talon in self.talons:
         #    talon.setSelectedSensorPosition(0, 0, 10)
 
-        self.mode = True # start going towards intake
+        self.reversed = True # start going towards intake
         self.vision.getEntry('ledMode').setNumber(1) # off
         self.vision.getEntry('camMode').setNumber(1) # driver camera
 
@@ -226,15 +226,17 @@ class DriveBot(sea.GeneratorBot):
             for talon in self.talons:
                 talon.set(ctre.ControlMode.Velocity, 0)
         elif not sea.getSwitch("DON'T DRIVE", False):
-            if self.mode == False:
+            if self.reversed:
+                self.directionLog.update("Towards intake")
                 sea.setActiveCameraURL('http://10.26.5.2:1187/stream.mjpg')
                 self.drive.drive(magnitude, direction + math.pi, turn)
             else:
+                self.directionLog.update("Towards shooter")
                 sea.setActiveCameraURL('http://10.26.5.6:5800')
                 self.drive.drive(magnitude, direction, turn)
 
         if self.driverJoystick.getRawButtonPressed(4):
-            self.mode = not self.mode
+            self.reversed = not self.reversed
 
 
     def test(self):
