@@ -7,4 +7,4 @@
 
 : L Do nothing, L Cross line, L Switch Front, L Switch side, L Exchange
 : R Do nothing, R Cross line, R Switch Front, R Switch side, R Exchange
-: Loc1, Loc2, Loc3, None
+: None, Loc1, Loc2, Loc3
