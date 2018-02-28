@@ -5,15 +5,17 @@ import seamonsters as sea
 import auto_navx
 import wpilib
 import auto_strategies
+import auto_override
 
 def autoSequence(drive, vision, rotationTracker, shooter):
-    location = wpilib.DriverStation.getInstance().getLocation()
     gameMessage = wpilib.DriverStation.getInstance().getGameSpecificMessage()
     if gameMessage is None or gameMessage == "":
         yield
         return
     switchPosition = gameMessage[0]
 
+    startPos = auto_override.override()
+    print ('the startPos is ', startPos)
     strategy = None
     for strat in auto_strategies.STRATEGIES:
         switchName = switchPosition + " " + strat
@@ -22,11 +24,11 @@ def autoSequence(drive, vision, rotationTracker, shooter):
     if strategy is None:
         strategy = auto_strategies.STRAT_CROSSLINE
 
-    print("Location:", location)
+    print("Location:", startPos)
     print("Switch position:", switchPosition)
     print("Strategy:", strategy)
 
-    stratGenerator = auto_strategies.LOCATION_STRATEGIES[location]\
+    stratGenerator = auto_strategies.LOCATION_STRATEGIES[startPos]\
         [switchPosition][strategy]
     yield from stratGenerator(drive, rotationTracker)
 
