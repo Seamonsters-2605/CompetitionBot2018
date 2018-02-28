@@ -25,7 +25,8 @@ class MainRobot(sea.GeneratorBot):
         self.lifterBot.driverJoystick = self.driverJoystick
         self.lifterBot.robotInit()
 
-        self.timerLogState = sea.LogState("Time")
+        self.timerLogState = sea.LogState("Time", 9999)
+        self.modeLog = sea.LogState("Mode")
 
     def timer(self):
         last_t = time.time()
@@ -63,10 +64,12 @@ class MainRobot(sea.GeneratorBot):
                                 self.sendLogStatesGenerator())
     def wait_shootmode(self):
         while not self.driverJoystick.getRawButton(11):
+            self.modeLog.update("Wing Mode!")
             yield
 
     def wait_liftmode(self):
         while not self.driverJoystick.getRawButton(12):
+            self.modeLog.update("Drive Mode")
             yield
 
     def wait_mode(self):
