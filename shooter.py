@@ -20,11 +20,11 @@ class MyRobot(sea.GeneratorBot):
                     self.leftBelt.set(1)
                     self.rightBelt.set(1)
                 elif pov == 0:
-                    self.leftBelt.set(0.6)
-                    self.rightBelt.set(0.6)
+                    self.leftBelt.set(0.45)
+                    self.rightBelt.set(0.45)
                 elif pov == 180:
-                    self.leftBelt.set(-0.3)
-                    self.rightBelt.set(-0.3)
+                    self.leftBelt.set(-0.25)
+                    self.rightBelt.set(-0.25)
                 else:
                     self.leftBelt.set(0)
                     self.rightBelt.set(0)
