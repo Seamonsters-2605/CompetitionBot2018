@@ -5,7 +5,6 @@ import seamonsters as sea
 WING_SPEED = .75
 MAX_WING_SPEED = 1.0
 CURRENT_LIMIT = 11
-WING_REVERSE = True # clockwise
 
 class Lifter(sea.GeneratorBot):
 
@@ -25,17 +24,19 @@ class Lifter(sea.GeneratorBot):
 
     def teleop(self):
         yield from sea.parallel(
-            self.wingGenerator(self.leftWing, button=5, axis=4,
+            # clockwise
+            self.wingGenerator(self.leftWing, motorReverse=-1, button=5, axis=4,
                                axisReverse=1, log=self.leftWingLog),
-            self.wingGenerator(self.rightWing, button=4, axis=1,
+            # counter-clockwise
+            self.wingGenerator(self.rightWing, motorReverse=1, button=4, axis=1,
                                axisReverse=-1, log=self.rightWingLog))
 
-    def wingGenerator(self, motor, button, axis, axisReverse, log):
+    def wingGenerator(self, motor, motorReverse, button, axis, axisReverse, log):
         try:
             while not self.driverJoystick.getRawButton(button):
                 log.update("Ready to release")
                 yield
-            motor.set(WING_SPEED)
+            motor.set(WING_SPEED * motorReverse)
             for _ in range(30):
                 log.update("Releasing")
                 yield
@@ -54,7 +55,7 @@ class Lifter(sea.GeneratorBot):
                         speed += (1 - speed) * axisValue
                     else:
                         speed *= axisValue + 1
-                    motor.set(speed)
+                    motor.set(speed * motorReverse)
                     current = motor.getOutputCurrent()
                     log.update(current)
                     if current > CURRENT_LIMIT:
