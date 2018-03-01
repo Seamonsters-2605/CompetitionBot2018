@@ -37,7 +37,7 @@ class Lifter(sea.GeneratorBot):
                 log.update("Ready to release")
                 yield
             motor.set(WING_SPEED * motorReverse)
-            for _ in range(30):
+            for _ in range(18):
                 log.update("Releasing")
                 yield
             motor.set(0)
@@ -59,6 +59,7 @@ class Lifter(sea.GeneratorBot):
                     current = motor.getOutputCurrent()
                     log.update(current)
                     if current > CURRENT_LIMIT:
+                        motor.set(0)
                         while self.driverJoystick.getRawButton(button):
                             log.update("Current limit!")
                             yield
