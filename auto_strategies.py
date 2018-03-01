@@ -112,6 +112,9 @@ def loc2_exchange(drive, rotationTracker):
     yield from sea.timeLimit(auto_driving.driveContinuous(drive, 0, 0, 0), 10)
     rotationTracker.setTargetOffsetRotation(0)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    rotationTracker.setTargetOffsetRotation(-45)
+    yield from auto_driving.driveDistance(drive, 50, .33)
+    rotationTracker.setTargetOffsetRotation(0)
 
 def loc3_left_switchFront(drive, rotationTracker):
     print("running loc3_left_switchFront")
