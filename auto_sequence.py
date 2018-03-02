@@ -44,22 +44,35 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         drive.drive(0, 0, 0)
         yield from sea.timeLimit(auto_driving.driveDistance(drive, 53, .5), 50)
         drive.drive(0, 0, 0)
-        yield from sea.watch(
-            auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
-            shooter.shootGenerator())
+        yield from shootFinal(drive, shooter, rotationTracker)
 
     if strategy == auto_strategies.STRAT_SWITCHSIDE:
         yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
         yield from sea.timeLimit(auto_driving.driveDistance(drive, 30, .5), 50)
         drive.drive(0, 0, 0)
-        yield from sea.watch(
-            auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
-            shooter.shootGenerator())
+        yield from shootFinal(drive, shooter, rotationTracker)
 
     if strategy == auto_strategies.STRAT_EXCHANGE:
+        yield from auto_driving.driveDistance(drive, -10, -.33)
         yield from sea.watch(auto_driving.driveContinuous(drive, 0.1, math.pi/2, 0), shooter.shootGenerator())
-        yield from sea.timeLimit(auto_driving.driveDistance(drive, -45, -0.33), 50)
-        yield from auto_driving.driveDistance(drive, 35, 0.33)
+        yield from sea.timeLimit(auto_driving.driveDistance(drive, -55, -0.33), 50)
+
+        # cross the line...
+        yield from auto_driving.driveDistance(drive, 35, .3)
+        rotationTracker.setTargetOffsetRotation(-90)
+        yield from auto_driving.driveDistance(drive, 100, .4)
+        rotationTracker.setTargetOffsetRotation(0)
+        yield from auto_driving.driveDistance(drive, 60, .33)
+
+def shootFinal(drive, shooter, rotationTracker):
+    yield from sea.watch(
+        auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
+        shooter.shootGenerator())
+    yield from auto_driving.driveDistance(drive, -25, -.5)
+    # rotationTracker.setTargetOffsetRotation(
+    #     rotationTracker.targetOffsetRotation + 180)
+    # yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+
 
 def autonomous(drive, ahrs, vision, shooter):
     multiDrive = sea.MultiDrive(drive)
