@@ -18,6 +18,10 @@ class RotationTracker:
     def rotateToTarget(self):
         while True:
             offset = self.ahrs.getAngle() - self.origin - self.targetOffsetRotation
+            if abs(offset) > 720:
+                print("NavX is broken!!")
+                yield
+                continue
             if offset > 0:
                 driveSpeed = (offset * ROTATE_SCALE) ** ROTATE_EXPONENT
             else:
