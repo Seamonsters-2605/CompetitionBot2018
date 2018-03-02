@@ -36,14 +36,17 @@ class Lifter(sea.GeneratorBot):
             while not self.driverJoystick.getRawButton(button):
                 log.update("Ready to release")
                 yield
-            motor.set(WING_SPEED * motorReverse)
-            for _ in range(18):
-                log.update("Releasing")
-                yield
-            motor.set(0)
+            currentPosition = motor.getSelectedSensorPosition(0)
+            motor.set(ctre.ControlMode.Position, currentPosition + 500 * motorReverse)
+            #motor.set(WING_SPEED * motorReverse)
+            #for _ in range(18):
+            #    log.update("Releasing")
+            #    yield
+            #motor.set(0)
             while self.driverJoystick.getRawButton(button):
                 log.update("Released")
                 yield
+            motor.set(0)
             while True:
                 while not self.driverJoystick.getRawButton(button):
                     log.update("Ready")
