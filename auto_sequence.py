@@ -12,13 +12,11 @@ def autoSequence(drive, vision, rotationTracker, shooter):
 
     gameMessage = wpilib.DriverStation.getInstance().getGameSpecificMessage()
     if gameMessage is None or gameMessage == "":
-        yield
-        return
+        switchPosition = "ERROR!" # will cause it to default to CROSSLINE
     else:
         switchPosition = gameMessage[0]
 
     startPos = auto_override.override()
-    print ('the startPos is ', startPos)
     strategy = None
     for strat in auto_strategies.STRATEGIES:
         switchName = switchPosition + " " + strat
@@ -30,9 +28,18 @@ def autoSequence(drive, vision, rotationTracker, shooter):
     print("Location:", startPos)
     print("Switch position:", switchPosition)
     print("Strategy:", strategy)
+    if switchPosition == "ERROR!":
+        switchPosition = 'L'
 
-    stratGenerator = auto_strategies.LOCATION_STRATEGIES[startPos]\
-        [switchPosition][strategy]
+    try:
+        stratGenerator = auto_strategies.LOCATION_STRATEGIES[startPos]\
+            [switchPosition][strategy]
+    except KeyError:
+        print("You chose an invalid auto sequence! Defaulting to Cross line")
+        strategy = auto_strategies.STRAT_CROSSLINE
+        stratGenerator = auto_strategies.LOCATION_STRATEGIES[startPos]\
+            [switchPosition][strategy]
+
     yield from stratGenerator(drive, rotationTracker)
 
     if strategy == auto_strategies.STRAT_SWITCHFRONT:

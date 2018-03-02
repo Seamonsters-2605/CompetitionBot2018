@@ -149,7 +149,6 @@ LOCATION1_STRATEGIES = {
         STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc1_crossLine,
         STRAT_SWITCHFRONT: loc1_right_switchFront,
-        STRAT_SWITCHSIDE: loc1_crossLine,
         STRAT_EXCHANGE: loc1_exchange
     }
 }
@@ -175,8 +174,7 @@ LOCATION3_STRATEGIES = {
     SWITCH_LEFT: {
         STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc3_crossLine,
-        STRAT_SWITCHFRONT: loc3_left_switchFront,
-        STRAT_SWITCHSIDE: loc3_crossLine
+        STRAT_SWITCHFRONT: loc3_left_switchFront
     },
     SWITCH_RIGHT: {
         STRAT_NONE: doNothing,
