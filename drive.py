@@ -224,7 +224,9 @@ class DriveBot(sea.GeneratorBot):
             self.driveParamLog.update(('%.3f' % magnitude) + "," +
                                       str(int(math.degrees(direction))) + "," +
                                       ('%.3f' % turn))
-        if self.driverJoystick.getRawButton(1):
+        if self.driverJoystick.getRawButton(5) \
+                or self.driverJoystick.getRawButton(6) \
+                or self.driverJoystick.getRawButton(7):
             self._setPID(robotconfig.speedModePIDs[2])
             for talon in self.talons:
                 talon.set(ctre.ControlMode.Velocity, 0)
