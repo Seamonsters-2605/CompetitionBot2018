@@ -34,7 +34,10 @@ class Lifter(sea.GeneratorBot):
                 log.update("Ready to release")
                 yield
             currentPosition = motor.getSelectedSensorPosition(0)
-            motor.set(ctre.ControlMode.Position, currentPosition + 500 * motorReverse)
+            # 500 too high
+            # 400 slightly too hight
+            # 300 barely enough, sometimes not enough
+            motor.set(ctre.ControlMode.Position, currentPosition + 350 * motorReverse)
             #motor.set(WING_SPEED * motorReverse)
             #for _ in range(18):
             #    log.update("Releasing")
