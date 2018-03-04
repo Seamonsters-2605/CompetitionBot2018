@@ -15,10 +15,7 @@ class Lifter(sea.GeneratorBot):
         self.rightWing = ctre.WPI_TalonSRX(7)
         self.rightWing.configSelectedFeedbackSensor(
             ctre.FeedbackDevice.QuadEncoder, 0, 0)
-        try:
-            self.driverJoystick
-        except AttributeError:
-            self.driverJoystick = wpilib.Joystick(0)
+        self.driverJoystick = wpilib.Joystick(1)
         self.leftWingLog = sea.LogState("Wing L")
         self.rightWingLog = sea.LogState("Wing R")
 

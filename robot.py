@@ -22,7 +22,7 @@ class MainRobot(sea.GeneratorBot):
 
         self.lifterBot = lifter.Lifter.__new__(lifter.Lifter)
         self.lifterBot.theRobot = self
-        self.lifterBot.driverJoystick = self.driverJoystick
+        #self.lifterBot.driverJoystick = self.driverJoystick
         self.lifterBot.robotInit()
 
         self.timerLogState = sea.LogState("Time", 9999)
@@ -53,7 +53,10 @@ class MainRobot(sea.GeneratorBot):
 
     def teleop(self):
         yield from sea.parallel(
-            self.wait_mode(),
+            #self.wait_mode(),
+            self.shooterBot.teleop(),
+            self.driveBot.teleop(),
+            self.lifterBot.teleop(),
             self.timer(),
             self.sendLogStatesGenerator())
 
