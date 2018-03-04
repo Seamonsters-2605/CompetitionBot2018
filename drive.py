@@ -24,9 +24,9 @@ class DriveBot(sea.GeneratorBot):
 
         self.pidLookBackRange = 10
 
-        self.strafeScales = (0.1, 0.2, 0.2)
-        self.forwardScales = (0.15, 0.5, 1.0)
-        self.turnScales = (0.15, 0.15, 0.20)
+        self.strafeScales = (0.2, 0.2, 0.6)
+        self.forwardScales = (0.35, 0.4, 1.0)
+        self.turnScales = (0.15, 0.20, 0.40)
 
         # Tad's vars
 
@@ -213,14 +213,11 @@ class DriveBot(sea.GeneratorBot):
             direction = math.pi
             turn = -.08
 
-        if sea.getSwitch("Drive voltage mode", False):
+        if sea.getSwitch("Drive voltage mode", False) or gear == 2:
             self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
-        elif gear != 0:
+        else:
             self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
             self._setPID(robotconfig.speedModePIDs[gear])
-        else:
-            self.holoDrive.setDriveMode(ctre.ControlMode.Position)
-            self._setPID(robotconfig.positionModePIDs[gear])
 
 
         if sea.getSwitch("Drive param logging", False):
