@@ -30,7 +30,12 @@ class RotationTracker:
             yield
 
     def waitRotation(self, range):
+        i = 0
         while True:
+            i += 1
+            if i > 5 * 50:
+                self.targetOffsetRotation = 999999 # break NavX
+
             offset = self.ahrs.getAngle() - self.origin - self.targetOffsetRotation
             yield abs(offset) <= range
 
