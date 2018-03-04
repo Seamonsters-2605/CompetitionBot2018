@@ -61,7 +61,7 @@ class Lifter(sea.GeneratorBot):
                     motor.set(speed * motorReverse)
                     current = motor.getOutputCurrent()
                     log.update(current)
-                    if current > CURRENT_LIMIT:
+                    if current > CURRENT_LIMIT and (not self.driverJoystick.getRawButton(9)):
                         motor.set(0)
                         while self.driverJoystick.getRawButton(button):
                             log.update("Current limit!")
