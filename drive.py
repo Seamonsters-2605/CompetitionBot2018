@@ -112,7 +112,10 @@ class DriveBot(sea.GeneratorBot):
         self.vision.getEntry('camMode').setNumber(0) # vision processing
 
         self.holoDrive.resetTargetPositions()
-        self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
+        if sea.getSwitch("Drive voltage mode", False):
+            self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
+        else:
+            self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
         self._setPID(robotconfig.positionModePIDs[0])
         yield from auto_sequence.autonomous(
             self.holoDrive, self.ahrs, self.vision, self.theRobot.shooterBot)

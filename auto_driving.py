@@ -13,6 +13,11 @@ def driveContinuous(drive, magnitude, direction, turn):
         drive.drive(0, 0, 0)
 
 def driveDistance(drive, distance, speed):
+    if sea.getSwitch("Drive voltage mode", False):
+        yield from sea.timeLimit(driveContinuous(drive, speed, math.pi/2, 0),
+                                 abs(int(distance*0.7)))
+        drive.drive(0, 0, 0)
+        return
     holoDrive = _findTheHoloDrive(drive)
     motor = holoDrive.wheelMotors[HolonomicDrive.FRONT_RIGHT]
     moveTicks = int(float(distance) * robotconfig.ticksPerWheelRotation
