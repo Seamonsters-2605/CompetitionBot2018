@@ -28,6 +28,7 @@ def getNum():
     pause = {"lpause":l,"rpause":r}
     return pause
 
+
 def setActiveCameraURL(url):
     table = networktables.NetworkTables.getTable('dashboard')
     table.putString('cam', url)
