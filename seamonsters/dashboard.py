@@ -20,6 +20,7 @@ def getSwitch(name, defaultValue):
         return defaultValue
     return switchValues[switchNames.index(name)]
 
+
 def getNum():
     numTable = networktables.NetworkTables.getTable('dashboard')
     l = numTable.getNumber('leftpause',defaultValue=0)
