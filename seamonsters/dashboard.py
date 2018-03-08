@@ -20,6 +20,19 @@ def getSwitch(name, defaultValue):
         return defaultValue
     return switchValues[switchNames.index(name)]
 
+def getNum(name,defaultValue):
+    numTable = networktables.NetworkTables.getTable('dashboard')
+    try:
+        pauseNames = numTable.getStringArray('pausenames', [])
+        pauseValues = numTable.getBooleanArray('pausevalues', [])
+    except BaseException as e:
+        print("Exception while getting pause value", e)
+        return defaultValue
+    if len(pauseNames) != len(pauseValues):
+        print("Invalid pause data")
+        return defaultValue
+    return pauseValues[pauseNames.index(name)]
+
 def setActiveCameraURL(url):
     table = networktables.NetworkTables.getTable('dashboard')
     table.putString('cam', url)
