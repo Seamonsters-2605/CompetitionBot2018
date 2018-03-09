@@ -18,6 +18,7 @@ STRATEGIES = [STRAT_NONE, STRAT_CROSSLINE, STRAT_SWITCHFRONT, STRAT_SWITCHSIDE,
 
 # Names: start location, switch direction, strategy
 
+
 def doNothing(drive, rotationTracker):
     yield
 
