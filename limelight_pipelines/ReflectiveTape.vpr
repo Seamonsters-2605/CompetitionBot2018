@@ -2,6 +2,7 @@ area_max:100
 area_min:0.06973
 aspect_max:20
 aspect_min:0
+blue_balance:1975
 calibration_type:0
 contour_grouping:1
 convexity_max:100
@@ -19,6 +20,7 @@ hue_max:70
 hue_min:55
 image_flip:0
 img_to_show:0
+red_balance:1200
 sat_max:255
 sat_min:45
 val_max:255
