@@ -15,10 +15,7 @@ class Lifter(sea.GeneratorBot):
         self.rightWing = ctre.WPI_TalonSRX(7)
         self.rightWing.configSelectedFeedbackSensor(
             ctre.FeedbackDevice.QuadEncoder, 0, 0)
-        try:
-            self.driverJoystick
-        except AttributeError:
-            self.driverJoystick = wpilib.Joystick(0)
+        self.driverJoystick = wpilib.Joystick(1)
         self.leftWingLog = sea.LogState("Wing L")
         self.rightWingLog = sea.LogState("Wing R")
 
@@ -36,14 +33,20 @@ class Lifter(sea.GeneratorBot):
             while not self.driverJoystick.getRawButton(button):
                 log.update("Ready to release")
                 yield
-            motor.set(WING_SPEED * motorReverse)
-            for _ in range(18):
-                log.update("Releasing")
-                yield
-            motor.set(0)
+            currentPosition = motor.getSelectedSensorPosition(0)
+            # 500 too high
+            # 400 slightly too hight
+            # 300 barely enough, sometimes not enough
+            motor.set(ctre.ControlMode.Position, currentPosition + 350 * motorReverse)
+            #motor.set(WING_SPEED * motorReverse)
+            #for _ in range(18):
+            #    log.update("Releasing")
+            #    yield
+            #motor.set(0)
             while self.driverJoystick.getRawButton(button):
                 log.update("Released")
                 yield
+            motor.set(0)
             while True:
                 while not self.driverJoystick.getRawButton(button):
                     log.update("Ready")
@@ -58,7 +61,7 @@ class Lifter(sea.GeneratorBot):
                     motor.set(speed * motorReverse)
                     current = motor.getOutputCurrent()
                     log.update(current)
-                    if current > CURRENT_LIMIT:
+                    if current > CURRENT_LIMIT and (not self.driverJoystick.getRawButton(9)):
                         motor.set(0)
                         while self.driverJoystick.getRawButton(button):
                             log.update("Current limit!")

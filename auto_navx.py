@@ -18,6 +18,10 @@ class RotationTracker:
     def rotateToTarget(self):
         while True:
             offset = self.ahrs.getAngle() - self.origin - self.targetOffsetRotation
+            if abs(offset) > 720:
+                print("NavX is broken!!")
+                yield
+                continue
             if offset > 0:
                 driveSpeed = (offset * ROTATE_SCALE) ** ROTATE_EXPONENT
             else:
@@ -26,7 +30,12 @@ class RotationTracker:
             yield
 
     def waitRotation(self, range):
+        i = 0
         while True:
+            i += 1
+            if i > 5 * 50:
+                self.targetOffsetRotation = 999999 # break NavX
+
             offset = self.ahrs.getAngle() - self.origin - self.targetOffsetRotation
             yield abs(offset) <= range
 

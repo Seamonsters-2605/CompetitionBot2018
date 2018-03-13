@@ -18,6 +18,7 @@ STRATEGIES = [STRAT_NONE, STRAT_CROSSLINE, STRAT_SWITCHFRONT, STRAT_SWITCHSIDE,
 
 # Names: start location, switch direction, strategy
 
+
 def doNothing(drive, rotationTracker):
     yield
 
@@ -32,7 +33,7 @@ def loc1_right_switchFront(drive, rotationTracker):
     print("running loc1_right_switchFront")
     yield from auto_driving.driveDistance(drive, 40, .33)
     rotationTracker.setTargetOffsetRotation(90)
-    yield from auto_driving.driveDistance(drive, 150, .33)
+    yield from auto_driving.driveDistance(drive, 150, .45)
     rotationTracker.setTargetOffsetRotation(0)
     #yield from auto_driving.driveDistance(drive,70,.33)
     yield
@@ -53,7 +54,7 @@ def loc1_exchange(drive, rotationTracker):
     yield from sea.timeLimit(auto_driving.driveContinuous(drive, 0, 0, 0), 10)
     rotationTracker.setTargetOffsetRotation(90)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-    yield from auto_driving.driveDistance(drive, 25, .33)
+    yield from auto_driving.driveDistance(drive, 50, .33)
     yield from sea.timeLimit(auto_driving.driveContinuous(drive, 0, 0, 0), 10)
     rotationTracker.setTargetOffsetRotation(0)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
@@ -108,13 +109,10 @@ def loc2_exchange(drive, rotationTracker):
     yield from sea.timeLimit(auto_driving.driveContinuous(drive, 0, 0, 0), 10)
     rotationTracker.setTargetOffsetRotation(-90)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-    yield from auto_driving.driveDistance(drive, 40, .33)
+    yield from auto_driving.driveDistance(drive, 33, .33)
     yield from sea.timeLimit(auto_driving.driveContinuous(drive, 0, 0, 0), 10)
     rotationTracker.setTargetOffsetRotation(0)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-    rotationTracker.setTargetOffsetRotation(-45)
-    yield from auto_driving.driveDistance(drive, 50, .33)
-    rotationTracker.setTargetOffsetRotation(0)
 
 def loc3_left_switchFront(drive, rotationTracker):
     print("running loc3_left_switchFront")
@@ -152,7 +150,6 @@ LOCATION1_STRATEGIES = {
         STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc1_crossLine,
         STRAT_SWITCHFRONT: loc1_right_switchFront,
-        STRAT_SWITCHSIDE: loc1_crossLine,
         STRAT_EXCHANGE: loc1_exchange
     }
 }
@@ -178,8 +175,7 @@ LOCATION3_STRATEGIES = {
     SWITCH_LEFT: {
         STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc3_crossLine,
-        STRAT_SWITCHFRONT: loc3_left_switchFront,
-        STRAT_SWITCHSIDE: loc3_crossLine
+        STRAT_SWITCHFRONT: loc3_left_switchFront
     },
     SWITCH_RIGHT: {
         STRAT_NONE: doNothing,

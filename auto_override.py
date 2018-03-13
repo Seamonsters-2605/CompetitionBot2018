@@ -10,7 +10,7 @@ def override():
         locate = 2
     elif sea.getSwitch("Loc3",defaultValue=False):
         locate = 3
-    elif sea.getSwitch("None",defaultValue=False):
+    else:
         locate = sL
 
 
