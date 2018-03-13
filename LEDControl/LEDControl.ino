@@ -4,7 +4,7 @@
 #define LED_NUM 28      //Number of leds per strip
 #define OFF 0
 
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(numOfLeds, dinPin, NEO_GRB + NEO_KHZ800);  //Create pixels object
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(LED_NUM, DATA_PIN, NEO_GRB + NEO_KHZ800);  //Create pixels object
 
 // Color takes RGB values, from 0,0,0 up to 255,255,255
 // e.g. White = (255,255,255), Red = (255,0,0)
@@ -18,7 +18,7 @@ void setup(){
 }
 
 void loop(){
-  AllAboard(0, 255, 0);
+  AllAboard(0, 0, 255);
 }
 
 //Wing activation - light each LED sequentially
