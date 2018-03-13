@@ -8,6 +8,8 @@ class SeizureLitesSpazzzm (wpilib.IterativeRobot):
     def teleopPeriodic(self):
         if self.joystick.getRawButton(1):
             self.output.set(True)
+        else:
+            self.output.set(False)
 print ("EnAbLiNg LiGhTiNg")
 
 if __name__ == "__main__":
