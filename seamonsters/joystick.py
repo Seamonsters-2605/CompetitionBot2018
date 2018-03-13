@@ -7,6 +7,15 @@ def deadZone(value, deadZone = 0.08):
        return 0.0
    return value
 
+def whileButtonPressed(joystick, button):
+    yield
+    while joystick.getRawButton(button):
+        yield
+
+def untilButtonPressed(joystick, button):
+    yield
+    while not joystick.getRawButton(button):
+        yield
 
 class DynamicAxis:
 
