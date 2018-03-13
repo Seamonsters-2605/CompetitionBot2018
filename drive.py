@@ -9,6 +9,8 @@ import seamonsters as sea
 import camera
 import robotconfig
 import auto_sequence
+import auto_vision
+import limelight
 
 
 class DriveBot(sea.GeneratorBot):
@@ -83,14 +85,15 @@ class DriveBot(sea.GeneratorBot):
 
         self.currentPIDs = None
 
+        limelight.driverCameraMode(self.vision)
+
 
     def teleop(self):
         #for talon in self.talons:
         #    talon.setSelectedSensorPosition(0, 0, 10)
 
         self.reversed = True # start going towards intake
-        self.vision.getEntry('ledMode').setNumber(1) # off
-        self.vision.getEntry('camMode').setNumber(1) # driver camera
+        limelight.driverCameraMode(self.vision)
 
         self.holoDrive.resetTargetPositions()
 
@@ -99,6 +102,20 @@ class DriveBot(sea.GeneratorBot):
             while True:
                 yield
                 self.teleopPeriodic()
+
+                if self.driverJoystick.getRawButton(9):
+                    limelight.cubeAlignMode(self.vision)
+
+                    yield from sea.watch(
+                        auto_vision.strafeAlign(self.drive, self.vision, 0),
+                        sea.whileButtonPressed(self.driverJoystick, 9))
+                    self.drive.drive(0, 0, 0)
+                    limelight.driverCameraMode(self.vision)
+
+                if self.driverJoystick.getRawButton(3):
+                    yield from sea.watch(
+                        self.theRobot.shooterBot.dropWhileDrivingGenerator(self.drive),
+                        sea.whileButtonPressed(self.driverJoystick, 3))
         finally:
             self.drive.drive(0, 0, 0)
 
@@ -108,8 +125,7 @@ class DriveBot(sea.GeneratorBot):
         #    talon.setSelectedSensorPosition(0, 0, 10)
 
         sea.setActiveCameraURL('')
-        self.vision.getEntry('ledMode').setNumber(0) # on
-        self.vision.getEntry('camMode').setNumber(0) # vision processing
+        limelight.visionTargetMode(self.vision)
 
         self.holoDrive.resetTargetPositions()
         if sea.getSwitch("Drive voltage mode", False):
@@ -154,9 +170,6 @@ class DriveBot(sea.GeneratorBot):
             self.fieldDriveLog.update(int(math.degrees(robotOffset)))
         else:
             self.fieldDriveLog.update("Disabled")
-
-        if self.driverJoystick.getRawButton(4):
-            self.fieldDrive.zero()
 
         # 3 possible positions of the throttle
         gear = 2 - round(self.driverJoystick.getRawAxis(2) + 1.0)
