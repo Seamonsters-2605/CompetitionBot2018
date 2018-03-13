@@ -10,7 +10,8 @@ class SeizureLitesSpazzzm (wpilib.IterativeRobot):
             wpilib.DigitalOutput.disablePWM()
 print ("Whoo")
 
-
+if __name__ == "__main__":
+    wpilib.run(MyRobot, physics_enabled=True)
 
 
 #whoo comments they're really helpful
