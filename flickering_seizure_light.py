@@ -11,7 +11,7 @@ class SeizureLitesSpazzzm (wpilib.IterativeRobot):
 print ("Whoo")
 
 if __name__ == "__main__":
-    wpilib.run(MyRobot, physics_enabled=True)
+    wpilib.run(SeizureLitesSpazzzm, physics_enabled=True)
 
 
 #whoo comments they're really helpful
