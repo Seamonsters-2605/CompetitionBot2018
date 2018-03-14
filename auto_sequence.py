@@ -25,12 +25,21 @@ def autoSequence(drive, vision, rotationTracker, shooter):
     print('rpause is ', auto_pauses.RightPause())
 =======
     pauses = sea.getNum()
+<<<<<<< HEAD
     print(pauses['lpause'])
     print(pauses['rpause'])
     
     sea.wait(pauses['lpause'])
     sea.wait(pauses['rpause'])
 >>>>>>> untested pausing
+=======
+    print('lpause is ', pauses['lpause'])
+    print('rpause is ', pauses['rpause'])
+
+    #previous loc
+    yield from sea.wait(int(pauses['lpause']*50)) #50 interations/s, divide by 2 b/c timing in sim
+    yield from sea.wait(int(pauses['rpause']*50))
+>>>>>>> pause is functional, though not accurate in sim
 
     strategy = None
     for strat in auto_strategies.STRATEGIES:
