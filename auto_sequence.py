@@ -17,6 +17,13 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         switchPosition = gameMessage[0]
 
     startPos = auto_override.override()
+    pauses = sea.getNum()
+    print(pauses['lpause'])
+    print(pauses['rpause'])
+    
+    sea.wait(pauses['lpause'])
+    sea.wait(pauses['rpause'])
+
     strategy = None
     for strat in auto_strategies.STRATEGIES:
         switchName = switchPosition + " " + strat
