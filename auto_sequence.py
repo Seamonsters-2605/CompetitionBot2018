@@ -7,22 +7,24 @@ import wpilib
 import auto_strategies
 import auto_override
 
+
 def autoSequence(drive, vision, rotationTracker, shooter):
-    shooter.stop() # it sometimes is running when auto starts?
+    shooter.stop()  # it sometimes is running when auto starts?
 
     gameMessage = wpilib.DriverStation.getInstance().getGameSpecificMessage()
     if gameMessage is None or gameMessage == "":
-        switchPosition = "ERROR!" # will cause it to default to CROSSLINE
+        switchPosition = "ERROR!"  # will cause it to default to CROSSLINE
     else:
         switchPosition = gameMessage[0]
 
     startPos = auto_override.override()
     pauses = sea.getNum()
-    print(pauses['lpause'])
-    print(pauses['rpause'])
-    
-    sea.wait(pauses['lpause'])
-    sea.wait(pauses['rpause'])
+    print('lpause is ', pauses['lpause'])
+    print('rpause is ', pauses['rpause'])
+
+    #previous loc
+    yield from sea.wait(int(pauses['lpause']*50)) #50 interations/s, divide by 2 b/c timing in sim
+    yield from sea.wait(int(pauses['rpause']*50))
 
     strategy = None
     for strat in auto_strategies.STRATEGIES:
@@ -39,12 +41,12 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         switchPosition = 'L'
 
     try:
-        stratGenerator = auto_strategies.LOCATION_STRATEGIES[startPos]\
+        stratGenerator = auto_strategies.LOCATION_STRATEGIES[startPos] \
             [switchPosition][strategy]
     except KeyError:
         print("You chose an invalid auto sequence! Defaulting to Cross line")
         strategy = auto_strategies.STRAT_CROSSLINE
-        stratGenerator = auto_strategies.LOCATION_STRATEGIES[startPos]\
+        stratGenerator = auto_strategies.LOCATION_STRATEGIES[startPos] \
             [switchPosition][strategy]
 
     yield from stratGenerator(drive, rotationTracker)
@@ -55,7 +57,7 @@ def autoSequence(drive, vision, rotationTracker, shooter):
             print("Skipping vision")
         elif (yield from auto_vision.waitForVision(vision)):
             yield from sea.timeLimit(sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0),
-                                      20), 100)
+                                                    20), 100)
         else:
             print("Couldn't find vision!")
         drive.drive(0, 0, 0)
@@ -81,9 +83,10 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         rotationTracker.setTargetOffsetRotation(0)
         yield from auto_driving.driveDistance(drive, 60, .33)
 
+
 def shootFinal(drive, shooter, rotationTracker):
     yield from sea.watch(
-        auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
+        auto_driving.driveContinuous(drive, .1, math.pi / 2, 0),
         shooter.shootGenerator())
     yield from auto_driving.driveDistance(drive, -25, -.5)
     # rotationTracker.setTargetOffsetRotation(
@@ -97,4 +100,5 @@ def autonomous(drive, ahrs, vision, shooter):
     rotationTracker.resetOrigin()
     rotationTracker.setTargetOffsetRotation(0)
     yield from sea.parallel(
-        rotationTracker.rotateToTarget(),autoSequence(multiDrive, vision, rotationTracker, shooter),auto_driving.updateMultiDrive(multiDrive))
+        rotationTracker.rotateToTarget(), autoSequence(multiDrive, vision, rotationTracker, shooter),
+        auto_driving.updateMultiDrive(multiDrive))
