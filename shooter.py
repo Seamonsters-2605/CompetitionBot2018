@@ -1,6 +1,8 @@
 import wpilib
 import ctre
 import seamonsters as sea
+import auto_driving
+import math
 
 class MyRobot(sea.GeneratorBot):
 
@@ -13,10 +15,14 @@ class MyRobot(sea.GeneratorBot):
             self.driverJoystick
         except AttributeError:
             self.driverJoystick = wpilib.Joystick(0)
+        self.teleopLock = False
 
     def teleop(self):
         try:
             while True:
+                if self.teleopLock:
+                    yield
+                    continue
                 pov = self.driverJoystick.getPOV()
                 if self.driverJoystick.getRawButton(2):
                     self.leftBelt.set(1)
@@ -49,9 +55,11 @@ class MyRobot(sea.GeneratorBot):
         self.leftBelt.set(0.45)
         self.rightBelt.set(0.45)
         try:
+            self.teleopLock = True
             for i in range(70):
                 yield
         finally:
+            self.teleopLock = False
             self.leftBelt.set(0)
             self.rightBelt.set(0)
 
@@ -59,11 +67,18 @@ class MyRobot(sea.GeneratorBot):
         self.leftBelt.set(-0.25)
         self.rightBelt.set(-0.25)
         try:
-            for i in range(70):
+            self.teleopLock = True
+            while True:
                 yield
         finally:
+            self.teleopLock = False
             self.leftBelt.set(0)
             self.rightBelt.set(0)
+
+    def dropWhileDrivingGenerator(self, drive):
+        yield from sea.watch(
+            auto_driving.driveContinuous(drive, 0.1, math.pi / 2, 0),
+            self.dropGenerator())
 
 if __name__ == "__main__":
     wpilib.run(MyRobot, physics_enabled=True)

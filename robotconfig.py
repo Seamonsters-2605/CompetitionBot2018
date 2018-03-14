@@ -1,6 +1,6 @@
 import math
 
-theRobot = "2018"
+theRobot = "2018 new encoders"
 
 wheelCircumference = 6 * math.pi
 
@@ -23,10 +23,15 @@ if theRobot == "Leviathan":
         (1.0, 0.0009, 3.0, 0.0),
         (1.0, 0.0009, 3.0, 0.0)
     )
-elif theRobot == "2018":
-    ticksPerWheelRotation = 7149
+elif theRobot == "2018" or theRobot == "2018 new encoders":
+    if theRobot == "2018 new encoders":
+        # 10,767; 10,819; 10,832
+        ticksPerWheelRotation = 10826
+        maxVelocitySpeedMode = 12115
+    else:
+        ticksPerWheelRotation = 7149
+        maxVelocitySpeedMode = 8000
     maxError = ticksPerWheelRotation * 1.5
-    maxVelocitySpeedMode = 8000
     maxVelocityPositionMode = maxVelocitySpeedMode / 5
 
     positionModePIDs = (

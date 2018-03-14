@@ -45,6 +45,7 @@ class SimulatedTalon:
                 return diff / maxVel * 5 * self.inv
             elif controlMode == ctre.ControlMode.Velocity:
                 targetVel = talonData['pid0_target']
+                talonData['quad_position'] += int(targetVel/5) # update encoders
                 return targetVel / maxVel * self.inv
             else:
                 return 0.0
