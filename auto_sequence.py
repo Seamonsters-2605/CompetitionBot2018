@@ -19,9 +19,18 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         switchPosition = gameMessage[0]
 
     startPos = auto_override.override()
+<<<<<<< HEAD
 
     print('lpause is ',auto_pauses.LeftPause())
     print('rpause is ', auto_pauses.RightPause())
+=======
+    pauses = sea.getNum()
+    print(pauses['lpause'])
+    print(pauses['rpause'])
+    
+    sea.wait(pauses['lpause'])
+    sea.wait(pauses['rpause'])
+>>>>>>> untested pausing
 
     strategy = None
     for strat in auto_strategies.STRATEGIES:
