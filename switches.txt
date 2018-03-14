@@ -3,6 +3,7 @@
 -Encoder logging
 -Drive param logging
 -Current logging
+-Auto: Switch vision
 -DON'T DRIVE
 
 : L Do nothing, L Cross line, L Switch front, L Switch side, L Exchange
