@@ -30,13 +30,13 @@ class MyRobot(sea.GeneratorBot):
                 elif pov == 0 or self.driverJoystick.getRawButton(1):
                     self.leftBelt.set(0.55)
                     self.rightBelt.set(0.55)
-                    self.leftintake.set(0.8)
-                    self.rightintake.set(0.8)
+                    self.leftintake.set(-0.35)
+                    self.rightintake.set(-0.35)
                 elif pov == 180:
-                    self.leftBelt.set(-0.25)
-                    self.rightBelt.set(-0.25)
-                    self.rightintake.set(-0.25)
-                    self.leftintake.set(-0.25)
+                    self.leftBelt.set(-.45)
+                    self.rightBelt.set(-.45)
+                    self.rightintake.set(0.35)
+                    self.leftintake.set(0.35)
                 else:
                     self.leftBelt.set(0)
                     self.rightBelt.set(0)
