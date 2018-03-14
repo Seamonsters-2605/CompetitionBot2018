@@ -13,8 +13,9 @@ STRAT_CROSSLINE = "Cross line"
 STRAT_SWITCHFRONT = "Switch front"
 STRAT_SWITCHSIDE = "Switch side"
 STRAT_EXCHANGE = "Exchange"
+STRAT_BACKCUBE = "Pick up back cube"
 STRATEGIES = [STRAT_NONE, STRAT_CROSSLINE, STRAT_SWITCHFRONT, STRAT_SWITCHSIDE,
-              STRAT_EXCHANGE]
+              STRAT_EXCHANGE, STRAT_BACKCUBE]
 
 # Names: start location, switch direction, strategy
 
@@ -73,6 +74,8 @@ def loc2_right_switchFront(drive, rotationTracker):
     rotationTracker.setTargetOffsetRotation(45)
     yield from auto_driving.driveDistance(drive, 57, .33)
     rotationTracker.setTargetOffsetRotation(0)
+    yield
+    yield from right_frontCubeExchange(drive, rotationTracker)
 
 def loc2_crossLine_start(drive, rotationTracker):
     yield from auto_driving.driveDistance(drive, 35, .3)
@@ -102,6 +105,7 @@ def loc2_right_switchSide(drive, rotationTracker):
     print("running loc2_right_switchSide")
     yield from loc2_left_crossLine(drive, rotationTracker)
     rotationTracker.setTargetOffsetRotation(-90)
+    yield from right_backCube(drive, rotationTracker)
 
 def loc2_exchange(drive, rotationTracker):
     print("running loc2_exchange")
@@ -137,6 +141,45 @@ def loc3_right_switchSide(drive, rotationTracker):
     yield from loc3_crossLine(drive, rotationTracker)
     rotationTracker.setTargetOffsetRotation(-90)
 
+def right_backCube(drive, rotationTracker):
+    print("running right_backCube")
+    rotationTracker.setTargetOffsetRotation(180)
+    yield from auto_driving.driveDistance(drive, -10, -.33)
+    for i in range(200):
+        drive.drive(.33, 0, 0)
+        yield
+    drive.drive(0, 0, 0)
+    yield from auto_driving.driveDistance(drive, 10, .33)
+    # pick up cube
+    yield from auto_driving.driveDistance(drive, -10, .33)
+    rotationTracker.setTargetOffsetRotation(0)
+
+def left_backCube(drive, rotationTracker):
+    print("running left_backCube")
+    rotationTracker.setTargetOffsetRotation(180)
+    yield from auto_driving.driveDistance(drive, -10, -.33)
+    for i in range(200):
+        drive.drive(-.33, 0, 0)
+        yield
+    drive.drive(0, 0, 0)
+    yield from auto_driving.driveDistance(drive, 10, .33)
+    # pick up cube
+    yield from auto_driving.driveDistance(drive, -10, .33)
+    rotationTracker.setTargetOffsetRotation(0)
+
+def right_frontCubeExchange(drive, rotationTracker):
+    print("running right_frontCubeExchange")
+    yield from auto_driving.driveDistance(drive, -20, -.33)
+    rotationTracker.setTargetOffsetRotation(-180)
+    yield from auto_driving.driveDistance(drive, 25, .33)
+    rotationTracker.setTargetOffsetRotation(180)
+    yield from auto_driving.driveDistance(drive, 10, .33)
+    #pick up cube
+    yield from auto_driving.driveDistance(drive, -20, -.33)
+
+
+
+
 
 LOCATION1_STRATEGIES = {
     SWITCH_LEFT: {
@@ -144,13 +187,16 @@ LOCATION1_STRATEGIES = {
         STRAT_CROSSLINE: loc1_crossLine,
         STRAT_SWITCHFRONT: loc1_left_switchFront,
         STRAT_SWITCHSIDE: loc1_left_switchSide,
-        STRAT_EXCHANGE: loc1_exchange
+        STRAT_EXCHANGE: loc1_exchange,
+        STRAT_BACKCUBE: left_backCube
     },
     SWITCH_RIGHT: {
         STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc1_crossLine,
         STRAT_SWITCHFRONT: loc1_right_switchFront,
-        STRAT_EXCHANGE: loc1_exchange
+        STRAT_EXCHANGE: loc1_exchange,
+        STRAT_BACKCUBE: right_backCube
+
     }
 }
 
@@ -160,14 +206,16 @@ LOCATION2_STRATEGIES = {
         STRAT_CROSSLINE: loc2_left_crossLine,
         STRAT_SWITCHFRONT: loc2_left_switchFront,
         STRAT_SWITCHSIDE: loc2_left_switchSide,
-        STRAT_EXCHANGE: loc2_exchange
+        STRAT_EXCHANGE: loc2_exchange,
+        STRAT_BACKCUBE: left_backCube
     },
     SWITCH_RIGHT: {
         STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc2_right_crossLine,
         STRAT_SWITCHFRONT: loc2_right_switchFront,
         STRAT_SWITCHSIDE: loc2_right_switchSide,
-        STRAT_EXCHANGE: loc2_exchange
+        STRAT_EXCHANGE: loc2_exchange,
+        STRAT_BACKCUBE: right_backCube
     }
 }
 
@@ -175,13 +223,15 @@ LOCATION3_STRATEGIES = {
     SWITCH_LEFT: {
         STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc3_crossLine,
-        STRAT_SWITCHFRONT: loc3_left_switchFront
+        STRAT_SWITCHFRONT: loc3_left_switchFront,
+        STRAT_BACKCUBE: left_backCube
     },
     SWITCH_RIGHT: {
         STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc3_crossLine,
         STRAT_SWITCHFRONT: loc3_right_switchFront,
-        STRAT_SWITCHSIDE: loc3_right_switchSide
+        STRAT_SWITCHSIDE: loc3_right_switchSide,
+        STRAT_BACKCUBE: right_backCube
     }
 }
 

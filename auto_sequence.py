@@ -43,12 +43,12 @@ def autoSequence(drive, vision, rotationTracker, shooter):
     yield from stratGenerator(drive, rotationTracker)
 
     if strategy == auto_strategies.STRAT_SWITCHFRONT:
-        yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-        if (yield from auto_vision.waitForVision(vision)):
-            yield from sea.timeLimit(sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0),
-                                      20), 100)
-        else:
-            print("Couldn't find vision!")
+        #yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+        #if (yield from auto_vision.waitForVision(vision)):
+            #yield from sea.timeLimit(sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0),
+                                  #    20), 100)
+        #else:
+            #print("Couldn't find vision!")
         drive.drive(0, 0, 0)
         yield from sea.timeLimit(auto_driving.driveDistance(drive, 53, .5), 50)
         drive.drive(0, 0, 0)
