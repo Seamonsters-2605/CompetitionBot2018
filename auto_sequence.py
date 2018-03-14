@@ -44,7 +44,9 @@ def autoSequence(drive, vision, rotationTracker, shooter):
 
     if strategy == auto_strategies.STRAT_SWITCHFRONT:
         yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-        if (yield from auto_vision.waitForVision(vision)):
+        if not sea.getSwitch("Auto: Switch vision", False):
+            print("Skipping vision")
+        elif (yield from auto_vision.waitForVision(vision)):
             yield from sea.timeLimit(sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0),
                                       20), 100)
         else:
