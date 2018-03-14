@@ -7,8 +7,8 @@ class MyRobot(sea.GeneratorBot):
     def robotInit(self):
         self.leftBelt = ctre.WPI_TalonSRX(4)
         self.rightBelt = ctre.WPI_TalonSRX(5)
-        self.leftintake = ctre.WPI_TalonSRX
-        self.rightintake = ctre.WPI_TalonSRX
+        self.leftintake = ctre.WPI_TalonSRX(9)
+        self.rightintake = ctre.WPI_TalonSRX(8)
         try:
             self.driverJoystick
         except AttributeError:
