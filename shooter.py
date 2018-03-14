@@ -44,8 +44,8 @@ class MyRobot(sea.GeneratorBot):
         self.rightBelt.set(0)
 
     def shootGenerator(self):
-        self.leftBelt.set(0.45)
-        self.rightBelt.set(0.45)
+        self.leftBelt.set(0.65)
+        self.rightBelt.set(0.65)
         try:
             self.teleopLock = True
             for i in range(70):

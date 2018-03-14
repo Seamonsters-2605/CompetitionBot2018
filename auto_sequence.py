@@ -52,7 +52,9 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         else:
             print("Couldn't find vision!")
         drive.drive(0, 0, 0)
-        yield from sea.timeLimit(auto_driving.driveDistance(drive, 53, .5), 50)
+        # for center autos: yield from sea.timeLimit(auto_driving.driveDistance(drive, 35, .5), 50)
+        # for side autos:
+        yield from sea.timeLimit(auto_driving.driveDistance(drive, 40, .5), 50)
         drive.drive(0, 0, 0)
         yield from shootFinal(drive, shooter, rotationTracker)
 

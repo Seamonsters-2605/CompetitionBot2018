@@ -31,9 +31,9 @@ def loc1_left_switchFront(drive, rotationTracker):
 
 def loc1_right_switchFront(drive, rotationTracker):
     print("running loc1_right_switchFront")
-    yield from auto_driving.driveDistance(drive, 30, .33)
+    yield from auto_driving.driveDistance(drive, 10, .33)
     rotationTracker.setTargetOffsetRotation(80)
-    yield from auto_driving.driveDistance(drive, 150, .45)
+    yield from auto_driving.driveDistance(drive, 130, .45)
     rotationTracker.setTargetOffsetRotation(0)
     yield
     drive.drive(0,0,0)
@@ -60,16 +60,16 @@ def loc1_exchange(drive, rotationTracker):
 
 def loc2_left_switchFront(drive, rotationTracker):
     print("running loc2_left_switchFront")
-    yield from auto_driving.driveDistance(drive, 35, .33)
-    rotationTracker.setTargetOffsetRotation(-45)
-    yield from auto_driving.driveDistance(drive,100,.33)
+    yield from auto_driving.driveDistance(drive, 15, .45)
+    rotationTracker.setTargetOffsetRotation(-65)
+    yield from auto_driving.driveDistance(drive, 100, .45)
     rotationTracker.setTargetOffsetRotation(0)
 
 def loc2_right_switchFront(drive, rotationTracker):
     print("running loc2_right_switchFront")
-    yield from auto_driving.driveDistance(drive, 15, .33)
+    yield from auto_driving.driveDistance(drive, 15, .45)
     rotationTracker.setTargetOffsetRotation(45)
-    yield from auto_driving.driveDistance(drive, 42, .33)
+    yield from auto_driving.driveDistance(drive, 42, .45)
     rotationTracker.setTargetOffsetRotation(0)
 
 def loc2_crossLine_start(drive, rotationTracker):
@@ -114,9 +114,9 @@ def loc2_exchange(drive, rotationTracker):
 
 def loc3_left_switchFront(drive, rotationTracker):
     print("running loc3_left_switchFront")
-    yield from auto_driving.driveDistance(drive, 20, .33)
+    yield from auto_driving.driveDistance(drive, 10, .40)
     rotationTracker.setTargetOffsetRotation(-80)
-    yield from auto_driving.driveDistance(drive, 220, .45)
+    yield from auto_driving.driveDistance(drive, 170, .45)
     rotationTracker.setTargetOffsetRotation(0)
 
 def loc3_right_switchFront(drive, rotationTracker):
