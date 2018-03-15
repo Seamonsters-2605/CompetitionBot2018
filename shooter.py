@@ -9,6 +9,8 @@ class MyRobot(sea.GeneratorBot):
     def robotInit(self):
         self.leftBelt = ctre.WPI_TalonSRX(4)
         self.rightBelt = ctre.WPI_TalonSRX(5)
+        self.leftintake = ctre.WPI_TalonSRX(9)
+        self.rightintake = ctre.WPI_TalonSRX(8)
         try:
             self.driverJoystick
         except AttributeError:
@@ -28,12 +30,18 @@ class MyRobot(sea.GeneratorBot):
                 elif pov == 0 or self.driverJoystick.getRawButton(1):
                     self.leftBelt.set(0.55)
                     self.rightBelt.set(0.55)
+                    self.leftintake.set(-0.35)
+                    self.rightintake.set(-0.35)
                 elif pov == 180:
-                    self.leftBelt.set(-0.25)
-                    self.rightBelt.set(-0.25)
+                    self.leftBelt.set(-.45)
+                    self.rightBelt.set(-.45)
+                    self.rightintake.set(0.35)
+                    self.leftintake.set(0.35)
                 else:
                     self.leftBelt.set(0)
                     self.rightBelt.set(0)
+                    self.leftintake.set(0)
+                    self.rightintake.set(0)
                 yield
         finally:
             self.leftBelt.set(0)
