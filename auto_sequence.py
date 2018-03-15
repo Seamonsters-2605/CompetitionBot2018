@@ -22,10 +22,6 @@ def autoSequence(drive, vision, rotationTracker, shooter):
     print('lpause is ', pauses['lpause'])
     print('rpause is ', pauses['rpause'])
 
-    #previous loc
-    yield from sea.wait(int(pauses['lpause']*50)) #50 interations/s, divide by 2 b/c timing in sim
-    yield from sea.wait(int(pauses['rpause']*50))
-
     strategy = None
     for strat in auto_strategies.STRATEGIES:
         switchName = switchPosition + " " + strat
