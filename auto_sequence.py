@@ -21,6 +21,7 @@ def autoSequence(drive, vision, rotationTracker, shooter):
     startPos = auto_override.override()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     print('lpause is ',auto_pauses.LeftPause())
     print('rpause is ', auto_pauses.RightPause())
@@ -50,6 +51,12 @@ def autoSequence(drive, vision, rotationTracker, shooter):
 
 =======
 >>>>>>> ready for testing
+=======
+
+    print('lpause is ',auto_pauses.LeftPause())
+    print('rpause is ', auto_pauses.RightPause())
+
+>>>>>>> ee41489309f50d1fd857c093debc535983507cbc
     strategy = None
     for strat in auto_strategies.STRATEGIES:
         switchName = switchPosition + " " + strat

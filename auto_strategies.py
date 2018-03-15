@@ -30,7 +30,6 @@ def loc1_left_switchFront(drive, rotationTracker):
     yield from auto_pauses.LeftPause()
     yield from auto_driving.driveDistance(drive, 42, .33)
     rotationTracker.setTargetOffsetRotation(0)
->>>>>>> func for pausing
 
 def loc1_right_switchFront(drive, rotationTracker):
     print("running loc1_right_switchFront")
