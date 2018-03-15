@@ -1,6 +1,7 @@
 import math
 import auto_driving
 import auto_vision
+import auto_pauses
 import seamonsters as sea
 import auto_navx
 import wpilib
@@ -18,9 +19,9 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         switchPosition = gameMessage[0]
 
     startPos = auto_override.override()
-    pauses = sea.getNum()
-    print('lpause is ', pauses['lpause'])
-    print('rpause is ', pauses['rpause'])
+
+    print('lpause is ',auto_pauses.LeftPause())
+    print('rpause is ', auto_pauses.RightPause())
 
     strategy = None
     for strat in auto_strategies.STRATEGIES:
