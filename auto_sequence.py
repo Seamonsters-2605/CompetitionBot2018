@@ -56,6 +56,13 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         yield from sea.timeLimit(auto_driving.driveDistance(drive, 53, .5), 50)
         drive.drive(0, 0, 0)
         yield from shootFinal(drive, shooter, rotationTracker)
+        if switchPosition == "R":
+            yield from auto_strategies.right_RightCubePickup(drive, rotationTracker)
+            yield from auto_strategies.auto_CubeExchange(drive, vision, shooter, rotationTracker)
+
+        if switchPosition == "L":
+            yield from auto_strategies.left_LeftCubePickup(drive, rotationTracker)
+            yield from auto_strategies.auto_CubeExchange(drive, vision, shooter, rotationTracker)
 
     if strategy == auto_strategies.STRAT_SWITCHSIDE:
         yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)

@@ -4,6 +4,8 @@ import auto_vision
 import seamonsters as sea
 import auto_navx
 import wpilib
+import auto_vision
+import shooter
 
 SWITCH_LEFT = "L"
 SWITCH_RIGHT = "R"
@@ -27,7 +29,7 @@ def loc1_left_switchFront(drive, rotationTracker):
     print("running loc1_left_switchFront")
     yield from auto_driving.driveDistance(drive, 15, .33)
     rotationTracker.setTargetOffsetRotation(45)
-    yield from auto_driving.driveDistance(drive, 42, .33)
+    yield from auto_driving.driveDistance(drive, 47, .33)
     rotationTracker.setTargetOffsetRotation(0)
 
 def loc1_right_switchFront(drive, rotationTracker):
@@ -42,7 +44,10 @@ def loc1_right_switchFront(drive, rotationTracker):
 
 def loc1_crossLine(drive, rotationTracker):
     print("running loc1_crossLine")
-    yield from auto_driving.driveDistance(drive, 120, .7)
+    yield from auto_driving.driveDistance(drive, 20, .7)
+    rotationTracker.setTargetOffsetRotation(-20)
+    yield from auto_driving.driveDistance(drive, 100, .7)
+    rotationTracker.setTargetOffsetRotation(0)
 
 def loc1_left_switchSide(drive, rotationTracker):
     print("running loc1_left_switchSide")
@@ -131,8 +136,11 @@ def loc3_right_switchFront(drive, rotationTracker):
     rotationTracker.setTargetOffsetRotation(0)
 
 def loc3_crossLine(drive, rotationTracker):
-    print("running loc3_crossLine")
-    yield from loc1_crossLine(drive, rotationTracker)
+    print("running loc1_crossLine")
+    yield from auto_driving.driveDistance(drive, 20, .7)
+    rotationTracker.setTargetOffsetRotation(20)
+    yield from auto_driving.driveDistance(drive, 100, .7)
+    rotationTracker.setTargetOffsetRotation(0)
 
 def loc3_right_switchSide(drive, rotationTracker):
     print("running loc3_right_switchSide")
@@ -184,17 +192,52 @@ def left_backCube(drive, rotationTracker, shooter):
         shooter.shootGenerator())
     yield from auto_driving.driveDistance(drive, 25, .5)
 
-def right_frontCubeExchange(drive, rotationTracker):
-    print("running right_frontCubeExchange")
-    yield from auto_driving.driveDistance(drive, -20, -.33)
+def right_RightCubePickup(drive, rotationTracker):
+    print("running right_frontCubePickup")
+    yield from auto_driving.driveDistance(drive, -30, -.33)
+    rotationTracker.setTargetOffsetRotation(-90)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, 50, .33)
     rotationTracker.setTargetOffsetRotation(-180)
-    yield from auto_driving.driveDistance(drive, 25, .33)
-    rotationTracker.setTargetOffsetRotation(180)
-    yield from auto_driving.driveDistance(drive, 10, .33)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+
+def left_LeftCubePickup(drive, rotationTracker):
+    print("running left_LeftCubePickup")
+    yield from auto_driving.driveDistance(drive, -30, -.33)
+    rotationTracker.setTargetOffsetRotation(90)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, 50, .33)
+    rotationTracker.setTargetOffsetRotation(-180)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+
+def auto_CubeExchange(drive, vision, shooter, rotationTracker):
+    #ViSiOn
+    if (yield from auto_vision.waitForVision(vision)):
+        yield from sea.timeLimit(sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0),
+                                                20), 100)
+    else:
+        print("Couldn't find vision!")
     #pick up cube
-    yield from auto_driving.driveDistance(drive, -20, -.33)
+    yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, -20, -.33))
+    yield from auto_driving.driveDistance(drive, 10, .33)
+    rotationTracker.setTargetOffsetRotation(-150)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, 65, .33)
+    rotationTracker.setTargetOffsetRotation(0)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from sea.timeLimit(shooter.dropWhileDrivingGenerator(drive), 70)
+    yield from auto_driving.driveDistance(drive, -40, -.33)
 
-
+def auto_SecondSwitchRight(drive, vision, shooter, rotationTracker):
+    #ViSiOn
+    if (yield from auto_vision.waitForVision(vision)):
+        yield from sea.timeLimit(sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0),
+                                                20), 100)
+    else:
+        print("Couldn't find vision!")
+    #pick up cube
+    yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, -20, -.33))
+    
 
 
 
