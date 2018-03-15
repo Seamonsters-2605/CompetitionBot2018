@@ -20,6 +20,7 @@ def autoSequence(drive, vision, rotationTracker, shooter):
 
     startPos = auto_override.override()
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     print('lpause is ',auto_pauses.LeftPause())
     print('rpause is ', auto_pauses.RightPause())
@@ -35,6 +36,11 @@ def autoSequence(drive, vision, rotationTracker, shooter):
 =======
     print('lpause is ', pauses['lpause'])
     print('rpause is ', pauses['rpause'])
+=======
+
+    print('lpause is ',auto_pauses.LeftPause())
+    print('rpause is ', auto_pauses.RightPause())
+>>>>>>> func for pausing
 
 <<<<<<< HEAD
     #previous loc
