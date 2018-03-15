@@ -19,44 +19,10 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         switchPosition = gameMessage[0]
 
     startPos = auto_override.override()
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     print('lpause is ',auto_pauses.LeftPause())
     print('rpause is ', auto_pauses.RightPause())
-=======
-    pauses = sea.getNum()
-<<<<<<< HEAD
-    print(pauses['lpause'])
-    print(pauses['rpause'])
     
-    sea.wait(pauses['lpause'])
-    sea.wait(pauses['rpause'])
->>>>>>> untested pausing
-=======
-    print('lpause is ', pauses['lpause'])
-    print('rpause is ', pauses['rpause'])
-=======
-
-    print('lpause is ',auto_pauses.LeftPause())
-    print('rpause is ', auto_pauses.RightPause())
->>>>>>> func for pausing
-
-<<<<<<< HEAD
-    #previous loc
-    yield from sea.wait(int(pauses['lpause']*50)) #50 interations/s, divide by 2 b/c timing in sim
-    yield from sea.wait(int(pauses['rpause']*50))
->>>>>>> pause is functional, though not accurate in sim
-
-=======
->>>>>>> ready for testing
-=======
-
-    print('lpause is ',auto_pauses.LeftPause())
-    print('rpause is ', auto_pauses.RightPause())
-
->>>>>>> ee41489309f50d1fd857c093debc535983507cbc
     strategy = None
     for strat in auto_strategies.STRATEGIES:
         switchName = switchPosition + " " + strat
