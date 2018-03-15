@@ -15,9 +15,8 @@ STRAT_CROSSLINE = "Cross line"
 STRAT_SWITCHFRONT = "Switch front"
 STRAT_SWITCHSIDE = "Switch side"
 STRAT_EXCHANGE = "Exchange"
-STRAT_BACKCUBE = "Pick up back cube"
 STRATEGIES = [STRAT_NONE, STRAT_CROSSLINE, STRAT_SWITCHFRONT, STRAT_SWITCHSIDE,
-              STRAT_EXCHANGE, STRAT_BACKCUBE]
+              STRAT_EXCHANGE]
 
 # Names: start location, switch direction, strategy
 
@@ -147,7 +146,7 @@ def loc3_right_switchSide(drive, rotationTracker):
     yield from loc3_crossLine(drive, rotationTracker)
     rotationTracker.setTargetOffsetRotation(-90)
 
-def right_backCube(drive, rotationTracker, shooter):
+def right_backCube(drive, rotationTracker, shooter, vision):
     print("running right_backCube")
     rotationTracker.setTargetOffsetRotation(-180)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
@@ -156,7 +155,7 @@ def right_backCube(drive, rotationTracker, shooter):
         drive.drive(.33, 0, 0)
         yield
     drive.drive(0, 0, 0)
-    #align with cube
+    yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
     yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, 10, .33))
     yield from auto_driving.driveDistance(drive, -10, -.33)
     rotationTracker.setTargetOffsetRotation(0)
@@ -170,7 +169,7 @@ def right_backCube(drive, rotationTracker, shooter):
         shooter.shootGenerator())
     yield from auto_driving.driveDistance(drive, 25, .5)
 
-def left_backCube(drive, rotationTracker, shooter):
+def left_backCube(drive, rotationTracker, shooter, vision):
     rotationTracker.setTargetOffsetRotation(180)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
     yield from auto_driving.driveDistance(drive, -80, -.33)
@@ -178,7 +177,7 @@ def left_backCube(drive, rotationTracker, shooter):
         drive.drive(-.33, 0, 0)
         yield
     drive.drive(0, 0, 0)
-    # align with cube
+    yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
     yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, 10, .33))
     yield from auto_driving.driveDistance(drive, -10, -.33)
     rotationTracker.setTargetOffsetRotation(0)
@@ -248,14 +247,12 @@ LOCATION1_STRATEGIES = {
         STRAT_SWITCHFRONT: loc1_left_switchFront,
         STRAT_SWITCHSIDE: loc1_left_switchSide,
         STRAT_EXCHANGE: loc1_exchange,
-        STRAT_BACKCUBE: left_backCube
     },
     SWITCH_RIGHT: {
         STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc1_crossLine,
         STRAT_SWITCHFRONT: loc1_right_switchFront,
         STRAT_EXCHANGE: loc1_exchange,
-        STRAT_BACKCUBE: right_backCube
 
     }
 }
@@ -267,7 +264,6 @@ LOCATION2_STRATEGIES = {
         STRAT_SWITCHFRONT: loc2_left_switchFront,
         STRAT_SWITCHSIDE: loc2_left_switchSide,
         STRAT_EXCHANGE: loc2_exchange,
-        STRAT_BACKCUBE: left_backCube
     },
     SWITCH_RIGHT: {
         STRAT_NONE: doNothing,
@@ -275,7 +271,6 @@ LOCATION2_STRATEGIES = {
         STRAT_SWITCHFRONT: loc2_right_switchFront,
         STRAT_SWITCHSIDE: loc2_right_switchSide,
         STRAT_EXCHANGE: loc2_exchange,
-        STRAT_BACKCUBE: right_backCube
     }
 }
 
@@ -284,7 +279,6 @@ LOCATION3_STRATEGIES = {
         STRAT_NONE: doNothing,
         STRAT_CROSSLINE: loc3_crossLine,
         STRAT_SWITCHFRONT: loc3_left_switchFront,
-        STRAT_BACKCUBE: left_backCube
     },
     SWITCH_RIGHT: {
         STRAT_NONE: doNothing,
