@@ -25,17 +25,16 @@ def doNothing(drive, rotationTracker):
 
 def loc1_left_switchFront(drive, rotationTracker):
     print("running loc1_left_switchFront")
+    pauses = sea.getNum()
     yield from auto_driving.driveDistance(drive, 15, .33)
     rotationTracker.setTargetOffsetRotation(45)
-    yield from auto_pauses.LeftPause()
-    yield from auto_driving.driveDistance(drive, 42, .33)
-    rotationTracker.setTargetOffsetRotation(0)
+
 
 def loc1_right_switchFront(drive, rotationTracker):
     print("running loc1_right_switchFront")
+    pauses = sea.getNum()
     yield from auto_driving.driveDistance(drive, 40, .33)
     rotationTracker.setTargetOffsetRotation(90)
-    yield from auto_pauses.RightPause()
     yield from auto_driving.driveDistance(drive, 150, .45)
     rotationTracker.setTargetOffsetRotation(0)
     #yield from auto_driving.driveDistance(drive,70,.33)
@@ -66,15 +65,15 @@ def loc2_left_switchFront(drive, rotationTracker):
     print("running loc2_left_switchFront")
     yield from auto_driving.driveDistance(drive, 35, .33)
     rotationTracker.setTargetOffsetRotation(-90)
-    yield from auto_pauses.LeftPause()
+
     yield from auto_driving.driveDistance(drive,100,.33)
     rotationTracker.setTargetOffsetRotation(0)
 
 def loc2_right_switchFront(drive, rotationTracker):
     print("running loc2_right_switchFront")
+    pauses = sea.getNum()
     yield from auto_driving.driveDistance(drive, 12, .33)
     rotationTracker.setTargetOffsetRotation(45)
-    yield from auto_pauses.RightPause()
     yield from auto_driving.driveDistance(drive, 57, .33)
     rotationTracker.setTargetOffsetRotation(0)
 
@@ -120,17 +119,17 @@ def loc2_exchange(drive, rotationTracker):
 
 def loc3_left_switchFront(drive, rotationTracker):
     print("running loc3_left_switchFront")
+    pauses = sea.getNum()
     yield from auto_driving.driveDistance(drive, 35, .33)
     rotationTracker.setTargetOffsetRotation(-90)
-    yield from auto_pauses.LeftPause()
     yield from auto_driving.driveDistance(drive, 200, .45)
     rotationTracker.setTargetOffsetRotation(0)
 
 def loc3_right_switchFront(drive, rotationTracker):
     print("running loc3_right_switchFront")
+    pauses = sea.getNum()
     yield from auto_driving.driveDistance(drive, 15, .33)
     rotationTracker.setTargetOffsetRotation(-45)
-    yield from auto_pauses.RightPause()
     yield from auto_driving.driveDistance(drive, 57, .33)
     rotationTracker.setTargetOffsetRotation(0)
 
