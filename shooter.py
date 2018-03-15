@@ -66,6 +66,8 @@ class MyRobot(sea.GeneratorBot):
     def dropGenerator(self):
         self.leftBelt.set(-0.25)
         self.rightBelt.set(-0.25)
+        self.rightintake.set(0.35)
+        self.leftintake.set(0.35)
         try:
             self.teleopLock = True
             while True:
@@ -74,6 +76,8 @@ class MyRobot(sea.GeneratorBot):
             self.teleopLock = False
             self.leftBelt.set(0)
             self.rightBelt.set(0)
+            self.rightintake.set(0)
+            self.leftintake.set(0)
 
     def dropWhileDrivingGenerator(self, drive):
         yield from sea.watch(
