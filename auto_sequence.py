@@ -20,9 +20,10 @@ def autoSequence(drive, vision, rotationTracker, shooter):
 
     startPos = auto_override.override()
 
-    print('lpause is ',auto_pauses.LeftPause())
-    print('rpause is ', auto_pauses.RightPause())
-    
+    table = sea.getNum()
+    print('lpause is ',table['lpause'])
+    print('rpause is ', table['rpause'])
+
     strategy = None
     for strat in auto_strategies.STRATEGIES:
         switchName = switchPosition + " " + strat
