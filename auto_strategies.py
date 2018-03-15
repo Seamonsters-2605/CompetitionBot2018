@@ -75,7 +75,6 @@ def loc2_right_switchFront(drive, rotationTracker):
     yield from auto_driving.driveDistance(drive, 57, .33)
     rotationTracker.setTargetOffsetRotation(0)
     yield
-    yield from right_frontCubeExchange(drive, rotationTracker)
 
 def loc2_crossLine_start(drive, rotationTracker):
     yield from auto_driving.driveDistance(drive, 35, .3)
@@ -105,7 +104,6 @@ def loc2_right_switchSide(drive, rotationTracker):
     print("running loc2_right_switchSide")
     yield from loc2_left_crossLine(drive, rotationTracker)
     rotationTracker.setTargetOffsetRotation(-90)
-    yield from right_backCube(drive, rotationTracker)
 
 def loc2_exchange(drive, rotationTracker):
     print("running loc2_exchange")
@@ -141,31 +139,50 @@ def loc3_right_switchSide(drive, rotationTracker):
     yield from loc3_crossLine(drive, rotationTracker)
     rotationTracker.setTargetOffsetRotation(-90)
 
-def right_backCube(drive, rotationTracker):
+def right_backCube(drive, rotationTracker, shooter):
     print("running right_backCube")
-    rotationTracker.setTargetOffsetRotation(180)
-    yield from auto_driving.driveDistance(drive, -10, -.33)
-    for i in range(200):
+    rotationTracker.setTargetOffsetRotation(-180)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, -80, -.33)
+    for i in range(115):
         drive.drive(.33, 0, 0)
         yield
     drive.drive(0, 0, 0)
-    yield from auto_driving.driveDistance(drive, 10, .33)
-    # pick up cube
-    yield from auto_driving.driveDistance(drive, -10, .33)
-    rotationTracker.setTargetOffsetRotation(0)
-
-def left_backCube(drive, rotationTracker):
-    print("running left_backCube")
-    rotationTracker.setTargetOffsetRotation(180)
+    #align with cube
+    yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, 10, .33))
     yield from auto_driving.driveDistance(drive, -10, -.33)
-    for i in range(200):
+    rotationTracker.setTargetOffsetRotation(0)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    for i in range(50):
+        drive.drive(.33, 0, 0)
+        yield
+    drive.drive(0, 0, 0)
+    yield from sea.watch(
+        auto_driving.driveContinuous(drive, .1, math.pi / -2, 0),
+        shooter.shootGenerator())
+    yield from auto_driving.driveDistance(drive, 25, .5)
+
+def left_backCube(drive, rotationTracker, shooter):
+    rotationTracker.setTargetOffsetRotation(180)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, -80, -.33)
+    for i in range(115):
         drive.drive(-.33, 0, 0)
         yield
     drive.drive(0, 0, 0)
-    yield from auto_driving.driveDistance(drive, 10, .33)
-    # pick up cube
-    yield from auto_driving.driveDistance(drive, -10, .33)
+    # align with cube
+    yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, 10, .33))
+    yield from auto_driving.driveDistance(drive, -10, -.33)
     rotationTracker.setTargetOffsetRotation(0)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    for i in range(50):
+        drive.drive(-.33, 0, 0)
+        yield
+    drive.drive(0, 0, 0)
+    yield from sea.watch(
+        auto_driving.driveContinuous(drive, -.1, math.pi / 2, 0),
+        shooter.shootGenerator())
+    yield from auto_driving.driveDistance(drive, 25, .5)
 
 def right_frontCubeExchange(drive, rotationTracker):
     print("running right_frontCubeExchange")

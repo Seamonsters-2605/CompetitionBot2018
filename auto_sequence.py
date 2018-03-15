@@ -63,6 +63,11 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         drive.drive(0, 0, 0)
         yield from shootFinal(drive, shooter, rotationTracker)
 
+        if switchPosition == 'R':
+            yield from auto_strategies.right_backCube(drive, rotationTracker, shooter)
+        if switchPosition == 'L':
+            yield from auto_strategies.left_backCube(drive, rotationTracker, shooter)
+
     if strategy == auto_strategies.STRAT_EXCHANGE:
         yield from auto_driving.driveDistance(drive, -10, -.33)
         yield from sea.timeLimit(shooter.dropWhileDrivingGenerator(drive), 70)
@@ -80,6 +85,7 @@ def shootFinal(drive, shooter, rotationTracker):
         auto_driving.driveContinuous(drive, .1, math.pi/2, 0),
         shooter.shootGenerator())
     yield from auto_driving.driveDistance(drive, -25, -.5)
+
     # rotationTracker.setTargetOffsetRotation(
     #     rotationTracker.targetOffsetRotation + 180)
     # yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
