@@ -159,7 +159,7 @@ def right_backCube(drive, rotationTracker, shooter, vision):
     yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, 10, .33))
     yield from auto_driving.driveDistance(drive, -10, -.33)
     rotationTracker.setTargetOffsetRotation(0)
-    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from sea.timeLimit(sea.ensureTrue(rotationTracker.waitRotation(5), 20), 100)
     for i in range(50):
         drive.drive(.33, 0, 0)
         yield
@@ -177,7 +177,7 @@ def left_backCube(drive, rotationTracker, shooter, vision):
         drive.drive(-.33, 0, 0)
         yield
     drive.drive(0, 0, 0)
-    yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
+    yield from sea.timeLimit(sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20), 100)
     yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, 10, .33))
     yield from auto_driving.driveDistance(drive, -10, -.33)
     rotationTracker.setTargetOffsetRotation(0)
@@ -285,7 +285,6 @@ LOCATION3_STRATEGIES = {
         STRAT_CROSSLINE: loc3_crossLine,
         STRAT_SWITCHFRONT: loc3_right_switchFront,
         STRAT_SWITCHSIDE: loc3_right_switchSide,
-        STRAT_BACKCUBE: right_backCube
     }
 }
 
