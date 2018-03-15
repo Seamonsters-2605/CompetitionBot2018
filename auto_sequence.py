@@ -57,11 +57,11 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         drive.drive(0, 0, 0)
         yield from shootFinal(drive, shooter, rotationTracker)
         if switchPosition == "R":
-            yield from auto_strategies.right_RightCubeExchange(drive, rotationTracker)
+            yield from auto_strategies.right_RightCubePickup(drive, rotationTracker)
             yield from auto_strategies.auto_CubeExchange(drive, vision, shooter, rotationTracker)
 
         if switchPosition == "L":
-            yield from left_LeftCubeExchange(drive, rotationTracker)
+            yield from auto_strategies.left_LeftCubePickup(drive, rotationTracker)
             yield from auto_strategies.auto_CubeExchange(drive, vision, shooter, rotationTracker)
 
     if strategy == auto_strategies.STRAT_SWITCHSIDE:
