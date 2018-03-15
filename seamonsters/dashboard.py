@@ -20,6 +20,13 @@ def getSwitch(name, defaultValue):
         return defaultValue
     return switchValues[switchNames.index(name)]
 
+def getNum():
+    numTable = networktables.NetworkTables.getTable('dashboard')
+    l = numTable.getNumber('leftpause',defaultValue=0)
+    r = numTable.getNumber('rightpause',defaultValue=0)
+    pause = {"lpause":l,"rpause":r}
+    return pause
+
 def setActiveCameraURL(url):
     table = networktables.NetworkTables.getTable('dashboard')
     table.putString('cam', url)
