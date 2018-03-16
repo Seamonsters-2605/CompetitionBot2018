@@ -41,6 +41,6 @@ elif theRobot == "2018" or theRobot == "2018 new encoders":
     )
     speedModePIDs = (
         (0.1, 0.0009, 3.0, 0.0), # original medium
-        (0.8, 0.0, 10.0, 0.0), # new/special
+        (0.4, 0.0, 5.0, 0.0), # new/special
         (0.1, 0.0009, 3.0, 0.0) # fast (voltage, doesn't matter)
     )

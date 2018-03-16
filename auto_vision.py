@@ -15,8 +15,12 @@ def strafeAlign(drive,vision,visionOffset):
             print('no vision')
             yield
             continue
-        totalOffset = xOffset - visionOffset
-        exOffset = abs(totalOffset) ** exponent / 13.9
+        totalOffset = -xOffset + visionOffset
+        exOffset = abs(totalOffset) ** exponent / 20
+        if exOffset > .25:
+            exOffset = .25
+        elif exOffset < -.25:
+            exOffset = -.25
         if totalOffset < -0.0:
             drive.drive(-exOffset,0,0)
         elif totalOffset > 0.0:

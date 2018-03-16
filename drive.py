@@ -28,7 +28,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.strafeScales = (0.2, 0.2, 0.6)
         self.forwardScales = (0.35, 0.4, 1.0)
-        self.turnScales = (0.15, 0.20, 0.40)
+        self.turnScales = (0.4, 0.4, 0.4)
 
         # Tad's vars
 
@@ -104,6 +104,7 @@ class DriveBot(sea.GeneratorBot):
                 self.teleopPeriodic()
 
                 if self.driverJoystick.getRawButton(9):
+                    self._setPID(robotconfig.positionModePIDs[0])
                     limelight.cubeAlignMode(self.vision)
 
                     yield from sea.watch(
@@ -214,18 +215,6 @@ class DriveBot(sea.GeneratorBot):
         direction = -math.atan2(fwd, strafe)
         direction = self.roundDirection(direction, math.pi/2)
 
-        pov = self.driverJoystick.getPOV()
-        if pov == 90:
-            gear = 0
-            magnitude = .20
-            direction = 0
-            turn = .08
-        if pov == 270:
-            gear = 0
-            magnitude = .20
-            direction = math.pi
-            turn = -.08
-
         if sea.getSwitch("Drive voltage mode", False) or gear == 2:
             self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
         else:
@@ -246,11 +235,11 @@ class DriveBot(sea.GeneratorBot):
         elif not sea.getSwitch("DON'T DRIVE", False):
             if self.reversed:
                 self.directionLog.update("Towards intake")
-                sea.setActiveCameraURL('http://10.26.5.2:1187/stream.mjpg')
+                sea.setActiveCameraURL('http://10.26.5.6:5800')
                 self.drive.drive(magnitude, direction + math.pi, turn)
             else:
                 self.directionLog.update("Towards shooter")
-                sea.setActiveCameraURL('http://10.26.5.6:5800')
+                sea.setActiveCameraURL('http://10.26.5.2:1187/stream.mjpg')
                 self.drive.drive(magnitude, direction, turn)
 
         if self.driverJoystick.getRawButtonPressed(4):
