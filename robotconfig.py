@@ -35,7 +35,7 @@ elif theRobot == "2018" or theRobot == "2018 new encoders":
     maxVelocityPositionMode = maxVelocitySpeedMode / 5
 
     positionModePIDs = (
-        (0.8, 0.0, 10.0, 0.0), # slow
+        (0.4, 0.0, 10.0, 0.0), # slow
         (0.6, 0.0, 5.0, 0.0), # medium
         (0.07, 0.0, 3.0, 0.0) # fast
     )

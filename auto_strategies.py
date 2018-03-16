@@ -41,10 +41,11 @@ def loc1_right_switchFront(drive, rotationTracker):
 
 def loc1_crossLine(drive, rotationTracker):
     print("running loc1_crossLine")
-    yield from auto_driving.driveDistance(drive, 20, .7)
+    yield from auto_driving.driveDistance(drive, 20, .45)
     rotationTracker.setTargetOffsetRotation(-20)
-    yield from auto_driving.driveDistance(drive, 100, .7)
+    yield from auto_driving.driveDistance(drive, 70, .45)
     rotationTracker.setTargetOffsetRotation(0)
+    yield from auto_driving.driveDistance(drive, 50, .33)
     
 def loc1_left_switchSide(drive, rotationTracker):
     print("running loc1_left_switchSide")
@@ -133,10 +134,11 @@ def loc3_right_switchFront(drive, rotationTracker):
 
 def loc3_crossLine(drive, rotationTracker):
     print("running loc1_crossLine")
-    yield from auto_driving.driveDistance(drive, 20, .7)
+    yield from auto_driving.driveDistance(drive, 20, .45)
     rotationTracker.setTargetOffsetRotation(20)
-    yield from auto_driving.driveDistance(drive, 100, .7)
+    yield from auto_driving.driveDistance(drive, 70, .45)
     rotationTracker.setTargetOffsetRotation(0)
+    yield from auto_driving.driveDistance(drive, 50, .33)
 
 def loc3_right_switchSide(drive, rotationTracker):
     print("running loc3_right_switchSide")
