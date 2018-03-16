@@ -37,6 +37,26 @@ class MyRobot(sea.GeneratorBot):
                     self.rightBelt.set(-.45)
                     self.rightintake.set(0.35)
                     self.leftintake.set(0.35)
+                elif pov == 90:
+                    self.leftintake.set(-0.45)
+                    self.rightintake.set(0.45)
+                    while self.driverJoystick.getPOV() == 90:
+                        yield
+                    self.leftintake.set(-0.35)
+                    self.rightintake.set(-0.35)
+                    yield from sea.wait(30)
+                    self.leftintake.set(0)
+                    self.rightintake.set(0)
+                elif pov == 270:
+                    self.leftintake.set(0.45)
+                    self.rightintake.set(-0.45)
+                    while self.driverJoystick.getPOV() == 270:
+                        yield
+                    self.leftintake.set(-0.35)
+                    self.rightintake.set(-0.35)
+                    yield from sea.wait(30)
+                    self.leftintake.set(0)
+                    self.rightintake.set(0)
                 else:
                     self.leftBelt.set(0)
                     self.rightBelt.set(0)
