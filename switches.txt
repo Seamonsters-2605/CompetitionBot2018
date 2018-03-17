@@ -1,5 +1,6 @@
 -Field oriented drive
 -Drive voltage mode
+-Slow PIDs
 -Encoder logging
 -Drive param logging
 -Current logging
