@@ -65,7 +65,8 @@ class Lifter(sea.GeneratorBot):
                         speed *= axisValue + 1
                     motor.set(speed * motorReverse)
                     current = motor.getOutputCurrent()
-                    log.update(current)
+                    log.update(str(current) + " " +
+                               str(self.wingGamepad.getRawButton(currentOverrideButton)))
                     if current > CURRENT_LIMIT and \
                             (not self.wingGamepad.getRawButton(currentOverrideButton)):
                         motor.set(0)
