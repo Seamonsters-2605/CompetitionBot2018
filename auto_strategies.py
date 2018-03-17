@@ -36,7 +36,7 @@ def loc1_right_switchFront(drive, rotationTracker):
     yield from auto_driving.driveDistance(drive, 10, .33)
     rotationTracker.setTargetOffsetRotation(80)
     yield from auto_pauses.RightPause()
-    yield from auto_driving.driveDistance(drive, 130, .45)
+    yield from auto_driving.driveDistance(drive, 115, .45)
     rotationTracker.setTargetOffsetRotation(0)
     yield
     drive.drive(0,0,0)
