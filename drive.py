@@ -83,7 +83,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.vision = NetworkTables.getTable('limelight')
 
-        self.currentPIDs = None
+        self.currentGear = None
 
         limelight.driverCameraMode(self.vision)
 
@@ -104,7 +104,7 @@ class DriveBot(sea.GeneratorBot):
                 self.teleopPeriodic()
 
                 if self.driverJoystick.getRawButton(9):
-                    self._setPID(robotconfig.positionModePIDs[0])
+                    self.setGear(robotconfig.autoGear)
                     limelight.cubeAlignMode(self.vision)
 
                     yield from sea.watch(
@@ -130,10 +130,9 @@ class DriveBot(sea.GeneratorBot):
 
         self.holoDrive.resetTargetPositions()
         if sea.getSwitch("Drive voltage mode", False):
-            self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
+            self.setGear(robotconfig.autoGearVoltage)
         else:
-            self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
-        self._setPID(robotconfig.positionModePIDs[0])
+            self.setGear(robotconfig.autoGear)
         yield from auto_sequence.autonomous(
             self.holoDrive, self.ahrs, self.vision, self.theRobot.shooterBot)
         print("Auto sequence complete!")
@@ -204,22 +203,23 @@ class DriveBot(sea.GeneratorBot):
                 self.magnitudeExponent = 1
             print("Magnitude exponent:", self.magnitudeExponent)"""
 
+        if sea.getSwitch("Drive voltage mode", False):
+            self.setGear(robotconfig.voltageGears[gear])
+        elif sea.getSwitch("Slow PIDs", False):
+            self.setGear(robotconfig.slowPIDGears[gear])
+        else:
+            self.setGear(robotconfig.normalGears[gear])
+
         fwd = self._joystickPower(fwd, self.magnitudeExponent, deadzone=0)
         strafe = self._joystickPower(strafe, self.magnitudeExponent, deadzone=0)
         turn = self._joystickPower(turn, self.twistExponent, deadzone=0)
-        fwd *= self.forwardScales[gear]
-        strafe *= self.strafeScales[gear]
-        turn *= self.turnScales[gear]
+        fwd *= self.currentGear.forwardScale
+        strafe *= self.currentGear.strafeScale
+        turn *= self.currentGear.turnScale
 
         magnitude = math.sqrt(fwd**2 + strafe**2)
         direction = -math.atan2(fwd, strafe)
         direction = self.roundDirection(direction, math.pi/2)
-
-        if sea.getSwitch("Drive voltage mode", False) or gear == 2:
-            self.holoDrive.setDriveMode(ctre.ControlMode.PercentOutput)
-        else:
-            self.holoDrive.setDriveMode(ctre.ControlMode.Velocity)
-            self._setPID(robotconfig.speedModePIDs[gear])
 
 
         if sea.getSwitch("Drive param logging", False):
@@ -229,7 +229,7 @@ class DriveBot(sea.GeneratorBot):
         if self.driverJoystick.getRawButton(5) \
                 or self.driverJoystick.getRawButton(6) \
                 or self.driverJoystick.getRawButton(7):
-            self._setPID(robotconfig.speedModePIDs[2])
+            self.setGear(robotconfig.slowPIDGears[2])
             for talon in self.talons:
                 talon.set(ctre.ControlMode.Velocity, 0)
         elif not sea.getSwitch("DON'T DRIVE", False):
@@ -289,15 +289,18 @@ class DriveBot(sea.GeneratorBot):
         estDist = focal8 * math.sqrt(targetRealArea) / math.sqrt(overallAvg)
         print("Est. Dist: " + str(estDist))
 
-    def _setPID(self, pid):
-        if pid == self.currentPIDs:
+    def setGear(self, gear):
+        if gear == self.currentGear:
             return
+        self.currentGear = gear
+        print("Switch gear", gear)
         for talon in self.talons:
-            talon.config_kP(0, pid[0], 0)
-            talon.config_kI(0, pid[1], 0)
-            talon.config_kD(0, pid[2], 0)
-            talon.config_kF(0, pid[3], 0)
-        self.currentPIDs = pid
+            talon.config_kP(0, gear.p, 0)
+            talon.config_kI(0, gear.i, 0)
+            talon.config_kD(0, gear.d, 0)
+            talon.config_kF(0, gear.f, 0)
+        self.holoDrive.setDriveMode(gear.mode)
+
 
     def _joystickPower(self, value, exponent, deadzone = 0.05):
         if value > deadzone:
@@ -318,6 +321,7 @@ class DriveBot(sea.GeneratorBot):
         if abs(roundedValue - value) < self.driveDirectionDeadZone:
             return roundedValue
         return value
+
 
 
 if __name__ == "__main__":

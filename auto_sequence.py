@@ -99,4 +99,5 @@ def autonomous(drive, ahrs, vision, shooter):
     rotationTracker.setTargetOffsetRotation(0)
     yield from sea.parallel(
         rotationTracker.rotateToTarget(), autoSequence(multiDrive, vision, rotationTracker, shooter),
-        auto_driving.updateMultiDrive(multiDrive))
+        auto_driving.updateMultiDrive(multiDrive),
+        shooter.prepGenerator())

@@ -96,6 +96,15 @@ class MyRobot(sea.GeneratorBot):
             self.teleopLock = False
             self.leftBelt.set(0)
             self.rightBelt.set(0)
+            #self.rightintake.set(0)
+            #self.leftintake.set(0)
+
+    def prepGenerator(self):
+        self.rightintake.set(.5)
+        self.leftintake.set(.5)
+        try:
+            yield from sea.forever()
+        finally:
             self.rightintake.set(0)
             self.leftintake.set(0)
 
