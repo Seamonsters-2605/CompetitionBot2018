@@ -72,8 +72,8 @@ class MyRobot(sea.GeneratorBot):
         self.rightBelt.set(0)
 
     def shootGenerator(self):
-        self.leftBelt.set(0.65)
-        self.rightBelt.set(0.65)
+        self.leftBelt.set(0.8)
+        self.rightBelt.set(0.8)
         try:
             self.teleopLock = True
             for i in range(70):
@@ -111,6 +111,11 @@ class MyRobot(sea.GeneratorBot):
     def dropWhileDrivingGenerator(self, drive):
         yield from sea.watch(
             auto_driving.driveContinuous(drive, 0.1, math.pi / 2, 0),
+            self.dropGenerator())
+
+    def dropWhileDrivingGeneratorVoltage(self, drive):
+        yield from sea.watch(
+            auto_driving.driveContinuous(drive, 0.3, math.pi / 2, 0),
             self.dropGenerator())
 
 if __name__ == "__main__":
