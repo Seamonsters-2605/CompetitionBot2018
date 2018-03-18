@@ -114,9 +114,15 @@ class DriveBot(sea.GeneratorBot):
                     limelight.driverCameraMode(self.vision)
 
                 if self.driverJoystick.getRawButton(3):
-                    yield from sea.watch(
-                        self.theRobot.shooterBot.dropWhileDrivingGenerator(self.drive),
-                        sea.whileButtonPressed(self.driverJoystick, 3))
+                    if self.currentGear.mode == ctre.ControlMode.PercentOutput:
+                        yield from sea.watch(
+                            self.theRobot.shooterBot.dropWhileDrivingGeneratorVoltage(self.drive),
+                            sea.whileButtonPressed(self.driverJoystick, 3))
+                    else:
+                        yield from sea.watch(
+                            self.theRobot.shooterBot.dropWhileDrivingGenerator(self.drive),
+                            sea.whileButtonPressed(self.driverJoystick, 3))
+
         finally:
             self.drive.drive(0, 0, 0)
 
@@ -293,7 +299,7 @@ class DriveBot(sea.GeneratorBot):
         if gear == self.currentGear:
             return
         self.currentGear = gear
-        print("Switch gear", gear)
+        #print("Switch gear", gear)
         for talon in self.talons:
             talon.config_kP(0, gear.p, 0)
             talon.config_kI(0, gear.i, 0)
