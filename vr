@@ -1,11 +1,7 @@
-import wpilib
-import ctre
-import seamonsters as sea
-import math
-from networktables import NetworkTables
 
 
 class MyRobot(wpilib.IterativeRobot):
+    STOP = wpilib.driverJoystick.getRawButton(2)
     def robotInit(self):
         self.vision = NetworkTables.getTable("limelight")
         #self.exponent = 0.8
@@ -34,7 +30,7 @@ class MyRobot(wpilib.IterativeRobot):
             self.diffY = -self.dynamicZeroY + -math.log(self.yOffset) * 4.3 # did this to turn it into a value of 89 degrees edit this later values are screwed up
             self.diffX = -self.dynamicZeroX + -math.log(self.xOffset) * 3.3
             # did this to turn it into a value of 89 degrees, i currently do not know what "position" mean in numbers but im guessing 360 for now
-        if self.yOffset > self.dynamicZeroY:
+        if self.yOffset > self.dynamicZeroY: #watch for threshhold
             self.motorRotY(ctre.ControlMode.Position, self.diffY)#edit of 1 is correct
         elif self.yOffset < self.dynamicZeroY:
             self.motorRotY(ctre.ControlMode.Position, self.diffY)
@@ -43,7 +39,14 @@ class MyRobot(wpilib.IterativeRobot):
             self.motorRotX(ctre.ControlMode.Position, self.diffX)
         elif self.xOffset < self.dynamicZeroX:
             self.motorRotX(ctre.ControlMode.Position, self.diffX)
-
+    #def waitDontDoThat(self):
+        if STOP == True:
+            xOffset(0)
+            yOffset(0)
+        else:
+            return
+        #print(diffY)
+        #print(diffX)
 
 
         #### print VVVV the angles test VVVVV #####
