@@ -150,20 +150,17 @@ def right_backCube(drive, rotationTracker, shooter, vision):
     print("running right_backCube")
     rotationTracker.setTargetOffsetRotation(-180)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-    yield from auto_driving.driveDistance(drive, -80, -.33)
-    for i in range(115):
-        drive.drive(.33, 0, 0)
-        yield
-    drive.drive(0, 0, 0)
-    yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
+    yield from auto_driving.driveDistance(drive, -40, -.33)
+    rotationTracker.setTargetOffsetRotation(-90)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, 50, .33)
+    rotationTracker.setTargetOffsetRotation(-180)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    #yield from sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20)
     yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, 10, .33))
     yield from auto_driving.driveDistance(drive, -10, -.33)
     rotationTracker.setTargetOffsetRotation(0)
     yield from sea.timeLimit(sea.ensureTrue(rotationTracker.waitRotation(5), 20), 100)
-    for i in range(50):
-        drive.drive(.33, 0, 0)
-        yield
-    drive.drive(0, 0, 0)
     yield from sea.watch(
         auto_driving.driveContinuous(drive, .1, math.pi / -2, 0),
         shooter.shootGenerator())
@@ -172,20 +169,18 @@ def right_backCube(drive, rotationTracker, shooter, vision):
 def left_backCube(drive, rotationTracker, shooter, vision):
     rotationTracker.setTargetOffsetRotation(180)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-    yield from auto_driving.driveDistance(drive, -80, -.33)
-    for i in range(115):
-        drive.drive(-.33, 0, 0)
-        yield
-    drive.drive(0, 0, 0)
-    yield from sea.timeLimit(sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20), 100)
-    yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, 10, .33))
-    yield from auto_driving.driveDistance(drive, -10, -.33)
+    yield from auto_driving.driveDistance(drive, -20, -.33)
+    rotationTracker.setTargetOffsetRotation(90)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    yield from auto_driving.driveDistance(drive, 50, .33)
+    rotationTracker.setTargetOffsetRotation(180)
+    yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
+    #yield from sea.timeLimit(sea.ensureTrue(auto_vision.strafeAlign(drive, vision, 0), 20), 100)
+    yield from sea.watch(shooter.shootGenerator(), auto_driving.driveDistance(drive, 25, .33))
+    yield from auto_driving.driveDistance(drive, -35, -.33)
     rotationTracker.setTargetOffsetRotation(0)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-    for i in range(50):
-        drive.drive(-.33, 0, 0)
-        yield
-    drive.drive(0, 0, 0)
+    yield from auto_driving.driveDistance(drive, -10, -.33)
     yield from sea.watch(
         auto_driving.driveContinuous(drive, -.1, math.pi / 2, 0),
         shooter.shootGenerator())
