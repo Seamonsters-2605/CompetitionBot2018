@@ -32,7 +32,11 @@ def readPoints(filename):
 
 
 def scriptedAutoSequence(filename, drive, rotationTracker):
-    points = readPoints(filename)
+    try:
+        points = readPoints(filename)
+    except FileNotFoundError:
+        print("File not found: " + filename + "!")
+        return
     if len(points) <= 1:
         print("Not enough points!")
         return
@@ -52,7 +56,8 @@ def scriptedAutoSequence(filename, drive, rotationTracker):
         angle = -math.degrees(angle) + 90
 
         rotationTracker.setTargetOffsetRotation(angle)
-        yield from auto_driving.driveDistance(drive, distance, point0[2])
+        yield from auto_driving.driveDistance(drive, distance, point0[2],
+                                              dualMotor=True)
 
         point0 = point1
 
