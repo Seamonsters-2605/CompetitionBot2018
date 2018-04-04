@@ -63,7 +63,7 @@ elif theRobot == "2018" or theRobot == "2018 new encoders":
                   forwardScale=0.5, strafeScale=0.2, turnScale=0.4,
                   p=0.25, i=0.0, d=5.0),
         DriveGear(mode=ControlMode.Velocity,
-                  forwardScale=0.6, strafeScale=0.2, turnScale=0.5,
+                  forwardScale=0.8, strafeScale=0.2, turnScale=0.5,
                   p=0.1, i=0.0009, d=3.0),
     )
 
@@ -75,7 +75,7 @@ elif theRobot == "2018" or theRobot == "2018 new encoders":
                   forwardScale=0.5, strafeScale=0.2, turnScale=0.4,
                   p=0.1, i=0.0009, d=3.0),
         DriveGear(mode=ControlMode.Velocity,
-                  forwardScale=0.6, strafeScale=0.2, turnScale=0.5,
+                  forwardScale=0.8, strafeScale=0.2, turnScale=0.5,
                   p=0.1, i=0.0009, d=3.0)
     )
 
