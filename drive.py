@@ -241,7 +241,7 @@ class DriveBot(sea.GeneratorBot):
         elif not sea.getSwitch("DON'T DRIVE", False):
             if self.reversed:
                 self.directionLog.update("Towards intake")
-                sea.setActiveCameraURL('http://10.26.5.6:5800')
+                sea.setActiveCameraURL('http://10.26.5.2:1188/stream.mjpg')
                 self.drive.drive(magnitude, direction + math.pi, turn)
             else:
                 self.directionLog.update("Towards shooter")

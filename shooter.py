@@ -19,6 +19,8 @@ class MyRobot(sea.GeneratorBot):
             self.driverJoystick = wpilib.Joystick(0)
         self.teleopLock = False
 
+        self.shootLED = wpilib.DigitalOutput(4)
+
     def teleop(self):
         try:
             while True:
@@ -27,9 +29,11 @@ class MyRobot(sea.GeneratorBot):
                     continue
                 pov = self.driverJoystick.getPOV()
                 if self.driverJoystick.getRawButton(2):
+                    self.shootLED.set(True)
                     self.leftBelt.set(1)
                     self.rightBelt.set(1)
                 elif pov == 0 or self.driverJoystick.getRawButton(1):
+                    self.shootLED.set(True)
                     self.leftBelt.set(0.55)
                     self.rightBelt.set(0.55)
                     self.leftintake.set(-0.35 * INTAKE_SCALE)
@@ -60,6 +64,7 @@ class MyRobot(sea.GeneratorBot):
                     self.leftintake.set(0)
                     self.rightintake.set(0)
                 else:
+                    self.shootLED.set(False)
                     self.leftBelt.set(0)
                     self.rightBelt.set(0)
                     self.leftintake.set(0)
@@ -74,6 +79,7 @@ class MyRobot(sea.GeneratorBot):
         self.rightBelt.set(0)
 
     def shootGenerator(self):
+        self.shootLED.set(True)
         self.leftBelt.set(0.8)
         self.rightBelt.set(0.8)
         self.leftintake.set(-0.35 * INTAKE_SCALE)
@@ -88,6 +94,7 @@ class MyRobot(sea.GeneratorBot):
             self.rightBelt.set(0)
             self.leftintake.set(0)
             self.rightintake.set(0)
+            self.shootLED.set(False)
 
     def dropGenerator(self):
         self.leftBelt.set(-0.25)
