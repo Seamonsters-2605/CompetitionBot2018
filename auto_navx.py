@@ -10,15 +10,23 @@ class RotationTracker:
         self.origin = 0
 
     def resetOrigin(self):
-        self.origin = self.ahrs.getAngle()
+        try:
+            self.origin = self.ahrs.getAngle()
+        except ZeroDivisionError:
+            print("well it looks like something's wrong with the NavX :(")
+            self.targetOffsetRotation = 999999  # break NavX
 
     def setTargetOffsetRotation(self, value):
         self.targetOffsetRotation = value
 
     def rotateToTarget(self):
         while True:
-            offset = self.ahrs.getAngle() - self.origin - self.targetOffsetRotation
-            if abs(offset) > 720:
+            try:
+                offset = self.ahrs.getAngle() - self.origin - self.targetOffsetRotation
+            except ZeroDivisionError:
+                print("well it looks like something's wrong with the NavX :(")
+                self.targetOffsetRotation = 999999  # break NavX
+            if abs(offset) > 360:
                 print("NavX is broken!!")
                 yield
                 continue
@@ -36,6 +44,10 @@ class RotationTracker:
             if i > 5 * 50:
                 self.targetOffsetRotation = 999999 # break NavX
 
-            offset = self.ahrs.getAngle() - self.origin - self.targetOffsetRotation
+            try:
+                offset = self.ahrs.getAngle() - self.origin - self.targetOffsetRotation
+            except ZeroDivisionError:
+                print("well it looks like something's wrong with the NavX :(")
+                self.targetOffsetRotation = 999999  # break NavX
             yield abs(offset) <= range
 

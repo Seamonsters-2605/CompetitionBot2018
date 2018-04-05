@@ -12,21 +12,28 @@ def driveContinuous(drive, magnitude, direction, turn):
     except:
         drive.drive(0, 0, 0)
 
-def driveDistance(drive, distance, speed):
+def driveDistance(drive, distance, speed, dualMotor=False):
     if sea.getSwitch("Drive voltage mode", False):
         yield from sea.timeLimit(driveContinuous(drive, speed, math.pi/2, 0),
-                                 abs(int(distance*0.7)))
+                                 abs(int(distance*0.75)))
         drive.drive(0, 0, 0)
         return
     holoDrive = _findTheHoloDrive(drive)
-    motor = holoDrive.wheelMotors[HolonomicDrive.FRONT_RIGHT]
+    motor1 = holoDrive.wheelMotors[HolonomicDrive.FRONT_RIGHT]
+    motor2 = holoDrive.wheelMotors[HolonomicDrive.FRONT_LEFT]
     moveTicks = int(float(distance) * robotconfig.ticksPerWheelRotation
                      / robotconfig.wheelCircumference * holoDrive.invert)
-    targetPosition = motor.getSelectedSensorPosition(0) + moveTicks
+    def motorPos():
+        if dualMotor:
+            return int((motor1.getSelectedSensorPosition(0)
+                   - motor2.getSelectedSensorPosition(0)) / 2)
+        else:
+            return motor1.getSelectedSensorPosition(0)
+    targetPosition = motorPos() + moveTicks
     def checkTheMotor():
         yield
         while True:
-            pos = motor.getSelectedSensorPosition(0)
+            pos = motorPos()
             if moveTicks > 0:
                 if pos >= targetPosition:
                     break

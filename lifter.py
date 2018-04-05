@@ -19,22 +19,33 @@ class Lifter(sea.GeneratorBot):
         self.leftWingLog = sea.LogState("Wing L")
         self.rightWingLog = sea.LogState("Wing R")
 
+        self.leftLiftLED = wpilib.DigitalOutput(0)
+        self.rightLiftLED = wpilib.DigitalOutput(1)
+        self.leftSuccessLED = wpilib.DigitalOutput(2)
+        self.rightSuccessLED = wpilib.DigitalOutput(3)
+
     def teleop(self):
         yield from sea.parallel(
             # clockwise
             self.wingGenerator(self.leftWing, motorReverse=-1,
                                button=sea.Gamepad.LT, axis=1,
                                currentOverrideButton=sea.Gamepad.LB,
-                               log=self.leftWingLog),
+                               log=self.leftWingLog,
+                               liftLED=self.leftLiftLED,
+                               successLED=self.leftSuccessLED),
             # counter-clockwise
             self.wingGenerator(self.rightWing, motorReverse=1,
                                button=sea.Gamepad.RT, axis=5,
                                currentOverrideButton=sea.Gamepad.RB,
-                               log=self.rightWingLog))
+                               log=self.rightWingLog,
+                               liftLED=self.rightLiftLED,
+                               successLED=self.rightSuccessLED))
 
     def wingGenerator(self, motor, motorReverse, button, axis,
-                      currentOverrideButton, log):
+                      currentOverrideButton, log, liftLED, successLED):
         try:
+            liftLED.set(False)
+            successLED.set(False)
             while not self.wingGamepad.getRawButton(button):
                 log.update("Ready to release")
                 yield
@@ -52,10 +63,12 @@ class Lifter(sea.GeneratorBot):
                 log.update("Released")
                 yield
             motor.set(0)
+            liftLED.set(True)
             while True:
                 while not self.wingGamepad.getRawButton(button):
                     log.update("Ready")
                     yield
+                successLED.set(False)
                 while self.wingGamepad.getRawButton(button):
                     speed = WING_SPEED
                     axisValue = -self.wingGamepad.getRawAxis(axis)
@@ -65,7 +78,8 @@ class Lifter(sea.GeneratorBot):
                         speed *= axisValue + 1
                     motor.set(speed * motorReverse)
                     current = motor.getOutputCurrent()
-                    log.update(current)
+                    log.update(str(current) + " " +
+                               str(self.wingGamepad.getRawButton(currentOverrideButton)))
                     if current > CURRENT_LIMIT and \
                             (not self.wingGamepad.getRawButton(currentOverrideButton)):
                         motor.set(0)
@@ -78,6 +92,7 @@ class Lifter(sea.GeneratorBot):
                         break
                     yield
                 motor.set(0)
+                successLED.set(True)
         finally:
             motor.set(0)
 
