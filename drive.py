@@ -85,7 +85,7 @@ class DriveBot(sea.GeneratorBot):
 
         self.currentGear = None
 
-        limelight.driverCameraMode(self.vision)
+        limelight.cubeAlignMode(self.vision)
 
 
     def teleop(self):
@@ -132,7 +132,7 @@ class DriveBot(sea.GeneratorBot):
         #    talon.setSelectedSensorPosition(0, 0, 10)
 
         sea.setActiveCameraURL('')
-        limelight.visionTargetMode(self.vision)
+        limelight.cubeAlignMode(self.vision)
 
         self.holoDrive.resetTargetPositions()
         if sea.getSwitch("Drive voltage mode", False):
@@ -241,12 +241,19 @@ class DriveBot(sea.GeneratorBot):
         elif not sea.getSwitch("DON'T DRIVE", False):
             if self.reversed:
                 self.directionLog.update("Towards intake")
-                sea.setActiveCameraURL('http://10.26.5.2:1188/stream.mjpg')
+                sea.setActiveCameraURL('http://10.26.5.6:5800')
+                # if self.driverJoystick.getRawButton(1) or \
+                #         self.driverJoystick.getRawButton(2) or \
+                #         self.driverJoystick.getPOV() != -1:
+                #     sea.setActiveCameraURL('http://10.26.5.6:5800')
+                # else:
+                #     sea.setActiveCameraURL('http://10.26.5.2:1187/stream.mjpg')
                 self.drive.drive(magnitude, direction + math.pi, turn)
             else:
                 self.directionLog.update("Towards shooter")
-                sea.setActiveCameraURL('http://10.26.5.2:1187/stream.mjpg')
+                sea.setActiveCameraURL('http://10.26.5.2:1188/stream.mjpg')
                 self.drive.drive(magnitude, direction, turn)
+
 
         if self.driverJoystick.getRawButtonPressed(4):
             self.reversed = not self.reversed

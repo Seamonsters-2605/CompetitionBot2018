@@ -1,11 +1,11 @@
 def visionTargetMode(table):
-    table.putNumber('ledMode', 0) # on
     table.putNumber('pipeline', 1)
+    table.putNumber('ledMode', 0) # on
 
 def driverCameraMode(table):
-    table.putNumber('ledMode', 1) # off
     table.putNumber('pipeline', 0)
+    table.putNumber('ledMode', 1) # off
 
 def cubeAlignMode(table):
-    table.putNumber('ledMode', 1) # off
     table.putNumber('pipeline', 2)
+    table.putNumber('ledMode', 1) # off
