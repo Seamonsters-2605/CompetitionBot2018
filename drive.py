@@ -6,7 +6,6 @@ import ctre
 from robotpy_ext.common_drivers.navx import AHRS
 from networktables import NetworkTables
 import seamonsters as sea
-import camera
 import robotconfig
 import auto_sequence
 import auto_vision

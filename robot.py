@@ -28,6 +28,8 @@ class MainRobot(sea.GeneratorBot):
         self.timerLogState = sea.LogState("Time", 9999)
         self.modeLog = sea.LogState("Mode")
 
+        wpilib.CameraServer.launch('camera.py:main')
+
     def timer(self):
         last_t = time.time()
         timeDiff = 0
