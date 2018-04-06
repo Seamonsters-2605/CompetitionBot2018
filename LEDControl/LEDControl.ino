@@ -13,6 +13,7 @@
 
 Adafruit_NeoPixel leftPixels = Adafruit_NeoPixel(NUM_LEDS * 2, 6, NEO_GRB + NEO_KHZ800); // 2nd number is pin
 Adafruit_NeoPixel rightPixels = Adafruit_NeoPixel(NUM_LEDS * 2, 7, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel leftPixels2 = Adafruit_NeoPixel(NUM_LEDS * 2, 8, NEO_GRB + NEO_KHZ800);
 
 int t = 0;
 
@@ -25,6 +26,9 @@ void setup(){
   rightPixels.begin();
   rightPixels.setBrightness(100);
   rightPixels.show();
+  leftPixels2.begin();
+  leftPixels2.setBrightness(100); // percent
+  leftPixels2.show(); // all pixels start off
 
   pinMode(IN_LEFT_LIFT, INPUT);
   pinMode(IN_RIGHT_LIFT, INPUT);
@@ -65,11 +69,15 @@ void loop(){
 
 // 1 is right
 void setLEDMirrored(int side, int pixel, uint32_t color) {
-  if(side == RIGHT_SIDE)
+  if(side == RIGHT_SIDE) {
     pixel = NUM_LEDS - pixel - 1;
+    rightPixels.setPixelColor(pixel, color);
+    rightPixels.setPixelColor(NUM_LEDS * 2 - pixel, color);
+  } else {
+    leftPixels.setPixelColor(pixel, color);
+    leftPixels2.setPixelColor(pixel, color);
+  }
   Adafruit_NeoPixel * pixels = side == RIGHT_SIDE ? &rightPixels : &leftPixels;
-  pixels->setPixelColor(pixel, color);
-  pixels->setPixelColor(NUM_LEDS * 2 - pixel, color);
 }
 
 void solid(int side, uint32_t color) {
