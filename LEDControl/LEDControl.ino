@@ -64,6 +64,7 @@ void loop(){
 
   leftPixels.show();
   rightPixels.show();
+  leftPixels2.show();
   delay(30);
 }
 
@@ -72,10 +73,10 @@ void setLEDMirrored(int side, int pixel, uint32_t color) {
   if(side == RIGHT_SIDE) {
     pixel = NUM_LEDS - pixel - 1;
     rightPixels.setPixelColor(pixel, color);
-    rightPixels.setPixelColor(NUM_LEDS * 2 - pixel, color);
+    rightPixels.setPixelColor(NUM_LEDS * 2 - pixel - 1, color);
   } else {
     leftPixels.setPixelColor(pixel, color);
-    leftPixels2.setPixelColor(pixel, color);
+    leftPixels2.setPixelColor(NUM_LEDS - pixel - 1, color);
   }
   Adafruit_NeoPixel * pixels = side == RIGHT_SIDE ? &rightPixels : &leftPixels;
 }
@@ -91,7 +92,7 @@ void blank(int side) {
 
 void liftPattern(int side, uint32_t color) {
   int t_loop = t % (NUM_LEDS + 10);
-  if(t_loop == 0) {
+  if(t_loop == NUM_LEDS + 9) {
     blank(side);
   }
   if(t_loop < NUM_LEDS) {
