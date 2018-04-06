@@ -1,12 +1,15 @@
 #include <Adafruit_NeoPixel.h>  //Library to control LED strip
 
-#define NUM_LEDS 28      // Number of leds per strip (multiplied by 2 for 2 sides of the wing)
+#define NUM_LEDS 25      // Number of leds per strip (multiplied by 2 for 2 sides of the wing)
 
 #define IN_LEFT_LIFT 0
 #define IN_RIGHT_LIFT 1
 #define IN_LEFT_SUCCESS 2
 #define IN_RIGHT_SUCCESS 3
 #define IN_SHOOT 4
+
+#define LEFT_SIDE 0
+#define RIGHT_SIDE 1
 
 Adafruit_NeoPixel leftPixels = Adafruit_NeoPixel(NUM_LEDS * 2, 6, NEO_GRB + NEO_KHZ800); // 2nd number is pin
 Adafruit_NeoPixel rightPixels = Adafruit_NeoPixel(NUM_LEDS * 2, 7, NEO_GRB + NEO_KHZ800);
@@ -37,22 +40,22 @@ void loop(){
   t++;
 
   if(digitalRead(IN_SHOOT)) {
-    shootPattern(&leftPixels);
-    shootPattern(&rightPixels);
+    shootPattern(LEFT_SIDE);
+    shootPattern(RIGHT_SIDE);
   } else {
     if(digitalRead(IN_LEFT_SUCCESS))
-      successPattern(&leftPixels, BLUE);
+      successPattern(LEFT_SIDE, BLUE);
     else if(digitalRead(IN_LEFT_LIFT))
-      liftPattern(&leftPixels, BLUE);
+      liftPattern(LEFT_SIDE, BLUE);
     else
-      solid(&leftPixels, BLUE);
+      solid(LEFT_SIDE, BLUE);
 
     if(digitalRead(IN_RIGHT_SUCCESS))
-      successPattern(&rightPixels, RED);
+      successPattern(RIGHT_SIDE, RED);
     else if(digitalRead(IN_RIGHT_LIFT))
-      liftPattern(&rightPixels, RED);
+      liftPattern(RIGHT_SIDE, RED);
     else
-      solid(&rightPixels, RED);
+      solid(RIGHT_SIDE, RED);
   }
 
   leftPixels.show();
@@ -60,49 +63,51 @@ void loop(){
   delay(30);
 }
 
-void setLEDMirrored(Adafruit_NeoPixel * pixels, int pixel, uint32_t color) {
-  if(pixels == &rightPixels)
+// 1 is right
+void setLEDMirrored(int side, int pixel, uint32_t color) {
+  if(side == RIGHT_SIDE)
     pixel = NUM_LEDS - pixel - 1;
+  Adafruit_NeoPixel * pixels = side == RIGHT_SIDE ? &rightPixels : &leftPixels;
   pixels->setPixelColor(pixel, color);
   pixels->setPixelColor(NUM_LEDS * 2 - pixel, color);
 }
 
-void solid(Adafruit_NeoPixel * pixels, uint32_t color) {
-  for(int j = 0; j < NUM_LEDS * 2; j++)
-    pixels->setPixelColor(j, color);
+void solid(int side, uint32_t color) {
+  for(int j = 0; j < NUM_LEDS; j++)
+    setLEDMirrored(side, j, color);
 }
 
-void blank(Adafruit_NeoPixel * pixels) {
-  solid(pixels, pixels->Color(0, 0, 0));
+void blank(int side) {
+  solid(side, leftPixels.Color(0, 0, 0));
 }
 
-void liftPattern(Adafruit_NeoPixel * pixels, uint32_t color) {
+void liftPattern(int side, uint32_t color) {
   int t_loop = t % (NUM_LEDS + 10);
   if(t_loop == 0) {
-    blank(pixels);
+    blank(side);
   }
   if(t_loop < NUM_LEDS) {
-    setLEDMirrored(pixels, t_loop, color);
+    setLEDMirrored(side, t_loop, color);
   }
 }
 
-void shootPattern(Adafruit_NeoPixel * pixels) {
+void shootPattern(int side) {
   for(int i = 0; i < NUM_LEDS; i++) {
     int j = i + t;
     j %= 12;
     if(j <= 4)
-      setLEDMirrored(pixels, i, pixels->Color(0, 51 * j, 0));
+      setLEDMirrored(side, i, leftPixels.Color(0, 51 * j, 0));
     else if(j <= 9)
-      setLEDMirrored(pixels, i, pixels->Color(0, 51 * (9 - j), 0));
+      setLEDMirrored(side, i, leftPixels.Color(0, 51 * (9 - j), 0));
     else
-      setLEDMirrored(pixels, i, pixels->Color(0, 0, 0));
+      setLEDMirrored(side, i, leftPixels.Color(0, 0, 0));
   }
 }
 
-void successPattern(Adafruit_NeoPixel * pixels, uint32_t color) {
+void successPattern(int side, uint32_t color) {
   if(t % 20 < 10)
-    blank(pixels);
+    blank(side);
   else
-    solid(pixels, color);
+    solid(side, color);
 }
 
