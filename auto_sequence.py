@@ -80,8 +80,10 @@ def autoSequence(drive, vision, rotationTracker, shooter):
         yield from shootFinal(drive, shooter, rotationTracker)
 
         if switchPosition == 'R':
+            yield from auto_pauses.RightPause()
             yield from auto_strategies.right_backCube(drive, rotationTracker, shooter, vision)
         if switchPosition == 'L':
+            yield from auto_pauses.LeftPause()
             yield from auto_strategies.left_backCube(drive, rotationTracker, shooter, vision)
 
     if strategy == auto_strategies.STRAT_EXCHANGE:
