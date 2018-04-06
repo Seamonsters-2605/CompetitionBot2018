@@ -106,10 +106,10 @@ class MyRobot(sea.GeneratorBot):
 
     def dropGenerator(self):
         print("Start dropGenerator")
-        self.leftBelt.set(-0.25)
-        self.rightBelt.set(-0.25)
-        self.rightintake.set(0.35 * INTAKE_SCALE)
-        self.leftintake.set(0.35 * INTAKE_SCALE)
+        self.leftBelt.set(-.45)
+        self.rightBelt.set(-.45)
+        self.rightintake.set(0.85 * INTAKE_SCALE)
+        self.leftintake.set(0.85 * INTAKE_SCALE)
         try:
             self.teleopLock = True
             while True:
