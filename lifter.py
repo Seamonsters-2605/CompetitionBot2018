@@ -2,6 +2,8 @@ import wpilib
 import ctre
 import seamonsters as sea
 
+# PIDs need to be: 0.5, 0, 0
+
 WING_SPEED = .75
 MAX_WING_SPEED = 1.0
 CURRENT_LIMIT = 11
@@ -50,10 +52,8 @@ class Lifter(sea.GeneratorBot):
                 log.update("Ready to release")
                 yield
             currentPosition = motor.getSelectedSensorPosition(0)
-            # 500 too high
-            # 400 slightly too hight
-            # 300 barely enough, sometimes not enough
-            motor.set(ctre.ControlMode.Position, currentPosition + 350 * motorReverse)
+            # 400 slightly too low
+            motor.set(ctre.ControlMode.Position, currentPosition + 450 * motorReverse)
             #motor.set(WING_SPEED * motorReverse)
             #for _ in range(18):
             #    log.update("Releasing")
