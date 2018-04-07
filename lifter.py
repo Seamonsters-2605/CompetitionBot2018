@@ -21,10 +21,10 @@ class Lifter(sea.GeneratorBot):
         self.leftWingLog = sea.LogState("Wing L")
         self.rightWingLog = sea.LogState("Wing R")
 
-        self.leftLiftLED = wpilib.DigitalOutput(0)
-        self.rightLiftLED = wpilib.DigitalOutput(1)
-        self.leftSuccessLED = wpilib.DigitalOutput(2)
-        self.rightSuccessLED = wpilib.DigitalOutput(3)
+        self.leftLiftLED = wpilib.DigitalOutput(5)
+        self.rightLiftLED = wpilib.DigitalOutput(6)
+        self.leftSuccessLED = wpilib.DigitalOutput(7)
+        self.rightSuccessLED = wpilib.DigitalOutput(8)
 
     def teleop(self):
         yield from sea.parallel(

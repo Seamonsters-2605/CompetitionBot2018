@@ -19,7 +19,7 @@ class MyRobot(sea.GeneratorBot):
             self.driverJoystick = wpilib.Joystick(0)
         self.teleopLock = False
 
-        self.shootLED = wpilib.DigitalOutput(4)
+        self.shootLED = wpilib.DigitalOutput(9)
 
     def teleop(self):
         try:
