@@ -15,7 +15,7 @@ Adafruit_NeoPixel leftPixels = Adafruit_NeoPixel(NUM_LEDS * 2, 6, NEO_GRB + NEO_
 Adafruit_NeoPixel rightPixels = Adafruit_NeoPixel(NUM_LEDS * 2, 7, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel leftPixels2 = Adafruit_NeoPixel(NUM_LEDS * 2, 8, NEO_GRB + NEO_KHZ800);
 
-int t = 0;
+uint32_t t = 0;
 
 uint32_t RED, BLUE;
 
@@ -47,17 +47,17 @@ void loop(){
     shootPattern(LEFT_SIDE);
     shootPattern(RIGHT_SIDE);
   } else {
-    if(digitalRead(IN_LEFT_SUCCESS))
-      successPattern(LEFT_SIDE, BLUE);
-    else if(digitalRead(IN_LEFT_LIFT))
+    if(digitalRead(IN_LEFT_LIFT))
       liftPattern(LEFT_SIDE, BLUE);
+    else if(digitalRead(IN_LEFT_SUCCESS))
+      successPattern(LEFT_SIDE, BLUE);
     else
       solid(LEFT_SIDE, BLUE);
 
-    if(digitalRead(IN_RIGHT_SUCCESS))
-      successPattern(RIGHT_SIDE, RED);
-    else if(digitalRead(IN_RIGHT_LIFT))
+    if(digitalRead(IN_RIGHT_LIFT))
       liftPattern(RIGHT_SIDE, RED);
+    else if(digitalRead(IN_RIGHT_SUCCESS))
+      successPattern(RIGHT_SIDE, RED);
     else
       solid(RIGHT_SIDE, RED);
   }
