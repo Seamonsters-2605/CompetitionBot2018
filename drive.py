@@ -240,7 +240,7 @@ class DriveBot(sea.GeneratorBot):
         elif not sea.getSwitch("DON'T DRIVE", False):
             if self.reversed:
                 self.directionLog.update("Towards intake")
-                sea.setActiveCameraURL('http://10.26.5.6:5800')
+                sea.setActiveCameraURL('http://10.26.5.2:1187/stream.mjpg')
                 # if self.driverJoystick.getRawButton(1) or \
                 #         self.driverJoystick.getRawButton(2) or \
                 #         self.driverJoystick.getPOV() != -1:
