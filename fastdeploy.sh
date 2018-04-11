@@ -19,12 +19,12 @@ hash python3 2> /dev/null || {
             echo "Python not found!"
             exit 1
         }
-        py $file deploy --builtin --nc --nonstandard --skip-tests --no-version-check
+        py $file deploy --builtin --nonstandard --skip-tests --no-version-check
         exit 0
     }
-    python $file deploy --builtin --nc --nonstandard --skip-tests --no-version-check
+    python $file deploy --builtin --nonstandard --skip-tests --no-version-check
     exit 0
 }
-python3 $file deploy --builtin --nc --nonstandard --skip-tests --no-version-check
+python3 $file deploy --builtin --nonstandard --skip-tests --no-version-check
 echo "Done, press enter to quit"
 read
