@@ -3,9 +3,16 @@ import wpilib
 __author__ = "seamonsters"
 
 def deadZone(value, deadZone = 0.08):
-   if abs(value) < deadZone:
-       return 0.0
-   return value
+    """
+    Add a dead-zone to the number
+    :param value: the number
+    :param deadZone: the minimum value
+    :return: zero if the number is less than the dead zone, otherwise the
+    original number
+    """
+    if abs(value) < deadZone:
+        return 0.0
+    return value
 
 def whileButtonPressed(joystick, button):
     """
