@@ -21,21 +21,35 @@ def getSwitch(name, defaultValue):
     return switchValues[switchNames.index(name)]
 
 def setActiveCameraURL(url):
+    """
+    Set the URL of the camera stream to display in the dashboard
+    :param url: URL string
+    """
     table = networktables.NetworkTables.getTable('dashboard')
     table.putString('cam', url)
 
 class DashboardCommandReader:
+    """
+    Allows reading data entered in the Command box on the dashboard.
+    """
 
     def __init__(self):
         self.commandTable = networktables.NetworkTables.getTable('commands')
         self.reset()
 
     def reset(self):
+        """
+        Reset the connection, forget existing commands.
+        """
         self.lastCommandId = 0
         self.commandTable.putString('command', "")
         self.commandTable.putNumber('id', 0)
 
     def getCommand(self):
+        """
+        Get the command entered in the box.
+        :return: a command string, or None if no command
+        """
         try:
             commandId = self.commandTable.getNumber('id', 0)
             if commandId != self.lastCommandId:

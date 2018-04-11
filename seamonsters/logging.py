@@ -5,6 +5,10 @@ from networktables import NetworkTables
 logStates = { }
 
 def sendLogStates():
+    """
+    Send all LogStates that have been updated to the dashboard
+    :return:
+    """
     global logStates
     logStateNames = [key for key, value in logStates.items()]
     logStateValues = [value for key, value in logStates.items()]
