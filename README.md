@@ -15,3 +15,7 @@ Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
     deploying code to robot.
 - `fastdeploy.bat` and `fastdeploy.sh`: Deploy code without testing it.
 - `physics.py` and `sim/`: Used for pyfrc robot simulation. See `sim/README` for details.
+
+## How to update the seamonsters library documentation
+
+The built sphinx documentation is published using GitHub pages on the `gh-pages` branch. In `seamonsters/docs`, run `make html` or `.\make.bat html` on that branch and push to update.
