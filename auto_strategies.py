@@ -208,19 +208,17 @@ def right_RightCubePickup(drive, vision, shooter,  rotationTracker):
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
     yield from alignWithTheCube(drive, vision)
     yield from pickUpTheCube(drive, shooter)
-    yield from auto_driving.driveDistance(drive, 25, .45)
 
 def left_LeftCubePickup(drive, vision, shooter, rotationTracker):
     print("running left_LeftCubePickup")
     yield from auto_driving.driveDistance(drive, -30, -.45)
     rotationTracker.setTargetOffsetRotation(90)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
-    yield from auto_driving.driveDistance(drive, 40, .45)
+    yield from auto_driving.driveDistance(drive, 30, .45)
     rotationTracker.setTargetOffsetRotation(180)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
     yield from alignWithTheCube(drive, vision)
     yield from pickUpTheCube(drive, shooter)
-    yield from auto_driving.driveDistance(drive, 25, .45)
 
 def auto_CubeExchange(drive, shooter, rotationTracker):
     yield from auto_driving.driveDistance(drive, 10, .33)
@@ -233,7 +231,7 @@ def auto_CubeExchange(drive, shooter, rotationTracker):
     yield from auto_driving.driveDistance(drive, -40, -.33)
 
 def auto_SecondSwitchRight(drive, vision, shooter, rotationTracker):
-    yield from auto_driving.driveDistance(drive, 25, .45)
+    yield from auto_driving.driveDistance(drive, 30, .45)
     rotationTracker.setTargetOffsetRotation(45)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
     yield from auto_driving.driveDistance(drive, 75, .45)
@@ -243,7 +241,7 @@ def auto_SecondSwitchRight(drive, vision, shooter, rotationTracker):
                              sea.wait(50))
 
 def auto_SecondSwitchLeft(drive, vision, shooter, rotationTracker):
-    yield from auto_driving.driveDistance(drive, 25, .45)
+    yield from auto_driving.driveDistance(drive, 30, .45)
     rotationTracker.setTargetOffsetRotation(-45)
     yield from sea.ensureTrue(rotationTracker.waitRotation(5), 20)
     yield from auto_driving.driveDistance(drive, 75, .45)
@@ -258,7 +256,10 @@ def alignWithTheCube(drive, vision):
 def pickUpTheCube(drive, shooter):
     yield from sea.timeLimit(sea.watch(
         shooter.shootGenerator(),
-        auto_driving.driveDistance(drive, -25, -.33)), 100)
+        auto_driving.driveDistance(drive, -25, -.25)), 125)
+    print("Done picking up cube")
+    drive.drive(0, 0, 0)
+    yield
 
 
 LOCATION1_STRATEGIES = {
