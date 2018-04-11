@@ -124,10 +124,19 @@ class MyRobot(sea.GeneratorBot):
 
     def prepGenerator(self):
         print("Start prepGenerator")
-        self.rightintake.set(.5 * INTAKE_SCALE)
-        self.leftintake.set(.5 * INTAKE_SCALE)
         try:
-            yield from sea.forever()
+            def watchTeleopLock():
+                while not self.teleopLock:
+                    yield
+            def pulseIntake():
+                while True:
+                    self.rightintake.set(.85 * INTAKE_SCALE)
+                    self.leftintake.set(.85 * INTAKE_SCALE)
+                    yield from sea.wait(25)
+                    self.rightintake.set(0)
+                    self.leftintake.set(0)
+                    yield from sea.wait(25)
+            yield from sea.watch(pulseIntake(), watchTeleopLock())
         finally:
             print("End prepGenerator")
             self.rightintake.set(0)
