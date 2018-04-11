@@ -12,11 +12,6 @@ position mode", and "jeff mode" used interchangeably. "Voltage mode" is used to
 refer either to Voltage or PercentVbus mode on CANTalons. Also, some classes use
 "velocity" in method/variable names while others use "speed."
 
-Rebuilding the documentation
-----------------------------
-This documentation was created with Sphinx. To update it, navigate to
-``seamonsters/docs`` and run ``make html``.
-
 Index:
 --------
 

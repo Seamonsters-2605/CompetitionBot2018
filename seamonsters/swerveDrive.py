@@ -1,4 +1,4 @@
-__author__ = "jacobvanthoog"
+__author__ = "seamonsters"
 
 import seamonsters.drive
 from seamonsters.motorControl import *

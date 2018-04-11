@@ -3,6 +3,16 @@ __author__ = "seamonsters"
 from xml.etree import ElementTree # XML
 
 def readPoints(filePath, pixelsPerUnit, leftMargin, bottomMargin):
+    """
+    Given an SVG with a path created in GIMP, read all the points in the path
+    and return a list of points.
+    :param filePath: string path to the SVG file
+    :param pixelsPerUnit: number of pixels for a single unit
+    :param leftMargin: units (not pixels) of margin at the left side of the
+    image
+    :param bottomMargin: units (not pixels) of margin at the bottom of the image
+    :return: a list of tuples (x, y)
+    """
     print('Load SVG at: ' + str(filePath))
     tree = ElementTree.parse(filePath)
     root = tree.getroot()

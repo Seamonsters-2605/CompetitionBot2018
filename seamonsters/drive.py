@@ -5,6 +5,11 @@ import math
 
 
 def talonModeToString(mode):
+    """
+    Get a readable name from a ``ctre.ControlMode`` constant
+    :param mode: a constant from ``ctre.ControlMode``
+    :return: a string name
+    """
     if mode == ctre.ControlMode.Disabled:
         return "Disabled"
     elif mode == ctre.ControlMode.PercentOutput:
@@ -42,6 +47,11 @@ class DriveInterface:
 
 
 class TestDriveInterface(DriveInterface):
+    """
+    A DriveInterface which does nothing but log the magnitude/direction/turn
+    values it receives.
+    """
+
     def drive(self, magnitude, direction, turn):
         print("Drive mag", magnitude, "dir", direction, "turn", turn)
 

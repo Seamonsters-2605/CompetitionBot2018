@@ -7,6 +7,11 @@ from wpilib.livewindow import LiveWindow
 from wpilib.smartdashboard import SmartDashboard
 
 class GeneratorBot(RobotBase):
+    """
+    A robot which runs generators throughout the cycles of autonomous, teleop,
+    and test mode. The generators are iterated 50 times per second, synchronized
+    with the rate that data is received from Driver Station.
+    """
 
     def __init__(self):
         RobotBase.__init__(self)

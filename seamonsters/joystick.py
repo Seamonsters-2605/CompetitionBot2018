@@ -3,21 +3,41 @@ import wpilib
 __author__ = "seamonsters"
 
 def deadZone(value, deadZone = 0.08):
-   if abs(value) < deadZone:
-       return 0.0
-   return value
+    """
+    Add a dead-zone to the number
+    :param value: the number
+    :param deadZone: the minimum value
+    :return: zero if the number is less than the dead zone, otherwise the
+    original number
+    """
+    if abs(value) < deadZone:
+        return 0.0
+    return value
 
 def whileButtonPressed(joystick, button):
+    """
+    A generator which runs while the joystick button is pressed, then exits.
+    :param joystick: a ``wpilib.Joystick``
+    :param button: a button number
+    """
     yield
     while joystick.getRawButton(button):
         yield
 
 def untilButtonPressed(joystick, button):
+    """
+    A generator which runs until the joystick button is pressed, then exits.
+    :param joystick: a ``wpilib.Joystick``
+    :param button: a button number
+    """
     yield
     while not joystick.getRawButton(button):
         yield
 
 class DynamicAxis:
+    """
+    Makes values from a joystick axis go higher if you push them faster.
+    """
 
     # try 2.0, 4.0, 0.5?
     def __init__(self, exponent=1.0, speedScaleFactor=0.0,
@@ -36,6 +56,11 @@ class DynamicAxis:
         self.scale = 1.0
 
     def update(self, value):
+        """
+        Update the value of the axis
+        :param value: the raw axis value from the joystick
+        :return: the adjusted value
+        """
         if self.deadZone is not None:
             if abs(value) < self.deadZone:
                 value = 0.0

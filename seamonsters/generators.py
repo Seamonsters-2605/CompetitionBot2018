@@ -4,6 +4,9 @@ import types
 import itertools
 
 def sequence(*iterables):
+    """
+    Run a set of iterables sequentially
+    """
     return itertools.chain(*iterables)
 
 def parallel(*iterables):

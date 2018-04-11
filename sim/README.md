@@ -7,12 +7,7 @@ This library makes it easier to set up the robot simulator that's included in py
  - Use pip3 to install `pygame` if you want to use real joystick input
  - Add the "physics.py" file and the "sim" folder to the same directory as your robot.py
 
-Run the simulation by typing `py -3 robot.py sim` in Windows, or `python3 robot.py sim` in Mac/Linux.
-
-## Robots
-An example robot.py file has been included.
-
-All Talons should be in PercentVBus mode (the default). You can have other talons besides the drive train motors, but only those motors will be simulated.
+## Usage instructions
 
 At the bottom of the robot file you should have:
 
@@ -20,6 +15,15 @@ At the bottom of the robot file you should have:
 if __name__ == '__main__':
     wpilib.run(YourRobotClass, physics_enabled=True)
 ```
+
+Run the simulation by typing `py -3 robot.py sim` in Windows, or `python3 robot.py sim` in Mac/Linux.
+
+## Features
+
+- Supports Talon SRXs in PercentOutput, Velocity, or Position mode.
+- Mecanum or tank drivetrains
+- Vision target simulation
+- NavX simulation
 
 ## Configuration files
 The "sim" folder contains configuration files for the simulation. "drivetrain.ini" controls the physics of the drivetrain. "config.json" controls the visual layout of the field. Look at both for examples, or see details for each below.
