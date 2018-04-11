@@ -16,6 +16,6 @@ Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
 
 ## How to update the seamonsters library documentation
 
-The built sphinx documentation is published using GitHub pages on the `gh-pages` branch. In `seamonsters/docs`, run `make html` or `.\make.bat html` on that branch and push to update.
+The built sphinx documentation is published using GitHub pages on the `gh-pages` branch. In `seamonsters/docs`, run `make clean`, then `make html` on that branch and push to update.
 
 You can view the documentation [here](https://seamonsters-2605.github.io/SeamonstersTemplate/seamonsters/docs/_build/html/index.html).
