@@ -4,6 +4,7 @@ import wpilib
 import inspect, os
 import configparser
 from pyfrc.physics import drivetrains
+from pyfrc.physics.visionsim import VisionSim
 import ctre
 import robotpy_ext.common_drivers.navx
 from networktables import NetworkTables
@@ -44,6 +45,7 @@ class SimulatedTalon:
                 return diff / maxVel * 5 * self.inv
             elif controlMode == ctre.ControlMode.Velocity:
                 targetVel = talonData['pid0_target']
+                talonData['quad_position'] += int(targetVel/5) # update encoders
                 return targetVel / maxVel * self.inv
             else:
                 return 0.0
@@ -85,6 +87,12 @@ class PhysicsEngine:
         team = 1 if (ds.get('team', 'red').lower() == 'blue') else 0
         self.allianceStation = location - 1 + team * 3
 
+        field = config['field']
+        self.visionX = float(field.get('visionx', '0'))
+        self.visionY = float(field.get('visiony', '0'))
+        self.visionAngleStart = float(field.get('visionanglestart', '90'))
+        self.visionAngleEnd = float(field.get('visionangleend', '270'))
+
     def initialize(self, hal_data):
         self.visionTable = NetworkTables.getTable('limelight')
         self.visionTable.putNumber('tv', 1)
@@ -92,6 +100,11 @@ class PhysicsEngine:
         self.visionTable.putNumber('ty', 0)
         self.visionTable.putNumber('ts', 0)
         self.visionTable.putNumber('ta', 5)
+
+        visionTarget = VisionSim.Target(self.visionX, self.visionY,
+                                        self.visionAngleStart,
+                                        self.visionAngleEnd)
+        self.visionSim = VisionSim([visionTarget], 60, 2, 50)
         hal_data['alliance_station'] = self.allianceStation
 
     def update_sim(self, data, time, elapsed):
@@ -116,3 +129,14 @@ class PhysicsEngine:
 
         # https://github.com/robotpy/robotpy-wpilib/issues/291
         data['analog_gyro'][0]['angle'] = math.degrees(self.physicsController.angle)
+
+        x, y, angle = self.physicsController.get_position()
+        visionData = self.visionSim.compute(time, x, y, angle)
+        if visionData is not None:
+            targetData = visionData[0]
+            self.visionTable.putNumber('tv', targetData[0])
+            if targetData[0] != 0:
+                self.visionTable.putNumber('tx', targetData[2])
+        else:
+            # DOESN'T mean no vision. vision just doesn't always update
+            pass
