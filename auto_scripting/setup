@@ -1,0 +1,35 @@
+import bpy
+
+driveTrain = ["swerve", "anything else"]
+if driveTrain = "anything else":
+    rotateWheels = False
+elif driveTrain = "swerve":
+    rotateWheels = True
+verts = 4
+faces = 6
+
+###########################
+meme = bpy.data.meshes.new('NAME') #name this to the robots obj name
+ob = bpy.data.objects.new('NAME', meme)
+ob.location = origin
+ob.show_name = True
+    # Link object to scene and make active
+scn = bpy.context.scene
+scn.objects.link(ob)
+scn.objects.active = ob
+ob.select = True
+me.from_pydata(verts, [], faces)
+me.update()    
+###########################
+meme = bpy.data.meshes.new('NAME') #name this to the robots' drive name
+ob = bpy.data.objects.new('NAME', meme)
+ob.location = origin
+ob.show_name = True
+    # Link object to scene and make active
+scn = bpy.context.scene
+scn.objects.link(ob)
+scn.objects.active = ob
+ob.select = True
+me.from_pydata(verts, [], faces)
+me.update()    
+#############################
