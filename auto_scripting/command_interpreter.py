@@ -25,6 +25,15 @@ def readPoints(filename):
                 continue
             points.append(values)
     return points
+def switchingSwerveMotor(self, Fr, Br, Fl, Bl):#need motor names to switch using these as place holders
+    if swerveDr = True:
+        if guideAngle > (math.pi/2)  and angle < math.pi #first quadrent 
+        
+        if guideAngle >= math.pi and angle < 3*(math.pi/2):
+         
+        if guideAngle >= 3*(math.pi/2) anf guideAngle < 2*math.pi:
+            
+        if guideAngle >=
 
 
 def scriptedAutoSequence(filename, drive, rotationTracker):
