@@ -54,11 +54,11 @@ def scriptedAutoSequence(filename, drive, rotationTracker):
         timeDiff = point1[0] - point0[0]
         if distance > 1e-6 and timeDiff > 0:
             # radians, positive counter-clockwise, 0 is right
-            angle = math.atan2(yOffset, xOffset)
+            angle = math.atan2(yOffset, xOffset) + math.radians(90)
             # degrees, positive clockwise, 0 is forward
-            angle = -math.degrees(angle) + 90
+            
             currentAngle = rotationTracker.targetOffsetRotation
-            while angle - currentAngle > 180:
+            while angle - currentAngle > math.degrees(:
                 angle -= 360
             while currentAngle - angle > 180:
                 angle += 360
