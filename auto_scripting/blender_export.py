@@ -23,7 +23,7 @@ robot_obj.select = True
 robot_path.select = True
 bpy.context.scene.objects.active = robot_obj
 #bpy.ops.object.parent_set(type='FOLLOW_PATH')
-empty = robot_path.constraints.new('FOLLOW_PATH')
+empty = robot_obj.constraints.new('FOLLOW_PATH')
 empty.target = robot_path
 #robot_obj.constraints["FOLLOW_PATH"].use_curve_follow
 K = robot_obj.constraints["Follow Path"] #or "FollowPathConstraint.use_curve_follow
