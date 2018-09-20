@@ -39,4 +39,4 @@ with open("C:\\Users\TANALE000\Desktop\path.txt", "w") as file:
         coords = plain_verts[x]
         coordsX = coords[0]
         coordsY = coords[1]
-        file.write(f"\nCoords: {coordsX},{coordsY}")
+        file.write(f"\nCoords: {coordsX},{coordsY}\n")
