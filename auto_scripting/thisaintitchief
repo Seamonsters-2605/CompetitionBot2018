@@ -13,15 +13,32 @@ bpy.context.scene.objects.active = robot_obj
 if obj.mode == 'EDIT':
     bm = bmesh.from_edit_mesh(obj.data)
     vertices = bm.verts 
-
 else:
     vertices = obj.data.vertices
-
 verts = [obj.matrix_world * vert.co for vert in vertices] 
-
 # coordinates as tuples
 plain_verts = [vert.to_tuple() for vert in verts]
 print(plain_verts)
+b = 0
+fe = 256
+increment = 25
+
+
+rotPoint.select = True
+data1 = obj.data
+bpy.context.scene.objects.active = rotPoint
+
+if obj.mode == 'EDIT':
+    bm = bmesh.from_edit_mesh(obj.data)
+    vertices = bm.verts 
+else:
+    vertices = obj.data1.vertices
+verts = [obj.matrix_world * vert.co for vert in vertices] 
+# coordinates as tuples
+plain_verts1 = [vert.to_tuple() for vert in verts]
+print(plain_verts1)
+
+
 b = 0
 fe = 256
 increment = 25
@@ -29,10 +46,15 @@ print( plain_verts)
 
 for x in range(0,len(data.vertices)):
     coords = plain_verts[x]
+    coords1 = plain_verts1[x]
+    coordsX1 = coords1[0]
+    coordsY1 = coords1[1]
     coordsX = coords[0]
     coordsY = coords[1]
-    print(coordsX,coordsY)
-
+    diffX = abs(coordsX-coordsX1)
+    diffY = abs(coordsY-coordsY1)
+    Theta = math.atan(diffY/diffX)
+     print(coordsX,coordsY,Theta)
 with open("C:\\Users\TANALE000\Desktop\path.txt", "w") as file:
     file.write("{} {} {}\n".format(b,coordsX, coordsY))
     for x in range(0, len(data.vertices)):
