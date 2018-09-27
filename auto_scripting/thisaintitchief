@@ -55,10 +55,17 @@ for x in range(0,len(data.vertices)):
     diffY = abs(coordsY-coordsY1)
     Theta = math.atan(diffY/diffX)
      print(coordsX,coordsY,Theta)
-with open("C:\\Users\TANALE000\Desktop\path.txt", "w") as file:
+with open("C:\\Users\PIROSKAZ000\Desktop\path.txt", "w") as file:
     file.write("{} {} {}\n".format(b,coordsX, coordsY))
-    for x in range(0, len(data.vertices)):
+    for x in range(0,len(data.vertices)):
         coords = plain_verts[x]
+        coords1 = plain_verts1[x]
+        coordsX1 = coords1[0]
+        coordsY1 = coords1[1]
         coordsX = coords[0]
         coordsY = coords[1]
-        file.write(f"\nCoords: {coordsX},{coordsY}\n")
+        diffX = abs(coordsX-coordsX1)
+        diffY = abs(coordsY-coordsY1)
+        Theta = math.atan(diffY/diffX)
+        file.write("{} {} {}\n".format(coordsX, coordsY, Theta))
+        #file.write(f"\nCoords: {coordsX},{coordsY}\n")
