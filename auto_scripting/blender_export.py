@@ -32,5 +32,5 @@ with open("C:\\Users\PIROSKAZ000\Desktop\path.txt", "w") as file:
         diffX = abs(coordsX-coordsX1);diffY = abs(coordsY-coordsY1)
         Theta = math.atan2((diffY+.001),(diffX+.001))
         
-        file.write("{} {} {}\n".format(coordsX, coordsY, Theta))
+        file.write("{} {} {} {}\n".format(x*25,coordsX, coordsY, Theta))
   
